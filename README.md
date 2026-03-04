@@ -2,7 +2,7 @@
 
 Interactive hemicycle map of every US Congress member who opposes arms sales to Israel — with live Polymarket odds, FEC finance data, challenger tracking, and P2P data sync via Gun.js.
 
-**Live site:** https://lukerldavis.github.io/Anti-Arms-Congress-Tracker/
+**Live site:** https://lukerdavis.github.io/Anti-Arms-Congress-Tracker/
 
 ---
 
@@ -87,7 +87,7 @@ Paste this anywhere:
 
 ```html
 <iframe
-  src="https://lukerldavis.github.io/Anti-Arms-Congress-Tracker/"
+  src="https://lukerdavis.github.io/Anti-Arms-Congress-Tracker/"
   width="100%"
   height="900"
   style="border:none;border-radius:12px;"
@@ -128,4 +128,3 @@ All member data is hardcoded in `index.html` (lines ~80–280). To update:
 - OpenFEC API — campaign finance, independent expenditures
 - Polymarket — incumbent reelection odds
 - Google Civic Information API — representative lookup by address
-- Jewish Insider, Responsible Statecraft, JTA, NBC News, Al Jazeera (challenger research)
