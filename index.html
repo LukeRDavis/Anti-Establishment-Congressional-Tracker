@@ -12,6 +12,13 @@
   <meta property="og:type"        content="website" />
   <meta property="og:url"         content="https://lukerldavis.github.io/Anti-Arms-Congress-Tracker/" />
 
+  <!-- OG Image for social sharing -->
+  <meta property="og:image" content="https://lukerdavis.github.io/Anti-Arms-Congress-Tracker/og-preview.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://lukerdavis.github.io/Anti-Arms-Congress-Tracker/og-preview.png" />
+
   <!-- Preact + hooks (UMD, no build step) -->
   <script src="https://unpkg.com/preact@10/dist/preact.umd.js"></script>
   <script src="https://unpkg.com/preact@10/hooks/dist/hooks.umd.js"></script>
@@ -51,7 +58,8 @@ const html = htm.bind(h);
 // Civic key is OK client-side IF you restrict it to your domain in Google Cloud Console:
 // https://console.cloud.google.com → APIs → Credentials → HTTP referrers → lukerldavis.github.io
 const CIVIC_KEY   = "AIzaSyCvHP-sSilnAIM53RtZ6pP2JigX-k0ckYk";
-const DATA_URL    = "./data.json";                 // served by GitHub Pages
+const DATA_URL      = "./data.json";
+const LEGISCAN_KEY  = "";  // Add your LegiScan key here when received                 // served by GitHub Pages
 const GUN_PEERS   = [                              // Gun relay peers (public, free)
   "https://gun-us.herokuapp.com/gun",
   "https://gun-manhattan.herokuapp.com/gun",
@@ -74,26 +82,26 @@ const THRESHOLDS = {
 };
 
 const ANTI_R_HOUSE = [
-  { name:"Thomas Massie",          state:"KY", district:4,  note:"Most consistent libertarian; opposes all foreign aid", ps:"INCUMBENT" },
-  { name:"Marjorie Taylor Greene", state:"GA", district:14, note:"'America First'; opposes all foreign aid spending",    ps:"INCUMBENT" },
-  { name:"Warren Davidson",        state:"OH", district:8,  note:"Freedom Caucus, fiscal objections to uncapped aid",   ps:"INCUMBENT" },
-  { name:"Andy Biggs",             state:"AZ", district:5,  note:"Freedom Caucus, fiscal objections",                  ps:"INCUMBENT" },
-  { name:"Lauren Boebert",         state:"CO", district:3,  note:"'America First', no foreign aid",                    ps:"INCUMBENT" },
-  { name:"Tim Burchett",           state:"TN", district:2,  note:"Freedom Caucus, fiscal objections",                  ps:"INCUMBENT" },
-  { name:"Andrew Clyde",           state:"GA", district:9,  note:"Opposes unoffset Israel spending",                   ps:"INCUMBENT" },
-  { name:"Eli Crane",              state:"AZ", district:2,  note:"Freedom Caucus, fiscal objections",                  ps:"INCUMBENT" },
-  { name:"Paul Gosar",             state:"AZ", district:9,  note:"Freedom Caucus, isolationist",                       ps:"INCUMBENT" },
-  { name:"Andy Harris",            state:"MD", district:1,  note:"Freedom Caucus",                                     ps:"INCUMBENT" },
-  { name:"Cory Mills",             state:"FL", district:7,  note:"Voted vs. Israel aid supplemental",                  ps:"INCUMBENT" },
-  { name:"Troy Nehls",             state:"TX", district:22, note:"'America First'",                                    ps:"INCUMBENT" },
-  { name:"Ralph Norman",           state:"SC", district:5,  note:"Freedom Caucus, fiscal hawk",                        ps:"INCUMBENT" },
-  { name:"Scott Perry",            state:"PA", district:10, note:"Freedom Caucus",                                     ps:"INCUMBENT_RISK" },
-  { name:"Chip Roy",               state:"TX", district:21, note:"Freedom Caucus, fiscal hawk",                        ps:"INCUMBENT" },
-  { name:"Tom Tiffany",            state:"WI", district:7,  note:"Fiscal / 'America First'",                           ps:"INCUMBENT" },
-  { name:"Ryan Zinke",             state:"MT", district:1,  note:"Voted vs. Israel aid bill",                          ps:"INCUMBENT" },
-  { name:"Matt Gaetz",    state:"FL", district:1,  note:"Resigned Nov 2024",                       ps:"RESIGNED",  gone:true },
-  { name:"Bob Good",      state:"VA", district:5,  note:"Lost primary to McGuire by 374 votes",    ps:"DEFEATED",  gone:true },
-  { name:"Matt Rosendale",state:"MT", district:2,  note:"Retired — declined re-election",          ps:"RETIRED",   gone:true },
+  { name:"Thomas Massie",          state:"KY", district:4,  note:"Voted No: HR 8034 (Israel aid Apr 2024), all Ukraine/Israel supplementals 2023–24; sponsor of H.R.1608 to eliminate all foreign aid", ps:"INCUMBENT" },
+  { name:"Marjorie Taylor Greene", state:"GA", district:14, note:"Voted No: HR 8034 (Israel aid Apr 2024), HR 8035 (Ukraine aid Apr 2024); all foreign aid supplementals 2023–24", ps:"INCUMBENT" },
+  { name:"Warren Davidson",        state:"OH", district:8,  note:"Voted No: HR 8034 (Israel aid Apr 2024); cited absence of spending offsets and opposition to uncapped commitments", ps:"INCUMBENT" },
+  { name:"Andy Biggs",             state:"AZ", district:5,  note:"Voted No: HR 8034 (Israel aid Apr 2024), HR 8035 (Ukraine aid Apr 2024); all foreign aid supplementals 2023–24",  ps:"INCUMBENT" },
+  { name:"Lauren Boebert",         state:"CO", district:3,  note:"Voted No: HR 8034 (Israel aid Apr 2024), HR 8035 (Ukraine aid Apr 2024); all foreign aid supplementals 2023–24",  ps:"INCUMBENT" },
+  { name:"Tim Burchett",           state:"TN", district:2,  note:"Voted No: HR 8034 (Israel aid Apr 2024); all foreign aid supplementals 2023–24",                                   ps:"INCUMBENT" },
+  { name:"Andrew Clyde",           state:"GA", district:9,  note:"Voted No: HR 8034 (Israel aid Apr 2024); cited lack of spending offsets",                                          ps:"INCUMBENT" },
+  { name:"Eli Crane",              state:"AZ", district:2,  note:"Voted No: HR 8034 (Israel aid Apr 2024), HR 8035 (Ukraine aid Apr 2024); all foreign aid supplementals 2023–24",  ps:"INCUMBENT" },
+  { name:"Paul Gosar",             state:"AZ", district:9,  note:"Voted No: HR 8034 (Israel aid Apr 2024), HR 8035 (Ukraine aid Apr 2024); all foreign aid supplementals 2023–24",  ps:"INCUMBENT" },
+  { name:"Andy Harris",            state:"MD", district:1,  note:"Voted No: HR 8034 (Israel aid Apr 2024); all foreign aid supplementals 2023–24",                                   ps:"INCUMBENT" },
+  { name:"Cory Mills",             state:"FL", district:7,  note:"Voted No: HR 8034 (Israel aid supplemental Apr 2024)",                                                             ps:"INCUMBENT" },
+  { name:"Troy Nehls",             state:"TX", district:22, note:"Voted No: HR 8034 (Israel aid Apr 2024), HR 8035 (Ukraine aid Apr 2024)",                                          ps:"INCUMBENT" },
+  { name:"Ralph Norman",           state:"SC", district:5,  note:"Voted No: HR 8034 (Israel aid Apr 2024); all foreign aid supplementals 2023–24",                                   ps:"INCUMBENT" },
+  { name:"Scott Perry",            state:"PA", district:10, note:"Voted No: HR 8034 (Israel aid Apr 2024); all foreign aid supplementals 2023–24",                                   ps:"INCUMBENT_RISK" },
+  { name:"Tom Tiffany",            state:"WI", district:7,  note:"Voted No: HR 8034 (Israel aid Apr 2024), HR 8035 (Ukraine aid Apr 2024)",                                          ps:"INCUMBENT" },
+  { name:"Ryan Zinke",             state:"MT", district:1,  note:"Voted No: HR 8034 (Israel aid supplemental Apr 2024)",                                                             ps:"INCUMBENT" },
+  { name:"Chip Roy",      state:"TX", district:21, note:"Voted No: HR 8034 (Israel aid Apr 2024). Vacated TX-21 seat Mar 2026 to run for TX Attorney General; in runoff vs. Middleton (May 26, 2026).", ps:"RETIRED", gone:true },
+  { name:"Matt Gaetz",    state:"FL", district:1,  note:"Voted No: HR 8034 (Israel aid Apr 2024). Resigned Nov 2024 ahead of Attorney General nomination.", ps:"RESIGNED", gone:true },
+  { name:"Bob Good",      state:"VA", district:5,  note:"Voted No: HR 8034 (Israel aid Apr 2024). Lost June 2024 primary to John McGuire by 374 votes.",     ps:"DEFEATED", gone:true },
+  { name:"Matt Rosendale",state:"MT", district:2,  note:"Voted No: HR 8034 (Israel aid Apr 2024). Did not seek re-election in 2024.",                          ps:"RETIRED",  gone:true },
 ];
 const ANTI_R_SENATE = [
   { name:"Rand Paul", state:"KY", note:"Files holds on all foreign military aid; Senate's leading opposition voice", ps:"INCUMBENT" },
@@ -160,7 +168,7 @@ const ANTI_D_SENATE = [
 
 const CHALLENGERS_R = [
   { name:"Brandon Herrera",  state:"TX", district:23, party:"R",
-    note:"'The AK Guy' — firearms YouTuber; America First isolationist vs. pro-Israel Rep. Tony Gonzales. Forced a RUNOFF Mar 3.",
+    note:"Firearms YouTuber and gunsmith; voted-based opponent of open-ended foreign military aid; ran vs. pro-Israel Rep. Tony Gonzales. Forced runoff Mar 3.",
     primaryDate:"2026-03-03", ps:"RUNOFF" },
 ];
 const CHALLENGERS_D = [
@@ -170,21 +178,21 @@ const CHALLENGERS_D = [
   { name:"Nida Allam",           state:"NC", district:4, party:"D",
     note:"Durham Co. Commissioner; endorsed by Bernie Sanders. American Priorities PAC spent $1M+ vs. Foushee.",
     primaryDate:"2026-03-03", ps:"RESULTS_PENDING" },
-  { name:"Kat Abughazaleh",      state:"IL", district:5, party:"D",
-    note:"Palestinian-American progressive; Justice Democrats-backed. Arms embargo vs. Rep. Quigley (retiring).",
-    primaryDate:"2026-03-03", ps:"RESULTS_PENDING" },
+  { name:"Kat Abughazaleh",      state:"IL", district:9, party:"D",
+    note:"Journalist and digital creator; grandchild of Nakba survivors; endorsed by CAIR Action and Justice Democrats. Calls for full arms embargo. Running for Schakowsky's open IL-9 seat (3-way primary with Biss and Fine).",
+    primaryDate:"2026-03-17", ps:"UPCOMING" },
   { name:"Frederick Haynes III", state:"TX", district:30, party:"D",
     note:"Crockett's own pastor; anti-arms. Running for her open TX-30 seat. Fundraising frontrunner.",
     primaryDate:"2026-03-03", ps:"RESULTS_PENDING" },
   { name:"Zeeshan Hafeez",       state:"TX", district:33, party:"D",
-    note:"Anti-arms challenger. Endorsed alongside Haynes. Results pending Mar 3.",
+    note:"Georgetown Law/UVA MBA graduate; no corporate PAC money; calls for end to US arms sales to Israel. Running in 4-way primary vs. incumbent Julie Johnson and former Rep. Colin Allred. Johnson and Allred led in fundraising. Results pending Mar 3.",
     primaryDate:"2026-03-03", ps:"RESULTS_PENDING" },
   { name:"Junaid Ahmed",         state:"IL", district:8, party:"D",
     note:"Arms embargo advocate. Endorsed by Khanna, Ramirez, Jayapal. Led fundraising at $838K.",
     primaryDate:"2026-06-02", ps:"UPCOMING" },
   { name:"Daniel Biss",          state:"IL", district:9, party:"D",
-    note:"Evanston mayor; weapons-pause advocate running for Schakowsky's open seat.",
-    primaryDate:"2026-06-02", ps:"UPCOMING" },
+    note:"Evanston mayor; endorsed by Schakowsky; supports ceasefire and weapons pause to Israel. Running for same IL-9 open seat (3-way with Abughazaleh and Fine). Leads in early polls at ~24%.",
+    primaryDate:"2026-03-17", ps:"UPCOMING" },
   { name:"Abdul el-Sayed",       state:"MI", district:11, party:"D",
     note:"Former Oakland Co. exec; calls Gaza campaign genocide; opposes all offensive US arms. Vs. Haley Stevens.",
     primaryDate:"2026-08-04", ps:"UPCOMING" },
@@ -269,6 +277,7 @@ function StatusBadge({ps, prob}) {
     RETIRING:        {bg:"rgba(156,163,175,.1)", c:"#9ca3af",t:"Retiring '26"},
     FLIPPED:         {bg:"rgba(251,191,36,.13)", c:"#fbbf24",t:"~ Flipped"},
     RUNOFF:          {bg:"rgba(251,191,36,.15)", c:"#f59e0b",t:"⚡ Runoff"},
+    RECOUNT:         {bg:"rgba(251,191,36,.15)", c:"#f59e0b",t:"🔄 Recount"},
     UPCOMING:        {bg:"rgba(139,92,246,.12)", c:"#a78bfa",t:"🗓 Upcoming"},
     RESULTS_PENDING: {bg:"rgba(251,191,36,.15)", c:"#fbbf24",t:"📊 Pending"},
     WON:             {bg:"rgba(34,197,94,.13)",  c:"#4ade80",t:"✓ WON"},
@@ -376,6 +385,15 @@ function MemberBox({title,color,members,challengers,fecData,polyData,onSelect}) 
           <${Section} label="Upcoming Primaries" items=${upcoming} isChallenger/>
           <${Section} label="Defeated" items=${lost} isChallenger/>
         `}
+      </div>
+      <div style=${{marginTop:8,display:"flex",gap:6,flexWrap:"wrap"}}>
+        <button onClick=${()=>{
+          const url=window.location.origin+window.location.pathname+"?"+
+            (chamber!=="house"?"chamber="+chamber+"&":"")+"member="+encodeURIComponent(member.name);
+          navigator.clipboard?.writeText(url).then(()=>alert("Link copied!")).catch(()=>prompt("Copy this link:",url));
+        }} style=${{padding:"4px 10px",borderRadius:6,border:"1px solid #1e2230",background:"transparent",color:"#6b7280",fontFamily:"monospace",fontSize:9,cursor:"pointer"}}>
+          ⎘ Copy member link
+        </button>
       </div>
     </div>`;
 }
@@ -512,6 +530,7 @@ function FindMyRep({members,onHighlight}) {
 
 function useData() {
   const [fecData,  setFec]    = useState({});
+  const [fetchedAt, setFetchedAt] = useState(null);
   const [polyData, setPoly]   = useState({});
   const [status,   setStatus] = useState("Connecting to peers…");
   const gunRef = useRef(null);
@@ -564,6 +583,7 @@ function useData() {
         node.get("poly").put(d.poly || {});
         node.get("last_fetched_ms").put(now);
         node.get("fetched_at").put(d.meta?.fetched_at || new Date().toISOString());
+        if (d.meta?.fetched_at) setFetchedAt(d.meta.fetched_at);
 
         const age = d.meta?.fetched_at ? Math.round((now - new Date(d.meta.fetched_at))/60000) : "?";
         setStatus("✓ Live data · " + (Object.keys(d.fec||{}).length) + " FEC · " + (Object.keys(d.poly||{}).length) + " Poly · " + age + "m ago");
@@ -582,7 +602,7 @@ function useData() {
 
   }, []);
 
-  return {fecData, polyData, status};
+  return {fecData, polyData, status, fetchedAt};
 }
 
 // ─── MAIN APP ─────────────────────────────────────────────────────────────────
@@ -591,7 +611,27 @@ function App() {
   const [selected, setSelected] = useState(null);
   const [hovered,  setHovered]  = useState(null);
   const [showAnti, setShowAnti] = useState(false);
-  const {fecData, polyData, status} = useData();
+  const {fecData, polyData, status, fetchedAt} = useData();
+
+  // URL deep-link: ?chamber=senate&member=Thomas+Massie
+  useEffect(() => {
+    const p = new URLSearchParams(window.location.search);
+    if (p.get("chamber") === "senate") setChamber("senate");
+    const mName = p.get("member");
+    if (mName) {
+      const idx = members.findIndex(m => m.name === mName);
+      if (idx >= 0) setSelected(idx);
+    }
+  }, [members]);
+
+  // Update URL when selection changes
+  useEffect(() => {
+    const p = new URLSearchParams();
+    if (chamber !== "house") p.set("chamber", chamber);
+    if (selected !== null && members[selected]?.name) p.set("member", members[selected].name);
+    const qs = p.toString();
+    window.history.replaceState(null, "", qs ? "?" + qs : window.location.pathname);
+  }, [selected, chamber, members]);
 
   const members   = useMemo(() => buildMembers(chamber), [chamber]);
   const svgW=610, svgH=300, cx=svgW/2, cy=svgH-14;
@@ -634,6 +674,9 @@ function App() {
           </span>
           <span style=${{fontFamily:"monospace",color:"#4b5563"}}>|</span>
           <span style=${{fontFamily:"monospace",color:"#6b7280",fontSize:8}}>${status}</span>
+          ${fetchedAt ? html`<span style=${{fontFamily:"monospace",color:"#374151",fontSize:8}}>
+            · Data: ${new Date(fetchedAt).toLocaleString("en-US",{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})}
+          </span>` : null}
         </div>
       </div>
 
