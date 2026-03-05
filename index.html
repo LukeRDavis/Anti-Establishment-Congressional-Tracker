@@ -797,7 +797,7 @@ function useData() {
     } catch(e) { console.warn("Gun.js:", e); }
   }, []);
 
-  return {allMembers, bills, challengers, history, fecData, polyData, fetchedAt, status, loaded};
+  return {allMembers, bills, challengers, history, races, fecData, polyData, fetchedAt, status, loaded};
 }
 
 
@@ -1425,10 +1425,10 @@ function ProbabilityGauge({prob, color, label, note, compact}) {
 
 function RaceCard({race, liveMembers}) {
   // Normalise field names — Python RACES_2026 uses snake_case; hardcoded uses camelCase
-  const winProb      = race.win_prob       ?? race.winProb ?? null;
+  const winProb      = race.win_prob != null ? race.win_prob : (race.winProb != null ? race.winProb : null);
   const opponent     = race.general_opponent || race.primary_opponent || race.opponent || "";
-  const departing    = race.departing ?? (race.status === "departed");
-  const justWonPrim  = race.justWonPrimary ?? (race.primary_result === "WON");
+  const departing    = race.departing != null ? race.departing : (race.status === "departed");
+  const justWonPrim  = race.justWonPrimary != null ? race.justWonPrimary : (race.primary_result === "WON");
   const cookRating   = race.cook_rating    || race.cookRating || null;
   const probSrc      = race.win_prob_src   || "estimate";
   const electionLabel= race.electionLabel  ||
