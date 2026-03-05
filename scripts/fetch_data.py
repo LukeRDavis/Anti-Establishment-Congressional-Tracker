@@ -283,23 +283,25 @@ def build_members_from_trackaipac(ta_congress):
     """
     members = []
     for name_lower, m in ta_congress.items():
-        if not m.get("name") or not m.get("state"):
+        name = m.get("name", "").strip()
+        # Skip only truly empty or placeholder entries
+        if not name or name.lower() == "vacant" or len(name) < 3:
             continue
         members.append({
-            "bioguide_id": "",          # filled in later if Congress.gov available
-            "name":        m["name"],
+            "bioguide_id": "",
+            "name":        name,
             "party":       m.get("party", "?"),
-            "state":       m.get("state", ""),
-            "district":    m.get("district"),
+            "state":       m.get("state") or "",      # allow empty — enriched later by Congress.gov
+            "district":    m.get("district") if m.get("district") not in ("", None) else None,
             "chamber":     m.get("chamber", "house"),
-            "antiArms":      m.get("antiArms", False),
-            "antiArmsLevel": "soft" if m.get("antiArms") else None,
-            "ps":            "INCUMBENT",
-            "bills":         [],
-            "votes":         [],
-            "lobby_total":   m.get("lobby_total", 0),
-            "pacs":          m.get("pacs", []),
-            "note":          m.get("note", ""),
+            "antiArms":    bool(m.get("antiArms") or m.get("approved")),
+            "antiArmsLevel": "soft" if (m.get("antiArms") or m.get("approved")) else None,
+            "ps":          "INCUMBENT",
+            "bills":       [],
+            "votes":       [],
+            "lobby_total": m.get("lobby_total", 0),
+            "pacs":        m.get("pacs", []),
+            "note":        m.get("note", ""),
         })
 
     # Enrich with bioguide IDs from Congress.gov (best-effort)
