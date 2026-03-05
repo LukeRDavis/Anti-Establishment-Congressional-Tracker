@@ -184,18 +184,97 @@ function ArmsBadge({m}) {
     ${hard ? "⚡ Hard Anti-Arms" : "◦ Soft Anti-Arms"}
   </span>`;
 }
-function ProgressBars({chamber, members}) {
-  const hard    = members.filter(m=>m.antiArms && m.antiArmsLevel==="hard").length;
-  const soft    = members.filter(m=>m.antiArms && m.antiArmsLevel!=="hard").length;
+function ProgressBars({chamber, members, allMembers, racesData, polyData}) {
+  const hard    = members.filter(m => m.antiArms && m.antiArmsLevel === "hard").length;
+  const soft    = members.filter(m => m.antiArms && m.antiArmsLevel !== "hard").length;
   const current = hard + soft;
+
+  // ── Probability model ────────────────────────────────────────────────────
+  // Each current anti-arms seat has a retention probability (from Polymarket or default).
+  // Each challenger race has a win probability.
+  // Coalition size = sum of independent Bernoulli trials → normal approximation.
+  // P(reach N) = Φ((μ - N) / σ)  where σ = sqrt(Σ p*(1-p))
+  //
+  // Sources (in priority order):
+  //   1. Polymarket market for that candidate (live, most accurate)
+  //   2. KEY_RACES_2026 winProb for named members
+  //   3. Default retention rates: incumbents 0.88, challengers 0.30
+
+  const races    = (racesData && racesData.length > 0) ? racesData : KEY_RACES_2026;
+  const ch       = chamber;  // "house" or "senate"
+
+  // Build a list of probability trials for THIS chamber's anti-arms seats
+  const trials = [];
+
+  // Current anti-arms incumbents (this chamber only)
+  members.filter(m => m.antiArms).forEach(m => {
+    const race    = races.find(r => r.name === m.name && r.chamber === ch);
+    const polyMkt = polyData && polyData[m.name];
+    let   p;
+    if (polyMkt && polyMkt.prob != null)           p = polyMkt.prob;
+    else if (race && race.win_prob != null)         p = race.win_prob;
+    else if (race && race.winProb != null)          p = race.winProb;
+    else if (race && race.departing)               p = 0;
+    else                                           p = 0.88;  // default incumbent retention
+    trials.push({name: m.name, p, src: polyMkt ? "poly" : race ? "race" : "default"});
+  });
+
+  // Anti-arms challengers for this chamber not yet in Congress
+  races
+    .filter(r => r.chamber === ch && (r.type === "challenger" || r.raceType === "CHALLENGER"))
+    .forEach(r => {
+      const polyMkt = polyData && polyData[r.name];
+      const p = polyMkt && polyMkt.prob != null ? polyMkt.prob :
+                r.win_prob != null ? r.win_prob :
+                r.winProb  != null ? r.winProb  : 0.20;
+      trials.push({name: r.name, p, src: polyMkt ? "poly" : "race"});
+    });
+
+  // μ and σ² from Poisson-binomial
+  const mu      = trials.reduce((s, t) => s + t.p, 0);
+  const sigma2  = trials.reduce((s, t) => s + t.p * (1 - t.p), 0);
+  const sigma   = Math.sqrt(Math.max(sigma2, 0.01));
+  const polyCount = trials.filter(t => t.src === "poly").length;
+
+  // Normal CDF approximation (Abramowitz & Stegun)
+  function normCDF(z) {
+    if (z > 6)  return 1;
+    if (z < -6) return 0;
+    const t = 1 / (1 + 0.2315419 * Math.abs(z));
+    const d = 0.3989423 * Math.exp(-z * z / 2);
+    const p = d * t * (0.3193815 + t * (-0.3565638 + t * (1.7814779 + t * (-1.8212560 + t * 1.3302744))));
+    return z > 0 ? 1 - p : p;
+  }
+
+  function pReach(n) {
+    // P(X >= n) using normal approx with continuity correction
+    const z = (n - 0.5 - mu) / sigma;
+    return Math.max(0, Math.min(1, normCDF(-z)));
+  }
+
+  function probColor(p) {
+    if (p >= 0.7) return "#4ade80";
+    if (p >= 0.4) return "#fbbf24";
+    if (p >= 0.15) return "#f97316";
+    return "#f87171";
+  }
+
+  function probLabel(p) {
+    if (p >= 0.85) return "Very Likely";
+    if (p >= 0.65) return "Likely";
+    if (p >= 0.40) return "Possible";
+    if (p >= 0.15) return "Unlikely";
+    return "Very Unlikely";
+  }
 
   return html`
     <div style=${{background:"#0f1117",border:"1px solid #1e2230",borderRadius:12,padding:"12px 14px",width:"100%",boxSizing:"border-box"}}>
       <div style=${{fontSize:9,color:"#a78bfa",fontFamily:"monospace",letterSpacing:"0.14em",textTransform:"uppercase",marginBottom:7}}>
-        ◈ Anti-Arms Coalition · ${chamber==="senate"?"Senate":"House"}
+        ◈ Anti-Arms Coalition · ${chamber === "senate" ? "Senate" : "House"}
       </div>
 
-      <div style=${{display:"flex",gap:12,marginBottom:10,flexWrap:"wrap"}}>
+      <!-- Hard/soft legend -->
+      <div style=${{display:"flex",gap:12,marginBottom:7,flexWrap:"wrap"}}>
         <span style=${{fontSize:8,fontFamily:"monospace",display:"flex",alignItems:"center",gap:4}}>
           <span style=${{width:9,height:9,borderRadius:2,background:"#7c3aed",display:"inline-block",flexShrink:0}}/>
           <span style=${{color:"#a78bfa",fontWeight:600}}>Hard ${hard}</span>
@@ -208,25 +287,57 @@ function ProgressBars({chamber, members}) {
         </span>
       </div>
 
-      ${THRESHOLDS[chamber].map((th,i) => {
-        const hardPct = Math.min(100, Math.round((hard/th.n)*100));
-        const softPct = Math.min(100-hardPct, Math.round((soft/th.n)*100));
-        const reached = current >= th.n;
-        const hardHit = hard >= th.n;
+      <!-- μ summary line -->
+      <div style=${{fontSize:8,fontFamily:"monospace",color:"#4b5563",marginBottom:10,lineHeight:1.6}}>
+        Expected by Nov 2026:
+        <span style=${{color:"#a5b4fc",fontWeight:600}}> μ=${mu.toFixed(1)}</span>
+        <span style=${{color:"#374151"}}> ± ${sigma.toFixed(1)}</span>
+        <span style=${{color:"#1e2230"}}> · </span>
+        <span style=${{color:"#374151"}}>based on ${trials.length} seats</span>
+        ${polyCount > 0 ? html`
+          <span style=${{color:"#1e2230"}}> · </span>
+          <span style=${{color:"#4ade80"}}>◉ ${polyCount} live Polymarket odds</span>` : null}
+      </div>
+
+      ${THRESHOLDS[chamber].map((th, i) => {
+        const hardPct  = Math.min(100, Math.round((hard / th.n) * 100));
+        const softPct  = Math.min(100 - hardPct, Math.round((soft / th.n) * 100));
+        const reached  = current >= th.n;
+        const hardHit  = hard >= th.n;
+        const prob     = pReach(th.n);
+        const pc       = probColor(prob);
+        const pl       = probLabel(prob);
+        const pct      = Math.round(prob * 100);
+        const need     = Math.max(0, th.n - current);
+
         return html`
-          <div key=${i} style=${{marginBottom:i<THRESHOLDS[chamber].length-1?14:0}}>
-            <div style=${{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:3}}>
-              <span style=${{fontSize:10,color:reached?"#4ade80":th.color,fontWeight:600}}>${th.label}</span>
-              <div style=${{display:"flex",gap:4,alignItems:"center",fontFamily:"monospace"}}>
-                <span style=${{fontSize:8,color:"#a78bfa"}}>${hard}H</span>
-                <span style=${{fontSize:8,color:"#374151"}}>+</span>
-                <span style=${{fontSize:8,color:"#818cf8"}}>${soft}S</span>
-                <span style=${{fontSize:8,color:"#374151"}}>=</span>
-                <span style=${{fontSize:10,color:reached?"#4ade80":"#6b7280",fontWeight:600}}>
-                  ${current}/${th.n}${reached?" ✓":""}
+          <div key=${i} style=${{marginBottom: i < THRESHOLDS[chamber].length - 1 ? 16 : 0}}>
+
+            <!-- Row 1: label + current count + probability pill -->
+            <div style=${{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:3,flexWrap:"wrap",gap:3}}>
+              <span style=${{fontSize:10,color:reached?"#4ade80":th.color,fontWeight:600,fontFamily:"monospace"}}>
+                ${th.label}
+                <span style=${{fontSize:9,fontWeight:400,color:"#374151"}}> / ${th.n}</span>
+              </span>
+              <div style=${{display:"flex",gap:5,alignItems:"center"}}>
+                <!-- Current count -->
+                <span style=${{fontSize:9,fontFamily:"monospace",color:reached?"#4ade80":"#6b7280"}}>
+                  ${hard}H + ${soft}S = ${current}${reached?" ✓":""}
+                </span>
+                <!-- Probability pill -->
+                <span style=${{
+                  fontSize:9,fontFamily:"monospace",fontWeight:700,
+                  padding:"1px 7px",borderRadius:4,
+                  background:pc+"18",color:pc,
+                  border:"1px solid "+pc+"40",
+                  minWidth:44,textAlign:"center",
+                }}>
+                  ${reached ? "100%" : pct+"%"}
                 </span>
               </div>
             </div>
+
+            <!-- Row 2: stacked bar -->
             <div style=${{height:7,borderRadius:4,background:"#1a1d27",overflow:"hidden",marginBottom:4,position:"relative"}}>
               <div style=${{position:"absolute",left:0,top:0,height:"100%",
                 width:hardPct+"%",background:hardHit?"#4ade80":"#7c3aed",
@@ -234,15 +345,41 @@ function ProgressBars({chamber, members}) {
               <div style=${{position:"absolute",left:hardPct+"%",top:0,height:"100%",
                 width:softPct+"%",background:"#818cf8",opacity:0.6,
                 transition:"all 0.8s ease"}}/>
+              <!-- μ tick mark — where expected value lands relative to threshold -->
+              ${!reached ? html`
+                <div style=${{
+                  position:"absolute",top:0,height:"100%",width:2,
+                  background:"#a5b4fc",opacity:0.5,
+                  left:Math.min(99, Math.round((mu/th.n)*100))+"%",
+                }}/>` : null}
             </div>
-            <div style=${{fontSize:8,color:hardHit?"#4ade80":"#374151",fontFamily:"monospace",marginBottom:3}}>
-              ${hardHit
-                ? "✓ Hard threshold reached — "+hard+" members with on-record legislative vote"
-                : "Hard-only: "+hard+"/"+th.n+" — need "+(th.n-hard)+" more with a legislative vote"}
+
+            <!-- Row 3: probability explanation -->
+            <div style=${{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:3}}>
+              <div style=${{fontSize:8,fontFamily:"monospace",color:pc,flex:1}}>
+                ${reached
+                  ? "✓ Threshold reached with current coalition"
+                  : pl + " by Nov 2026 — need " + need + " more (μ=" + mu.toFixed(1) + ", σ=" + sigma.toFixed(1) + ")"}
+              </div>
+              ${!reached ? html`
+                <div style=${{fontSize:7,fontFamily:"monospace",color:"#374151",textAlign:"right",lineHeight:1.4}}>
+                  ${hardHit
+                    ? "Hard threshold met"
+                    : "Hard-only: "+hard+"/"+th.n}
+                </div>` : null}
             </div>
-            <div style=${{fontSize:9,color:"#374151",lineHeight:1.5}}>${th.desc}</div>
+
+            <!-- Row 4: threshold description -->
+            <div style=${{fontSize:9,color:"#374151",lineHeight:1.5,marginTop:2}}>${th.desc}</div>
           </div>`;
       })}
+
+      <!-- Data source footnote -->
+      <div style=${{marginTop:10,paddingTop:7,borderTop:"1px solid #1a1d27",
+        fontSize:7,color:"#1e2230",fontFamily:"monospace",lineHeight:1.7}}>
+        Probability model: Poisson-binomial normal approximation (μ=Σpᵢ, σ=√Σpᵢ(1−pᵢ)).
+        P(reach N) = Φ((μ−N+0.5)/σ). Win probs: Polymarket → KEY_RACES_2026 → default 0.88 retention.
+      </div>
     </div>`;
 }
 function BillsPanel({bills}) {
@@ -1324,7 +1461,7 @@ function App() {
 
           <!-- Progress bars -->
           <div style=${{width:"100%",maxWidth:610}}>
-            <${ProgressBars} chamber=${chamber} members=${members}/>
+            <${ProgressBars} chamber=${chamber} members=${members} allMembers=${allMembers} racesData=${races} polyData=${polyData}/>
           </div>
 
           <!-- Legislation -->
