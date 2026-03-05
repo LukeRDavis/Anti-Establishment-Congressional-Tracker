@@ -89,20 +89,16 @@ function dotColor(m) {
   if (m.party === "R") return hard ? "#c026d3" : "#a855f7";
   return hard ? "#7c3aed" : "#818cf8";
 }
-
 function antiArmsTag(m) {
   if (!m.antiArms) return null;
   return m.antiArmsLevel === "hard" ? "Hard Anti-Arms" : "Soft Anti-Arms";
 }
-
 function antiArmsTagColor(m) {
   if (!m.antiArms) return "#9ca3af";
   return m.antiArmsLevel === "hard"
     ? (m.party === "R" ? "#c026d3" : "#7c3aed")
     : (m.party === "R" ? "#a855f7" : "#818cf8");
 }
-
-// ── Hemicycle layout ──────────────────────────────────────────────────────────
 function computeHemicycle(n, cx, cy, innerR, spacing, rows) {
   const radii  = Array.from({length:rows}, (_,i) => innerR + i*spacing);
   const total  = radii.reduce((s,r) => s+r, 0);
@@ -119,7 +115,6 @@ function computeHemicycle(n, cx, cy, innerR, spacing, rows) {
   pts.sort((a,b) => b.angle - a.angle || a.y - b.y);
   return pts;
 }
-
 function buildMembers(allMembers, chamber) {
   const ch    = chamber === "house" ? "house" : "senate";
   const chMem = allMembers.filter(m => m.chamber === ch);
@@ -146,15 +141,12 @@ function buildMembers(allMembers, chamber) {
 
   return [...rFill, ...softAntiR, ...hardAntiR, ...hardAntiD, ...softAntiD, ...dFill, ...iFill];
 }
-
 function fmtM(n) {
   if (!n&&n!==0) return "—";
   if (n>=1e6) return "$"+(n/1e6).toFixed(1)+"M";
   if (n>=1e3) return "$"+Math.round(n/1e3)+"K";
   return "$"+n;
 }
-
-// ── Status badge ──────────────────────────────────────────────────────────────
 function StatusBadge({ps, prob}) {
   const isInc = ps==="INCUMBENT"||ps==="INCUMBENT_RISK";
   if (isInc && prob!=null) {
@@ -182,8 +174,6 @@ function StatusBadge({ps, prob}) {
   const s = MAP[ps]||{bg:"transparent",c:"#9ca3af",t:ps||"—"};
   return html`<span style=${{fontSize:9,padding:"1px 6px",borderRadius:3,fontFamily:"monospace",whiteSpace:"nowrap",background:s.bg,color:s.c}}>${s.t}</span>`;
 }
-
-// ── Anti-arms level badge ─────────────────────────────────────────────────────
 function ArmsBadge({m}) {
   if (!m || !m.antiArms) return null;
   const hard  = m.antiArmsLevel === "hard";
@@ -194,8 +184,6 @@ function ArmsBadge({m}) {
     ${hard ? "⚡ Hard Anti-Arms" : "◦ Soft Anti-Arms"}
   </span>`;
 }
-
-// ── Progress bars ─────────────────────────────────────────────────────────────
 function ProgressBars({chamber, members}) {
   const hard    = members.filter(m=>m.antiArms && m.antiArmsLevel==="hard").length;
   const soft    = members.filter(m=>m.antiArms && m.antiArmsLevel!=="hard").length;
@@ -257,8 +245,6 @@ function ProgressBars({chamber, members}) {
       })}
     </div>`;
 }
-
-// ── Tracked Legislation Panel ─────────────────────────────────────────────────
 function BillsPanel({bills}) {
   if (!bills||bills.length===0) return null;
   const anti = bills.filter(b=>b.classification==="anti_arms");
@@ -299,8 +285,6 @@ function BillsPanel({bills}) {
         ${pro.map((b,i)=>html`<${BillRow} key=${i} b=${b}/>`)}`:null}
     </div>`;
 }
-
-// ── Member box (side panel) ───────────────────────────────────────────────────
 function MemberBox({title, color, members, challengers, fecData, polyData, onSelect}) {
   const [tab, setTab] = useState("members");
 
@@ -388,8 +372,6 @@ function MemberBox({title, color, members, challengers, fecData, polyData, onSel
       </div>
     </div>`;
 }
-
-// ── Detail panel ──────────────────────────────────────────────────────────────
 function DetailPanel({member, fecData, polyData, bills, chamber}) {
   if (!member||member._filler) return html`
     <div style=${{color:"#1f2937",fontSize:11,textAlign:"center",paddingTop:20}}>
@@ -514,8 +496,6 @@ function DetailPanel({member, fecData, polyData, bills, chamber}) {
       </div>
     </div>`;
 }
-
-// ── History Timeline ──────────────────────────────────────────────────────────
 function HistoryTimeline({history}) {
   const [filter, setFilter] = useState("all");
   const events = (history.events||[]).filter(e =>
@@ -583,8 +563,6 @@ function HistoryTimeline({history}) {
         </div>`}
     </div>`;
 }
-
-// ── Find My Rep ───────────────────────────────────────────────────────────────
 function FindMyRep({members, onHighlight}) {
   const [addr,setAddr]=useState(""), [reps,setReps]=useState(null), [loading,setLoad]=useState(false), [err,setErr]=useState(null);
   const lookup = async () => {
@@ -642,8 +620,6 @@ function FindMyRep({members, onHighlight}) {
         </div>`:null}
     </div>`;
 }
-
-// ── Data loading ──────────────────────────────────────────────────────────────
 function useData() {
   const [allMembers,   setMembers]     = useState([]);
   const [races,        setRaces]       = useState([]);
@@ -801,926 +777,352 @@ function useData() {
 }
 
 
-// ── Congress Shifts ──────────────────────────────────────────────────────────
-const CONGRESS_HISTORY_STATIC = {
-  117: { congress:117, years:"2021–22", label:"117th",
-    hardR:3, softR:1, hardD:13, softD:6, hardI:1, softI:0,
-    note:"Block the Bombs Act era. Squad + libertarian R. Pre-Gaza.",
-    events:[] },
-  118: { congress:118, years:"2023–24", label:"118th",
-    hardR:9, softR:4, hardD:26, softD:14, hardI:2, softI:0,
-    note:"Post-Oct 7 peak. HR 8034 Nay: 21R+37D (58). Block the Bombs 22 co-sponsors.",
-    events:[] },
-};
-
-const KEY_EVENTS = [
-  { date:"2023-10-07", y:2023.77, label:"Oct 7 → Gaza war",   color:"#ef4444", side:"right" },
-  { date:"2024-04-20", y:2024.30, label:"HR 8034 Nay 21R+37D",color:"#7c3aed", side:"left"  },
-  { date:"2024-06-12", y:2024.45, label:"Senate JRD vote",     color:"#7c3aed", side:"right" },
-  { date:"2024-08-06", y:2024.60, label:"Bowman+Bush lost primaries",color:"#374151",side:"left"},
-  { date:"2025-01-03", y:2025.01, label:"119th Congress seated",color:"#fbbf24", side:"right"},
-  { date:"2026-03-03", y:2026.17, label:"Talarico won TX primary",color:"#4ade80",side:"left" },
-  { date:"2026-05-19", y:2026.38, label:"Massie primary (KY-4)",color:"#f59e0b", side:"right"},
-  { date:"2026-11-03", y:2026.84, label:"2026 General Election",color:"#60a5fa", side:"left" },
-];
-
-const RACES_2026_STATIC = [
-  {
-    id:"talarico-tx-senate",
-    name:"James Talarico", party:"D", state:"TX", chamber:"senate",
-    antiArms:true, antiArmsLevel:"soft", type:"challenger",
-    status:"pending_general", primaryResult:"WON",
-    primaryPct:53.1, primaryOppPct:46.0, primaryOpponent:"J. Crockett",
-    primaryDate:"2026-03-03", generalDate:"2026-11-03",
-    generalOpponent:"Cornyn or Paxton (R runoff May 26)",
-    cookRating:null, winProb:0.22,
-    impactWin:"+1 soft-D Senate", impactLose:"No change (seat stays R)",
-    note:"Won D primary 53–46. Supports banning offensive weapons. TX last went D statewide 1994.",
-  },
-  {
-    id:"foushee-nc04",
-    name:"Valerie Foushee", party:"D", state:"NC", chamber:"house", district:4,
-    antiArms:true, antiArmsLevel:"soft", type:"incumbent",
-    status:"pending_general", primaryResult:"WON",
-    primaryPct:49.18, primaryOppPct:48.22, primaryOpponent:"N. Allam",
-    primaryDate:"2026-03-03", generalDate:"2026-11-03",
-    generalOpponent:"TBD (R)",
-    cookRating:"Likely D", winProb:0.88,
-    impactWin:"+1 soft-D retained", impactLose:"-1 D seat",
-    note:"Won primary by 1,202 votes; Allam conceded. Foushee swore off AIPAC, pledged arms restrictions.",
-  },
-  {
-    id:"massie-ky04",
-    name:"Thomas Massie", party:"R", state:"KY", chamber:"house", district:4,
-    antiArms:true, antiArmsLevel:"hard", type:"incumbent",
-    status:"pending_primary", primaryResult:null,
-    primaryDate:"2026-05-19", generalDate:"2026-11-03",
-    primaryOpponent:"Ed Gallrein (Trump-endorsed)",
-    generalOpponent:"TBD (D)",
-    cookRating:"Solid R (general)", winProb:0.62,
-    impactWin:"Retains 1 hard-R anti-arms vote", impactLose:"-1 hard-R (Gallrein would be pro-arms)",
-    note:"Trump endorsed Gallrein Oct 2025. Massie claims +17 in own polling. Rand Paul campaigning for him. Trump machine + $10M against.",
-  },
-  {
-    id:"tlaib-mi12",
-    name:"Rashida Tlaib", party:"D", state:"MI", chamber:"house", district:12,
-    antiArms:true, antiArmsLevel:"soft", type:"incumbent",
-    status:"pending_primary", primaryResult:null,
-    primaryDate:"2026-08-04", generalDate:"2026-11-03",
-    primaryOpponent:"TBD", generalOpponent:"TBD (R)",
-    cookRating:"Safe D", winProb:0.80,
-    impactWin:"+1 soft-D retained", impactLose:"-1 if AIPAC-backed challenger wins",
-    note:"Won 2024 primary 58%. May face renewed well-funded primary challenge.",
-  },
-  {
-    id:"omar-mn05",
-    name:"Ilhan Omar", party:"D", state:"MN", chamber:"house", district:5,
-    antiArms:true, antiArmsLevel:"soft", type:"incumbent",
-    status:"pending_primary", primaryResult:null,
-    primaryDate:"2026-08-11", generalDate:"2026-11-03",
-    primaryOpponent:"TBD", generalOpponent:"TBD (R)",
-    cookRating:"Safe D", winProb:0.78,
-    impactWin:"+1 soft-D retained", impactLose:"-1 D seat",
-    note:"Survived close 2024 primary 56%. AIPAC spent heavily against her.",
-  },
-  {
-    id:"casar-tx37",
-    name:"Greg Casar", party:"D", state:"TX", chamber:"house", district:37,
-    antiArms:true, antiArmsLevel:"soft", type:"incumbent",
-    status:"won_primary", primaryResult:"WON",
-    primaryDate:"2026-03-03", generalDate:"2026-11-03",
-    primaryOpponent:null, generalOpponent:"TBD (R)",
-    cookRating:"Safe D", winProb:0.95,
-    impactWin:"+1 soft-D retained (TX-35 redrawn TX-37)",
-    note:"Safe D seat in redrawn district.",
-  },
-];
-
-function CongressShifts({allMembers, challengers, congress_history, races_2026}) {
-  // Use server data if available, fall back to static
-  const hist   = congress_history || CONGRESS_HISTORY_STATIC;
-  const races  = (races_2026 && races_2026.length > 0) ? races_2026 : RACES_2026_STATIC;
-
-  const [raceFilter, setRaceFilter] = useState("all");
-
-  // Live 119th data from members
-  const hardR19 = allMembers.filter(m=>m.antiArms&&m.party==="R"&&m.antiArmsLevel==="hard").length;
-  const softR19 = allMembers.filter(m=>m.antiArms&&m.party==="R"&&m.antiArmsLevel!=="hard").length;
-  const hardD19 = allMembers.filter(m=>m.antiArms&&m.party!=="R"&&m.antiArmsLevel==="hard").length;
-  const softD19 = allMembers.filter(m=>m.antiArms&&m.party!=="R"&&m.antiArmsLevel!=="hard").length;
-  const total19 = hardR19+softR19+hardD19+softD19;
-
-  // 120th projection: EV calculation from races
-  const activeRaces = races.filter(r=>r.winProb!==null&&r.antiArms);
-  const incumbentRaces = activeRaces.filter(r=>r.type==="incumbent");
-  const challengerRaces = activeRaces.filter(r=>r.type==="challenger");
-  // Expected change: incumbents retain with winProb, challengers gain with winProb
-  const evDelta = incumbentRaces.reduce((s,r)=>{
-    // If incumbent loses we lose 1; expected = -(1-p)
-    return s - (1 - r.winProb);
-  }, 0) + challengerRaces.reduce((s,r)=>{
-    return s + r.winProb;  // gain if challenger wins
-  }, 0);
-  const proj20 = Math.round(total19 + evDelta);
-  const proj20Low  = Math.round(total19 - incumbentRaces.filter(r=>r.winProb<0.85).length - 1);
-  const proj20High = Math.round(total19 + challengerRaces.reduce((s,r)=>s+1,0) + 1);
-
-  // ── Timeline chart ──
-  const chartH = 180, chartW = 520, padL = 42, padR = 20, padT = 20, padB = 30;
-  const cw = chartW - padL - padR;
-  const congresses = [
-    {label:"117th", sub:"2021–22", ...(hist[117]||CONGRESS_HISTORY_STATIC[117])},
-    {label:"118th", sub:"2023–24", ...(hist[118]||CONGRESS_HISTORY_STATIC[118])},
-    {label:"119th (current)", sub:"2025–26", hardR:hardR19, softR:softR19, hardD:hardD19, softD:softD19},
-    {label:"120th (projected)", sub:"2027–28", hardR:Math.round(hardR19*0.75+proj20*0.1), softR:Math.round(softR19*0.85), hardD:Math.round(hardD19*0.9+proj20*0.05), softD:Math.round(softD19*0.95+proj20*0.05), projected:true},
-  ];
-  const maxTotal = Math.max(...congresses.map(c=>(c.hardR||0)+(c.softR||0)+(c.hardD||0)+(c.softD||0)+(c.hardI||0)+(c.softI||0)));
-  const barW     = Math.floor(cw / (congresses.length * 1.6));
-  const gap      = (cw - barW * congresses.length) / (congresses.length + 1);
-  const yScale   = (chartH - padT - padB) / (maxTotal * 1.1);
-
-  // Filter races
-  const filtered = races.filter(r => {
-    if (raceFilter==="all") return true;
-    if (raceFilter==="confirmed") return r.primaryResult==="WON" && r.status==="pending_general";
-    if (raceFilter==="primary") return r.status==="pending_primary";
-    if (raceFilter==="at_risk") return r.type==="incumbent" && r.winProb!==null && r.winProb < 0.75;
-    return true;
-  }).filter(r=>r.winProb!==null);
-
-  const partyColor = (p) => p==="R" ? "#c026d3" : "#7c3aed";
-  const softColor  = (p) => p==="R" ? "#a855f7" : "#818cf8";
-
-  // Race status helpers
-  const statusLabel = (r) => {
-    if (r.primaryResult==="WON" && r.status==="pending_general") return "✓ Won Primary";
-    if (r.status==="pending_primary") return "⏳ Primary " + (r.primaryDate||"").slice(5,10);
-    if (r.status==="won_primary") return "✓ Primary Won";
-    if (r.status==="safe") return "• Safe";
-    return r.status;
-  };
-  const statusColor = (r) => {
-    if (r.primaryResult==="WON") return "#4ade80";
-    if (r.status==="pending_primary") return "#fbbf24";
-    if (r.status==="safe") return "#374151";
-    return "#60a5fa";
-  };
-
-  const colorsH = ["#c026d3","#a855f7","#7c3aed","#818cf8"];  // hardR softR hardD softD
-  const labsH   = ["Hard-R","Soft-R","Hard-D","Soft-D"];
-
-  return html`
-  <div style=${{width:"100%",maxWidth:860,margin:"0 auto"}}>
-
-    <!-- Header -->
-    <div style=${{textAlign:"center",marginBottom:22}}>
-      <div style=${{fontSize:9,letterSpacing:"0.2em",color:"#374151",fontFamily:"monospace",marginBottom:4}}>
-        ANTI-ARMS BLOC · CONGRESS OVER TIME
-      </div>
-      <h2 style=${{fontSize:16,fontWeight:700,color:"#f0ebe0",margin:"0 0 6px",letterSpacing:"-0.01em"}}>
-        Congress Shift Timeline
-      </h2>
-      <p style=${{fontSize:10,color:"#6b7280",fontFamily:"monospace",margin:0,maxWidth:540,marginLeft:"auto",marginRight:"auto",lineHeight:1.6}}>
-        How the anti-arms bloc has grown, peaked, and changed across Congresses —
-        and what 2026 races will determine the 120th Congress.
-      </p>
-    </div>
-
-    <!-- Timeline Chart -->
-    <div style=${{background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,padding:"18px 16px",marginBottom:14}}>
-      <div style=${{fontSize:9,letterSpacing:"0.15em",color:"#374151",fontFamily:"monospace",marginBottom:14}}>
-        ANTI-ARMS MEMBERS BY CONGRESS
-      </div>
-
-      <!-- Legend row -->
-      <div style=${{display:"flex",gap:10,flexWrap:"wrap",marginBottom:12}}>
-        ${colorsH.map((c,i)=>html`
-          <span key=${i} style=${{display:"flex",alignItems:"center",gap:4,fontSize:9,fontFamily:"monospace",color:c}}>
-            <span style=${{width:8,height:8,borderRadius:2,background:c,display:"inline-block"}}/>
-            ${labsH[i]}
-          </span>`)}
-      </div>
-
-      <!-- SVG chart -->
-      <svg viewBox=${"0 0 "+chartW+" "+chartH} width="100%" style=${{display:"block",maxHeight:180,overflow:"visible"}}>
-        <!-- Y axis gridlines -->
-        ${[10,20,30,40,50].filter(v=>v<=maxTotal*1.1).map(v=>html`
-          <g key=${v}>
-            <line x1=${padL} y1=${chartH-padB-v*yScale} x2=${chartW-padR} y2=${chartH-padB-v*yScale}
-              stroke="#1a1d27" stroke-width="1"/>
-            <text x=${padL-4} y=${chartH-padB-v*yScale+3.5} text-anchor="end"
-              fill="#374151" font-size="8" font-family="monospace">${v}</text>
-          </g>`)}
-
-        <!-- Bars -->
-        ${congresses.map((c,i)=>{
-          const x = padL + gap + i*(barW+gap);
-          const tot = (c.hardR||0)+(c.softR||0)+(c.hardD||0)+(c.softD||0)+(c.hardI||0)+(c.softI||0);
-          const segs = [
-            {v:c.softD||0, color:"#818cf8"},
-            {v:c.hardD||0, color:"#7c3aed"},
-            {v:c.softR||0, color:"#a855f7"},
-            {v:c.hardR||0, color:"#c026d3"},
-          ];
-          let yOff = 0;
-          return html`
-          <g key=${i}>
-            ${segs.map((s,j)=>{
-              const h = s.v*yScale;
-              const y = chartH-padB-yOff-h;
-              yOff += h;
-              return html`
-              <rect key=${j} x=${x} y=${y} width=${barW} height=${h}
-                fill=${s.color} opacity=${c.projected?"0.4":"0.85"}
-                rx="1"/>`;
-            })}
-            <!-- Total label -->
-            <text x=${x+barW/2} y=${chartH-padB-tot*yScale-5}
-              text-anchor="middle" fill=${c.projected?"#6b7280":"#f0ebe0"} font-size="9" font-family="monospace" font-weight="700">
-              ${c.projected?"~"+tot:tot}
-            </text>
-            <!-- Congress label -->
-            <text x=${x+barW/2} y=${chartH-padB+12}
-              text-anchor="middle" fill=${c.projected?"#374151":"#9ca3af"} font-size="8" font-family="monospace">
-              ${c.label}
-            </text>
-            <text x=${x+barW/2} y=${chartH-padB+20}
-              text-anchor="middle" fill="#374151" font-size="7" font-family="monospace">
-              ${c.sub||""}
-            </text>
-            ${c.projected?html`
-            <rect x=${x-1} y=${padT-4} width=${barW+2} height=${chartH-padB-padT+4}
-              fill="none" stroke="#374151" stroke-width="0.5" stroke-dasharray="3,2" rx="2"/>
-            `:null}
-          </g>`;
-        })}
-      </svg>
-
-      <!-- Key events -->
-      <div style=${{marginTop:12,borderTop:"1px solid #1a1d27",paddingTop:10}}>
-        <div style=${{fontSize:8,letterSpacing:"0.15em",color:"#374151",fontFamily:"monospace",marginBottom:8}}>KEY EVENTS</div>
-        <div style=${{display:"flex",flexWrap:"wrap",gap:5}}>
-          ${KEY_EVENTS.map(e=>html`
-            <span key=${e.date} style=${{display:"inline-flex",alignItems:"center",gap:3,
-              background:e.color+"14",border:"1px solid "+e.color+"30",borderRadius:5,
-              padding:"2px 6px",fontSize:8,fontFamily:"monospace",color:e.color}}>
-              <span style=${{width:4,height:4,borderRadius:"50%",background:e.color,display:"inline-block",flexShrink:0}}/>
-              ${e.label}
-            </span>`)}
-        </div>
-      </div>
-    </div>
-
-    <!-- 120th Projection Summary -->
-    <div style=${{background:"#0f1117",border:"1px solid #7c3aed30",borderRadius:13,padding:"14px 16px",marginBottom:14,display:"flex",gap:16,alignItems:"center",flexWrap:"wrap"}}>
-      <div style=${{flex:1,minWidth:180}}>
-        <div style=${{fontSize:9,letterSpacing:"0.15em",color:"#374151",fontFamily:"monospace",marginBottom:4}}>
-          PROJECTED 120TH CONGRESS (2027–28)
-        </div>
-        <div style=${{fontSize:22,fontWeight:700,color:"#c084fc",letterSpacing:"-0.02em",marginBottom:2}}>
-          ${proj20} <span style=${{fontSize:12,color:"#6b7280",fontWeight:400}}>expected</span>
-        </div>
-        <div style=${{fontSize:9,color:"#4b5563",fontFamily:"monospace"}}>
-          Range: ${proj20Low}–${proj20High} · vs ${total19} current (119th)
-        </div>
-      </div>
-      <div style=${{flex:2,minWidth:220}}>
-        <!-- Range bar -->
-        <div style=${{position:"relative",height:10,background:"#161920",borderRadius:5,overflow:"hidden",marginBottom:6}}>
-          ${(()=>{
-            const maxR = 70, minR = 20;
-            const lo = (proj20Low-minR)/(maxR-minR)*100;
-            const hi = (proj20High-minR)/(maxR-minR)*100;
-            const pt = (proj20-minR)/(maxR-minR)*100;
-            const cur = (total19-minR)/(maxR-minR)*100;
-            return html`
-              <div style=${{position:"absolute",left:lo+"%",width:(hi-lo)+"%",height:"100%",background:"#7c3aed30"}}/>
-              <div style=${{position:"absolute",left:cur+"%",top:0,width:2,height:"100%",background:"#374151"}}/>
-              <div style=${{position:"absolute",left:pt+"%",top:0,width:2,height:"100%",background:"#c026d3"}}/>
-            `;
-          })()}
-        </div>
-        <div style=${{display:"flex",justifyContent:"space-between",fontSize:8,fontFamily:"monospace",color:"#4b5563"}}>
-          <span>Pessimistic: ${proj20Low}</span>
-          <span style=${{color:"#374151"}}>Current: ${total19}</span>
-          <span>Optimistic: ${proj20High}</span>
-        </div>
-        <div style=${{marginTop:8,fontSize:8,color:"#4b5563",fontFamily:"monospace",lineHeight:1.7}}>
-          ${races.filter(r=>r.winProb!==null&&r.winProb<1.0).map(r=>html`
-            <div key=${r.id} style=${{display:"flex",gap:5,alignItems:"baseline"}}>
-              <span style=${{color:partyColor(r.party)}}>${r.name.split(" ").pop()}</span>
-              <span style=${{color:"#374151"}}>${r.state}·</span>
-              <span style=${{color:r.winProb>=0.75?"#4ade80":r.winProb>=0.5?"#fbbf24":"#f87171"}}>
-                ${Math.round(r.winProb*100)}%
-              </span>
-              <span style=${{color:"#1f2937"}}>${r.primaryResult==="WON"?"won primary":r.status==="pending_primary"?"primary "+r.primaryDate.slice(5,10):"general"}</span>
-            </div>`)}
-        </div>
-      </div>
-    </div>
-
-    <!-- Race Tracker -->
-    <div style=${{background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,padding:"14px 16px"}}>
-      <div style=${{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:12,flexWrap:"wrap",gap:8}}>
-        <div style=${{fontSize:9,letterSpacing:"0.15em",color:"#374151",fontFamily:"monospace"}}>
-          2026 RACE TRACKER
-        </div>
-        <div style=${{display:"flex",gap:3}}>
-          ${[
-            ["all","All"],["confirmed","Won Primary"],["primary","Primary Pending"],["at_risk","At Risk"],
-          ].map(([k,l])=>html`
-            <button key=${k} onClick=${()=>setRaceFilter(k)}
-              style=${{padding:"2px 7px",borderRadius:5,border:"1px solid #1e2230",fontFamily:"monospace",fontSize:8,cursor:"pointer",
-                background:raceFilter===k?"#7c3aed2a":"transparent",color:raceFilter===k?"#c084fc":"#4b5563"}}>
-              ${l}
-            </button>`)}
-        </div>
-      </div>
-
-      <div style=${{display:"flex",flexDirection:"column",gap:8}}>
-        ${filtered.map(r=>html`
-          <div key=${r.id} style=${{
-            background:"#0a0c10",borderRadius:10,padding:"10px 12px",
-            border:"1px solid "+(r.antiArmsLevel==="hard"?"#c026d330":"#7c3aed20"),
-            display:"flex",gap:12,alignItems:"flex-start",flexWrap:"wrap",
-          }}>
-            <!-- Left: member info -->
-            <div style=${{flex:1,minWidth:160}}>
-              <div style=${{display:"flex",alignItems:"center",gap:6,marginBottom:3}}>
-                <span style=${{
-                  width:6,height:6,borderRadius:"50%",flexShrink:0,display:"inline-block",
-                  background:r.antiArmsLevel==="hard"?partyColor(r.party):softColor(r.party)
-                }}/>
-                <span style=${{fontSize:11,fontWeight:700,color:"#f0ebe0"}}>${r.name}</span>
-                <span style=${{fontSize:8,fontFamily:"monospace",
-                  color:statusColor(r),background:statusColor(r)+"22",
-                  padding:"1px 5px",borderRadius:3,border:"1px solid "+statusColor(r)+"44"}}>
-                  ${statusLabel(r)}
-                </span>
-              </div>
-              <div style=${{fontSize:9,color:"#6b7280",fontFamily:"monospace",marginBottom:4}}>
-                ${r.party==="R"?"R":"D"} · ${r.state}${r.district?"-"+r.district:""} · ${r.chamber}
-                ${r.type==="challenger"?" · challenger":""}
-              </div>
-              ${r.primaryResult==="WON"?html`
-                <div style=${{fontSize:8,color:"#4ade80",fontFamily:"monospace",marginBottom:3}}>
-                  ✓ Primary: ${r.primaryPct}% vs ${r.primaryOppPct}% (${r.primaryOpponent})
-                </div>`:null}
-              ${r.primaryOpponent&&r.primaryResult!=="WON"?html`
-                <div style=${{fontSize:8,color:"#fbbf24",fontFamily:"monospace",marginBottom:3}}>
-                  ⏳ vs ${r.primaryOpponent} · ${r.primaryDate}
-                </div>`:null}
-              <div style=${{fontSize:8,color:"#374151",fontFamily:"monospace",lineHeight:1.5}}>
-                ${r.note}
-              </div>
-            </div>
-
-            <!-- Right: probability + impact -->
-            <div style=${{width:160,flexShrink:0}}>
-              <div style=${{fontSize:8,color:"#374151",fontFamily:"monospace",marginBottom:4}}>
-                ${r.status==="pending_primary"?"Primary win odds":"General win odds"}
-              </div>
-              <!-- Probability bar -->
-              <div style=${{position:"relative",height:18,background:"#161920",borderRadius:4,overflow:"hidden",marginBottom:4}}>
-                <div style=${{
-                  width:(r.winProb*100)+"%",height:"100%",borderRadius:4,
-                  background:r.winProb>=0.75?"#4ade8088":r.winProb>=0.4?"#fbbf2488":"#f8717188",
-                  transition:"width .3s"
-                }}/>
-                <span style=${{position:"absolute",right:5,top:"50%",transform:"translateY(-50%)",
-                  fontSize:9,fontWeight:700,fontFamily:"monospace",
-                  color:r.winProb>=0.75?"#4ade80":r.winProb>=0.4?"#fbbf24":"#f87171"}}>
-                  ${Math.round(r.winProb*100)}%
-                </span>
-              </div>
-              ${r.cookRating?html`
-                <div style=${{fontSize:7,color:"#374151",fontFamily:"monospace",marginBottom:3}}>
-                  Cook: ${r.cookRating}
-                </div>`:null}
-              <div style=${{fontSize:8,lineHeight:1.5}}>
-                <div style=${{color:"#4ade8099",marginBottom:1}}>▲ ${r.impactWin||"—"}</div>
-                <div style=${{color:"#f8717199"}}>▼ ${r.impactLose||"—"}</div>
-              </div>
-            </div>
-          </div>`)}
-      </div>
-
-      <div style=${{marginTop:12,fontSize:8,color:"#1f2937",fontFamily:"monospace",lineHeight:1.8}}>
-        WIN PROBABILITIES ARE EDITORIAL ESTIMATES BASED ON COOK POLITICAL REPORT, INTERNAL POLLING DATA, AND HISTORICAL CONTEXT — NOT POLYMARKET.
-        POLYMARKET ODDS WILL BE FETCHED AUTOMATICALLY WHEN THE GITHUB ACTION RUNS WITH POLY_KEY SET.
-      </div>
-    </div>
-
-  </div>`;
-}
-
-// ── Main App ──────────────────────────────────────────────────────────────────
-
-// ── HISTORICAL + FORECAST DATA ─────────────────────────────────────────────
-
-// Verified anti-arms member counts by Congress.
-// Sources: GovTrack co-sponsorship records, TrackAIPAC historical data, RLC Liberty Index
+// ── Historical + Projected Data ───────────────────────────────────────────────
+// Verified counts per Congress from TrackAIPAC historical data, GovTrack, Clerk XML
 const CONGRESS_HISTORY = [
-  {
-    congress: "115th", years: "2017–19",
-    hardD:0, softD:0, hardR:2, softR:0,
-    note: "Pre-Gaza. Only libertarian-R bloc: Massie (House), Rand Paul (Senate). No formal D anti-arms caucus.",
-    total: 2,
-  },
-  {
-    congress: "116th", years: "2019–21",
-    hardD:4, softD:0, hardR:2, softR:0,
-    note: "The Squad enters Congress — Tlaib, Omar, AOC, Pressley join with explicit Israel arms opposition. Massie + Paul on R side.",
-    total: 6,
-  },
-  {
-    congress: "117th", years: "2021–23",
-    hardD:7, softD:2, hardR:3, softR:0,
-    note: "Block the Bombs Act introduced (HR 3565). Ed Markey + Bernie Sanders force Senate JRD vote. Ro Khanna, McGovern, Waters co-sponsor.",
-    total: 12,
-  },
-  {
-    congress: "118th", years: "2023–25",
-    hardD:10, softD:4, hardR:6, softR:1,
-    note: "Post-Oct 7. HR 8034 vote (Apr 2024) — Massie, Biggs, Perry, Gosar, Roy, Tiffany vote No on Israel aid. Summer Lee, Frost, Casar join D bloc. Peak AIPAC pushback: Bowman & Bush unseated.",
-    total: 21,
-  },
-  {
-    congress: "119th", years: "2025–27",
-    hardD: null, softD: null, hardR: null, softR: null, // ← filled live from members[]
-    note: "Current Congress. RLC Liberty Index adds R bloc. TrackAIPAC + Congress.gov co-sponsorship tracking live.",
-    total: null, isLive: true,
-  },
-  {
-    congress: "120th", years: "2027–29",
-    hardD: null, softD: null, hardR: null, softR: null, // ← computed from projections
-    note: "Projected. Based on incumbent win probabilities (Polymarket + Cook ratings) and challenger race outcomes.",
-    total: null, isProjected: true,
-  },
+  {congress:"115th", years:"2017-19", hardD:0, softD:0, hardR:2, softR:0,
+   note:"Pre-Gaza. Only libertarian-R: Massie (House) + Rand Paul (Senate)."},
+  {congress:"116th", years:"2019-21", hardD:4, softD:0, hardR:2, softR:0,
+   note:"The Squad enters — Tlaib, Omar, AOC, Pressley join with explicit anti-arms stance."},
+  {congress:"117th", years:"2021-23", hardD:7, softD:2, hardR:3, softR:0,
+   note:"Block the Bombs Act (HR 3565) introduced. Markey + Sanders force Senate JRD vote."},
+  {congress:"118th", years:"2023-25", hardD:10, softD:4, hardR:6, softR:1,
+   note:"Post-Oct 7. HR 8034 vote — Massie, Biggs, Perry, Gosar, Roy, Tiffany vote No. Peak anti-AIPAC organising; Bowman and Bush unseated."},
+  {congress:"119th", years:"2025-27", isLive:true,
+   note:"Current Congress. RLC Liberty Index adds R bloc. Live TrackAIPAC + Congress.gov tracking."},
+  {congress:"120th", years:"2027-29", isProjected:true,
+   note:"Projected — expected value from win probabilities of key 2026 races."},
 ];
 
-// Key 2026 races — manually curated with research from Ballotpedia, Polymarket, news
 const KEY_RACES_2026 = [
   {
-    name: "Thomas Massie",
-    party: "R", chamber: "house", state: "KY-04",
-    raceType: "PRIMARY RISK",
-    raceColor: "#f59e0b",
-    electionDate: "2026-05-19",
-    electionLabel: "Primary · May 19",
-    opponent: "Ed Gallrein (R) — Trump-endorsed",
-    status: "Trump personally backing Gallrein. Massie had 17-pt lead in internal polls but facing $10M+ super PAC spend. Rand Paul is the only Congressional R campaigning for him.",
-    winProb: 0.60,
-    probLabel: "60% — contested primary",
-    probNote: "Cook: Solid R general if primary won",
-    impact: "hard-R exits if lost",
-    impactDir: -1,
-    level: "hard",
-    departing: false,
+    name:"Thomas Massie", party:"R", state:"KY-04", chamber:"house",
+    raceType:"PRIMARY RISK", raceColor:"#f59e0b",
+    electionLabel:"Primary — May 19, 2026",
+    opponent:"Ed Gallrein (R, Trump-endorsed)",
+    status:"Trump endorsed Gallrein Oct 2025. Massie claims +17 lead in own polling. Rand Paul is his only Congressional ally. $10M+ super PAC spend against him.",
+    winProb:0.60, probNote:"Cook: Solid R general if primary won",
+    impact:"-1 hard-R if lost", impactDir:-1, level:"hard", departing:false,
   },
   {
-    name: "James Talarico",
-    party: "D", chamber: "senate", state: "TX-Senate",
-    raceType: "CHALLENGER",
-    raceColor: "#4ade80",
-    electionDate: "2026-11-03",
-    electionLabel: "General · Nov 3",
-    opponent: "Cornyn or Paxton (R) — May 26 runoff decides",
-    status: "Just won Democratic primary (Mar 3, 2026) over Jasmine Crockett. Opposes offensive arms to Israel, refuses AIPAC money. Heavy underdog in deep-red Texas — but Colbert interview went viral (7.3M views) after CBS censored it.",
-    winProb: 0.14,
-    probLabel: "14% — deep red state",
-    probNote: "No D has won Texas statewide since 1994",
-    impact: "+1 hard-D Senate if wins",
-    impactDir: 1,
-    level: "hard",
-    departing: false,
-    justWonPrimary: true,
+    name:"James Talarico", party:"D", state:"TX-Senate", chamber:"senate",
+    raceType:"CHALLENGER", raceColor:"#4ade80",
+    electionLabel:"General — Nov 3, 2026",
+    opponent:"Cornyn or Paxton (R runoff May 26)",
+    status:"Won Democratic primary Mar 3, 2026 (53% vs Crockett 46%). Opposes offensive arms to Israel. Heavy underdog in deep-red Texas — no D has won statewide since 1994.",
+    winProb:0.14, probNote:"Texas: Trump +13 in 2024",
+    impact:"+1 hard-D Senate if wins", impactDir:1, level:"hard", departing:false,
+    justWonPrimary:true,
   },
   {
-    name: "Summer Lee",
-    party: "D", chamber: "house", state: "PA-12",
-    raceType: "AIPAC TARGET",
-    raceColor: "#f87171",
-    electionDate: "2026-05-19",
-    electionLabel: "Primary · May 2026",
-    opponent: "TBD — AIPAC testing Bhavini Patel or Eugene DePasquale",
-    status: "Introduced bill to ban AIPAC-style super PACs. Won 2024 primary by 20pts despite AIPAC opposition. PAL PAC (new counter-AIPAC group) endorsed her. Safe general if primary won.",
-    winProb: 0.76,
-    probLabel: "76% — survived before",
-    probNote: "AIPAC spending up to $100M total cycle",
-    impact: "+1 soft-D retained",
-    impactDir: 1,
-    level: "soft",
-    departing: false,
+    name:"Chip Roy", party:"R", state:"TX-21", chamber:"house",
+    raceType:"DEPARTING", raceColor:"#9ca3af",
+    electionLabel:"Running for TX Attorney General",
+    opponent:"Mayes Middleton (R) — TX AG primary",
+    status:"Left House to run for Texas AG. RLC score 97/100, voted No on HR 8034. TX-21 seat open — likely goes to AIPAC-aligned R regardless of AG outcome.",
+    winProb:0.42, probNote:"TX-21 House: -1 hard-R regardless",
+    impact:"-1 hard-R regardless", impactDir:-1, level:"hard", departing:true,
   },
   {
-    name: "Rashida Tlaib",
-    party: "D", chamber: "house", state: "MI-12",
-    raceType: "AIPAC TARGET",
-    raceColor: "#f87171",
-    electionDate: "2026-05-05",
-    electionLabel: "Primary · May 2026",
-    opponent: "TBD — no major challenger announced yet",
-    status: "Ran unopposed in 2024. Only Palestinian-American in Congress. AIPAC has polled her district. Currently safest of the AIPAC targets — strong community ties, no credible opponent yet.",
-    winProb: 0.84,
-    probLabel: "84% — very safe",
-    probNote: "Ran unopposed in 2024 primary",
-    impact: "+1 soft-D retained",
-    impactDir: 1,
-    level: "soft",
-    departing: false,
+    name:"Summer Lee", party:"D", state:"PA-12", chamber:"house",
+    raceType:"AIPAC TARGET", raceColor:"#f87171",
+    electionLabel:"Primary — May 2026",
+    opponent:"TBD — AIPAC testing challengers",
+    status:"Introduced bill to ban AIPAC-style super PACs. Won 2024 primary by 20pts despite AIPAC opposition. Safe general if primary won.",
+    winProb:0.76, probNote:"Survived AIPAC challenge before",
+    impact:"+1 soft-D retained", impactDir:1, level:"soft", departing:false,
   },
   {
-    name: "Ilhan Omar",
-    party: "D", chamber: "house", state: "MN-05",
-    raceType: "AIPAC TARGET",
-    raceColor: "#f87171",
-    electionDate: "2026-08-11",
-    electionLabel: "Primary · Aug 2026",
-    opponent: "Don Samuels (D) — 2022 & 2024 rematch expected",
-    status: "Beat Samuels by 2pts in 2022, by wide margin in 2024. AIPAC historically spent $2.5M vs her. PAL PAC endorsed her for 2026. Safe D general seat.",
-    winProb: 0.80,
-    probLabel: "80% — widened margin",
-    probNote: "AIPAC may skip after 2024 blowout",
-    impact: "+1 soft-D retained",
-    impactDir: 1,
-    level: "soft",
-    departing: false,
+    name:"Rashida Tlaib", party:"D", state:"MI-12", chamber:"house",
+    raceType:"AIPAC TARGET", raceColor:"#f87171",
+    electionLabel:"Primary — Aug 2026",
+    opponent:"TBD — no major challenger yet",
+    status:"Only Palestinian-American in Congress. Ran largely unopposed in 2024. AIPAC has polled her district but no credible challenger announced yet.",
+    winProb:0.84, probNote:"Ran unopposed in 2024 primary",
+    impact:"+1 soft-D retained", impactDir:1, level:"soft", departing:false,
   },
   {
-    name: "Chip Roy",
-    party: "R", chamber: "house", state: "TX-21",
-    raceType: "DEPARTING",
-    raceColor: "#9ca3af",
-    electionDate: "2026-03-03",
-    electionLabel: "Running for TX AG",
-    opponent: "Mayes Middleton (R) — TX AG primary runoff",
-    status: "Left House to run for Texas Attorney General. Strong RLC Liberty Index score (97/100), voted No on HR 8034. TX-21 seat will be open — likely goes to AIPAC-aligned R. Net loss for anti-arms bloc.",
-    winProb: 0.42,
-    probLabel: "42% — TX AG primary",
-    probNote: "TX-21 House seat: likely -1 hard-R regardless",
-    impact: "-1 hard-R regardless of AG result",
-    impactDir: -1,
-    level: "hard",
-    departing: true,
+    name:"Ilhan Omar", party:"D", state:"MN-05", chamber:"house",
+    raceType:"AIPAC TARGET", raceColor:"#f87171",
+    electionLabel:"Primary — Aug 2026",
+    opponent:"Don Samuels (D, expected rematch)",
+    status:"Beat Samuels by wide margin in 2024. AIPAC spent $2.5M vs her in 2022. PAL PAC endorsed her for 2026.",
+    winProb:0.80, probNote:"Widened margin in 2024",
+    impact:"+1 soft-D retained", impactDir:1, level:"soft", departing:false,
   },
   {
-    name: "Rand Paul",
-    party: "R", chamber: "senate", state: "KY-Senate",
-    raceType: "NOT UP 2026",
-    raceColor: "#6b7280",
-    electionDate: "2028-11-03",
-    electionLabel: "Up for reelection: 2028",
-    opponent: "No opponent yet",
-    status: "Not on the 2026 ballot — term runs through Jan 2029. Currently the lone hard-R anti-arms Senator. Campaigning alongside Massie in Kentucky. Strongly expected to run for reelection in 2028.",
-    winProb: null,
-    probLabel: "Safe · 2028 race",
-    probNote: "Deep red Kentucky, won 2022 easily",
-    impact: "Stays in 120th Congress",
-    impactDir: 0,
-    level: "hard",
-    departing: false,
+    name:"Andy Biggs", party:"R", state:"AZ-05", chamber:"house",
+    raceType:"SAFE SEAT", raceColor:"#6b7280",
+    electionLabel:"Primary — Aug 2026",
+    opponent:"No Trump challenge expected",
+    status:"RLC Liberty Index 102/100. Voted No on HR 8034 and 8035. No Trump endorsement against him. Cook: Solid R.",
+    winProb:0.88, probNote:"Cook Political: Solid R",
+    impact:"+1 hard-R retained", impactDir:1, level:"hard", departing:false,
   },
   {
-    name: "Andy Biggs",
-    party: "R", chamber: "house", state: "AZ-05",
-    raceType: "SAFE SEAT",
-    raceColor: "#6b7280",
-    electionDate: "2026-08-04",
-    electionLabel: "Primary · Aug 2026",
-    opponent: "No Trump challenge — relatively safe",
-    status: "RLC Liberty Index 102/100 (tied top). Voted No on HR 8034 & 8035. No Trump endorsement against him unlike Massie. Cook: Solid R. Expected to return to 120th Congress.",
-    winProb: 0.88,
-    probLabel: "88% — solid seat",
-    probNote: "Cook Political: Solid R",
-    impact: "+1 hard-R retained",
-    impactDir: 1,
-    level: "hard",
-    departing: false,
+    name:"Rand Paul", party:"R", state:"KY-Senate", chamber:"senate",
+    raceType:"NOT UP 2026", raceColor:"#6b7280",
+    electionLabel:"Up for reelection: 2028",
+    opponent:"No 2026 race",
+    status:"Term ends Jan 2029. Not on 2026 ballot. Currently the lone hard-R anti-arms Senator. Campaigning with Massie in Kentucky.",
+    winProb:null, probNote:"Safe — 2028 race",
+    impact:"Stays in 120th Congress", impactDir:0, level:"hard", departing:false,
   },
 ];
 
-// ── CONGRESS TIMELINE COMPONENT ───────────────────────────────────────────
 
-function ProbabilityGauge({prob, color, label, note, compact}) {
-  if (prob === null) return html`<div style=${{fontSize:9,color:"#4b5563",fontFamily:"monospace"}}>${label}</div>`;
+// ── Timeline Components ───────────────────────────────────────────────────────
+
+function ProbabilityGauge({prob, color, label, note}) {
+  if (prob === null || prob === undefined) {
+    return html`<div style=${{fontSize:9,color:"#4b5563",fontFamily:"monospace",textAlign:"center"}}>${label||"—"}</div>`;
+  }
   const pct = Math.round(prob * 100);
-  const arc = (prob, r) => {
-    const angle = prob * Math.PI;
-    const x = 28 + r * Math.cos(Math.PI - angle);
-    const y = 28 - r * Math.sin(Math.PI - angle);
-    const large = angle > Math.PI/2 ? 1 : 0;
-    return `M ${28-r} 28 A ${r} ${r} 0 ${large} 1 ${x} ${y}`;
-  };
+  const r = 20;
+  const circumference = Math.PI * r;
+  const dash = prob * circumference;
   return html`
     <div style=${{display:"flex",flexDirection:"column",alignItems:"center",gap:2}}>
-      <svg width="56" height="30" viewBox="0 0 56 30">
-        <path d=${arc(1, 22)} fill="none" stroke="#1e2230" stroke-width="5" stroke-linecap="round"/>
-        <path d=${arc(prob, 22)} fill="none" stroke=${color} stroke-width="5" stroke-linecap="round"/>
-        <text x="28" y="26" text-anchor="middle" font-size="9" font-family="monospace" fill=${color} font-weight="700">${pct}%</text>
+      <svg width="50" height="28" viewBox="0 0 50 28">
+        <path d="M 5 25 A 20 20 0 0 1 45 25" fill="none" stroke="#1e2230" stroke-width="5" stroke-linecap="round"/>
+        <path d="M 5 25 A 20 20 0 0 1 45 25" fill="none" stroke=${color} stroke-width="5"
+          stroke-linecap="round"
+          stroke-dasharray="${dash} ${circumference}"
+          transform="rotate(0 25 25)"/>
+        <text x="25" y="23" text-anchor="middle" font-size="9" font-family="monospace" fill=${color} font-weight="700">${pct}%</text>
       </svg>
-      <div style=${{fontSize:8,color:"#6b7280",fontFamily:"monospace",textAlign:"center",maxWidth:100,lineHeight:1.3}}>${note}</div>
+      ${note ? html`<div style=${{fontSize:7,color:"#4b5563",fontFamily:"monospace",textAlign:"center",maxWidth:90,lineHeight:1.3}}>${note}</div>` : null}
     </div>`;
 }
 
-function RaceCard({race, liveMembers}) {
-  // Normalise field names — Python RACES_2026 uses snake_case; hardcoded uses camelCase
-  const winProb      = race.win_prob != null ? race.win_prob : (race.winProb != null ? race.winProb : null);
-  const opponent     = race.general_opponent || race.primary_opponent || race.opponent || "";
-  const departing    = race.departing != null ? race.departing : (race.status === "departed");
-  const justWonPrim  = race.justWonPrimary != null ? race.justWonPrimary : (race.primary_result === "WON");
-  const cookRating   = race.cook_rating    || race.cookRating || null;
-  const probSrc      = race.win_prob_src   || "estimate";
-  const electionLabel= race.electionLabel  ||
-    (race.general_date ? "General · "+new Date(race.general_date+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}) :
-     race.primary_date ? "Primary · "+new Date(race.primary_date+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"}) : "");
-  const raceType     = race.raceType || (
-    race.type==="challenger" ? "CHALLENGER" :
-    race.status==="safe"     ? "SAFE SEAT"  :
-    race.status==="pending_primary" ? "PRIMARY PENDING" :
-    race.departing           ? "DEPARTING"  : "INCUMBENT"
-  );
-  const raceColor    = race.raceColor || (
-    raceType==="DEPARTING" ? "#9ca3af" :
-    raceType==="CHALLENGER" ? "#4ade80" :
-    raceType.includes("PRIMARY") || raceType==="AIPAC TARGET" ? (justWonPrim?"#4ade80":"#f87171") :
-    "#6b7280"
-  );
-  const probNote     = race.probNote || cookRating || (probSrc==="polymarket"?"Live Polymarket odds":"Manual estimate");
+function RaceCard({race, liveRacesData}) {
   const [expanded, setExpanded] = useState(false);
-  const liveMember = liveMembers.find(m => m.name === race.name);
-  const partyColor = race.party === "R" ? "#ef4444" : race.party === "D" ? "#60a5fa" : "#a3e635";
-  const levelColor = race.level === "hard" ? (race.party==="R" ? "#c026d3" : "#7c3aed") : (race.party==="R" ? "#a855f7" : "#818cf8");
 
-  const impactStyle = {
-    fontSize: 8,
-    fontFamily: "monospace",
-    padding: "1px 6px",
-    borderRadius: 3,
-    background: race.impactDir > 0 ? "rgba(74,222,128,.1)" : race.impactDir < 0 ? "rgba(248,113,113,.1)" : "rgba(107,114,128,.1)",
-    color: race.impactDir > 0 ? "#4ade80" : race.impactDir < 0 ? "#f87171" : "#9ca3af",
-    border: `1px solid ${race.impactDir > 0 ? "#4ade8030" : race.impactDir < 0 ? "#f8717130" : "#6b728030"}`,
-  };
+  // Accept both camelCase (hardcoded) and snake_case (from data.json)
+  const winProb     = race.win_prob != null ? race.win_prob : (race.winProb != null ? race.winProb : null);
+  const opponent    = race.general_opponent || race.primary_opponent || race.opponent || "";
+  const departing   = race.departing != null ? race.departing : (race.status === "departed");
+  const wonPrimary  = race.justWonPrimary != null ? race.justWonPrimary : (race.primary_result === "WON");
+  const probSrc     = race.win_prob_src || "estimate";
+  const level       = race.level || race.anti_arms_level || "soft";
+  const impact      = race.impact || race.impact_if_wins || "";
+  const cookRating  = race.cook_rating || race.cookRating || null;
+  const probNote    = race.probNote || cookRating || (probSrc === "polymarket" ? "Live Polymarket" : "Manual estimate");
+  const raceType    = race.raceType || (race.type === "challenger" ? "CHALLENGER" : race.status === "safe" ? "SAFE SEAT" : "INCUMBENT");
+  const raceColor   = race.raceColor || "#6b7280";
+
+  const electionLabel = race.electionLabel || (
+    race.general_date ? "General: " + new Date(race.general_date + "T12:00:00").toLocaleDateString("en-US", {month:"short", day:"numeric", year:"numeric"}) :
+    race.primary_date ? "Primary: " + new Date(race.primary_date + "T12:00:00").toLocaleDateString("en-US", {month:"short", day:"numeric"}) : ""
+  );
+
+  const partyColor  = race.party === "R" ? "#ef4444" : race.party === "D" ? "#60a5fa" : "#a3e635";
+  const levelColor  = level === "hard" ? (race.party === "R" ? "#c026d3" : "#7c3aed") : (race.party === "R" ? "#a855f7" : "#818cf8");
+  const impactColor = race.impactDir > 0 ? "#4ade80" : race.impactDir < 0 ? "#f87171" : "#9ca3af";
 
   return html`
-    <div onClick=${()=>setExpanded(v=>!v)} style=${{
-      background: "#0f1117",
-      border: `1px solid ${race.raceColor}30`,
-      borderLeft: `3px solid ${race.raceColor}`,
-      borderRadius: 8,
-      padding: "8px 10px",
-      cursor: "pointer",
-      transition: "border-color .15s",
-      minWidth: 190,
-      maxWidth: 240,
-      flex: "1 1 190px",
+    <div onClick=${() => setExpanded(v => !v)} style=${{
+      background:"#0f1117", border:"1px solid " + raceColor + "30",
+      borderLeft:"3px solid " + raceColor, borderRadius:8,
+      padding:"8px 10px", cursor:"pointer",
+      minWidth:185, maxWidth:235, flex:"1 1 185px",
     }}>
-      <!-- Header row -->
-      <div style=${{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:4,marginBottom:4}}>
+      <div style=${{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:4}}>
         <div>
           <div style=${{fontSize:11,fontWeight:700,color:"#f0ebe0",fontFamily:"monospace"}}>${race.name}</div>
-          <div style=${{fontSize:8,color:partyColor,fontFamily:"monospace",marginTop:1}}>
-            ${race.party} · ${race.state||race.chamber}
-          </div>
+          <div style=${{fontSize:8,color:partyColor,fontFamily:"monospace",marginTop:1}}>${race.party} · ${race.state}</div>
         </div>
         <div style=${{textAlign:"right"}}>
-          <div style=${{
-            fontSize:7,fontFamily:"monospace",padding:"1px 5px",borderRadius:3,
-            background:raceColor+"18",color:raceColor,
-            border:"1px solid "+raceColor+"40",
-            letterSpacing:"0.06em",marginBottom:3,
-          }}>${raceType}</div>
-          ${justWonPrim ? html`<div style=${{fontSize:7,fontFamily:"monospace",padding:"1px 5px",borderRadius:3,background:"rgba(74,222,128,.12)",color:"#4ade80",border:"1px solid #4ade8030"}}>✓ PRIMARY WON</div>` : null}
+          <div style=${{fontSize:7,fontFamily:"monospace",padding:"1px 5px",borderRadius:3,
+            background:raceColor+"18",color:raceColor,border:"1px solid "+raceColor+"40",
+            letterSpacing:"0.06em",marginBottom:3}}>${raceType}</div>
+          ${wonPrimary ? html`<div style=${{fontSize:7,fontFamily:"monospace",padding:"1px 5px",borderRadius:3,
+            background:"rgba(74,222,128,.12)",color:"#4ade80",border:"1px solid #4ade8030"}}>WON PRIMARY</div>` : null}
         </div>
       </div>
 
-      <!-- Election date + opponent -->
-      <div style=${{fontSize:8,color:"#6b7280",fontFamily:"monospace",marginBottom:5,lineHeight:1.5}}>
+      <div style=${{fontSize:8,color:"#6b7280",fontFamily:"monospace",marginBottom:4,lineHeight:1.4}}>
         <span style=${{color:raceColor}}>${electionLabel}</span>
-        ${!departing && opponent ? html` vs ${opponent.slice(0,42)}${opponent.length>42?"…":""}` : ""}
+        ${opponent && !departing ? html` · vs ${opponent.slice(0,38)}${opponent.length>38?"…":""}` : ""}
       </div>
 
-      <!-- Level badge -->
-      <div style=${{display:"flex",gap:4,alignItems:"center",marginBottom:5,flexWrap:"wrap"}}>
+      <div style=${{display:"flex",gap:4,marginBottom:5,flexWrap:"wrap",alignItems:"center"}}>
         <span style=${{fontSize:8,fontFamily:"monospace",padding:"1px 5px",borderRadius:3,
-          background:`${levelColor}18`,color:levelColor,border:`1px solid ${levelColor}30`}}>
-          ${level==="hard"?"⚡ Hard Anti-Arms":"◦ Soft Anti-Arms"}
+          background:levelColor+"18",color:levelColor,border:"1px solid "+levelColor+"30"}}>
+          ${level === "hard" ? "⚡ Hard" : "◦ Soft"}
         </span>
-        <span style=${{...impactStyle}}>${impact}</span>
+        ${impact ? html`<span style=${{fontSize:8,fontFamily:"monospace",padding:"1px 5px",borderRadius:3,
+          background:impactColor+"18",color:impactColor,border:"1px solid "+impactColor+"25"}}>${impact}</span>` : null}
+        ${probSrc === "polymarket" ? html`<span style=${{fontSize:7,color:"#4ade80",fontFamily:"monospace"}}>◉ live</span>` : null}
       </div>
 
-      <!-- Gauge + status -->
-      <div style=${{display:"flex",gap:8,alignItems:"flex-start",marginTop:4}}>
-        <${ProbabilityGauge} prob=${winProb} color=${raceColor} label=${race.probLabel||race.win_prob?(Math.round((winProb||0)*100)+"%"):"-"} note=${probNote}/>
-      ${probSrc==="polymarket"?html`<div style=${{fontSize:7,color:"#4ade80",fontFamily:"monospace",textAlign:"center",marginTop:2}}>◉ polymarket live</div>\`:
-        html`<div style=${{fontSize:7,color:"#374151",fontFamily:"monospace",textAlign:"center",marginTop:2}}>${probSrc==="cook"?"cook/ballotpedia":"est."}</div>\`}
+      <div style=${{display:"flex",gap:8,alignItems:"flex-start"}}>
+        <${ProbabilityGauge} prob=${winProb} color=${raceColor} label=${winProb !== null ? Math.round(winProb*100)+"%" : "—"} note=${probNote}/>
         <div style=${{flex:1,fontSize:8,color:"#6b7280",fontFamily:"monospace",lineHeight:1.5}}>
-          ${expanded ? race.status : race.status.slice(0,80)+"…"}
-          ${race.status.length>80 ? html`<span style=${{color:"#374151"}}> ${expanded?"▲ less":"▼ more"}</span>` : null}
+          ${expanded ? race.status : (race.status||"").slice(0,85) + (race.status && race.status.length > 85 ? "…" : "")}
+          ${race.status && race.status.length > 85 ? html`<span style=${{color:"#374151"}}> ${expanded ? "▲" : "▼ more"}</span>` : null}
         </div>
       </div>
     </div>`;
 }
 
 function CongressTimeline({allMembers, polyData, racesData}) {
-  // Use live races from data.json if available, fall back to hardcoded
-  const liveRaces = (racesData && racesData.length > 0) ? racesData : KEY_RACES_2026;
-  const [hoveredBar, setHoveredBar] = useState(null);
-  const [showProjection, setShowProjection] = useState(true);
+  const [hovered, setHovered] = useState(null);
+  const [showProj, setShowProj] = useState(true);
 
-  // Compute live 119th counts from current members
-  const liveHardD = allMembers.filter(m=>m.antiArms&&m.party!=="R"&&m.antiArmsLevel==="hard").length;
-  const liveSoftD = allMembers.filter(m=>m.antiArms&&m.party!=="R"&&m.antiArmsLevel!=="soft"&&m.antiArmsLevel!=="hard").length
-                  + allMembers.filter(m=>m.antiArms&&m.party!=="R"&&m.antiArmsLevel==="soft").length;
-  const liveHardR = allMembers.filter(m=>m.antiArms&&m.party==="R"&&m.antiArmsLevel==="hard").length;
-  const liveSoftR = allMembers.filter(m=>m.antiArms&&m.party==="R"&&m.antiArmsLevel!=="hard").length;
+  // Use live races from data.json if available, else hardcoded
+  const races = (racesData && racesData.length > 0) ? racesData : KEY_RACES_2026;
 
-  // Compute 120th projection from key races + stable incumbents
-  // Start from 119th; apply adjustments from KEY_RACES_2026
-  const stableIncumbents119 = allMembers.filter(m => {
-    if (!m.antiArms) return false;
-    const race = KEY_RACES_2026.find(r => r.name === m.name);
-    if (race?.departing) return false;   // definitely leaving
-    if (race) return false;              // has a race card — handled separately
-    return true;  // no specific race — assume 0.88 retention
-  });
-  const stableRetained = stableIncumbents119.length * 0.88;
-
-  let proj120HardD = stableIncumbents119.filter(m=>m.antiArms&&m.party!=="R"&&m.antiArmsLevel==="hard").length * 0.88;
-  let proj120SoftD = stableIncumbents119.filter(m=>m.antiArms&&m.party!=="R"&&m.antiArmsLevel!=="hard").length * 0.88;
-  let proj120HardR = stableIncumbents119.filter(m=>m.antiArms&&m.party==="R"&&m.antiArmsLevel==="hard").length * 0.88;
-  let proj120SoftR = stableIncumbents119.filter(m=>m.antiArms&&m.party==="R"&&m.antiArmsLevel!=="hard").length * 0.88;
-
-  // Add key race contributions
-  KEY_RACES_2026.forEach(race => {
-    if (race.departing || race.impactDir <= 0 || race.winProb === null) return;
-    const p = race.winProb;
-    if (race.party === "R") {
-      if (race.level === "hard") proj120HardR += p;
-      else proj120SoftR += p;
-    } else {
-      if (race.level === "hard") proj120HardD += p;
-      else proj120SoftD += p;
-    }
-  });
-
-  // Round for display
-  const p20 = {
-    hardD: Math.round(proj120HardD),
-    softD: Math.round(proj120SoftD),
-    hardR: Math.round(proj120HardR),
-    softR: Math.round(proj120SoftR),
+  // Live 119th counts from members[]
+  const live = {
+    hardD: allMembers.filter(m => m.antiArms && m.party !== "R" && m.antiArmsLevel === "hard").length,
+    softD: allMembers.filter(m => m.antiArms && m.party !== "R" && m.antiArmsLevel !== "hard").length,
+    hardR: allMembers.filter(m => m.antiArms && m.party === "R" && m.antiArmsLevel === "hard").length,
+    softR: allMembers.filter(m => m.antiArms && m.party === "R" && m.antiArmsLevel !== "hard").length,
   };
-  p20.total = p20.hardD + p20.softD + p20.hardR + p20.softR;
+  live.total = live.hardD + live.softD + live.hardR + live.softR;
 
+  // 120th projection: stable incumbents * 0.88 + race win probabilities
+  const stableMembers = allMembers.filter(m => {
+    if (!m.antiArms) return false;
+    return !races.find(r => r.name === m.name);
+  });
+  let p = {hardD:0, softD:0, hardR:0, softR:0};
+  stableMembers.forEach(m => {
+    const k = (m.antiArmsLevel === "hard" ? "hard" : "soft") + (m.party === "R" ? "R" : "D");
+    p[k] += 0.88;
+  });
+  races.forEach(r => {
+    if (r.departing || r.impactDir <= 0 || r.winProb == null) return;
+    const wp = r.win_prob != null ? r.win_prob : (r.winProb || 0);
+    const lv = r.level || r.anti_arms_level || "soft";
+    const k  = (lv === "hard" ? "hard" : "soft") + (r.party === "R" ? "R" : "D");
+    p[k] += wp;
+  });
+  const proj = {hardD:Math.round(p.hardD), softD:Math.round(p.softD), hardR:Math.round(p.hardR), softR:Math.round(p.softR)};
+  proj.total = proj.hardD + proj.softD + proj.hardR + proj.softR;
+
+  // Fill live and projected into history
   const data = CONGRESS_HISTORY.map(d => {
-    if (d.isLive) return {...d, hardD:liveHardD, softD:liveSoftD, hardR:liveHardR, softR:liveSoftR, total:liveHardD+liveSoftD+liveHardR+liveSoftR};
-    if (d.isProjected) return {...d, ...p20};
+    if (d.isLive)      return {...d, ...live};
+    if (d.isProjected) return {...d, ...proj};
     return d;
-  }).filter(d => showProjection || !d.isProjected);
+  }).filter(d => showProj || !d.isProjected);
 
-  const maxTotal = Math.max(...data.map(d => (d.hardD||0)+(d.softD||0)+(d.hardR||0)+(d.softR||0))) * 1.15 || 60;
-  const chartH = 180, chartW = 460, padL=40, padB=30, padT=14, padR=16;
+  const chartW = 470, chartH = 175, padL = 36, padB = 32, padT = 12, padR = 12;
   const innerW = chartW - padL - padR;
   const innerH = chartH - padT - padB;
-  const barW = Math.min(52, (innerW / data.length) * 0.65);
-  const gap   = innerW / data.length;
+  const maxVal = Math.max(...data.map(d => (d.hardD||0)+(d.softD||0)+(d.hardR||0)+(d.softR||0))) * 1.15 || 50;
+  const barW   = Math.min(50, innerW / data.length * 0.62);
+  const gap    = innerW / data.length;
+  const ys = v => innerH - (v / maxVal) * innerH;
 
-  const yScale = v => innerH - (v / maxTotal) * innerH;
-  const bars = [
-    {key:"hardD", color:"#7c3aed", label:"Hard-D"},
-    {key:"softD", color:"#818cf8", label:"Soft-D"},
-    {key:"hardR", color:"#c026d3", label:"Hard-R"},
-    {key:"softR", color:"#a855f7", label:"Soft-R"},
+  const bands = [
+    {k:"hardD", c:"#7c3aed", l:"Hard-D"},
+    {k:"softD", c:"#818cf8", l:"Soft-D"},
+    {k:"hardR", c:"#c026d3", l:"Hard-R"},
+    {k:"softR", c:"#a855f7", l:"Soft-R"},
   ];
-
-  const hov = hoveredBar !== null ? data[hoveredBar] : null;
+  const hov = hovered !== null ? data[hovered] : null;
 
   return html`
-    <div style=${{background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,padding:"14px 16px",width:"100%",maxWidth:610}}>
-      <div style=${{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12,flexWrap:"wrap",gap:6}}>
+    <div style=${{background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,padding:"13px 15px",width:"100%",maxWidth:610}}>
+      <div style=${{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10,flexWrap:"wrap",gap:5}}>
         <div>
-          <div style=${{fontSize:11,fontWeight:700,color:"#f0ebe0",fontFamily:"monospace",marginBottom:2}}>
-            Anti-Arms Congress Over Time
-          </div>
-          <div style=${{fontSize:8,color:"#4b5563",fontFamily:"monospace"}}>
-            115th Congress (2017) → projected 120th (2027)
-          </div>
+          <div style=${{fontSize:11,fontWeight:700,color:"#f0ebe0",fontFamily:"monospace"}}>Anti-Arms Congress Over Time</div>
+          <div style=${{fontSize:8,color:"#4b5563",fontFamily:"monospace",marginTop:1}}>115th (2017) → projected 120th (2027) · hover bars for detail</div>
         </div>
-        <div style=${{display:"flex",gap:4,flexWrap:"wrap"}}>
-          ${bars.map(b=>html`
-            <span key=${b.key} style=${{display:"inline-flex",alignItems:"center",gap:3,fontSize:8,color:b.color,fontFamily:"monospace"}}>
-              <span style=${{width:8,height:8,borderRadius:2,background:b.color,display:"inline-block"}}/>
-              ${b.label}
+        <div style=${{display:"flex",gap:5,flexWrap:"wrap",alignItems:"center"}}>
+          ${bands.map(b => html`
+            <span key=${b.k} style=${{display:"inline-flex",alignItems:"center",gap:3,fontSize:8,color:b.c,fontFamily:"monospace"}}>
+              <span style=${{width:7,height:7,borderRadius:2,background:b.c,display:"inline-block"}}/>
+              ${b.l}
             </span>`)}
-          <button onClick=${()=>setShowProjection(v=>!v)}
-            style=${{marginLeft:4,padding:"1px 6px",borderRadius:4,border:"1px solid #1e2230",background:"transparent",
-              color:showProjection?"#a5b4fc":"#374151",fontFamily:"monospace",fontSize:8,cursor:"pointer"}}>
-            ${showProjection?"Hide 120th":"Show 120th"}
+          <button onClick=${() => setShowProj(v => !v)}
+            style=${{padding:"1px 6px",borderRadius:4,border:"1px solid #1e2230",background:"transparent",
+              color:showProj?"#a5b4fc":"#374151",fontFamily:"monospace",fontSize:8,cursor:"pointer",marginLeft:2}}>
+            ${showProj ? "Hide 120th" : "Show 120th"}
           </button>
         </div>
       </div>
 
-      <!-- SVG Bar Chart -->
-      <div style=${{overflowX:"auto"}}>
-        <svg width=${chartW} height=${chartH} viewBox=${"0 0 "+chartW+" "+chartH} style=${{fontFamily:"monospace",display:"block",maxWidth:"100%"}}>
-          <!-- Y gridlines -->
-          ${[0,10,20,30,40,50].filter(v=>v<=maxTotal*1.05).map(v=>html`
-            <g key=${v}>
-              <line x1=${padL} y1=${padT+yScale(v)} x2=${chartW-padR} y2=${padT+yScale(v)}
-                stroke="#1e2230" stroke-width="1" stroke-dasharray=${v===0?"":"3,3"}/>
-              <text x=${padL-4} y=${padT+yScale(v)+3} text-anchor="end" font-size="7" fill="#374151">${v}</text>
-            </g>`)}
+      <svg width=${chartW} height=${chartH} viewBox=${"0 0 "+chartW+" "+chartH}
+        style=${{fontFamily:"monospace",display:"block",maxWidth:"100%",overflow:"visible"}}>
 
-          <!-- Bars -->
-          ${data.map((d,i)=>{
-            const cx = padL + i*gap + gap/2;
-            const x  = cx - barW/2;
-            const isProj = d.isProjected;
-            const isLive = d.isLive;
-            const totals = bars.map(b=>d[b.key]||0);
-            let cumY = innerH;
-            return html`<g key=${i}
-              onMouseEnter=${()=>setHoveredBar(i)}
-              onMouseLeave=${()=>setHoveredBar(null)}
-              style=${{cursor:"pointer"}}
-            >
-              ${bars.map((b,bi)=>{
-                const val = d[b.key]||0;
-                const h   = (val/maxTotal)*innerH;
+        ${[0,10,20,30].filter(v => v <= maxVal).map(v => html`
+          <g key=${v}>
+            <line x1=${padL} y1=${padT+ys(v)} x2=${chartW-padR} y2=${padT+ys(v)}
+              stroke="#1e2230" stroke-width="1" stroke-dasharray=${v===0?"none":"3,3"}/>
+            <text x=${padL-4} y=${padT+ys(v)+3} text-anchor="end" font-size="7" fill="#374151">${v}</text>
+          </g>`)}
+
+        ${data.map((d, i) => {
+          const cx = padL + i * gap + gap / 2;
+          const x  = cx - barW / 2;
+          const isProj = d.isProjected, isLive = d.isLive;
+          let cumY = innerH;
+          const tot = (d.hardD||0)+(d.softD||0)+(d.hardR||0)+(d.softR||0);
+          return html`
+            <g key=${i} onMouseEnter=${() => setHovered(i)} onMouseLeave=${() => setHovered(null)} style=${{cursor:"pointer"}}>
+              ${bands.map((b, bi) => {
+                const val = d[b.k] || 0;
+                const h   = (val / maxVal) * innerH;
                 const y   = padT + cumY - h;
                 cumY -= h;
                 if (!h) return null;
                 return html`<rect key=${bi} x=${x} y=${y} width=${barW} height=${h}
-                  fill=${b.color} opacity=${isProj?0.45:isLive?1:0.75}
-                  stroke=${isProj?"#a5b4fc":"none"} stroke-width=${isProj?"1":"0"}
-                  stroke-dasharray=${isProj?"4,3":""}
-                  rx="2"
-                  style=${{transition:"opacity .15s"}}/>`;
+                  fill=${b.c} opacity=${isProj ? 0.45 : isLive ? 1 : 0.75} rx="2"
+                  stroke=${isProj ? "#a5b4fc" : "none"} stroke-width=${isProj ? "1" : "0"}
+                  stroke-dasharray=${isProj ? "4,3" : "none"}/>`;
               })}
-              <!-- Total label -->
-              <text x=${cx} y=${padT+yScale((d.hardD||0)+(d.softD||0)+(d.hardR||0)+(d.softR||0))-5}
-                text-anchor="middle" font-size="8" fill=${isProj?"#a5b4fc":isLive?"#f0ebe0":"#9ca3af"} font-weight=${isLive?"700":"400"}>
-                ${(d.hardD||0)+(d.softD||0)+(d.hardR||0)+(d.softR||0)}${isProj?"*":""}
+              <text x=${cx} y=${padT+ys(tot)-4} text-anchor="middle" font-size="8"
+                fill=${isProj?"#a5b4fc":isLive?"#f0ebe0":"#9ca3af"} font-weight=${isLive?"700":"400"}>
+                ${tot}${isProj?"*":""}
               </text>
-              <!-- Congress label -->
-              <text x=${cx} y=${chartH-padB+12} text-anchor="middle" font-size="8"
-                fill=${isProj?"#a5b4fc":isLive?"#f0ebe0":"#6b7280"}>
-                ${d.congress.replace("th","")}th
-              </text>
-              <text x=${cx} y=${chartH-padB+22} text-anchor="middle" font-size="6.5" fill="#374151">
-                ${d.years}
-              </text>
-              <!-- Live / Projected badge -->
-              ${isLive ? html`<text x=${cx} y=${chartH-padB+32} text-anchor="middle" font-size="6" fill="#4ade80">LIVE</text>` : null}
-              ${isProj ? html`<text x=${cx} y=${chartH-padB+32} text-anchor="middle" font-size="6" fill="#a5b4fc">PROJ.</text>` : null}
+              <text x=${cx} y=${chartH-padB+11} text-anchor="middle" font-size="8"
+                fill=${isProj?"#a5b4fc":isLive?"#f0ebe0":"#6b7280"}>${d.congress}</text>
+              <text x=${cx} y=${chartH-padB+21} text-anchor="middle" font-size="6.5" fill="#374151">${d.years}</text>
+              ${isLive ? html`<text x=${cx} y=${chartH-padB+31} text-anchor="middle" font-size="6" fill="#4ade80">LIVE</text>` : null}
+              ${isProj ? html`<text x=${cx} y=${chartH-padB+31} text-anchor="middle" font-size="6" fill="#a5b4fc">PROJ</text>` : null}
             </g>`;
-          })}
-        </svg>
-      </div>
+        })}
+      </svg>
 
-      <!-- Hover tooltip -->
       ${hov ? html`
-        <div style=${{background:"#161920",border:"1px solid #1e2230",borderRadius:7,padding:"8px 10px",
-          marginTop:6,fontSize:8,fontFamily:"monospace",color:"#9ca3af",lineHeight:1.7}}>
-          <span style=${{color:"#f0ebe0",fontWeight:700}}>${hov.congress} Congress ${hov.years}</span>
-          ${hov.isProjected?" — PROJECTED (expected value)":hov.isLive?" — LIVE (current 119th)":""}<br/>
-          <span style=${{color:"#7c3aed"}}>Hard-D: ${hov.hardD||0}</span>
-          · <span style=${{color:"#818cf8"}}>Soft-D: ${hov.softD||0}</span>
-          · <span style=${{color:"#c026d3"}}>Hard-R: ${hov.hardR||0}</span>
-          · <span style=${{color:"#a855f7"}}>Soft-R: ${hov.softR||0}</span>
-          · Total: ${(hov.hardD||0)+(hov.softD||0)+(hov.hardR||0)+(hov.softR||0)}${hov.isProjected?"*":""}<br/>
-          ${hov.note}
-          ${hov.isProjected?html`<br/><span style=${{color:"#374151"}}>*Expected value based on win probabilities. Individual race outcomes will shift final count.</span>`:""}
+        <div style=${{background:"#161920",border:"1px solid #1e2230",borderRadius:7,padding:"7px 10px",
+          marginTop:5,fontSize:8,fontFamily:"monospace",color:"#9ca3af",lineHeight:1.7}}>
+          <span style=${{color:"#f0ebe0",fontWeight:700}}>${hov.congress} · ${hov.years}</span>
+          ${hov.isProjected?" — PROJECTED":hov.isLive?" — LIVE":""}<br/>
+          <span style=${{color:"#7c3aed"}}>Hard-D:${hov.hardD||0}</span>
+          · <span style=${{color:"#818cf8"}}>Soft-D:${hov.softD||0}</span>
+          · <span style=${{color:"#c026d3"}}>Hard-R:${hov.hardR||0}</span>
+          · <span style=${{color:"#a855f7"}}>Soft-R:${hov.softR||0}</span>
+          · Total:${(hov.hardD||0)+(hov.softD||0)+(hov.hardR||0)+(hov.softR||0)}${hov.isProjected?"*":""}<br/>
+          <span style=${{color:"#6b7280"}}>${hov.note}</span>
+          ${hov.isProjected ? html`<br/><span style=${{color:"#374151"}}>*Expected value. Actual outcome will vary.</span>` : null}
         </div>` : null}
 
-      <!-- Arrow annotation showing growth -->
-      <div style=${{display:"flex",alignItems:"center",justifyContent:"center",gap:8,marginTop:8,fontSize:8,color:"#374151",fontFamily:"monospace"}}>
+      <div style=${{display:"flex",gap:6,justifyContent:"center",alignItems:"center",
+        marginTop:8,fontSize:8,color:"#374151",fontFamily:"monospace",flexWrap:"wrap"}}>
         <span style=${{color:"#7c3aed"}}>2 members (2017)</span>
-        <span style=${{letterSpacing:"0.2em"}}>→</span>
-        <span style=${{color:"#4ade80",fontWeight:700}}>${liveHardD+liveSoftD+liveHardR+liveSoftR} members (live)</span>
-        <span style=${{letterSpacing:"0.2em"}}>→</span>
-        <span style=${{color:"#a5b4fc"}}>${p20.total} projected (2027)</span>
-        <span style=${{color:"#1e2230"}}>·</span>
-        <span style=${{color:"#374151"}}>${Math.round(((liveHardD+liveSoftD+liveHardR+liveSoftR)/2 - 1)*100)}× growth since 115th</span>
+        <span>→</span>
+        <span style=${{color:"#4ade80",fontWeight:700}}>${live.total} members (live)</span>
+        <span>→</span>
+        <span style=${{color:"#a5b4fc"}}>${proj.total} projected (2027)</span>
       </div>
     </div>
 
-    <!-- Key 2026 Races heading -->
-    <div style=${{width:"100%",maxWidth:610,marginTop:14}}>
-      <div style=${{fontSize:10,fontFamily:"monospace",color:"#6b7280",marginBottom:8,letterSpacing:"0.12em",textTransform:"uppercase"}}>
-        Key 2026 Races
-        <span style=${{color:"#374151",fontWeight:400,letterSpacing:"normal",textTransform:"none",marginLeft:8}}>
-          — click any card for details
-        </span>
+    <div style=${{width:"100%",maxWidth:610,marginTop:12}}>
+      <div style=${{fontSize:9,fontFamily:"monospace",color:"#6b7280",marginBottom:6,letterSpacing:"0.1em"}}>
+        KEY 2026 RACES
+        <span style=${{color:"#374151",letterSpacing:"normal",fontWeight:400,marginLeft:6}}>click cards for detail</span>
       </div>
-      <div style=${{display:"flex",flexWrap:"wrap",gap:7}}>
-        ${liveRaces.map(race=>html`
-          <${RaceCard} key=${race.name} race=${race} liveMembers=${allMembers}/>`)}
+      <div style=${{display:"flex",flexWrap:"wrap",gap:6}}>
+        ${races.map((r, i) => html`<${RaceCard} key=${i} race=${r} liveRacesData=${races}/>`)}
       </div>
-      <div style=${{marginTop:8,fontSize:8,color:"#374151",fontFamily:"monospace",lineHeight:1.8}}>
-        Win probabilities sourced from Polymarket where available, Cook Political Report ratings, and polling data.
-        120th projection = expected value (Σ win_prob × seat_value). Actual outcome will vary.
+      <div style=${{marginTop:7,fontSize:7,color:"#374151",fontFamily:"monospace",lineHeight:1.7}}>
+        Win probabilities: Polymarket where available (marked ◉ live), else Cook Political / manual estimate.
+        120th projection = expected value (sum of win_prob × seats). Actual outcome varies.
       </div>
     </div>`;
 }
@@ -1959,6 +1361,7 @@ function App() {
 }
 
 render(html`<${App}/>`, document.getElementById("app"));
+
 </script>
 </body>
 </html>
