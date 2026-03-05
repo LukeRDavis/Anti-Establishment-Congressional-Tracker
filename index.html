@@ -646,6 +646,7 @@ function FindMyRep({members, onHighlight}) {
 // ── Data loading ──────────────────────────────────────────────────────────────
 function useData() {
   const [allMembers,   setMembers]     = useState([]);
+  const [races,        setRaces]       = useState([]);
   const [bills,        setBills]       = useState([]);
   const [challengers,  setChallengers] = useState([]);
   const [history,      setHistory]     = useState({events:[]});
@@ -763,6 +764,7 @@ function useData() {
         }
         setMembers(memberList);
         setBills(d.bills || []);
+        if (d.races_2026?.length) setRaces(d.races_2026);
         if (d.fec&&Object.keys(d.fec).length>0)   setFec(d.fec);
         if (d.poly&&Object.keys(d.poly).length>0)  setPoly(d.poly);
         if (d.meta?.fetched_at) setFetchedAt(d.meta.fetched_at);
@@ -1422,6 +1424,29 @@ function ProbabilityGauge({prob, color, label, note, compact}) {
 }
 
 function RaceCard({race, liveMembers}) {
+  // Normalise field names — Python RACES_2026 uses snake_case; hardcoded uses camelCase
+  const winProb      = race.win_prob       ?? race.winProb ?? null;
+  const opponent     = race.general_opponent || race.primary_opponent || race.opponent || "";
+  const departing    = race.departing ?? (race.status === "departed");
+  const justWonPrim  = race.justWonPrimary ?? (race.primary_result === "WON");
+  const cookRating   = race.cook_rating    || race.cookRating || null;
+  const probSrc      = race.win_prob_src   || "estimate";
+  const electionLabel= race.electionLabel  ||
+    (race.general_date ? "General · "+new Date(race.general_date+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}) :
+     race.primary_date ? "Primary · "+new Date(race.primary_date+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"}) : "");
+  const raceType     = race.raceType || (
+    race.type==="challenger" ? "CHALLENGER" :
+    race.status==="safe"     ? "SAFE SEAT"  :
+    race.status==="pending_primary" ? "PRIMARY PENDING" :
+    race.departing           ? "DEPARTING"  : "INCUMBENT"
+  );
+  const raceColor    = race.raceColor || (
+    raceType==="DEPARTING" ? "#9ca3af" :
+    raceType==="CHALLENGER" ? "#4ade80" :
+    raceType.includes("PRIMARY") || raceType==="AIPAC TARGET" ? (justWonPrim?"#4ade80":"#f87171") :
+    "#6b7280"
+  );
+  const probNote     = race.probNote || cookRating || (probSrc==="polymarket"?"Live Polymarket odds":"Manual estimate");
   const [expanded, setExpanded] = useState(false);
   const liveMember = liveMembers.find(m => m.name === race.name);
   const partyColor = race.party === "R" ? "#ef4444" : race.party === "D" ? "#60a5fa" : "#a3e635";
@@ -1455,38 +1480,40 @@ function RaceCard({race, liveMembers}) {
         <div>
           <div style=${{fontSize:11,fontWeight:700,color:"#f0ebe0",fontFamily:"monospace"}}>${race.name}</div>
           <div style=${{fontSize:8,color:partyColor,fontFamily:"monospace",marginTop:1}}>
-            ${race.party} · ${race.state}
+            ${race.party} · ${race.state||race.chamber}
           </div>
         </div>
         <div style=${{textAlign:"right"}}>
           <div style=${{
             fontSize:7,fontFamily:"monospace",padding:"1px 5px",borderRadius:3,
-            background:`${race.raceColor}18`,color:race.raceColor,
-            border:`1px solid ${race.raceColor}40`,
+            background:raceColor+"18",color:raceColor,
+            border:"1px solid "+raceColor+"40",
             letterSpacing:"0.06em",marginBottom:3,
-          }}>${race.raceType}</div>
-          ${race.justWonPrimary ? html`<div style=${{fontSize:7,fontFamily:"monospace",padding:"1px 5px",borderRadius:3,background:"rgba(74,222,128,.12)",color:"#4ade80",border:"1px solid #4ade8030"}}>✓ PRIMARY WON</div>` : null}
+          }}>${raceType}</div>
+          ${justWonPrim ? html`<div style=${{fontSize:7,fontFamily:"monospace",padding:"1px 5px",borderRadius:3,background:"rgba(74,222,128,.12)",color:"#4ade80",border:"1px solid #4ade8030"}}>✓ PRIMARY WON</div>` : null}
         </div>
       </div>
 
       <!-- Election date + opponent -->
       <div style=${{fontSize:8,color:"#6b7280",fontFamily:"monospace",marginBottom:5,lineHeight:1.5}}>
-        <span style=${{color:race.raceColor}}>${race.electionLabel}</span>
-        ${!race.departing && race.opponent ? html` vs ${race.opponent.slice(0,40)}${race.opponent.length>40?"…":""}` : ""}
+        <span style=${{color:raceColor}}>${electionLabel}</span>
+        ${!departing && opponent ? html` vs ${opponent.slice(0,42)}${opponent.length>42?"…":""}` : ""}
       </div>
 
       <!-- Level badge -->
       <div style=${{display:"flex",gap:4,alignItems:"center",marginBottom:5,flexWrap:"wrap"}}>
         <span style=${{fontSize:8,fontFamily:"monospace",padding:"1px 5px",borderRadius:3,
           background:`${levelColor}18`,color:levelColor,border:`1px solid ${levelColor}30`}}>
-          ${race.level==="hard"?"⚡ Hard Anti-Arms":"◦ Soft Anti-Arms"}
+          ${level==="hard"?"⚡ Hard Anti-Arms":"◦ Soft Anti-Arms"}
         </span>
-        <span style=${{...impactStyle}}>${race.impact}</span>
+        <span style=${{...impactStyle}}>${impact}</span>
       </div>
 
       <!-- Gauge + status -->
-      <div style=${{display:"flex",gap:8,alignItems:"flex-start"}}>
-        <${ProbabilityGauge} prob=${race.winProb} color=${race.raceColor} label=${race.probLabel} note=${race.probNote}/>
+      <div style=${{display:"flex",gap:8,alignItems:"flex-start",marginTop:4}}>
+        <${ProbabilityGauge} prob=${winProb} color=${raceColor} label=${race.probLabel||race.win_prob?(Math.round((winProb||0)*100)+"%"):"-"} note=${probNote}/>
+      ${probSrc==="polymarket"?html`<div style=${{fontSize:7,color:"#4ade80",fontFamily:"monospace",textAlign:"center",marginTop:2}}>◉ polymarket live</div>\`:
+        html`<div style=${{fontSize:7,color:"#374151",fontFamily:"monospace",textAlign:"center",marginTop:2}}>${probSrc==="cook"?"cook/ballotpedia":"est."}</div>\`}
         <div style=${{flex:1,fontSize:8,color:"#6b7280",fontFamily:"monospace",lineHeight:1.5}}>
           ${expanded ? race.status : race.status.slice(0,80)+"…"}
           ${race.status.length>80 ? html`<span style=${{color:"#374151"}}> ${expanded?"▲ less":"▼ more"}</span>` : null}
@@ -1495,7 +1522,9 @@ function RaceCard({race, liveMembers}) {
     </div>`;
 }
 
-function CongressTimeline({allMembers, polyData}) {
+function CongressTimeline({allMembers, polyData, racesData}) {
+  // Use live races from data.json if available, fall back to hardcoded
+  const liveRaces = (racesData && racesData.length > 0) ? racesData : KEY_RACES_2026;
   const [hoveredBar, setHoveredBar] = useState(null);
   const [showProjection, setShowProjection] = useState(true);
 
@@ -1686,7 +1715,7 @@ function CongressTimeline({allMembers, polyData}) {
         </span>
       </div>
       <div style=${{display:"flex",flexWrap:"wrap",gap:7}}>
-        ${KEY_RACES_2026.map(race=>html`
+        ${liveRaces.map(race=>html`
           <${RaceCard} key=${race.name} race=${race} liveMembers=${allMembers}/>`)}
       </div>
       <div style=${{marginTop:8,fontSize:8,color:"#374151",fontFamily:"monospace",lineHeight:1.8}}>
@@ -1704,7 +1733,7 @@ function App() {
   const [hardOnly, setHardOnly] = useState(false);
   const [showTimeline, setShowTimeline] = useState(false);
 
-  const {allMembers, bills, challengers, history, fecData, polyData, fetchedAt, status, loaded} = useData();
+  const {allMembers, bills, challengers, history, races, fecData, polyData, fetchedAt, status, loaded} = useData();
   const members = useMemo(() => buildMembers(allMembers, chamber), [allMembers, chamber]);
 
   // URL deep-link (mount only)
@@ -1834,7 +1863,7 @@ function App() {
       <!-- Three columns / Timeline toggle -->
       ${showTimeline ? html`
         <div style=${{width:"100%",maxWidth:860,display:"flex",flexDirection:"column",alignItems:"center",gap:10}}>
-          <${CongressTimeline} allMembers=${allMembers} polyData=${polyData}/>
+          <${CongressTimeline} allMembers=${allMembers} polyData=${polyData} racesData=${races}/>
         </div>`
       : html`
       <div class="three-col" style=${{display:"flex",gap:10,alignItems:"flex-start",flexWrap:"wrap",justifyContent:"center",width:"100%",maxWidth:1080}}>
