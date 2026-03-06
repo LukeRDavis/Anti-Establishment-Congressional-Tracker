@@ -76,8 +76,8 @@ const THRESHOLDS = {
 // Hard = legislative action (co-sponsored bill / on-record vote)
 // Soft = TrackAIPAC approved (rejects AIPAC money, no legislative vote yet)
 //
-//  R ────────── Soft Anti-R ──── Hard Anti-R ──── Hard Anti-D ──── Soft Anti-D ──────── D
-//  #991b1b      #a855f7          #c026d3           #7c3aed           #818cf8              #1e40af
+// R (red) ── Anti-Intv. R (fuchsia) ── Anti-Intv. D (indigo) ── D (blue)
+// #991b1b           #e879f9                  #818cf8                #1e40af
 
 function dotColor(m) {
   if (!m.antiArms) return "#1e2230";
@@ -101,45 +101,41 @@ function antiArmsTagColor(m) {
 }
 
 
-function computeHemicycle(members, chamber) {
+function computeHemicycle(members, chamber, cx, cy, innerR, spacing, rows) {
+  // Returns [{...member, x, y, _color}] ordered for hemicycle layout
   const chMem = members.filter(m =>
     m.chamber === chamber &&
     !["RETIRED","RESIGNED","DEFEATED","RETIRING","FAILED_PRIMARY"].includes(m.ps)
   );
-  const antiR = chMem.filter(m => m.antiArms && m.party === "R");
-  const antiD = chMem.filter(m => m.antiArms && m.party !== "R");
-  const rest  = chMem.filter(m => !m.antiArms);
-
-  const total = chMem.length || (chamber === "senate" ? 100 : 435);
-  const seats = [];
-  const toSeats = arr => arr.map(m => ({...m, _color: dotColor(m)}));
-
-  // Order: R anti-intervention, rest (gray), D anti-intervention
+  const antiR  = chMem.filter(m => m.antiArms && m.party === "R");
+  const antiD  = chMem.filter(m => m.antiArms && m.party !== "R");
+  const rest   = chMem.filter(m => !m.antiArms);
   const allSeats = [
-    ...toSeats(antiR),
-    ...rest.map(m => ({...m, _color: "#1e2230"})),
-    ...toSeats(antiD),
+    ...antiR.map(m => ({...m, _color: dotColor(m)})),
+    ...rest.map(m  => ({...m, _color: "#1e2230"})),
+    ...antiD.map(m => ({...m, _color: dotColor(m)})),
   ];
 
-  // Hemicycle layout — rows from outside in
-  const rows   = chamber === "senate" ? [34, 33, 33] : [80, 80, 90, 90, 95];
-  let   idx    = 0;
-  const result = [];
-  rows.forEach((count, ri) => {
-    const r      = 90 - ri * 18;
-    const spread = 180;
-    for (let i = 0; i < count && idx < allSeats.length; i++, idx++) {
-      const angle = (spread / (count - 1)) * i;
-      const rad   = (angle - 90) * Math.PI / 180;
-      result.push({
+  const positions = [];
+  let idx = 0;
+  for (let row = 0; row < rows; row++) {
+    const r      = innerR + row * spacing;
+    const seats  = Math.round(Math.PI * r / (spacing * 0.95));
+    const count  = Math.min(seats, allSeats.length - idx + (row < rows - 1 ? 0 : 0));
+    for (let s = 0; s < count && idx < allSeats.length; s++, idx++) {
+      const angle = (Math.PI / (count - 1)) * s;
+      positions.push({
         ...allSeats[idx],
-        cx: 100 + r * Math.cos(rad),
-        cy: 100 + r * Math.sin(rad),
-        r:  chamber === "senate" ? 4.5 : 3.2,
+        x: cx - r * Math.cos(angle),
+        y: cy - r * Math.sin(angle),
       });
     }
-  });
-  return result;
+  }
+  // Fill any remaining with fillers
+  while (positions.length < members.length) {
+    positions.push({_filler: true, x: -999, y: -999, _color: "#111419"});
+  }
+  return positions;
 }
 
 
@@ -482,7 +478,6 @@ function DetailPanel({member, fecData, polyData, bills, chamber}) {
   const color  = dotColor(member);
   const mBills = (member.bills||[]).map(id=>bills.find(b=>b.id===id)).filter(Boolean);
   const votes  = member.votes||[];
-  const hard   = member.antiArmsLevel === "hard";
 
   const copyLink = () => {
     const base = window.location.origin+window.location.pathname;
@@ -495,7 +490,7 @@ function DetailPanel({member, fecData, polyData, bills, chamber}) {
       <div style=${{display:"flex",alignItems:"center",gap:9,marginBottom:8}}>
         <div style=${{width:30,height:30,borderRadius:"50%",background:color,flexShrink:0,
           display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,fontWeight:700,color:"#fff",
-          boxShadow: member.antiArms && hard ? "0 0 12px "+color+"60" : "none"}}>
+          boxShadow: member.antiArms ? "0 0 12px "+color+"40" : "none"}}>
           ${member.name.charAt(0)}
         </div>
         <div style=${{flex:1}}>
@@ -510,15 +505,13 @@ function DetailPanel({member, fecData, polyData, bills, chamber}) {
 
       ${member.antiArms?html`
         <div style=${{marginBottom:8,padding:"7px 10px",borderRadius:8,
-          background:hard?"rgba(124,58,237,.1)":"rgba(129,140,248,.07)",
-          border:"1px solid "+(hard?"#7c3aed33":"#818cf833")}}>
+          background:"rgba(129,140,248,.07)",
+          border:"1px solid #818cf833"}}>
           <div style=${{display:"flex",alignItems:"center",gap:6,marginBottom:3}}>
             <${ArmsBadge} m=${member}/>
           </div>
           <div style=${{fontSize:9,color:"#4b5563",lineHeight:1.5}}>
-            ${hard
-              ? "Has taken a legislative stand — co-sponsored arms-restricting legislation or cast an on-record No vote against arms authorization."
-              : "Endorsed by TrackAIPAC: rejects AIPAC contributions and has low or zero Israel lobby receipts. No on-record legislative vote yet."}
+            ${member.antiArms ? "Opposes foreign interventionism and arms sales." : null}
           </div>
           ${member.lobby_total>0?html`
             <div style=${{fontSize:8,color:"#374151",fontFamily:"monospace",marginTop:3}}>
@@ -1462,7 +1455,6 @@ function App() {
   const [selected, setSelected] = useState(null);
   const [hovered,  setHovered]  = useState(null);
   const [showAnti, setShowAnti] = useState(false);
-  const [hardOnly, setHardOnly] = useState(false);
   const [showTimeline, setShowTimeline] = useState(false);
 
   const {allMembers, bills, challengers, history, races, fecData, polyData, polyLive, polyUpdated, polyLoading, fetchedAt, status, loaded} = useData();
@@ -1490,8 +1482,8 @@ function App() {
 
   const svgW=610, svgH=300, cx=svgW/2, cy=svgH-14;
   const cfg = chamber==="house" ? {innerR:50,spacing:20,rows:9} : {innerR:78,spacing:30,rows:6};
-  const positions = useMemo(()=>computeHemicycle(members.length,cx,cy,cfg.innerR,cfg.spacing,cfg.rows),
-    [members.length,cx,cy,cfg.innerR,cfg.spacing,cfg.rows]);
+  const positions = useMemo(()=>computeHemicycle(members,chamber,cx,cy,cfg.innerR,cfg.spacing,cfg.rows),
+    [members,chamber,cx,cy,cfg.innerR,cfg.spacing,cfg.rows]);
 
   const dotR      = chamber==="house" ? 4.5 : 6.5;
   const selMember = selected!==null ? members[selected] : null;
@@ -1502,8 +1494,6 @@ function App() {
   const challD    = challengers.filter(c=>c.party!=="R"&&c.chamber===ch);
 
   const totalAnti = members.filter(m=>m.antiArms).length;
-  const totalHard = members.filter(m=>m.antiArmsLevel==="hard").length;
-  const totalSoft = totalAnti - totalHard;
 
   if (!loaded) return html`
     <div style=${{minHeight:"100vh",background:"#0a0c10",display:"flex",alignItems:"center",justifyContent:"center"}}>
@@ -1577,12 +1567,10 @@ function App() {
       <!-- Legend + stat pills -->
       <div style=${{display:"flex",gap:5,flexWrap:"wrap",justifyContent:"center",marginBottom:7}}>
         ${[
-          {c:"#991b1b", bg:"rgba(153,27,27,.1)",  l:"Rep",       n:members.filter(m=>m.party==="R"&&!m.antiArms).length},
-          {c:"#a855f7", bg:"rgba(168,85,247,.1)",  l:"Soft Anti-R",n:members.filter(m=>m.antiArms&&m.party==="R"&&m.antiArmsLevel!=="hard").length},
-          {c:"#c026d3", bg:"rgba(192,38,211,.12)", l:"Hard Anti-R",n:members.filter(m=>m.antiArms&&m.party==="R"&&m.antiArmsLevel==="hard").length},
-          {c:"#7c3aed", bg:"rgba(124,58,237,.1)",  l:"Hard Anti-D",n:members.filter(m=>m.antiArms&&m.party!=="R"&&m.antiArmsLevel==="hard").length},
-          {c:"#818cf8", bg:"rgba(129,140,248,.1)", l:"Soft Anti-D",n:members.filter(m=>m.antiArms&&m.party!=="R"&&m.antiArmsLevel!=="hard").length},
-          {c:"#1e40af", bg:"rgba(30,64,175,.1)",   l:"Dem",       n:members.filter(m=>m.party==="D"&&!m.antiArms).length},
+          {c:"#991b1b", bg:"rgba(153,27,27,.1)",  l:"Rep",            n:members.filter(m=>m.party==="R"&&!m.antiArms).length},
+          {c:"#e879f9", bg:"rgba(232,121,249,.1)", l:"Anti-Intv. R",  n:members.filter(m=>m.antiArms&&m.party==="R").length},
+          {c:"#818cf8", bg:"rgba(129,140,248,.1)", l:"Anti-Intv. D",  n:members.filter(m=>m.antiArms&&m.party!=="R").length},
+          {c:"#1e40af", bg:"rgba(30,64,175,.1)",   l:"Dem",           n:members.filter(m=>m.party==="D"&&!m.antiArms).length},
         ].map(b=>html`
           <span key=${b.l} style=${{display:"inline-flex",alignItems:"center",gap:4,background:b.bg,border:"1px solid "+b.c+"30",borderRadius:5,padding:"2px 7px",fontSize:9,fontFamily:"monospace",color:b.c}}>
             <span style=${{width:5,height:5,borderRadius:"50%",background:b.c,display:"inline-block"}}/>
@@ -1592,10 +1580,7 @@ function App() {
           style=${{padding:"2px 7px",borderRadius:5,border:"1px solid #7c3aed33",background:showAnti?"#7c3aed1a":"transparent",color:showAnti?"#c084fc":"#4b5563",fontFamily:"monospace",fontSize:9,cursor:"pointer"}}>
           ${showAnti?"Show all":"Highlight anti-intervention"}
         </button>
-        <button onClick=${()=>setHardOnly(v=>!v)}
-          style=${{padding:"2px 7px",borderRadius:5,border:"1px solid #c026d333",background:hardOnly?"#c026d31a":"transparent",color:hardOnly?"#e879f9":"#4b5563",fontFamily:"monospace",fontSize:9,cursor:"pointer"}}>
-          ${hardOnly?"Show all":"Hard only"}
-        </button>
+
       </div>
 
       <!-- Three columns / Timeline toggle -->
@@ -1622,14 +1607,14 @@ function App() {
               })}
               ${positions.map((pos,i)=>{
                 const m=members[i]; if(!m) return null;
-                const dimDot = (showAnti&&!m.antiArms) || (hardOnly&&(!m.antiArms||!isHard));
+                const dimDot = showAnti && !m.antiArms;
                 const isSel=selected===i, isHov=hovered===i;
                 const color=dotColor(m), poly=polyData[m.name], atRisk=poly&&poly.prob<0.65;
                 const r=isHov?dotR+1.5:dotR;
                 return html`<g key=${i}>
                   ${isSel?html`<circle cx=${pos.x} cy=${pos.y} r=${dotR+4.5} fill="none" stroke=${color} stroke-width="1.5" opacity=".35"/>`:null}
-                  ${isHard&&m.antiArms&&!dimDot?html`<circle cx=${pos.x} cy=${pos.y} r=${dotR+3.5} fill="none" stroke=${color} stroke-width="1" opacity=".25"/>`:null}
-                  ${m.antiArms&&!isHard&&!dimDot?html`<circle cx=${pos.x} cy=${pos.y} r=${dotR+2} fill="none" stroke=${color} stroke-width=".6" opacity=".15"/>`:null}
+                  ${m.antiArms&&!dimDot?html`<circle cx=${pos.x} cy=${pos.y} r=${dotR+2} fill="none" stroke=${color} stroke-width=".8" opacity=".2"/>`:null}
+                  
                   ${atRisk&&!dimDot?html`<circle cx=${pos.x} cy=${pos.y} r=${dotR+2.5} fill="none" stroke="#fbbf24" stroke-width="1" opacity=".35" stroke-dasharray="2,2"/>`:null}
                   <circle cx=${pos.x} cy=${pos.y} r=${r}
                     fill=${dimDot?"#111419":color} opacity=${dimDot?.07:1}
