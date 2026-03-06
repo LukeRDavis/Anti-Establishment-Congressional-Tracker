@@ -1,12 +1,12 @@
 {
   "meta": {
-    "fetched_at": "2026-03-06T07:21:53.154616+00:00",
-    "trackaipac_scraped": "2026-03-06T07:21:53.154630+00:00",
+    "fetched_at": "2026-03-06T07:46:08.068058+00:00",
+    "trackaipac_scraped": "2026-03-06T07:46:08.068078+00:00",
     "member_count": 532,
     "anti_intervention_count": 41,
     "bill_count": 0,
     "challenger_count": 77,
-    "history_events": 42,
+    "history_events": 83,
     "version": 7,
     "sources": {
       "members": "trackaipac.com + rlc.org Liberty Index",
