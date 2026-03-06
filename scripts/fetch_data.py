@@ -2,24 +2,24 @@
 """
 fetch_data.py — GitHub Actions, every 4 hours.
 
-Anti-Arms classification pipeline:
+Anti-Intervention classification pipeline:
   Democrats/Independents:
     TrackAIPAC /congress "Track AIPAC Approved" → antiArms=True, level=soft
     Congress.gov bill co-sponsorship            → upgrade to hard
-    LegiScan Yes vote on anti-arms bill         → upgrade to hard
+    LegiScan Yes vote on anti-intervention bill         → upgrade to hard
 
   Republicans:
     RLC Liberty Index score ≥ 75               → antiArms=True, level=soft
     Congress.gov bill co-sponsorship            → upgrade to hard
     Congress.gov house-vote No on pro-arms      → upgrade to hard
-    KNOWN_ANTI_ARMS override (118th record)     → sets level directly
+    KNOWN_ANTI_INTERVENTION override (118th record)     → sets level directly
 
   Both:
-    KNOWN_ANTI_ARMS dict                        → authoritative override
+    KNOWN_ANTI_INTERVENTION dict                        → authoritative override
 
 Challengers:
-  TrackAIPAC /endorsements                     → anti-arms D/I challengers
-  RLC /endorsements blog posts                 → anti-arms R challengers
+  TrackAIPAC /endorsements                     → anti-intervention D/I challengers
+  RLC /endorsements blog posts                 → anti-intervention R challengers
   FEC /candidates 2026                         → cross-reference for FEC IDs
 
 GitHub Secrets:
@@ -78,35 +78,35 @@ PRO_ARMS_SIGNALS = [
 
 # Authoritative overrides — verified from 118th Congress roll calls and bill records.
 # These are applied on top of scraped data and cannot be overridden by scrapers.
-# level: "hard" = on-record legislative vote or bill co-sponsorship
-#        "soft" = stated position, no verifiable legislative action yet
-KNOWN_ANTI_ARMS = {
+# level: "yes" = on-record legislative vote or bill co-sponsorship
+#        "yes" = stated position, no verifiable legislative action yet
+KNOWN_ANTI_INTERVENTION = {
     # Republicans — anti-interventionist No votes on Israel arms packages
-    "Thomas Massie":    {"level":"hard","party":"R","reason":"Co-sponsored HR 3565 Block the Bombs Act; No on HR 8034 & HR 8035 (Apr 2024)"},
-    "Warren Davidson":  {"level":"hard","party":"R","reason":"No on HR 8034 (Israel aid supplemental, Apr 2024); leads House Liberty Caucus"},
-    "Andy Biggs":       {"level":"hard","party":"R","reason":"No on HR 8034 & HR 8035 (Israel/Ukraine packages, Apr 2024)"},
-    "Scott Perry":      {"level":"hard","party":"R","reason":"No on HR 8034 (Israel aid supplemental, Apr 2024)"},
-    "Paul Gosar":       {"level":"hard","party":"R","reason":"No on HR 8034 (Israel aid supplemental, Apr 2024)"},
-    "Chip Roy":         {"level":"hard","party":"R","reason":"No on HR 8034 (Israel aid supplemental, Apr 2024)"},
-    "Thomas Tiffany":   {"level":"hard","party":"R","reason":"No on HR 8034 (Israel aid supplemental, Apr 2024)"},
-    "Rand Paul":        {"level":"hard","party":"R","reason":"Led Senate holds on Israel arms sales; forced vote on FMS Joint Resolution of Disapproval (2024)"},
-    "Eli Crane":        {"level":"hard","party":"R","reason":"No on HR 8034 (Israel aid supplemental, Apr 2024); RLC Liberty Index 97/100"},
-    "Lauren Boebert":   {"level":"soft","party":"R","reason":"No on HR 8034; positions inconsistent — classified soft"},
-    "Barry Moore":      {"level":"soft","party":"R","reason":"No on some Israel aid provisions; running for Senate 2026"},
-    "Bob Good":         {"level":"soft","party":"R","reason":"RLC Liberty Index 92/100; consistent anti-interventionist votes"},
-    "Andrew Ogles":     {"level":"soft","party":"R","reason":"RLC Liberty Index 95/100; voted against multiple foreign aid packages"},
-    "Anna Paulina Luna":{"level":"soft","party":"R","reason":"RLC Liberty Index 94/100; voted against Israel aid supplemental"},
+    "Thomas Massie":    {"level":"yes","party":"R","reason":"Co-sponsored HR 3565 Block the Bombs Act; No on HR 8034 & HR 8035 (Apr 2024)"},
+    "Warren Davidson":  {"level":"yes","party":"R","reason":"No on HR 8034 (Israel aid supplemental, Apr 2024); leads House Liberty Caucus"},
+    "Andy Biggs":       {"level":"yes","party":"R","reason":"No on HR 8034 & HR 8035 (Israel/Ukraine packages, Apr 2024)"},
+    "Scott Perry":      {"level":"yes","party":"R","reason":"No on HR 8034 (Israel aid supplemental, Apr 2024)"},
+    "Paul Gosar":       {"level":"yes","party":"R","reason":"No on HR 8034 (Israel aid supplemental, Apr 2024)"},
+    "Chip Roy":         {"level":"yes","party":"R","reason":"No on HR 8034 (Israel aid supplemental, Apr 2024)"},
+    "Thomas Tiffany":   {"level":"yes","party":"R","reason":"No on HR 8034 (Israel aid supplemental, Apr 2024)"},
+    "Rand Paul":        {"level":"yes","party":"R","reason":"Led Senate holds on Israel arms sales; forced vote on FMS Joint Resolution of Disapproval (2024)"},
+    "Eli Crane":        {"level":"yes","party":"R","reason":"No on HR 8034 (Israel aid supplemental, Apr 2024); RLC Liberty Index 97/100"},
+    "Lauren Boebert":   {"level":"yes","party":"R","reason":"No on HR 8034; positions inconsistent — classified soft"},
+    "Barry Moore":      {"level":"yes","party":"R","reason":"No on some Israel aid provisions; running for Senate 2026"},
+    "Bob Good":         {"level":"yes","party":"R","reason":"RLC Liberty Index 92/100; consistent anti-interventionist votes"},
+    "Andrew Ogles":     {"level":"yes","party":"R","reason":"RLC Liberty Index 95/100; voted against multiple foreign aid packages"},
+    "Anna Paulina Luna":{"level":"yes","party":"R","reason":"RLC Liberty Index 94/100; voted against Israel aid supplemental"},
     # Democrats/Independents — bill co-sponsorship or JRD votes
-    "Ro Khanna":        {"level":"hard","party":"D","reason":"Co-sponsored HR 3565 Block the Bombs Act and Senate JRD on Israel FMS"},
-    "Lloyd Doggett":    {"level":"hard","party":"D","reason":"Co-sponsored HR 3565 Block the Bombs Act"},
-    "Jim McGovern":     {"level":"hard","party":"D","reason":"Co-sponsored HR 3565 Block the Bombs Act"},
-    "Jan Schakowsky":   {"level":"hard","party":"D","reason":"Co-sponsored HR 3565 Block the Bombs Act"},
-    "Maxine Waters":    {"level":"hard","party":"D","reason":"Co-sponsored HR 3565 Block the Bombs Act"},
-    "Jamie Raskin":     {"level":"soft","party":"D","reason":"Called for arms conditions; voting record mixed"},
-    "Ed Markey":        {"level":"hard","party":"D","reason":"Co-sponsored Senate Joint Resolution of Disapproval on Israel FMS"},
-    "Brian Schatz":     {"level":"soft","party":"D","reason":"Signed letters on arms conditions; no JRD co-sponsorship yet"},
-    "Elizabeth Warren": {"level":"soft","party":"D","reason":"Called for arms review; no JRD co-sponsorship yet"},
-    "Bernie Sanders":   {"level":"hard","party":"I","reason":"Forced Senate floor vote on Joint Resolution of Disapproval on Israel FMS (2024)"},
+    "Ro Khanna":        {"level":"yes","party":"D","reason":"Co-sponsored HR 3565 Block the Bombs Act and Senate JRD on Israel FMS"},
+    "Lloyd Doggett":    {"level":"yes","party":"D","reason":"Co-sponsored HR 3565 Block the Bombs Act"},
+    "Jim McGovern":     {"level":"yes","party":"D","reason":"Co-sponsored HR 3565 Block the Bombs Act"},
+    "Jan Schakowsky":   {"level":"yes","party":"D","reason":"Co-sponsored HR 3565 Block the Bombs Act"},
+    "Maxine Waters":    {"level":"yes","party":"D","reason":"Co-sponsored HR 3565 Block the Bombs Act"},
+    "Jamie Raskin":     {"level":"yes","party":"D","reason":"Called for arms conditions; voting record mixed"},
+    "Ed Markey":        {"level":"yes","party":"D","reason":"Co-sponsored Senate Joint Resolution of Disapproval on Israel FMS"},
+    "Brian Schatz":     {"level":"yes","party":"D","reason":"Signed letters on arms conditions; no JRD co-sponsorship yet"},
+    "Elizabeth Warren": {"level":"yes","party":"D","reason":"Called for arms review; no JRD co-sponsorship yet"},
+    "Bernie Sanders":   {"level":"yes","party":"I","reason":"Forced Senate floor vote on Joint Resolution of Disapproval on Israel FMS (2024)"},
 }
 
 KNOWN_FEC_IDS = {
@@ -129,7 +129,7 @@ KNOWN_FEC_IDS = {
 }
 
 
-# ── Historical anti-arms counts by Congress ────────────────────────────────────
+# ── Historical anti-intervention counts by Congress ────────────────────────────────────
 # Sources: Congress.gov co-sponsorship, clerk.house.gov roll calls, TrackAIPAC archives
 # 117th: Block the Bombs Act (HR 3103) era, pre-Gaza
 # 118th: Post-Oct 7 peak — HR 8034 Nay 58 total (21R+37D)
@@ -146,7 +146,7 @@ CONGRESS_HISTORY = {
         "hardR": 9, "softR": 4, "hardD": 26, "softD": 14, "hardI": 2, "softI": 0,
         "note": "Post-Oct 7 peak. HR 8034 Nay: 21R+37D (58 total). Block the Bombs Act (HR 3565) 22 co-sponsors. Senate JRDs forced.",
         "key_events": [
-            "Oct 7, 2023: Hamas attack → Gaza war → surge in anti-arms sentiment",
+            "Oct 7, 2023: Hamas attack → Gaza war → surge in anti-intervention sentiment",
             "Apr 20, 2024: HR 8034 Israel Security Supplemental — 21R+37D voted Nay",
             "Jun 2024: Bernie Sanders forced Senate JRD floor vote on Israel FMS",
             "Aug 2024: Bowman (D-NY) and Bush (D-MO) lost primaries to AIPAC-backed challengers",
@@ -158,13 +158,13 @@ CONGRESS_HISTORY = {
 # ── 2026 Key Races ─────────────────────────────────────────────────────────────
 # Tracks incumbents at risk and challengers who could change the 120th Congress count
 # status: "won_primary" | "pending_primary" | "pending_general" | "confirmed" | "safe"
-# impact: effect on 120th Congress anti-arms count if candidate wins
+# impact: effect on 120th Congress anti-intervention count if candidate wins
 RACES_2026 = [
     # ── RESULTS CONFIRMED (March 3, 2026 primaries) ──────────────────────────
     {
         "id": "talarico-tx-senate",
         "name": "James Talarico", "party": "D", "state": "TX", "chamber": "senate",
-        "anti_arms": True, "anti_arms_level": "soft",
+        "anti_intervention": True, "anti_intervention_level": "yes",
         "type": "challenger",  # not currently in Congress
         "status": "pending_general",
         "primary_date": "2026-03-03", "primary_result": "WON",
@@ -182,7 +182,7 @@ RACES_2026 = [
     {
         "id": "foushee-nc04",
         "name": "Valerie Foushee", "party": "D", "state": "NC", "chamber": "house", "district": 4,
-        "anti_arms": True, "anti_arms_level": "soft",
+        "anti_intervention": True, "anti_intervention_level": "yes",
         "type": "incumbent",
         "status": "pending_general",  # narrowly won primary (recount pending → Allam conceded)
         "primary_date": "2026-03-03", "primary_result": "WON",
@@ -193,7 +193,7 @@ RACES_2026 = [
         "cook_rating": "Likely Democratic",
         "win_prob": 0.88,
         "impact_if_wins": "+1 soft-D retained (Foushee pledged to block arms to Israel this cycle)",
-        "impact_if_loses": "-1 D anti-arms seat",
+        "impact_if_loses": "-1 D anti-intervention seat",
         "note": "Won primary by 1,202 votes (49.18% vs Allam 48.22%). Allam conceded Mar 4. Foushee swore off AIPAC money this cycle, pledged arms restrictions legislation.",
         "polymarket_url": None,
     },
@@ -201,7 +201,7 @@ RACES_2026 = [
     {
         "id": "massie-ky04-primary",
         "name": "Thomas Massie", "party": "R", "state": "KY", "chamber": "house", "district": 4,
-        "anti_arms": True, "anti_arms_level": "hard",
+        "anti_intervention": True, "anti_intervention_level": "yes",
         "type": "incumbent",
         "status": "pending_primary",
         "primary_date": "2026-05-19",
@@ -210,7 +210,7 @@ RACES_2026 = [
         "general_opponent": "TBD (D)",
         "cook_rating": "Solid Republican (general)",
         "win_prob": 0.62,  # Massie claims +17 own polling; Trump machine + $10M against him
-        "impact_if_wins": "Retains 1 hard-R anti-arms vote (most consistent in Congress)",
+        "impact_if_wins": "Retains 1 hard-R anti-intervention vote (most consistent in Congress)",
         "impact_if_loses": "-1 hard-R (Gallrein would vote pro-arms with Trump)",
         "note": "Trump endorsed Gallrein Oct 2025. Massie claims +17 lead in own internal polling. Rand Paul campaigning with him. Cook: Solid R general. Primary May 19.",
         "polymarket_url": None,
@@ -218,7 +218,7 @@ RACES_2026 = [
     {
         "id": "paul-ky-senate",
         "name": "Rand Paul", "party": "R", "state": "KY", "chamber": "senate",
-        "anti_arms": True, "anti_arms_level": "hard",
+        "anti_intervention": True, "anti_intervention_level": "yes",
         "type": "incumbent",
         "status": "safe",  # not up for election in 2026
         "primary_date": None, "general_date": None,
@@ -233,7 +233,7 @@ RACES_2026 = [
     {
         "id": "casar-tx37",
         "name": "Greg Casar", "party": "D", "state": "TX", "chamber": "house", "district": 37,
-        "anti_arms": True, "anti_arms_level": "soft",
+        "anti_intervention": True, "anti_intervention_level": "yes",
         "type": "incumbent",  # running in redrawn TX-37 from TX-35
         "status": "pending_primary",
         "primary_date": "2026-03-03",  # TX primary was March 3
@@ -247,7 +247,7 @@ RACES_2026 = [
     {
         "id": "tlaib-mi12",
         "name": "Rashida Tlaib", "party": "D", "state": "MI", "chamber": "house", "district": 12,
-        "anti_arms": True, "anti_arms_level": "soft",
+        "anti_intervention": True, "anti_intervention_level": "yes",
         "type": "incumbent",
         "status": "pending_primary",
         "primary_date": "2026-08-04",  # MI primary
@@ -262,7 +262,7 @@ RACES_2026 = [
     {
         "id": "omar-mn05",
         "name": "Ilhan Omar", "party": "D", "state": "MN", "chamber": "house", "district": 5,
-        "anti_arms": True, "anti_arms_level": "soft",
+        "anti_intervention": True, "anti_intervention_level": "yes",
         "type": "incumbent",
         "status": "pending_primary",
         "primary_date": "2026-08-11",  # MN primary
@@ -279,8 +279,8 @@ CLERK_XML_BASE = "http://clerk.house.gov/evs"
 
 # Key 118th Congress votes for historical record
 HISTORICAL_VOTE_XMLS = {
-    "118-hr8034": ("2024", "152"),   # Israel Security Supplemental — Nay = anti-arms
-    "118-hr8035": ("2024", "153"),   # Ukraine/Israel combined — Nay = anti-arms
+    "118-hr8034": ("2024", "152"),   # Israel Security Supplemental — Nay = anti-intervention
+    "118-hr8035": ("2024", "153"),   # Ukraine/Israel combined — Nay = anti-intervention
 }
 
 
@@ -396,9 +396,9 @@ def score_bill(title, subjects):
         return None
     anti = sum(1 for kw in ANTI_ARMS_SIGNALS if kw in combined)
     pro  = sum(1 for kw in PRO_ARMS_SIGNALS  if kw in combined)
-    if anti > pro: return "anti_arms"
+    if anti > pro: return "anti_intervention"
     if pro > anti: return "pro_arms"
-    if anti > 0:   return "anti_arms"
+    if anti > 0:   return "anti_intervention"
     return None
 
 def parse_district(raw):
@@ -413,7 +413,7 @@ def parse_district(raw):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 1. TRACKAIPAC — Democrat/Independent anti-arms source
+# 1. TRACKAIPAC — Democrat/Independent anti-intervention source
 # ─────────────────────────────────────────────────────────────────────────────
 
 def scrape_trackaipac_congress():
@@ -478,7 +478,7 @@ def scrape_trackaipac_endorsements():
         website = href_m.group(1) if href_m else ""
         challengers.append({
             "name":name,"state":state,"district":district,"party":party,"chamber":chamber,
-            "antiArms":True,"antiArmsLevel":"soft",
+            "antiArms":True,"antiArmsLevel":"yes",
             "ps":"GENERAL" if "General Election" in text else "UPCOMING",
             "primaryDate":primary_date,"website":website,
             "source":"trackaipac","note":"Endorsed by Citizens Against AIPAC Corruption.",
@@ -489,14 +489,14 @@ def scrape_trackaipac_endorsements():
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 2. RLC LIBERTY INDEX — Republican anti-arms source
+# 2. RLC LIBERTY INDEX — Republican anti-intervention source
 # ─────────────────────────────────────────────────────────────────────────────
 
 def fetch_rlc_liberty_index():
     """
     Downloads and parses the RLC Liberty Index PDF.
     Returns dict: name_lower → {name, score, rlc_level}
-    Members scoring ≥ RLC_SOFT_THRESHOLD are classified as soft anti-arms.
+    Members scoring ≥ RLC_SOFT_THRESHOLD are classified as soft anti-intervention.
     """
     print("Fetching RLC Liberty Index PDF …")
     try:
@@ -659,7 +659,7 @@ def scrape_rlc_endorsements():
 
             challengers.append({
                 "name":name,"state":state,"district":district,"party":"R","chamber":chamber,
-                "antiArms":True,"antiArmsLevel":"soft",
+                "antiArms":True,"antiArmsLevel":"yes",
                 "ps":"UPCOMING","primaryDate":"","website":"",
                 "source":"rlc_endorsed","note":f"Endorsed by Republican Liberty Caucus for {district_raw.strip()[:60]}",
                 "opponent":"","incumbentParty":"",
@@ -682,7 +682,7 @@ def build_members(ta_congress, rlc_index):
     Classification logic:
       D/I: TrackAIPAC approved → soft; KNOWN override → hard/soft
       R:   RLC score ≥75      → soft; KNOWN override → hard/soft
-      Any: KNOWN_ANTI_ARMS    → authoritative override
+      Any: KNOWN_ANTI_INTERVENTION    → authoritative override
     """
     members = []
     processed = set()
@@ -696,15 +696,15 @@ def build_members(ta_congress, rlc_index):
         rlc       = rlc_index.get(name_lower, {})
         rlc_score = rlc.get("score", 0)
         rlc_anti  = rlc_score >= RLC_SOFT_THRESHOLD
-        known     = KNOWN_ANTI_ARMS.get(name)
+        known     = KNOWN_ANTI_INTERVENTION.get(name)
 
-        anti_arms  = ta_anti or rlc_anti or bool(known)
+        anti_intervention  = ta_anti or rlc_anti or bool(known)
         if known:
             level = known["level"]
         elif ta_anti:
-            level = "soft"
+            level = "yes"
         elif rlc_anti:
-            level = "soft"
+            level = "yes"
         else:
             level = None
 
@@ -719,7 +719,7 @@ def build_members(ta_congress, rlc_index):
             "state":        m.get("state") or "",
             "district":     m.get("district") if m.get("district") not in ("",None) else None,
             "chamber":      m.get("chamber","house"),
-            "antiArms":     anti_arms,
+            "antiArms":     anti_intervention,
             "antiArmsLevel":level,
             "rlc_score":    rlc_score if rlc_score else None,
             "lobby_total":  m.get("lobby_total",0),
@@ -735,8 +735,8 @@ def build_members(ta_congress, rlc_index):
         if name_lower in processed: continue
         if rlc.get("score",0) < RLC_SOFT_THRESHOLD: continue
         name  = rlc.get("name","")
-        known = KNOWN_ANTI_ARMS.get(name)
-        level = known["level"] if known else "soft"
+        known = KNOWN_ANTI_INTERVENTION.get(name)
+        level = known["level"] if known else "yes"
         note  = known["reason"] if known else f"RLC Liberty Index {rlc['score']}/100"
         members.append({
             "bioguide_id":"","name":name,"party":"R",
@@ -752,9 +752,9 @@ def build_members(ta_congress, rlc_index):
         members = enrich_bioguide_ids(members)
 
     anti = sum(1 for m in members if m["antiArms"])
-    hard = sum(1 for m in members if m.get("antiArmsLevel")=="hard")
+    hard = sum(1 for m in members if m.get("antiArmsLevel")=="yes")
     soft = anti - hard
-    print(f"  Members: {len(members)} total — {anti} anti-arms ({hard} hard, {soft} soft)")
+    print(f"  Members: {len(members)} total — {anti} anti-intervention ({hard} {soft} soft)")
     return members
 
 
@@ -833,9 +833,9 @@ def discover_bills(members_by_id):
             bid = s.get("bioguideId","")
             if bid:
                 sp_ids.append(bid)
-                if cls=="anti_arms" and bid in members_by_id:
+                if cls=="anti_intervention" and bid in members_by_id:
                     members_by_id[bid]["antiArms"]      = True
-                    members_by_id[bid]["antiArmsLevel"]  = "hard"
+                    members_by_id[bid]["antiArmsLevel"]  = "yes"
                     if uid not in members_by_id[bid]["bills"]:
                         members_by_id[bid]["bills"].append(uid)
 
@@ -849,7 +849,7 @@ def discover_bills(members_by_id):
             "sponsor_count":len(sp_ids),"sponsor_ids":sp_ids,"url":burl,
             "last_action":lat.get("text",""),"last_action_date":lat.get("actionDate",""),
         })
-        print(f"  {'🚫' if cls=='anti_arms' else '🔫'} {btype.upper()} {bnum}: {btitle[:55]} ({cls})")
+        print(f"  {'🚫' if cls=='anti_intervention' else '🔫'} {btype.upper()} {bnum}: {btitle[:55]} ({cls})")
 
     for btype, bnum in [("hr","3565")]:
         process_bill({"type":btype,"number":bnum,"title":"","congress":CURRENT_CONGRESS})
@@ -911,12 +911,12 @@ def fetch_house_votes(members_by_id):
                 m = members_by_id[bio]
                 if classification == "pro_arms" and "nay" in voted:
                     m["antiArms"]      = True
-                    m["antiArmsLevel"] = "hard"
+                    m["antiArmsLevel"] = "yes"
                     m["votes"].append({"bill":key,"vote":"No","desc":vote.get("description","")[:60]})
                     print(f"  🗳 {m['name']} voted No on pro-arms {key}")
-                elif classification == "anti_arms" and "yea" in voted:
+                elif classification == "anti_intervention" and "yea" in voted:
                     m["antiArms"]      = True
-                    m["antiArmsLevel"] = "hard"
+                    m["antiArmsLevel"] = "yes"
                     m["votes"].append({"bill":key,"vote":"Yes","desc":vote.get("description","")[:60]})
 
             time.sleep(0.3)
@@ -928,9 +928,9 @@ def fetch_house_votes(members_by_id):
 def enrich_hard_classification(members, bills):
     """Congress.gov /member/{bioguideId}/cosponsored-legislation upgrade soft→hard."""
     if not CONGRESS_KEY: return members
-    anti_bill_ids  = {b["id"] for b in bills if b.get("classification")=="anti_arms"}
-    anti_bill_nums = {b["number"].lower() for b in bills if b.get("classification")=="anti_arms"}
-    soft_members   = [m for m in members if m.get("antiArms") and m.get("antiArmsLevel")=="soft" and m.get("bioguide_id")]
+    anti_bill_ids  = {b["id"] for b in bills if b.get("classification")=="anti_intervention"}
+    anti_bill_nums = {b["number"].lower() for b in bills if b.get("classification")=="anti_intervention"}
+    soft_members   = [m for m in members if m.get("antiArms") and m.get("antiArmsLevel")=="yes" and m.get("bioguide_id")]
     if not soft_members: return members
     print(f"\n  Congress.gov: checking {len(soft_members)} soft members for co-sponsorship …")
     upgraded = 0
@@ -944,7 +944,7 @@ def enrich_hard_classification(members, bills):
             bnum  = str(item.get("number") or "")
             uid   = f"{CURRENT_CONGRESS}-{btype}-{bnum}"
             if uid in anti_bill_ids or bnum.lower() in anti_bill_nums:
-                m["antiArmsLevel"] = "hard"
+                m["antiArmsLevel"] = "yes"
                 if uid not in m.get("bills",[]): m.setdefault("bills",[]).append(uid)
                 upgraded += 1
                 print(f"  ↑ Hard: {m['name']} co-sponsored {btype.upper()} {bnum}")
@@ -990,10 +990,10 @@ def fetch_legiscan_votes(members_by_name):
                     for mname, m in members_by_name.items():
                         if m["name"].split()[-1].lower()==last.lower():
                             if cls=="pro_arms" and "nay" in vtxt:
-                                m["antiArms"]=True; m["antiArmsLevel"]="hard"
+                                m["antiArms"]=True; m["antiArmsLevel"]="yes"
                                 m["votes"].append({"bill":b.get("bill_number",""),"vote":"No","desc":desc})
-                            elif cls=="anti_arms" and "yea" in vtxt:
-                                m["antiArms"]=True; m["antiArmsLevel"]="hard"
+                            elif cls=="anti_intervention" and "yea" in vtxt:
+                                m["antiArms"]=True; m["antiArmsLevel"]="yes"
                                 m["votes"].append({"bill":b.get("bill_number",""),"vote":"Yes","desc":desc})
                 vote_records[str(rid)] = {"desc":desc,"bill":b.get("bill_number",""),"date":rc.get("date",""),"yeas":rc.get("yeas",0),"nays":rc.get("nays",0)}
                 time.sleep(0.3)
@@ -1066,7 +1066,7 @@ def fetch_fec_candidates_2026(ta_endorsed, rlc_endorsed):
 
 def fetch_poly(members, races=None):
     """
-    Fetches Polymarket win probabilities for anti-arms members + 2026 races.
+    Fetches Polymarket win probabilities for anti-intervention members + 2026 races.
 
     TWO-PASS STRATEGY (no API key required — all public endpoints):
 
@@ -1101,7 +1101,7 @@ def fetch_poly(members, races=None):
     print("\nFetching Polymarket (Gamma catalog + CLOB midpoint, no auth) …")
     results = {}
 
-    # Build candidate list: anti-arms incumbents + all race entries
+    # Build candidate list: anti-intervention incumbents + all race entries
     candidates = {}  # name → {name, type}
     for m in members:
         if m.get("antiArms") and m["name"] not in candidates:
@@ -1317,15 +1317,15 @@ def detect_history_changes(old_members, new_members, ta_congress):
     for nk, nm in new_by_name.items():
         om = old_by_name.get(nk)
         if not om:
-            if nm.get("antiArms"): add(nk,nm,"pro_to_anti","First detected as anti-arms")
+            if nm.get("antiArms"): add(nk,nm,"pro_to_anti","First detected as anti-intervention")
             continue
         if om.get("antiArms") and not nm.get("antiArms"):
-            add(nk,nm,"anti_to_pro","No longer flagged as anti-arms")
+            add(nk,nm,"anti_to_pro","No longer flagged as anti-intervention")
         elif not om.get("antiArms") and nm.get("antiArms"):
-            add(nk,nm,"pro_to_anti","Newly flagged as anti-arms")
-        elif om.get("antiArmsLevel")=="soft" and nm.get("antiArmsLevel")=="hard":
+            add(nk,nm,"pro_to_anti","Newly flagged as anti-intervention")
+        elif om.get("antiArmsLevel")=="yes" and nm.get("antiArmsLevel")=="yes":
             add(nk,nm,"soft_to_hard",f"Upgraded to Hard via co-sponsorship or vote record")
-        elif om.get("antiArmsLevel")=="hard" and nm.get("antiArmsLevel")=="soft":
+        elif om.get("antiArmsLevel")=="yes" and nm.get("antiArmsLevel")=="yes":
             add(nk,nm,"hard_to_soft","Downgraded from Hard — may have withdrawn co-sponsorship")
 
     for ok, om in old_by_name.items():
@@ -1587,16 +1587,15 @@ def main():
     races = wire_polymarket_to_races(races, poly)
 
     anti = sum(1 for m in members if m["antiArms"])
-    hard = sum(1 for m in members if m.get("antiArmsLevel")=="hard")
+    hard = sum(1 for m in members if m.get("antiArmsLevel")=="yes")
 
     data = {
         "meta": {
             "fetched_at":         datetime.now(timezone.utc).isoformat(),
             "trackaipac_scraped": datetime.now(timezone.utc).isoformat() if should_scrape else last_scraped,
             "member_count":       len(members),
-            "anti_arms_count":    anti,
-            "hard_count":         hard,
-            "soft_count":         anti - hard,
+            "anti_intervention_count":    anti,
+            "anti_intervention_count": anti,
             "bill_count":         len(bills),
             "challenger_count":   len(challengers),
             "history_events":     len(history.get("events",[])),
@@ -1631,7 +1630,7 @@ def main():
 
     print(f"""
 ✓ data.json written (v7)
-  Members:           {len(members)} ({anti} anti-arms: {hard} hard, {anti-hard} soft)
+  Members:           {len(members)} ({anti} anti-intervention: {hard} {anti-hard} soft)
   Bills:             {len(bills)}
   House votes:       {len(house_votes)} relevant roll calls
   Challengers:       {len(challengers)}
