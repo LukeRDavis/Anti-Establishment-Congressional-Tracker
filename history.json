@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-03-06T13:13:12.790253+00:00",
+  "last_updated": "2026-03-06T13:24:32.982431+00:00",
   "events": [
     {
       "id": "c22594f611",
@@ -491,6 +491,42 @@
       "party": "D",
       "change": "soft_to_hard",
       "trigger": "Upgraded to Hard via co-sponsorship or vote record",
+      "source": "trackaipac+rlc"
+    },
+    {
+      "id": "6bd1db0c02",
+      "date": "2026-03-06",
+      "detected_at": "2026-03-06T13:24:32.982431+00:00",
+      "member": "Brian Schatz",
+      "chamber": "senate",
+      "state": "HI",
+      "party": "D",
+      "change": "anti_to_pro",
+      "trigger": "No longer flagged as anti-intervention",
+      "source": "trackaipac+rlc"
+    },
+    {
+      "id": "e04c9de4f0",
+      "date": "2026-03-06",
+      "detected_at": "2026-03-06T13:24:32.982431+00:00",
+      "member": "Jamie Raskin",
+      "chamber": "house",
+      "state": "MD",
+      "party": "D",
+      "change": "anti_to_pro",
+      "trigger": "No longer flagged as anti-intervention",
+      "source": "trackaipac+rlc"
+    },
+    {
+      "id": "d2b87784d3",
+      "date": "2026-03-06",
+      "detected_at": "2026-03-06T13:24:32.982431+00:00",
+      "member": "Elizabeth Warren",
+      "chamber": "senate",
+      "state": "MA",
+      "party": "D",
+      "change": "anti_to_pro",
+      "trigger": "No longer flagged as anti-intervention",
       "source": "trackaipac+rlc"
     },
     {

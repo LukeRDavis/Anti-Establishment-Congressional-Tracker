@@ -1,12 +1,12 @@
 {
   "meta": {
-    "fetched_at": "2026-03-06T13:14:55.722720+00:00",
-    "trackaipac_scraped": "2026-03-06T13:14:55.722741+00:00",
+    "fetched_at": "2026-03-06T13:26:09.367624+00:00",
+    "trackaipac_scraped": "2026-03-06T13:26:09.367640+00:00",
     "member_count": 532,
-    "anti_intervention_count": 41,
+    "anti_intervention_count": 38,
     "bill_count": 0,
     "challenger_count": 77,
-    "history_events": 83,
+    "history_events": 86,
     "version": 7,
     "sources": {
       "members": "trackaipac.com + rlc.org Liberty Index",
@@ -1881,7 +1881,7 @@
       "ps": "INCUMBENT",
       "bills": [],
       "votes": [],
-      "note": "No on HR 8034; positions inconsistent \u2014 classified soft"
+      "note": "No on HR 8034 (Israel aid supplemental, Apr 2024); positions have shifted"
     },
     {
       "bioguide_id": "",
@@ -3198,8 +3198,8 @@
       "state": "HI",
       "district": null,
       "chamber": "senate",
-      "antiArms": true,
-      "antiArmsLevel": "yes",
+      "antiArms": false,
+      "antiArmsLevel": null,
       "rlc_score": null,
       "lobby_total": 716215,
       "pacs": [
@@ -3214,7 +3214,7 @@
       "ps": "INCUMBENT",
       "bills": [],
       "votes": [],
-      "note": "Signed letters on arms conditions; no JRD co-sponsorship yet"
+      "note": ""
     },
     {
       "bioguide_id": "",
@@ -4966,8 +4966,8 @@
       "state": "MD",
       "district": 8,
       "chamber": "house",
-      "antiArms": true,
-      "antiArmsLevel": "yes",
+      "antiArms": false,
+      "antiArmsLevel": null,
       "rlc_score": null,
       "lobby_total": 1238058,
       "pacs": [
@@ -4977,7 +4977,7 @@
       "ps": "INCUMBENT",
       "bills": [],
       "votes": [],
-      "note": "Called for arms conditions; voting record mixed"
+      "note": ""
     },
     {
       "bioguide_id": "",
@@ -4986,8 +4986,8 @@
       "state": "MA",
       "district": null,
       "chamber": "senate",
-      "antiArms": true,
-      "antiArmsLevel": "yes",
+      "antiArms": false,
+      "antiArmsLevel": null,
       "rlc_score": null,
       "lobby_total": 1385014,
       "pacs": [
@@ -4996,7 +4996,7 @@
       "ps": "INCUMBENT",
       "bills": [],
       "votes": [],
-      "note": "Called for arms review; no JRD co-sponsorship yet"
+      "note": ""
     },
     {
       "bioguide_id": "",
@@ -22214,5 +22214,6 @@
       ],
       "url": "https://clerk.house.gov/Votes/2024153"
     }
-  }
+  },
+  "ai_cache": {}
 }
