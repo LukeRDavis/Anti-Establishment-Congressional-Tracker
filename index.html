@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>Anti-Arms Congress Tracker</title>
-  <meta name="description" content="Live tracker of US Congress members who oppose arms sales to Israel — seating chart, Polymarket odds, FEC finance data." />
-  <meta property="og:title"       content="Anti-Arms Congress Tracker" />
-  <meta property="og:description" content="Interactive hemicycle map of every anti-arms member of Congress, with Polymarket odds, FEC finance data, and tracked legislation." />
+  <title>Anti-Establishment Congressional Tracker</title>
+  <meta name="description" content="Non-partisan tracker of US Congress members who oppose foreign interventionism — seating chart, Polymarket odds, FEC finance data." />
+  <meta property="og:title"       content="Anti-Establishment Congressional Tracker" />
+  <meta property="og:description" content="Non-partisan hemicycle map of every anti-intervention member of Congress — progressives, constitutionalists, and libertarians united." />
   <meta property="og:type"        content="website" />
-  <meta property="og:url"         content="https://lukerdavis.github.io/Anti-Arms-Congress-Tracker/" />
-  <meta property="og:image"       content="https://lukerdavis.github.io/Anti-Arms-Congress-Tracker/og-preview.png" />
+  <meta property="og:url"         content="https://lukerdavis.github.io/Anti-Establishment-Congressional-Tracker/" />
+  <meta property="og:image"       content="https://lukerdavis.github.io/Anti-Establishment-Congressional-Tracker/og-preview.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card"       content="summary_large_image" />
-  <meta name="twitter:image"      content="https://lukerdavis.github.io/Anti-Arms-Congress-Tracker/og-preview.png" />
+  <meta name="twitter:image"      content="https://lukerdavis.github.io/Anti-Establishment-Congressional-Tracker/og-preview.png" />
 
   <script src="https://unpkg.com/preact@10/dist/preact.umd.js"></script>
   <script src="https://unpkg.com/preact@10/hooks/dist/hooks.umd.js"></script>
@@ -80,41 +80,69 @@ const THRESHOLDS = {
 //  #991b1b      #a855f7          #c026d3           #7c3aed           #818cf8              #1e40af
 
 function dotColor(m) {
-  if (!m.antiArms) {
-    if (m.party === "R") return "#991b1b";
-    if (m.party === "D") return "#1e40af";
-    return "#9ca3af";
-  }
-  const hard = m.antiArmsLevel === "hard";
-  if (m.party === "R") return hard ? "#c026d3" : "#a855f7";
-  return hard ? "#7c3aed" : "#818cf8";
+  if (!m.antiArms) return "#1e2230";
+  if (m.party === "R") return "#e879f9";   // fuchsia — R anti-intervention
+  if (m.party === "I") return "#a3e635";   // lime    — Independent
+  return "#818cf8";                         // indigo  — D anti-intervention
 }
+
+
 function antiArmsTag(m) {
   if (!m.antiArms) return null;
-  return m.antiArmsLevel === "hard" ? "Hard Anti-Arms" : "Soft Anti-Arms";
+  return "Anti-Intervention";
 }
+
+
 function antiArmsTagColor(m) {
-  if (!m.antiArms) return "#9ca3af";
-  return m.antiArmsLevel === "hard"
-    ? (m.party === "R" ? "#c026d3" : "#7c3aed")
-    : (m.party === "R" ? "#a855f7" : "#818cf8");
+  if (!m.antiArms) return "#374151";
+  if (m.party === "R") return "#e879f9";
+  if (m.party === "I") return "#a3e635";
+  return "#818cf8";
 }
-function computeHemicycle(n, cx, cy, innerR, spacing, rows) {
-  const radii  = Array.from({length:rows}, (_,i) => innerR + i*spacing);
-  const total  = radii.reduce((s,r) => s+r, 0);
-  let   perRow = radii.map(r => Math.round((r/total)*n));
-  perRow[perRow.length-1] += n - perRow.reduce((a,b)=>a+b, 0);
-  const pts = [];
-  for (let row=0; row<rows; row++) {
-    const r=radii[row], c=perRow[row];
-    for (let s=0; s<c; s++) {
-      const a = Math.PI*(s/(c-1||1));
-      pts.push({x: cx - r*Math.cos(a), y: cy - r*Math.sin(a), angle: a});
+
+
+function computeHemicycle(members, chamber) {
+  const chMem = members.filter(m =>
+    m.chamber === chamber &&
+    !["RETIRED","RESIGNED","DEFEATED","RETIRING","FAILED_PRIMARY"].includes(m.ps)
+  );
+  const antiR = chMem.filter(m => m.antiArms && m.party === "R");
+  const antiD = chMem.filter(m => m.antiArms && m.party !== "R");
+  const rest  = chMem.filter(m => !m.antiArms);
+
+  const total = chMem.length || (chamber === "senate" ? 100 : 435);
+  const seats = [];
+  const toSeats = arr => arr.map(m => ({...m, _color: dotColor(m)}));
+
+  // Order: R anti-intervention, rest (gray), D anti-intervention
+  const allSeats = [
+    ...toSeats(antiR),
+    ...rest.map(m => ({...m, _color: "#1e2230"})),
+    ...toSeats(antiD),
+  ];
+
+  // Hemicycle layout — rows from outside in
+  const rows   = chamber === "senate" ? [34, 33, 33] : [80, 80, 90, 90, 95];
+  let   idx    = 0;
+  const result = [];
+  rows.forEach((count, ri) => {
+    const r      = 90 - ri * 18;
+    const spread = 180;
+    for (let i = 0; i < count && idx < allSeats.length; i++, idx++) {
+      const angle = (spread / (count - 1)) * i;
+      const rad   = (angle - 90) * Math.PI / 180;
+      result.push({
+        ...allSeats[idx],
+        cx: 100 + r * Math.cos(rad),
+        cy: 100 + r * Math.sin(rad),
+        r:  chamber === "senate" ? 4.5 : 3.2,
+      });
     }
-  }
-  pts.sort((a,b) => b.angle - a.angle || a.y - b.y);
-  return pts;
+  });
+  return result;
 }
+
+
 function buildMembers(allMembers, chamber) {
   const ch    = chamber === "house" ? "house" : "senate";
   const chMem = allMembers.filter(m => m.chamber === ch);
@@ -147,118 +175,88 @@ function fmtM(n) {
   if (n>=1e3) return "$"+Math.round(n/1e3)+"K";
   return "$"+n;
 }
-function StatusBadge({ps, prob}) {
-  const isInc = ps==="INCUMBENT"||ps==="INCUMBENT_RISK";
-  if (isInc && prob!=null) {
-    const pct=Math.round(prob*100), risk=prob<0.65;
-    return html`<span style=${{fontSize:9,padding:"1px 6px",borderRadius:3,fontFamily:"monospace",whiteSpace:"nowrap",
-      background:risk?"rgba(251,191,36,.15)":"rgba(34,197,94,.1)",color:risk?"#fbbf24":"#4ade80"}}>
-      ${risk?"⚡ At Risk · "+pct+"%":"✓ "+pct+"%"}
-    </span>`;
-  }
+function StatusBadge({ps}) {
   const MAP = {
-    INCUMBENT:       {bg:"rgba(34,197,94,.1)",   c:"#4ade80",t:"✓ Incumbent"},
-    INCUMBENT_RISK:  {bg:"rgba(251,191,36,.15)", c:"#fbbf24",t:"⚡ At Risk"},
-    DEFEATED:        {bg:"rgba(239,68,68,.13)",  c:"#f87171",t:"✗ Defeated"},
-    RESIGNED:        {bg:"rgba(156,163,175,.1)", c:"#9ca3af",t:"Resigned"},
-    RETIRED:         {bg:"rgba(156,163,175,.1)", c:"#9ca3af",t:"Retired"},
-    RETIRING:        {bg:"rgba(156,163,175,.1)", c:"#9ca3af",t:"Retiring '26"},
-    FLIPPED:         {bg:"rgba(251,191,36,.13)", c:"#fbbf24",t:"~ Flipped"},
-    RUNOFF:          {bg:"rgba(251,191,36,.15)", c:"#f59e0b",t:"⚡ Runoff"},
-    RECOUNT:         {bg:"rgba(251,191,36,.15)", c:"#f59e0b",t:"🔄 Recount"},
-    UPCOMING:        {bg:"rgba(139,92,246,.12)", c:"#a78bfa",t:"🗓 Upcoming"},
-    RESULTS_PENDING: {bg:"rgba(251,191,36,.15)", c:"#fbbf24",t:"📊 Pending"},
-    WON:             {bg:"rgba(34,197,94,.13)",  c:"#4ade80",t:"✓ WON"},
-    GENERAL:         {bg:"rgba(139,92,246,.12)", c:"#a78bfa",t:"🗓 General"},
+    INCUMBENT:       ["#374151","#9ca3af"],
+    CHALLENGER:      ["#064e3b","#4ade80"],
+    ENDORSED:        ["#1e3a8a","#93c5fd"],
+    RETIRED:         ["#1a1d27","#374151"],
+    RESIGNED:        ["#1a1d27","#374151"],
+    DEFEATED:        ["#3b0000","#f87171"],
+    RETIRING:        ["#1a1d27","#6b7280"],
+    FAILED_PRIMARY:  ["#3b0000","#f87171"],
   };
-  const s = MAP[ps]||{bg:"transparent",c:"#9ca3af",t:ps||"—"};
-  return html`<span style=${{fontSize:9,padding:"1px 6px",borderRadius:3,fontFamily:"monospace",whiteSpace:"nowrap",background:s.bg,color:s.c}}>${s.t}</span>`;
+  const [bg, fg] = MAP[ps] || ["#1a1d27","#4b5563"];
+  return html`<span style=${{
+    fontSize:7, fontFamily:"monospace", padding:"1px 5px",
+    borderRadius:3, background:bg, color:fg,
+    border:"1px solid "+fg+"30", letterSpacing:"0.06em",
+  }}>${ps||"?"}</span>`;
 }
-function ArmsBadge({m}) {
-  if (!m || !m.antiArms) return null;
-  const hard  = m.antiArmsLevel === "hard";
-  const color = antiArmsTagColor(m);
-  const bg    = hard ? color+"22" : color+"14";
-  return html`<span style=${{fontSize:8,padding:"1px 6px",borderRadius:3,fontFamily:"monospace",
-    whiteSpace:"nowrap",background:bg,color,border:"1px solid "+color+"33"}}>
-    ${hard ? "⚡ Hard Anti-Arms" : "◦ Soft Anti-Arms"}
-  </span>`;
+
+
+function ArmsBadge({member}) {
+  if (!member.antiArms) return null;
+  const color = antiArmsTagColor(member);
+  return html`<span style=${{
+    fontSize:7, fontFamily:"monospace", padding:"1px 6px",
+    borderRadius:3, background:color+"18", color,
+    border:"1px solid "+color+"30", letterSpacing:"0.06em",
+  }}>◈ Anti-Intervention</span>`;
 }
+
+
 function ProgressBars({chamber, members, allMembers, racesData, polyData}) {
-  const hard    = members.filter(m => m.antiArms && m.antiArmsLevel === "hard").length;
-  const soft    = members.filter(m => m.antiArms && m.antiArmsLevel !== "hard").length;
-  const current = hard + soft;
+  const current = members.filter(m => m.antiArms).length;
 
-  // ── Probability model ────────────────────────────────────────────────────
-  // Each current anti-arms seat has a retention probability (from Polymarket or default).
-  // Each challenger race has a win probability.
-  // Coalition size = sum of independent Bernoulli trials → normal approximation.
-  // P(reach N) = Φ((μ - N) / σ)  where σ = sqrt(Σ p*(1-p))
-  //
-  // Sources (in priority order):
-  //   1. Polymarket market for that candidate (live, most accurate)
-  //   2. KEY_RACES_2026 winProb for named members
-  //   3. Default retention rates: incumbents 0.88, challengers 0.30
+  // ── Probability model (Poisson-binomial normal approximation) ──────────
+  const races  = (racesData && racesData.length > 0) ? racesData : KEY_RACES_2026;
+  const ch     = chamber;
 
-  const races    = (racesData && racesData.length > 0) ? racesData : KEY_RACES_2026;
-  const ch       = chamber;  // "house" or "senate"
-
-  // Build a list of probability trials for THIS chamber's anti-arms seats
   const trials = [];
-
-  // Current anti-arms incumbents (this chamber only)
   members.filter(m => m.antiArms).forEach(m => {
     const race    = races.find(r => r.name === m.name && r.chamber === ch);
     const polyMkt = polyData && polyData[m.name];
     let   p;
-    if (polyMkt && polyMkt.prob != null)           p = polyMkt.prob;
-    else if (race && race.win_prob != null)         p = race.win_prob;
-    else if (race && race.winProb != null)          p = race.winProb;
-    else if (race && race.departing)               p = 0;
-    else                                           p = 0.88;  // default incumbent retention
-    trials.push({name: m.name, p, src: polyMkt ? "poly" : race ? "race" : "default"});
+    if (polyMkt && polyMkt.prob != null)      p = polyMkt.prob;
+    else if (race && race.win_prob != null)    p = race.win_prob;
+    else if (race && race.winProb != null)     p = race.winProb;
+    else if (race && race.departing)           p = 0;
+    else                                       p = 0.88;
+    trials.push({name: m.name, p});
   });
-
-  // Anti-arms challengers for this chamber not yet in Congress
   races
     .filter(r => r.chamber === ch && (r.type === "challenger" || r.raceType === "CHALLENGER"))
     .forEach(r => {
-      const polyMkt = polyData && polyData[r.name];
-      const p = polyMkt && polyMkt.prob != null ? polyMkt.prob :
-                r.win_prob != null ? r.win_prob :
-                r.winProb  != null ? r.winProb  : 0.20;
-      trials.push({name: r.name, p, src: polyMkt ? "poly" : "race"});
+      const pm = polyData && polyData[r.name];
+      const p  = pm && pm.prob != null ? pm.prob : r.win_prob != null ? r.win_prob : 0.20;
+      trials.push({name: r.name, p});
     });
 
-  // μ and σ² from Poisson-binomial
-  const mu      = trials.reduce((s, t) => s + t.p, 0);
-  const sigma2  = trials.reduce((s, t) => s + t.p * (1 - t.p), 0);
-  const sigma   = Math.sqrt(Math.max(sigma2, 0.01));
-  const polyCount = trials.filter(t => t.src === "poly").length;
+  const mu     = trials.reduce((s, t) => s + t.p, 0);
+  const sigma2 = trials.reduce((s, t) => s + t.p * (1 - t.p), 0);
+  const sigma  = Math.sqrt(Math.max(sigma2, 0.01));
+  const polyCount = trials.filter(t => {
+    const pm = polyData && polyData[t.name];
+    return pm && pm.prob != null;
+  }).length;
 
-  // Normal CDF approximation (Abramowitz & Stegun)
   function normCDF(z) {
-    if (z > 6)  return 1;
-    if (z < -6) return 0;
+    if (z > 6) return 1; if (z < -6) return 0;
     const t = 1 / (1 + 0.2315419 * Math.abs(z));
     const d = 0.3989423 * Math.exp(-z * z / 2);
     const p = d * t * (0.3193815 + t * (-0.3565638 + t * (1.7814779 + t * (-1.8212560 + t * 1.3302744))));
     return z > 0 ? 1 - p : p;
   }
-
   function pReach(n) {
-    // P(X >= n) using normal approx with continuity correction
-    const z = (n - 0.5 - mu) / sigma;
-    return Math.max(0, Math.min(1, normCDF(-z)));
+    return Math.max(0, Math.min(1, normCDF(-(n - 0.5 - mu) / sigma)));
   }
-
   function probColor(p) {
-    if (p >= 0.7) return "#4ade80";
-    if (p >= 0.4) return "#fbbf24";
+    if (p >= 0.7)  return "#4ade80";
+    if (p >= 0.4)  return "#fbbf24";
     if (p >= 0.15) return "#f97316";
     return "#f87171";
   }
-
   function probLabel(p) {
     if (p >= 0.85) return "Very Likely";
     if (p >= 0.65) return "Likely";
@@ -270,118 +268,81 @@ function ProgressBars({chamber, members, allMembers, racesData, polyData}) {
   return html`
     <div style=${{background:"#0f1117",border:"1px solid #1e2230",borderRadius:12,padding:"12px 14px",width:"100%",boxSizing:"border-box"}}>
       <div style=${{fontSize:9,color:"#a78bfa",fontFamily:"monospace",letterSpacing:"0.14em",textTransform:"uppercase",marginBottom:7}}>
-        ◈ Anti-Arms Coalition · ${chamber === "senate" ? "Senate" : "House"}
+        ◈ Anti-Intervention Coalition · ${chamber === "senate" ? "Senate" : "House"}
       </div>
 
-      <!-- Hard/soft legend -->
-      <div style=${{display:"flex",gap:12,marginBottom:7,flexWrap:"wrap"}}>
-        <span style=${{fontSize:8,fontFamily:"monospace",display:"flex",alignItems:"center",gap:4}}>
-          <span style=${{width:9,height:9,borderRadius:2,background:"#7c3aed",display:"inline-block",flexShrink:0}}/>
-          <span style=${{color:"#a78bfa",fontWeight:600}}>Hard ${hard}</span>
-          <span style=${{color:"#374151"}}> co-sponsored or voted on record</span>
+      <div style=${{display:"flex",gap:8,marginBottom:7,flexWrap:"wrap",alignItems:"center",fontFamily:"monospace",fontSize:8}}>
+        <span style=${{display:"flex",alignItems:"center",gap:4}}>
+          <span style=${{width:9,height:9,borderRadius:2,background:"#818cf8",display:"inline-block"}}/>
+          <span style=${{color:"#818cf8",fontWeight:600}}>${current} Anti-Intervention</span>
         </span>
-        <span style=${{fontSize:8,fontFamily:"monospace",display:"flex",alignItems:"center",gap:4}}>
-          <span style=${{width:9,height:9,borderRadius:2,background:"#818cf8",opacity:0.7,display:"inline-block",flexShrink:0}}/>
-          <span style=${{color:"#818cf8",fontWeight:600}}>Soft ${soft}</span>
-          <span style=${{color:"#374151"}}> rejects AIPAC, no vote yet</span>
+        <span style=${{color:"#4b5563"}}>·</span>
+        <span style=${{color:"#374151"}}>Expected by Nov 2026:
+          <span style=${{color:"#a5b4fc",fontWeight:600}}> μ=${mu.toFixed(1)}</span>
+          <span style=${{color:"#374151"}}> ± ${sigma.toFixed(1)}</span>
         </span>
-      </div>
-
-      <!-- μ summary line -->
-      <div style=${{fontSize:8,fontFamily:"monospace",color:"#4b5563",marginBottom:10,lineHeight:1.6}}>
-        Expected by Nov 2026:
-        <span style=${{color:"#a5b4fc",fontWeight:600}}> μ=${mu.toFixed(1)}</span>
-        <span style=${{color:"#374151"}}> ± ${sigma.toFixed(1)}</span>
-        <span style=${{color:"#1e2230"}}> · </span>
-        <span style=${{color:"#374151"}}>based on ${trials.length} seats</span>
-        ${polyCount > 0 ? html`
-          <span style=${{color:"#1e2230"}}> · </span>
-          <span style=${{color:"#4ade80"}}>◉ ${polyCount} live Polymarket odds</span>` : null}
+        ${polyCount > 0 ? html`<span style=${{color:"#4ade80",fontSize:7}}>◉ ${polyCount} live</span>` : null}
       </div>
 
       ${THRESHOLDS[chamber].map((th, i) => {
-        const hardPct  = Math.min(100, Math.round((hard / th.n) * 100));
-        const softPct  = Math.min(100 - hardPct, Math.round((soft / th.n) * 100));
-        const reached  = current >= th.n;
-        const hardHit  = hard >= th.n;
-        const prob     = pReach(th.n);
-        const pc       = probColor(prob);
-        const pl       = probLabel(prob);
-        const pct      = Math.round(prob * 100);
-        const need     = Math.max(0, th.n - current);
+        const pct     = Math.min(100, Math.round((current / th.n) * 100));
+        const reached = current >= th.n;
+        const prob    = pReach(th.n);
+        const pc      = probColor(prob);
+        const pl      = probLabel(prob);
+        const need    = Math.max(0, th.n - current);
+        const muPct   = Math.min(99, Math.round((mu / th.n) * 100));
 
         return html`
           <div key=${i} style=${{marginBottom: i < THRESHOLDS[chamber].length - 1 ? 16 : 0}}>
-
-            <!-- Row 1: label + current count + probability pill -->
             <div style=${{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:3,flexWrap:"wrap",gap:3}}>
               <span style=${{fontSize:10,color:reached?"#4ade80":th.color,fontWeight:600,fontFamily:"monospace"}}>
                 ${th.label}
                 <span style=${{fontSize:9,fontWeight:400,color:"#374151"}}> / ${th.n}</span>
               </span>
               <div style=${{display:"flex",gap:5,alignItems:"center"}}>
-                <!-- Current count -->
                 <span style=${{fontSize:9,fontFamily:"monospace",color:reached?"#4ade80":"#6b7280"}}>
-                  ${hard}H + ${soft}S = ${current}${reached?" ✓":""}
+                  ${current}/${th.n}${reached ? " ✓" : ""}
                 </span>
-                <!-- Probability pill -->
                 <span style=${{
                   fontSize:9,fontFamily:"monospace",fontWeight:700,
                   padding:"1px 7px",borderRadius:4,
-                  background:pc+"18",color:pc,
-                  border:"1px solid "+pc+"40",
+                  background:pc+"18",color:pc,border:"1px solid "+pc+"40",
                   minWidth:44,textAlign:"center",
                 }}>
-                  ${reached ? "100%" : pct+"%"}
+                  ${reached ? "100%" : Math.round(prob*100)+"%"}
                 </span>
               </div>
             </div>
 
-            <!-- Row 2: stacked bar -->
             <div style=${{height:7,borderRadius:4,background:"#1a1d27",overflow:"hidden",marginBottom:4,position:"relative"}}>
               <div style=${{position:"absolute",left:0,top:0,height:"100%",
-                width:hardPct+"%",background:hardHit?"#4ade80":"#7c3aed",
+                width:pct+"%",background:reached?"#4ade80":"#818cf8",
                 borderRadius:4,transition:"width 0.8s ease"}}/>
-              <div style=${{position:"absolute",left:hardPct+"%",top:0,height:"100%",
-                width:softPct+"%",background:"#818cf8",opacity:0.6,
-                transition:"all 0.8s ease"}}/>
-              <!-- μ tick mark — where expected value lands relative to threshold -->
               ${!reached ? html`
-                <div style=${{
-                  position:"absolute",top:0,height:"100%",width:2,
-                  background:"#a5b4fc",opacity:0.5,
-                  left:Math.min(99, Math.round((mu/th.n)*100))+"%",
-                }}/>` : null}
+                <div style=${{position:"absolute",top:0,height:"100%",width:2,
+                  background:"#a5b4fc",opacity:0.5,left:muPct+"%"}}/>` : null}
             </div>
 
-            <!-- Row 3: probability explanation -->
             <div style=${{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:3}}>
               <div style=${{fontSize:8,fontFamily:"monospace",color:pc,flex:1}}>
                 ${reached
                   ? "✓ Threshold reached with current coalition"
                   : pl + " by Nov 2026 — need " + need + " more (μ=" + mu.toFixed(1) + ", σ=" + sigma.toFixed(1) + ")"}
               </div>
-              ${!reached ? html`
-                <div style=${{fontSize:7,fontFamily:"monospace",color:"#374151",textAlign:"right",lineHeight:1.4}}>
-                  ${hardHit
-                    ? "Hard threshold met"
-                    : "Hard-only: "+hard+"/"+th.n}
-                </div>` : null}
             </div>
-
-            <!-- Row 4: threshold description -->
             <div style=${{fontSize:9,color:"#374151",lineHeight:1.5,marginTop:2}}>${th.desc}</div>
           </div>`;
       })}
 
-      <!-- Data source footnote -->
       <div style=${{marginTop:10,paddingTop:7,borderTop:"1px solid #1a1d27",
         fontSize:7,color:"#1e2230",fontFamily:"monospace",lineHeight:1.7}}>
-        Probability model: Poisson-binomial normal approximation (μ=Σpᵢ, σ=√Σpᵢ(1−pᵢ)).
-        P(reach N) = Φ((μ−N+0.5)/σ). Win probs: Polymarket → KEY_RACES_2026 → default 0.88 retention.
+        P(reach N) = Φ((μ−N+0.5)/σ). Win probs: Polymarket live → race data → 0.88 default retention.
       </div>
     </div>`;
 }
+
+
 function BillsPanel({bills}) {
   if (!bills||bills.length===0) return null;
   const anti = bills.filter(b=>b.classification==="anti_arms");
@@ -415,7 +376,7 @@ function BillsPanel({bills}) {
         <div style=${{fontSize:8,color:"#374151",marginTop:2}}>${anti.length} arms-restricting · ${pro.length} arms-authorizing · refreshed from api.congress.gov</div>
       </div>
       ${anti.length>0?html`
-        <div style=${{padding:"3px 9px",background:"#0a0c10",fontSize:8,color:"#374151",fontFamily:"monospace",letterSpacing:"0.1em",textTransform:"uppercase"}}>Anti-Arms Legislation</div>
+        <div style=${{padding:"3px 9px",background:"#0a0c10",fontSize:8,color:"#374151",fontFamily:"monospace",letterSpacing:"0.1em",textTransform:"uppercase"}}>Anti-Intervention Legislation</div>
         ${anti.map((b,i)=>html`<${BillRow} key=${i} b=${b}/>`)}`:null}
       ${pro.length>0?html`
         <div style=${{padding:"3px 9px",background:"#0a0c10",fontSize:8,color:"#374151",fontFamily:"monospace",letterSpacing:"0.1em",textTransform:"uppercase"}}>Pro-Arms (tracked for No votes)</div>
@@ -492,9 +453,9 @@ function MemberBox({title, color, members, challengers, fecData, polyData, onSel
       </div>
       <div style=${{maxHeight:440,overflowY:"auto"}}>
         ${tab==="members"?html`
-          ${hard.length>0?html`<div style=${{padding:"3px 9px",background:"#090b0e",fontSize:8,color:"#374151",fontFamily:"monospace",letterSpacing:"0.1em",textTransform:"uppercase"}}>⚡ Hard Anti-Arms</div>`:null}
+          ${hard.length>0?html`<div style=${{padding:"3px 9px",background:"#090b0e",fontSize:8,color:"#374151",fontFamily:"monospace",letterSpacing:"0.1em",textTransform:"uppercase"}}>⚡ Anti-Intervention</div>`:null}
           <${Section} items=${hard}/>
-          ${soft.length>0?html`<div style=${{padding:"3px 9px",background:"#090b0e",fontSize:8,color:"#374151",fontFamily:"monospace",letterSpacing:"0.1em",textTransform:"uppercase"}}>◦ Soft Anti-Arms</div>`:null}
+          ${soft.length>0?html`<div style=${{padding:"3px 9px",background:"#090b0e",fontSize:8,color:"#374151",fontFamily:"monospace",letterSpacing:"0.1em",textTransform:"uppercase"}}>◦ Anti-Intervention</div>`:null}
           <${Section} items=${soft}/>
           <${Section} label="Departed" items=${departed}/>
         `:html`
@@ -641,7 +602,7 @@ function HistoryTimeline({history}) {
     filter==="departures" ? e.change==="departed" : true
   );
   const STYLE = {
-    pro_to_anti: {color:"#a78bfa",bg:"rgba(124,58,237,.13)",icon:"✦",label:"Pro → Anti-Arms"},
+    pro_to_anti: {color:"#a78bfa",bg:"rgba(124,58,237,.13)",icon:"✦",label:"Pro → Anti-Intervention"},
     anti_to_pro: {color:"#f87171",bg:"rgba(239,68,68,.13)", icon:"✗",label:"Anti → Pro-Arms"},
     departed:    {color:"#9ca3af",bg:"rgba(156,163,175,.1)",icon:"○",label:"Departed"},
   };
@@ -758,175 +719,419 @@ function FindMyRep({members, onHighlight}) {
     </div>`;
 }
 function useData() {
-  const [allMembers,   setMembers]     = useState([]);
-  const [races,        setRaces]       = useState([]);
-  const [bills,        setBills]       = useState([]);
-  const [challengers,  setChallengers] = useState([]);
-  const [history,      setHistory]     = useState({events:[]});
-  const [fecData,      setFec]         = useState({});
-  const [polyData,     setPoly]        = useState({});
-  const [fetchedAt,    setFetchedAt]   = useState(null);
-  const [status,       setStatus]      = useState("Loading…");
-  const [loaded,       setLoaded]      = useState(false);
+  const [allMembers,   setMembers]   = useState([]);
+  const [races,        setRaces]     = useState([]);
+  const [bills,        setBills]     = useState([]);
+  const [challengers,  setChalls]    = useState([]);
+  const [history,      setHistory]   = useState({events:[]});
+  const [fecData,      setFec]       = useState({});
+  const [polyBase,     setPolyBase]  = useState({});  // data.json snapshot (has token_ids)
+  const [polyLive,     setPolyLive]  = useState({});  // live CLOB prices
+  const [polyUpdated,  setPolyUpd]   = useState(null);
+  const [polyLoading,  setPolyLoad]  = useState(false);
+  const [fetchedAt,    setFetchedAt] = useState(null);
+  const [status,       setStatus]    = useState("Loading…");
+  const [loaded,       setLoaded]    = useState(false);
 
+  // ── Helpers ──────────────────────────────────────────────────────────────
+
+  const GAMMA = "https://gamma-api.polymarket.com";
+  const CLOB  = "https://clob.polymarket.com";
+
+  function safeFloat(v) {
+    const n = parseFloat(v);
+    return isNaN(n) ? null : n;
+  }
+
+  // Extract YES token_id from a Gamma market object
+  function extractYesToken(mk) {
+    const tokens = mk.tokens || mk.clobTokenIds || [];
+    let yes = null, no = null;
+    for (const tok of tokens) {
+      if (tok && typeof tok === "object") {
+        const out = (tok.outcome || "").toUpperCase();
+        const tid = tok.token_id || tok.tokenId || "";
+        if (out === "YES") yes = tid;
+        if (out === "NO")  no  = tid;
+      } else if (typeof tok === "string") {
+        if (!yes) yes = tok;
+        else if (!no) no = tok;
+      }
+    }
+    return {yes, no};
+  }
+
+  // ── Batch CLOB refresh (fast: 1 request for all known tokens) ────────────
+  async function batchRefreshCLOB(basePolyData) {
+    // Collect all YES token_ids from the data.json snapshot
+    const tokenMap = {};  // token_id → candidate name
+    for (const [name, pd] of Object.entries(basePolyData)) {
+      if (pd.token_id) tokenMap[pd.token_id] = name;
+    }
+    const tokenIds = Object.keys(tokenMap);
+    if (tokenIds.length === 0) return {};
+
+    // CLOB batch midpoints endpoint — GET with comma-separated token_ids
+    // Falls back to individual calls if batch fails
+    const fresh = {};
+    try {
+      // Try batch GET (up to 500 ids)
+      const qs = tokenIds.map(id => "token_ids=" + encodeURIComponent(id)).join("&");
+      const r  = await fetch(CLOB + "/midpoints?" + qs);
+      if (r.ok) {
+        const data = await r.json();
+        // Response: [{token_id, mid}, ...] or {results: [...]}
+        const items = Array.isArray(data) ? data : (data.results || data.midpoints || []);
+        for (const item of items) {
+          const tid  = item.token_id || item.tokenId;
+          const mid  = safeFloat(item.mid || item.price);
+          const name = tokenMap[tid];
+          if (name && mid !== null && mid >= 0 && mid <= 1) {
+            fresh[name] = {
+              ...basePolyData[name],
+              prob:       mid,
+              src:        "polymarket_live",
+              fetched_at: new Date().toISOString(),
+            };
+          }
+        }
+        if (Object.keys(fresh).length > 0) {
+          console.log("Poly batch CLOB: " + Object.keys(fresh).length + "/" + tokenIds.length + " refreshed");
+          return fresh;
+        }
+      }
+    } catch (e) {
+      console.warn("Poly batch failed, falling back to individual:", e);
+    }
+
+    // Fallback: individual CLOB calls (in parallel, max 8 at once)
+    const chunkSize = 8;
+    for (let i = 0; i < tokenIds.length; i += chunkSize) {
+      const chunk = tokenIds.slice(i, i + chunkSize);
+      await Promise.all(chunk.map(async tid => {
+        try {
+          const r = await fetch(CLOB + "/midpoint?token_id=" + encodeURIComponent(tid));
+          if (!r.ok) return;
+          const d   = await r.json();
+          const mid = safeFloat(d.mid || d.price);
+          const name = tokenMap[tid];
+          if (name && mid !== null && mid >= 0 && mid <= 1) {
+            fresh[name] = {
+              ...basePolyData[name],
+              prob:       mid,
+              src:        "polymarket_live",
+              fetched_at: new Date().toISOString(),
+            };
+          }
+        } catch {}
+      }));
+      if (i + chunkSize < tokenIds.length) {
+        await new Promise(r => setTimeout(r, 100));
+      }
+    }
+    console.log("Poly individual CLOB: " + Object.keys(fresh).length + " refreshed");
+    return fresh;
+  }
+
+  // ── Gamma search for candidates NOT yet in poly data ─────────────────────
+  async function searchGammaForNew(memberList, racesList, existingPoly) {
+    const missing = [];
+    const seen    = new Set(Object.keys(existingPoly));
+
+    memberList.filter(m => m.antiArms).forEach(m => {
+      if (!seen.has(m.name)) missing.push(m.name);
+    });
+    racesList.forEach(r => {
+      if (r.name && !seen.has(r.name)) missing.push(r.name);
+    });
+
+    if (missing.length === 0) return {};
+
+    // Pass 1: catalog sweep for all missing names at once
+    const catalog = {};  // last_name_lower → market
+    const catalogQueries = [
+      "2026 congressional", "2026 senate", "2026 house", "midterm 2026"
+    ];
+    for (const q of catalogQueries) {
+      try {
+        for (const ep of ["markets", "events"]) {
+          const r = await fetch(GAMMA + "/" + ep + "?q=" + encodeURIComponent(q) + "&active=true&limit=50");
+          if (!r.ok) continue;
+          const data = await r.json();
+          const items = Array.isArray(data) ? data :
+            (data[ep] || data.data || data.markets || []);
+          for (const item of items) {
+            const markets = item.markets || [item];
+            for (const mk of markets) {
+              const title = (mk.question || mk.title || "").toLowerCase();
+              if (!/win|elect|primary|congress|senate|house|seat|race|general/i.test(title)) continue;
+              for (const name of missing) {
+                const last = name.split(" ").pop().toLowerCase();
+                if (title.includes(last) && !catalog[last]) catalog[last] = mk;
+              }
+            }
+          }
+        }
+      } catch {}
+      await new Promise(r => setTimeout(r, 200));
+    }
+
+    // Pass 2: per-candidate search for remaining
+    const fresh = {};
+    for (const name of missing) {
+      const last = name.split(" ").pop().toLowerCase();
+      let mk = catalog[last];
+
+      if (!mk) {
+        // Individual search
+        for (const q of [name, last + " 2026", last + " congress"]) {
+          try {
+            const r = await fetch(GAMMA + "/markets?q=" + encodeURIComponent(q) + "&limit=8");
+            if (!r.ok) continue;
+            const data = await r.json();
+            const items = Array.isArray(data) ? data : (data.markets || []);
+            mk = items.find(m => {
+              const t = (m.question || m.title || "").toLowerCase();
+              return t.includes(last) && /win|elect|primary|congress|senate|house|general/i.test(t);
+            });
+            if (mk) break;
+          } catch {}
+          await new Promise(r => setTimeout(r, 250));
+        }
+      }
+
+      if (!mk) continue;
+
+      const {yes, no} = extractYesToken(mk);
+      let prob = null, src = "polymarket_gamma";
+
+      if (yes) {
+        try {
+          const r = await fetch(CLOB + "/midpoint?token_id=" + encodeURIComponent(yes));
+          if (r.ok) {
+            const d = await r.json();
+            const mid = safeFloat(d.mid);
+            if (mid !== null) { prob = mid; src = "polymarket_live"; }
+          }
+        } catch {}
+      }
+
+      // Fallback: Gamma lastTradePrice / outcomePrices
+      if (prob === null) {
+        const ltp = mk.lastTradePrice || mk.last_trade_price;
+        if (ltp != null) { prob = safeFloat(ltp); }
+        else {
+          const op = mk.outcomePrices;
+          if (op) {
+            try {
+              const arr = typeof op === "string" ? JSON.parse(op) : op;
+              if (arr && arr.length > 0) prob = safeFloat(arr[0]);
+            } catch {}
+          }
+        }
+      }
+
+      if (prob !== null && prob >= 0 && prob <= 1) {
+        const slug = mk.slug || "";
+        fresh[name] = {
+          prob,
+          src,
+          question:     mk.question || mk.title || "",
+          condition_id: mk.conditionId || "",
+          token_id:     yes || "",
+          no_token_id:  no  || "",
+          slug,
+          volume:       safeFloat(mk.volume) || 0,
+          url:          slug ? "https://polymarket.com/event/" + slug : "https://polymarket.com",
+          fetched_at:   new Date().toISOString(),
+        };
+      }
+      await new Promise(r => setTimeout(r, 300));
+    }
+
+    if (Object.keys(fresh).length > 0) {
+      console.log("Poly Gamma new: " + Object.keys(fresh).length + " candidates found");
+    }
+    return fresh;
+  }
+
+  // ── Full poly refresh cycle ───────────────────────────────────────────────
+  async function refreshPoly(memberList, racesList, basePolyData) {
+    setPolyLoad(true);
+    try {
+      // Step 1: fast batch refresh for known tokens
+      const batchFresh = await batchRefreshCLOB(basePolyData);
+
+      // Step 2: Gamma search for new candidates
+      const merged = {...basePolyData, ...batchFresh};
+      const newFresh = await searchGammaForNew(memberList, racesList, merged);
+
+      const allFresh = {...batchFresh, ...newFresh};
+      if (Object.keys(allFresh).length > 0) {
+        setPolyLive(prev => ({...prev, ...allFresh}));
+        setPolyUpd(new Date().toISOString());
+        // Update polyBase if we found new token_ids
+        const newTokens = Object.entries(newFresh).filter(([,v]) => v.token_id);
+        if (newTokens.length > 0) {
+          setPolyBase(prev => {
+            const updated = {...prev};
+            newTokens.forEach(([k,v]) => { updated[k] = v; });
+            return updated;
+          });
+        }
+      }
+    } catch (e) {
+      console.warn("refreshPoly error:", e);
+    }
+    setPolyLoad(false);
+  }
+
+  // ── Load data.json ────────────────────────────────────────────────────────
   useEffect(() => {
-    fetch(HISTORY_URL+"?_="+Date.now()).then(r=>r.json()).then(d=>{
+    fetch(HISTORY_URL + "?_=" + Date.now()).then(r => r.json()).then(d => {
       if (d.events) setHistory(d);
-    }).catch(()=>{});
+    }).catch(() => {});
 
-    fetch(CHALLENGERS_URL+"?_="+Date.now()).then(r=>r.json()).then(d=>{
-      if (d.challengers) setChallengers(d.challengers);
-    }).catch(()=>{});
+    fetch(CHALLENGERS_URL + "?_=" + Date.now()).then(r => r.json()).then(d => {
+      if (d.challengers) setChalls(d.challengers);
+    }).catch(() => {});
 
-    // data.json is a static file — always fetch directly, no gating
     (async () => {
       try {
-        const r = await fetch(DATA_URL+"?_="+Date.now());
-        if (!r.ok) throw new Error("HTTP "+r.status);
+        const r = await fetch(DATA_URL + "?_=" + Date.now());
+        if (!r.ok) throw new Error("HTTP " + r.status);
         const d = await r.json();
 
-        // Build member list — fall back to trackaipac_congress if members[] is empty
-        // (handles old data.json generated before the Python fix was deployed)
         let memberList = d.members || [];
         if (memberList.length === 0 && d.trackaipac_congress) {
           memberList = Object.values(d.trackaipac_congress)
             .filter(m => m.name && m.name.toLowerCase() !== "vacant" && m.name.length > 2)
             .map(m => ({
-              bioguide_id: "",
-              name:        m.name,
-              party:       m.party || "?",
-              state:       m.state || "",
-              district:    (m.district !== "" && m.district != null) ? m.district : null,
-              chamber:     m.chamber || "house",
-              antiArms:    !!(m.antiArms || m.approved),
-              antiArmsLevel: (m.antiArms || m.approved) ? "soft" : null,
+              bioguide_id: "", name: m.name, party: m.party || "?",
+              state: m.state || "", district: m.district != null ? m.district : null,
+              chamber: m.chamber || "house",
+              antiArms: !!(m.antiArms || m.approved),
+              antiArmsLevel: null,
               ps: "INCUMBENT", bills: [], votes: [],
-              lobby_total: m.lobby_total || 0,
-              pacs: m.pacs || [],
-              note: m.note || "",
+              lobby_total: m.lobby_total || 0, pacs: m.pacs || [], note: m.note || "",
             }));
-          // Apply KNOWN_ANTI_ARMS overrides — Republicans + others TrackAIPAC doesn't flag
-          const KNOWN_ANTI_ARMS = {
-            "Thomas Massie":   {level:"hard", reason:"Co-sponsored HR 3565 Block the Bombs Act; consistent No votes on Israel arms"},
-            "Warren Davidson": {level:"hard", reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
-            "Andy Biggs":      {level:"hard", reason:"Voted No on HR 8034 and HR 8035 (Israel/Ukraine aid, Apr 2024)"},
-            "Scott Perry":     {level:"hard", reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
-            "Paul Gosar":      {level:"hard", reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
-            "Chip Roy":        {level:"hard", reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
-            "Thomas Tiffany":  {level:"hard", reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
-            "Rand Paul":       {level:"hard", reason:"Led Senate holds on Israel arms sales; co-sponsored FMS disapproval resolutions"},
-            "Lauren Boebert":  {level:"soft", reason:"Voted No on HR 8034; positions have shifted — classified soft"},
-            "Barry Moore":     {level:"soft", reason:"Voted No on some Israel aid provisions"},
-            "Eli Crane":         {level:"hard", reason:"No on HR 8034 (Israel aid supplemental, Apr 2024); RLC Liberty Index 97/100"},
-            "Bob Good":          {level:"soft", reason:"RLC Liberty Index 92/100; consistent anti-interventionist votes"},
-            "Andrew Ogles":      {level:"soft", reason:"RLC Liberty Index 95/100; voted against multiple foreign aid packages"},
-            "Anna Paulina Luna": {level:"soft", reason:"RLC Liberty Index 94/100; voted against Israel aid supplemental"},
-            "Mike Lee":          {level:"soft", reason:"RLC Liberty Index 88/100; consistent anti-interventionist Senate record"},
-            "Ro Khanna":       {level:"hard", reason:"Co-sponsored HR 3565 Block the Bombs Act; co-sponsored Senate JRD on Israel FMS"},
-            "Lloyd Doggett":   {level:"hard", reason:"Co-sponsored HR 3565 Block the Bombs Act"},
-            "Jim McGovern":    {level:"hard", reason:"Co-sponsored HR 3565 Block the Bombs Act"},
-            "Jan Schakowsky":  {level:"hard", reason:"Co-sponsored HR 3565 Block the Bombs Act"},
-            "Maxine Waters":   {level:"hard", reason:"Co-sponsored HR 3565 Block the Bombs Act"},
-            "Jamie Raskin":    {level:"soft", reason:"Publicly called for arms conditions; voting record mixed"},
-            "Ed Markey":       {level:"hard", reason:"Co-sponsored Senate Joint Resolution of Disapproval on Israel FMS"},
-            "Brian Schatz":    {level:"soft", reason:"Signed letters on arms conditions; no co-sponsorship of JRD yet"},
-            "Elizabeth Warren":{level:"soft", reason:"Called for arms review; no co-sponsorship of JRD yet"},
-            "Bernie Sanders":  {level:"hard", reason:"Forced Senate vote on Joint Resolution of Disapproval on Israel FMS (2024)"},
-          };
-          memberList = memberList.map(m => {
-            const ka = KNOWN_ANTI_ARMS[m.name];
-            if (ka) return {...m, antiArms:true, antiArmsLevel:ka.level, note:m.note||ka.reason};
-            return m;
-          });
-          console.log("Fallback: built", memberList.length, "members from trackaipac_congress");
-        } else if (memberList.length > 0) {
-          // Even when data.json has members[], still apply KNOWN_ANTI_ARMS
-          // in case the Action ran before the Python fix was deployed
-          const KNOWN_ANTI_ARMS = {
-            "Thomas Massie":   {level:"hard", reason:"Co-sponsored HR 3565 Block the Bombs Act; consistent No votes on Israel arms"},
-            "Warren Davidson": {level:"hard", reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
-            "Andy Biggs":      {level:"hard", reason:"Voted No on HR 8034 and HR 8035 (Israel/Ukraine aid, Apr 2024)"},
-            "Scott Perry":     {level:"hard", reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
-            "Paul Gosar":      {level:"hard", reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
-            "Chip Roy":        {level:"hard", reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
-            "Thomas Tiffany":  {level:"hard", reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
-            "Rand Paul":       {level:"hard", reason:"Led Senate holds on Israel arms sales; co-sponsored FMS disapproval resolutions"},
-            "Lauren Boebert":  {level:"soft", reason:"Voted No on HR 8034; positions have shifted — classified soft"},
-            "Barry Moore":     {level:"soft", reason:"Voted No on some Israel aid provisions"},
-            "Eli Crane":         {level:"hard", reason:"No on HR 8034 (Israel aid supplemental, Apr 2024); RLC Liberty Index 97/100"},
-            "Bob Good":          {level:"soft", reason:"RLC Liberty Index 92/100; consistent anti-interventionist votes"},
-            "Andrew Ogles":      {level:"soft", reason:"RLC Liberty Index 95/100; voted against multiple foreign aid packages"},
-            "Anna Paulina Luna": {level:"soft", reason:"RLC Liberty Index 94/100; voted against Israel aid supplemental"},
-            "Mike Lee":          {level:"soft", reason:"RLC Liberty Index 88/100; consistent anti-interventionist Senate record"},
-            "Ro Khanna":       {level:"hard", reason:"Co-sponsored HR 3565 Block the Bombs Act; co-sponsored Senate JRD on Israel FMS"},
-            "Lloyd Doggett":   {level:"hard", reason:"Co-sponsored HR 3565 Block the Bombs Act"},
-            "Jim McGovern":    {level:"hard", reason:"Co-sponsored HR 3565 Block the Bombs Act"},
-            "Jan Schakowsky":  {level:"hard", reason:"Co-sponsored HR 3565 Block the Bombs Act"},
-            "Maxine Waters":   {level:"hard", reason:"Co-sponsored HR 3565 Block the Bombs Act"},
-            "Jamie Raskin":    {level:"soft", reason:"Publicly called for arms conditions; voting record mixed"},
-            "Ed Markey":       {level:"hard", reason:"Co-sponsored Senate Joint Resolution of Disapproval on Israel FMS"},
-            "Brian Schatz":    {level:"soft", reason:"Signed letters on arms conditions; no co-sponsorship of JRD yet"},
-            "Elizabeth Warren":{level:"soft", reason:"Called for arms review; no co-sponsorship of JRD yet"},
-            "Bernie Sanders":  {level:"hard", reason:"Forced Senate vote on Joint Resolution of Disapproval on Israel FMS (2024)"},
-          };
-          memberList = memberList.map(m => {
-            const ka = KNOWN_ANTI_ARMS[m.name];
-            if (ka) return {...m, antiArms:true, antiArmsLevel:ka.level, note:m.note||ka.reason};
-            return m;
-          });
         }
+        const KNOWN_ANTI_INTERVENTION = {
+          "Thomas Massie":    {reason:"Co-sponsored HR 3565; consistent No votes on Israel arms"},
+          "Warren Davidson":  {reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
+          "Andy Biggs":       {reason:"Voted No on HR 8034 and HR 8035 (Israel/Ukraine aid, Apr 2024)"},
+          "Scott Perry":      {reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
+          "Paul Gosar":       {reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
+          "Chip Roy":         {reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
+          "Thomas Tiffany":   {reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
+          "Rand Paul":        {reason:"Led Senate holds on Israel arms sales; co-sponsored FMS disapproval resolutions"},
+          "Lauren Boebert":   {reason:"Voted No on HR 8034; positions have shifted"},
+          "Barry Moore":      {reason:"Voted No on some Israel aid provisions"},
+          "Eli Crane":        {reason:"No on HR 8034; RLC Liberty Index 97/100"},
+          "Bob Good":         {reason:"RLC Liberty Index 92/100"},
+          "Andrew Ogles":     {reason:"RLC Liberty Index 95/100"},
+          "Anna Paulina Luna":{reason:"RLC Liberty Index 94/100"},
+          "Mike Lee":         {reason:"RLC Liberty Index 88/100"},
+          "Ro Khanna":        {reason:"Co-sponsored HR 3565; co-sponsored Senate JRD on Israel FMS"},
+          "Lloyd Doggett":    {reason:"Co-sponsored HR 3565 Block the Bombs Act"},
+          "Jim McGovern":     {reason:"Co-sponsored HR 3565 Block the Bombs Act"},
+          "Jan Schakowsky":   {reason:"Co-sponsored HR 3565 Block the Bombs Act"},
+          "Maxine Waters":    {reason:"Co-sponsored HR 3565 Block the Bombs Act"},
+          "Jamie Raskin":     {reason:"Publicly called for arms conditions; voting record mixed"},
+          "Ed Markey":        {reason:"Co-sponsored Senate JRD on Israel FMS"},
+          "Brian Schatz":     {reason:"Signed letters on arms conditions"},
+          "Elizabeth Warren": {reason:"Called for arms review"},
+          "Bernie Sanders":   {reason:"Forced Senate vote on JRD on Israel FMS (2024)"},
+        };
+        memberList = memberList.map(m => {
+          const ka = KNOWN_ANTI_INTERVENTION[m.name];
+          return ka ? {...m, antiArms:true, note:m.note||ka.reason} : m;
+        });
+
         setMembers(memberList);
         setBills(d.bills || []);
-        if (d.races_2026?.length) setRaces(d.races_2026);
-        if (d.fec&&Object.keys(d.fec).length>0)   setFec(d.fec);
-        if (d.poly&&Object.keys(d.poly).length>0)  setPoly(d.poly);
-        if (d.meta?.fetched_at) setFetchedAt(d.meta.fetched_at);
+        if (d.races_2026 && d.races_2026.length) setRaces(d.races_2026);
+        if (d.fec && Object.keys(d.fec).length > 0) setFec(d.fec);
 
-        const anti  = memberList.filter(m=>m.antiArms).length;
-        const hard  = memberList.filter(m=>m.antiArmsLevel==="hard").length;
-        const total = memberList.length;
-        const age   = d.meta?.fetched_at
-          ? Math.round((Date.now()-new Date(d.meta.fetched_at))/60000) : "?";
-        const rlcCount = memberList.filter(m=>m.rlc_score && m.rlc_score>=75).length;
-        setStatus("✓ "+anti+" anti-arms ("+hard+" hard) · "+total+" members · RLC:"+rlcCount+" · "+age+"m ago");
-      } catch(e) {
+        // Store poly snapshot (has token_ids) then immediately refresh
+        const baseP = (d.poly && Object.keys(d.poly).length > 0) ? d.poly : {};
+        setPolyBase(baseP);
+        
+        if (d.meta && d.meta.fetched_at) setFetchedAt(d.meta.fetched_at);
+        const anti  = memberList.filter(m => m.antiArms).length;
+        const age   = (d.meta && d.meta.fetched_at)
+          ? Math.round((Date.now() - new Date(d.meta.fetched_at)) / 60000) : "?";
+        setStatus("✓ " + anti + " anti-intervention · " + memberList.length + " members · " + age + "m ago");
+
+        // Kick off live refresh immediately after data loads
+        const racesList = (d.races_2026 && d.races_2026.length) ? d.races_2026 : [];
+        refreshPoly(memberList, racesList, baseP);
+
+      } catch (e) {
         setStatus("⚠ Could not load data.json — run the GitHub Action to generate it.");
         console.error("data.json:", e);
-        setLoaded(true);
       }
       setLoaded(true);
     })();
 
-    // Gun.js: share FEC/Polymarket between peers (non-blocking)
     try {
-      const gun  = Gun({peers:GUN_PEERS, localStorage:false});
-      const node = gun.get("anti-arms-tracker-v4");
-      node.get("fec").on(d=>{
-        if(d){const c=Object.fromEntries(Object.entries(d).filter(([k])=>k!=="_"));if(Object.keys(c).length>0)setFec(c);}
+      const gun  = Gun({peers: GUN_PEERS, localStorage: false});
+      const node = gun.get("aect-tracker-v1");
+      node.get("fec").on(d => {
+        if (d) {
+          const c = Object.fromEntries(Object.entries(d).filter(([k]) => k !== "_"));
+          if (Object.keys(c).length > 0) setFec(c);
+        }
       });
-      node.get("poly").on(d=>{
-        if(d){const c=Object.fromEntries(Object.entries(d).filter(([k])=>k!=="_"));if(Object.keys(c).length>0)setPoly(c);}
-      });
-    } catch(e) { console.warn("Gun.js:", e); }
+    } catch (e) { console.warn("Gun.js:", e); }
   }, []);
 
-  return {allMembers, bills, challengers, history, races, fecData, polyData, fetchedAt, status, loaded};
+  // 5-minute refresh cycle (batch CLOB only — fast, no Gamma search)
+  useEffect(() => {
+    if (allMembers.length === 0) return;
+    const id = setInterval(() => {
+      batchRefreshCLOB(polyBase).then(fresh => {
+        if (Object.keys(fresh).length > 0) {
+          setPolyLive(prev => ({...prev, ...fresh}));
+          setPolyUpd(new Date().toISOString());
+        }
+      });
+    }, 5 * 60 * 1000);
+    return () => clearInterval(id);
+  }, [allMembers.length, polyBase]);
+
+  // Helper: apply live prices over base snapshot
+  // polyLive always wins; polyBase provides token_ids even for un-refreshed entries
+  const mergedPoly = {};
+  const allPolyKeys = new Set([...Object.keys(polyBase), ...Object.keys(polyLive)]);
+  for (const k of allPolyKeys) {
+    mergedPoly[k] = polyLive[k] || polyBase[k];
+  }
+
+  return {
+    allMembers, bills, challengers: [], history, races, fecData,
+    polyData:    mergedPoly,
+    polyLive,
+    polyUpdated: polyUpdated,
+    polyLoading,
+    fetchedAt,   status, loaded,
+  };
 }
 
 
 // ── Historical + Projected Data ───────────────────────────────────────────────
 // Verified counts per Congress from TrackAIPAC historical data, GovTrack, Clerk XML
 const CONGRESS_HISTORY = [
-  {congress:"115th", years:"2017-19", hardD:0, softD:0, hardR:2, softR:0,
-   note:"Pre-Gaza. Only libertarian-R: Massie (House) + Rand Paul (Senate)."},
-  {congress:"116th", years:"2019-21", hardD:4, softD:0, hardR:2, softR:0,
-   note:"The Squad enters — Tlaib, Omar, AOC, Pressley join with explicit anti-arms stance."},
-  {congress:"117th", years:"2021-23", hardD:7, softD:2, hardR:3, softR:0,
+  {congress:"115th", years:"2017-19", D:0, R:2,
+   note:"Pre-Gaza. Only anti-interventionist libertarian-R: Massie (House) + Rand Paul (Senate)."},
+  {congress:"116th", years:"2019-21", D:4, R:2,
+   note:"The Squad enters — Tlaib, Omar, AOC, Pressley join opposing arms and foreign entanglement."},
+  {congress:"117th", years:"2021-23", D:9, R:3,
    note:"Block the Bombs Act (HR 3565) introduced. Markey + Sanders force Senate JRD vote."},
-  {congress:"118th", years:"2023-25", hardD:10, softD:4, hardR:6, softR:1,
-   note:"Post-Oct 7. HR 8034 vote — Massie, Biggs, Perry, Gosar, Roy, Tiffany vote No. Peak anti-AIPAC organising; Bowman and Bush unseated."},
+  {congress:"118th", years:"2023-25", D:14, R:7,
+   note:"Post-Oct 7. HR 8034 vote. Peak anti-intervention organising; Bowman and Bush unseated."},
   {congress:"119th", years:"2025-27", isLive:true,
-   note:"Current Congress. RLC Liberty Index adds R bloc. Live TrackAIPAC + Congress.gov tracking."},
+   note:"Current Congress. Live TrackAIPAC + RLC Liberty Index tracking."},
   {congress:"120th", years:"2027-29", isProjected:true,
    note:"Projected — expected value from win probabilities of key 2026 races."},
 ];
@@ -1001,7 +1206,7 @@ const KEY_RACES_2026 = [
     raceType:"NOT UP 2026", raceColor:"#6b7280",
     electionLabel:"Up for reelection: 2028",
     opponent:"No 2026 race",
-    status:"Term ends Jan 2029. Not on 2026 ballot. Currently the lone hard-R anti-arms Senator. Campaigning with Massie in Kentucky.",
+    status:"Term ends Jan 2029. Not on 2026 ballot. Currently the lone hard-R anti-intervention Senator. Campaigning with Massie in Kentucky.",
     winProb:null, probNote:"Safe — 2028 race",
     impact:"Stays in 120th Congress", impactDir:0, level:"hard", departing:false,
   },
@@ -1041,7 +1246,6 @@ function RaceCard({race, liveRacesData}) {
   const departing   = race.departing != null ? race.departing : (race.status === "departed");
   const wonPrimary  = race.justWonPrimary != null ? race.justWonPrimary : (race.primary_result === "WON");
   const probSrc     = race.win_prob_src || "estimate";
-  const level       = race.level || race.anti_arms_level || "soft";
   const impact      = race.impact || race.impact_if_wins || "";
   const cookRating  = race.cook_rating || race.cookRating || null;
   const probNote    = race.probNote || cookRating || (probSrc === "polymarket" ? "Live Polymarket" : "Manual estimate");
@@ -1054,7 +1258,6 @@ function RaceCard({race, liveRacesData}) {
   );
 
   const partyColor  = race.party === "R" ? "#ef4444" : race.party === "D" ? "#60a5fa" : "#a3e635";
-  const levelColor  = level === "hard" ? (race.party === "R" ? "#c026d3" : "#7c3aed") : (race.party === "R" ? "#a855f7" : "#818cf8");
   const impactColor = race.impactDir > 0 ? "#4ade80" : race.impactDir < 0 ? "#f87171" : "#9ca3af";
 
   return html`
@@ -1085,8 +1288,8 @@ function RaceCard({race, liveRacesData}) {
 
       <div style=${{display:"flex",gap:4,marginBottom:5,flexWrap:"wrap",alignItems:"center"}}>
         <span style=${{fontSize:8,fontFamily:"monospace",padding:"1px 5px",borderRadius:3,
-          background:levelColor+"18",color:levelColor,border:"1px solid "+levelColor+"30"}}>
-          ${level === "hard" ? "⚡ Hard" : "◦ Soft"}
+          background:"#818cf840",color:"#818cf8",border:"1px solid #818cf830"}}>
+          ◈ Anti-Intervention
         </span>
         ${impact ? html`<span style=${{fontSize:8,fontFamily:"monospace",padding:"1px 5px",borderRadius:3,
           background:impactColor+"18",color:impactColor,border:"1px solid "+impactColor+"25"}}>${impact}</span>` : null}
@@ -1112,53 +1315,46 @@ function CongressTimeline({allMembers, polyData, racesData}) {
 
   // Live 119th counts from members[]
   const live = {
-    hardD: allMembers.filter(m => m.antiArms && m.party !== "R" && m.antiArmsLevel === "hard").length,
-    softD: allMembers.filter(m => m.antiArms && m.party !== "R" && m.antiArmsLevel !== "hard").length,
-    hardR: allMembers.filter(m => m.antiArms && m.party === "R" && m.antiArmsLevel === "hard").length,
-    softR: allMembers.filter(m => m.antiArms && m.party === "R" && m.antiArmsLevel !== "hard").length,
+    D: allMembers.filter(m => m.antiArms && m.party !== "R").length,
+    R: allMembers.filter(m => m.antiArms && m.party === "R").length,
   };
-  live.total = live.hardD + live.softD + live.hardR + live.softR;
+  live.total = live.D + live.R;
 
   // 120th projection: stable incumbents * 0.88 + race win probabilities
   const stableMembers = allMembers.filter(m => {
     if (!m.antiArms) return false;
     return !races.find(r => r.name === m.name);
   });
-  let p = {hardD:0, softD:0, hardR:0, softR:0};
+  let p = {D:0, R:0};
   stableMembers.forEach(m => {
-    const k = (m.antiArmsLevel === "hard" ? "hard" : "soft") + (m.party === "R" ? "R" : "D");
-    p[k] += 0.88;
+    p[m.party === "R" ? "R" : "D"] += 0.88;
   });
   races.forEach(r => {
     if (r.departing || r.impactDir <= 0 || r.winProb == null) return;
     const wp = r.win_prob != null ? r.win_prob : (r.winProb || 0);
-    const lv = r.level || r.anti_arms_level || "soft";
-    const k  = (lv === "hard" ? "hard" : "soft") + (r.party === "R" ? "R" : "D");
-    p[k] += wp;
+    p[r.party === "R" ? "R" : "D"] += wp;
   });
-  const proj = {hardD:Math.round(p.hardD), softD:Math.round(p.softD), hardR:Math.round(p.hardR), softR:Math.round(p.softR)};
-  proj.total = proj.hardD + proj.softD + proj.hardR + proj.softR;
+  const proj = {D: Math.round(p.D), R: Math.round(p.R)};
+  proj.total = proj.D + proj.R;
 
   // Fill live and projected into history
   const data = CONGRESS_HISTORY.map(d => {
-    if (d.isLive)      return {...d, ...live};
-    if (d.isProjected) return {...d, ...proj};
+    if (d.isLive) return {...d, D: live.D, R: live.R, total: live.total};
+    if (d.isProjected) return {...d, D: proj.D, R: proj.R, total: proj.total};
     return d;
   }).filter(d => showProj || !d.isProjected);
 
   const chartW = 470, chartH = 175, padL = 36, padB = 32, padT = 12, padR = 12;
   const innerW = chartW - padL - padR;
   const innerH = chartH - padT - padB;
-  const maxVal = Math.max(...data.map(d => (d.hardD||0)+(d.softD||0)+(d.hardR||0)+(d.softR||0))) * 1.15 || 50;
+  const maxVal = Math.max(...data.map(d => (d.D||0)+(d.R||0))) * 1.15 || 50;
   const barW   = Math.min(50, innerW / data.length * 0.62);
   const gap    = innerW / data.length;
   const ys = v => innerH - (v / maxVal) * innerH;
 
   const bands = [
-    {k:"hardD", c:"#7c3aed", l:"Hard-D"},
-    {k:"softD", c:"#818cf8", l:"Soft-D"},
-    {k:"hardR", c:"#c026d3", l:"Hard-R"},
-    {k:"softR", c:"#a855f7", l:"Soft-R"},
+    {k:"D", c:"#818cf8", l:"Dem"},
+    {k:"R", c:"#e879f9", l:"Rep"},
   ];
   const hov = hovered !== null ? data[hovered] : null;
 
@@ -1166,7 +1362,7 @@ function CongressTimeline({allMembers, polyData, racesData}) {
     <div style=${{background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,padding:"13px 15px",width:"100%",maxWidth:610}}>
       <div style=${{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10,flexWrap:"wrap",gap:5}}>
         <div>
-          <div style=${{fontSize:11,fontWeight:700,color:"#f0ebe0",fontFamily:"monospace"}}>Anti-Arms Congress Over Time</div>
+          <div style=${{fontSize:11,fontWeight:700,color:"#f0ebe0",fontFamily:"monospace"}}>Anti-Intervention Congress Over Time</div>
           <div style=${{fontSize:8,color:"#4b5563",fontFamily:"monospace",marginTop:1}}>115th (2017) → projected 120th (2027) · hover bars for detail</div>
         </div>
         <div style=${{display:"flex",gap:5,flexWrap:"wrap",alignItems:"center"}}>
@@ -1198,7 +1394,7 @@ function CongressTimeline({allMembers, polyData, racesData}) {
           const x  = cx - barW / 2;
           const isProj = d.isProjected, isLive = d.isLive;
           let cumY = innerH;
-          const tot = (d.hardD||0)+(d.softD||0)+(d.hardR||0)+(d.softR||0);
+          const tot = (d.D||0)+(d.R||0);
           return html`
             <g key=${i} onMouseEnter=${() => setHovered(i)} onMouseLeave=${() => setHovered(null)} style=${{cursor:"pointer"}}>
               ${bands.map((b, bi) => {
@@ -1230,18 +1426,15 @@ function CongressTimeline({allMembers, polyData, racesData}) {
           marginTop:5,fontSize:8,fontFamily:"monospace",color:"#9ca3af",lineHeight:1.7}}>
           <span style=${{color:"#f0ebe0",fontWeight:700}}>${hov.congress} · ${hov.years}</span>
           ${hov.isProjected?" — PROJECTED":hov.isLive?" — LIVE":""}<br/>
-          <span style=${{color:"#7c3aed"}}>Hard-D:${hov.hardD||0}</span>
-          · <span style=${{color:"#818cf8"}}>Soft-D:${hov.softD||0}</span>
-          · <span style=${{color:"#c026d3"}}>Hard-R:${hov.hardR||0}</span>
-          · <span style=${{color:"#a855f7"}}>Soft-R:${hov.softR||0}</span>
-          · Total:${(hov.hardD||0)+(hov.softD||0)+(hov.hardR||0)+(hov.softR||0)}${hov.isProjected?"*":""}<br/>
-          <span style=${{color:"#6b7280"}}>${hov.note}</span>
+          <span style=${{color:"#818cf8"}}>D:${hov.D||0}</span>
+          · <span style=${{color:"#e879f9"}}>R:${hov.R||0}</span>
+          · Total:${(hov.D||0)+(hov.R||0)}
           ${hov.isProjected ? html`<br/><span style=${{color:"#374151"}}>*Expected value. Actual outcome will vary.</span>` : null}
         </div>` : null}
 
       <div style=${{display:"flex",gap:6,justifyContent:"center",alignItems:"center",
         marginTop:8,fontSize:8,color:"#374151",fontFamily:"monospace",flexWrap:"wrap"}}>
-        <span style=${{color:"#7c3aed"}}>2 members (2017)</span>
+        <span style=${{color:"#818cf8"}}>2 members (2017)</span>
         <span>→</span>
         <span style=${{color:"#4ade80",fontWeight:700}}>${live.total} members (live)</span>
         <span>→</span>
@@ -1272,7 +1465,7 @@ function App() {
   const [hardOnly, setHardOnly] = useState(false);
   const [showTimeline, setShowTimeline] = useState(false);
 
-  const {allMembers, bills, challengers, history, races, fecData, polyData, fetchedAt, status, loaded} = useData();
+  const {allMembers, bills, challengers, history, races, fecData, polyData, polyLive, polyUpdated, polyLoading, fetchedAt, status, loaded} = useData();
   const members = useMemo(() => buildMembers(allMembers, chamber), [allMembers, chamber]);
 
   // URL deep-link (mount only)
@@ -1343,13 +1536,19 @@ function App() {
 
       <div style=${{textAlign:"center",marginBottom:10}}>
         <div style=${{fontSize:8,letterSpacing:"0.22em",textTransform:"uppercase",color:"#374151",fontFamily:"monospace",marginBottom:3}}>
-          119TH UNITED STATES CONGRESS · 2025–2026
+          ANTI-ESTABLISHMENT CONGRESSIONAL TRACKER
         </div>
         <h1 style=${{fontSize:19,fontWeight:700,margin:"0 0 2px",letterSpacing:"-0.02em",color:"#f0ebe0"}}>
-          Anti-Arms Congress Tracker
+          Anti-Establishment Congressional Tracker
         </h1>
         <div style=${{fontSize:9,color:"#6b7280",display:"flex",gap:8,justifyContent:"center",flexWrap:"wrap",alignItems:"center"}}>
           <span style=${{fontFamily:"monospace",color:"#6b7280",fontSize:8}}>${status}</span>
+          ${polyLoading ? html`<span style=${{fontFamily:"monospace",color:"#4ade80",fontSize:8}}>◉ fetching live odds…</span>` : null}
+          ${!polyLoading && polyUpdated ? html`
+            <span style=${{fontFamily:"monospace",color:"#4ade80",fontSize:8,opacity:0.7}}
+              title=${"Polymarket live — " + Object.keys(polyLive||{}).length + " markets refreshed " + new Date(polyUpdated).toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"})}>
+              · ◉ ${Object.keys(polyLive||{}).length} live odds · ${new Date(polyUpdated).toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"})}
+            </span>` : html`<span style=${{fontFamily:"monospace",color:"#374151",fontSize:8}}>◎ odds from cache</span>`}
           ${fetchedAt?html`<span style=${{fontFamily:"monospace",color:"#374151",fontSize:8}}>
             · ${new Date(fetchedAt).toLocaleString("en-US",{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})}
           </span>`:null}
@@ -1391,7 +1590,7 @@ function App() {
           </span>`)}
         <button onClick=${()=>setShowAnti(v=>!v)}
           style=${{padding:"2px 7px",borderRadius:5,border:"1px solid #7c3aed33",background:showAnti?"#7c3aed1a":"transparent",color:showAnti?"#c084fc":"#4b5563",fontFamily:"monospace",fontSize:9,cursor:"pointer"}}>
-          ${showAnti?"Show all":"Highlight anti-arms"}
+          ${showAnti?"Show all":"Highlight anti-intervention"}
         </button>
         <button onClick=${()=>setHardOnly(v=>!v)}
           style=${{padding:"2px 7px",borderRadius:5,border:"1px solid #c026d333",background:hardOnly?"#c026d31a":"transparent",color:hardOnly?"#e879f9":"#4b5563",fontFamily:"monospace",fontSize:9,cursor:"pointer"}}>
@@ -1407,7 +1606,7 @@ function App() {
       : html`
       <div class="three-col" style=${{display:"flex",gap:10,alignItems:"flex-start",flexWrap:"wrap",justifyContent:"center",width:"100%",maxWidth:1080}}>
 
-        <${MemberBox} title="Anti-Arms Republicans" color="#a855f7"
+        <${MemberBox} title="Anti-Intervention Republicans" color="#a855f7"
           members=${sideR} challengers=${challR}
           fecData=${fecData} polyData=${polyData}
           onSelect=${m=>setSelected(members.findIndex(x=>x.name===m.name))}/>
@@ -1423,7 +1622,6 @@ function App() {
               })}
               ${positions.map((pos,i)=>{
                 const m=members[i]; if(!m) return null;
-                const isHard = m.antiArmsLevel==="hard";
                 const dimDot = (showAnti&&!m.antiArms) || (hardOnly&&(!m.antiArms||!isHard));
                 const isSel=selected===i, isHov=hovered===i;
                 const color=dotColor(m), poly=polyData[m.name], atRisk=poly&&poly.prob<0.65;
@@ -1480,7 +1678,7 @@ function App() {
           </div>
         </div>
 
-        <${MemberBox} title="Anti-Arms Democrats" color="#7c3aed"
+        <${MemberBox} title="Anti-Intervention Democrats" color="#7c3aed"
           members=${sideD} challengers=${challD}
           fecData=${fecData} polyData=${polyData}
           onSelect=${m=>setSelected(members.findIndex(x=>x.name===m.name))}/>
@@ -1492,12 +1690,13 @@ function App() {
       <div style=${{fontSize:8,color:"#1a1d27",marginTop:14,fontFamily:"monospace",textAlign:"center",maxWidth:800,lineHeight:1.8}}>
         MEMBERS: TRACKAIPAC.COM (D/I) + RLC LIBERTY INDEX (R) · HARD: CONGRESS.GOV BILL CO-SPONSORSHIP + HOUSE-VOTE API + LEGISCAN
         <br/>FINANCE: OPENFEC · ODDS: POLYMARKET · REPS: GOOGLE CIVIC · P2P: GUN.JS · REFRESH: 4H GITHUB ACTIONS
-        <br/><a href="https://github.com/LukeRDavis/Anti-Arms-Congress-Tracker" target="_blank" style=${{color:"#374151"}}>github.com/LukeRDavis/Anti-Arms-Congress-Tracker</a>
+        <br/><a href="https://github.com/LukeRDavis/Anti-Establishment-Congressional-Tracker" target="_blank" style=${{color:"#374151"}}>github.com/LukeRDavis/Anti-Establishment-Congressional-Tracker</a>
       </div>
     </div>`;
 }
 
 render(html`<${App}/>`, document.getElementById("app"));
+
 
 </script>
 </body>
