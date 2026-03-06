@@ -40,6 +40,19 @@
 </head>
 <body>
 <div id="app"></div>
+<div id="fallback" style="display:none;position:fixed;top:0;left:0;right:0;background:#7f1d1d;color:#fca5a5;padding:12px;font-family:monospace;font-size:11px;z-index:9999;">
+  JS Error — check browser console (F12). If page is blank, GitHub Actions may not have run yet.
+</div>
+<script>
+window.onerror = function(msg, src, line, col, err) {
+  document.getElementById('fallback').style.display = 'block';
+  document.getElementById('fallback').textContent = 'JS Error: ' + msg + ' (line ' + line + ')';
+};
+window.onunhandledrejection = function(e) {
+  document.getElementById('fallback').style.display = 'block';
+  document.getElementById('fallback').textContent = 'Unhandled promise: ' + (e.reason && e.reason.message ? e.reason.message : e.reason);
+};
+</script>
 <script>
 const { h, render, Fragment } = preact;
 const { useState, useEffect, useMemo } = preactHooks;
@@ -1027,7 +1040,7 @@ function useData() {
         // Fix lingering 'soft' language in notes
         memberList = memberList.map(m => ({
           ...m,
-          note: (m.note||"").replace(/[–—-]?\s*classified soft\.?/i,"").trim(),
+          note: (m.note||"").replace(/[-–—]?\s*classified soft\.?/gi,"").trim(),
         }));
 
         setMembers(memberList);
@@ -1074,17 +1087,34 @@ function useData() {
         const age   = (d.meta && d.meta.fetched_at)
           ? Math.round((Date.now() - new Date(d.meta.fetched_at)) / 60000) : "?";
         setStatus("✓ " + anti + " anti-intervention · " + memberList.length + " members · " + age + "m ago");
+        clearTimeout(window._aectLoadTimeout);
 
         // Kick off live refresh immediately after data loads
         const racesList = (d.races_2026 && d.races_2026.length) ? d.races_2026 : [];
         refreshPoly(memberList, racesList, baseP);
 
       } catch (e) {
-        setStatus("⚠ Could not load data.json — run the GitHub Action to generate it.");
-        console.error("data.json:", e);
+        const msg = e && e.message ? e.message : String(e);
+        setStatus("⚠ " + msg + " — Check GitHub Actions has run and data.json exists.");
+        console.error("data.json load error:", e);
+        setLoaded(true);   // always unblock render even on error
+        return;
       }
       setLoaded(true);
-    })();
+    })().catch(e => {
+      // Final safety net — if the async IIFE itself rejects (should never happen)
+      console.error("useData IIFE rejected:", e);
+      setStatus("⚠ Unexpected load error: " + (e && e.message ? e.message : e));
+      setLoaded(true);
+    });
+
+    // Safety timeout — if data.json never resolves, unblock after 10s
+    const _loadTimeout = setTimeout(() => {
+      setLoaded(true);
+      setStatus("⚠ Timed out loading data.json. Check GitHub Actions.");
+    }, 10000);
+    // Store cleanup ref on window (effect deps=[])
+    window._aectLoadTimeout = _loadTimeout;
 
     try {
       const gun  = Gun({peers: GUN_PEERS, localStorage: false});
