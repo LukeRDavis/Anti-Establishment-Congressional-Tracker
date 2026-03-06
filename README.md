@@ -4,7 +4,7 @@ Interactive hemicycle map of every US Congress member who opposes establishment 
 
 The goal of this tracker is Non-Partisan Coalition Building: Designed for progressives, constitutionalists, and libertarians to track anti-establishment progress across these shared values.
 
-**Live site:** https://lukerdavis.github.io/Anti-Arms-Congress-Tracker/
+**Live site:** https://lukerdavis.github.io/Anti-Establishment-Congressional-Tracker/
 
 Phase 2 of AECT will involve the following:
 
