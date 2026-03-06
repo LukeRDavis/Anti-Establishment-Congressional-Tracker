@@ -12,5 +12,5 @@ Phase 2 of AECT will involve the following:
 
 **Labor & Corporate Accountability or Pro-Good Labor:** Identify legislators supporting fair labor practices, anti-monopoly policies, and opposing exploitative foreign labor models (e.g., corporate global labor arbitrage).
 
-**Environmental Stewardship:** Highlight support for regenerative agriculture, wilderness conservation, and ecological restoration.
+**Environmental Stewardship or Pro Sustainable Nature and Agriculture:** Highlight support for regenerative agriculture, wilderness conservation, and ecological restoration.
 
