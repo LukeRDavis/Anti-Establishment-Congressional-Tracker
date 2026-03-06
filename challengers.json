@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-03-06T16:54:06.076232+00:00",
+  "_last_scraped": "2026-03-06T20:40:43.157610+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -897,6 +897,22 @@
       "opponent": "",
       "incumbentParty": "",
       "fec_id": "H6NY13279"
+    },
+    {
+      "name": "Karen Ortiz",
+      "state": "NY",
+      "district": 12,
+      "party": "I",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "GENERAL",
+      "primaryDate": "2026-11-03",
+      "website": "https://ko4congress.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
     },
     {
       "name": "Salvatore Padellaro",

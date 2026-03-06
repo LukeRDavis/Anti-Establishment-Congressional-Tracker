@@ -1,11 +1,11 @@
 {
   "meta": {
-    "fetched_at": "2026-03-06T16:55:58.869676+00:00",
-    "trackaipac_scraped": "2026-03-06T16:55:58.869695+00:00",
+    "fetched_at": "2026-03-06T20:42:28.711456+00:00",
+    "trackaipac_scraped": "2026-03-06T20:42:28.711469+00:00",
     "member_count": 532,
     "anti_intervention_count": 38,
     "bill_count": 0,
-    "challenger_count": 77,
+    "challenger_count": 78,
     "history_events": 86,
     "version": 7,
     "sources": {
@@ -20763,6 +20763,22 @@
       "ps": "UPCOMING",
       "primaryDate": "2026-06-23",
       "website": "https://clairevaldezforcongress.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Karen Ortiz",
+      "state": "NY",
+      "district": 12,
+      "party": "I",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "GENERAL",
+      "primaryDate": "2026-11-03",
+      "website": "https://ko4congress.com/",
       "source": "trackaipac",
       "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
