@@ -117,45 +117,75 @@ function antiArmsTagColor(m) {
 function computeHemicycle(allMembers, chamber, cx, cy) {
   const ch = chamber === "senate" ? "senate" : "house";
 
-  // Row seat counts and radii — designed to fill the 610×300 SVG
-  // House: 9 rows, innerR=52, spacing=22 → outer r=228 (x: 77–533, top: y=58)
-  // Senate: 4 rows, innerR=80, spacing=28 → outer r=164 (x: 141–469, top: y=122)
+  // Row counts sized to fill the 610×300 SVG
+  // House: 9 rows, innerR=52, spacing=22 → outerR=228
+  // Senate: 4 rows, innerR=80, spacing=28 → outerR=164
   const rowCounts = ch === "senate"
-    ? [16, 22, 28, 34]           // 100 seats
-    : [18, 26, 33, 41, 48, 56, 64, 71, 78];  // 435 seats
-  const innerR  = ch === "senate" ? 80  : 52;
-  const spacing = ch === "senate" ? 28  : 22;
+    ? [16, 22, 28, 34]
+    : [18, 26, 33, 41, 48, 56, 64, 71, 78];
+  const innerR  = ch === "senate" ? 80 : 52;
+  const spacing = ch === "senate" ? 28 : 22;
+  const total   = rowCounts.reduce((s,c) => s+c, 0);
+  const filler  = {_filler:true, antiArms:false, party:"", name:""};
 
-  const totalSeats = rowCounts.reduce((s, c) => s + c, 0);
-
-  // Filter active members in this chamber
+  // Active members in this chamber
   const active = allMembers.filter(m =>
     m.chamber === ch &&
     !["RETIRED","RESIGNED","DEFEATED","RETIRING","FAILED_PRIMARY"].includes(m.ps)
   );
 
-  // Seat order L→R: R bloc | anti-R | anti-D | D/I bloc
   const antiR = active.filter(m =>  m.antiArms && m.party === "R");
   const antiD = active.filter(m =>  m.antiArms && m.party !== "R");
   const restR = active.filter(m => !m.antiArms && m.party === "R");
   const restD = active.filter(m => !m.antiArms && m.party === "D");
-  const restI = active.filter(m => !m.antiArms && m.party === "I");
-  const restU = active.filter(m => !m.antiArms && m.party !== "R" && m.party !== "D" && m.party !== "I");
-  const ordered = [...restR, ...antiR, ...antiD, ...restD, ...restI, ...restU];
+  const restOther = active.filter(m => !m.antiArms && m.party !== "R" && m.party !== "D");
+  const antiCount = antiR.length + antiD.length;
 
-  // Pad with fillers to fill all seats
-  const filler = {_filler:true, antiArms:false, party:"", name:""};
-  while (ordered.length < totalSeats) ordered.push(filler);
+  // Distribute anti seats proportionally across rows, centered in each row.
+  // Non-anti R fills right side, non-anti D fills left side.
+  // Within anti bloc: D on left, R on right.
+  const antiPerRow = rowCounts.map(c => Math.round(antiCount * c / total));
+  let diff = antiCount - antiPerRow.reduce((s,n) => s+n, 0);
+  for (let i = antiPerRow.length-1; i >= 0 && diff !== 0; i--) {
+    if (diff > 0) { antiPerRow[i]++; diff--; }
+    else if (antiPerRow[i] > 0) { antiPerRow[i]--; diff++; }
+  }
 
-  // Assign seats row by row (inner → outer), left → right
+  // Build ordered seat arrays for each row
+  let antiDq = [...antiD], antiRq = [...antiR];
+  let restDq  = [...restD, ...restOther], restRq = [...restR];
+
   const result = [];
-  let idx = 0;
   for (let ri = 0; ri < rowCounts.length; ri++) {
-    const count = rowCounts[ri];
-    const r     = innerR + ri * spacing;
-    for (let s = 0; s < count; s++, idx++) {
-      const m     = ordered[idx] || filler;
-      const angle = count === 1 ? Math.PI / 2 : (Math.PI / (count - 1)) * s;
+    const count  = rowCounts[ri];
+    const r      = innerR + ri * spacing;
+    const aN     = antiPerRow[ri];
+    const leftN  = Math.floor((count - aN) / 2);   // D seats (left of anti bloc)
+    const rightN = count - aN - leftN;               // R seats (right of anti bloc)
+
+    const row = [];
+    // Left: D members (or fillers)
+    for (let s = 0; s < leftN; s++)
+      row.push(restDq.length ? restDq.shift() : filler);
+    // Center: anti-D then anti-R
+    for (let s = 0; s < aN; s++) {
+      if (s < Math.ceil(aN * antiD.length / antiCount) && antiDq.length)
+        row.push(antiDq.shift());
+      else if (antiRq.length)
+        row.push(antiRq.shift());
+      else if (antiDq.length)
+        row.push(antiDq.shift());
+      else
+        row.push(filler);
+    }
+    // Right: R members (or fillers)
+    for (let s = 0; s < rightN; s++)
+      row.push(restRq.length ? restRq.shift() : filler);
+
+    // Place seats along arc
+    for (let s = 0; s < count; s++) {
+      const m     = row[s] || filler;
+      const angle = count === 1 ? Math.PI/2 : (Math.PI / (count-1)) * s;
       result.push({
         ...m,
         _x: cx - r * Math.cos(angle),
@@ -165,6 +195,7 @@ function computeHemicycle(allMembers, chamber, cx, cy) {
   }
   return result;
 }
+
 
 
 
