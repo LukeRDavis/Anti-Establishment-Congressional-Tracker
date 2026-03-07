@@ -611,6 +611,24 @@ RACES_2026 = [
         "impact_if_wins": "+1 soft-D retained",
         "note": "Survived close 2024 primary 56%. AIPAC spent heavily against her. May face challenge again.",
     },
+    {
+        "id": "herrera-tx23",
+        "name": "Brandon Herrera", "party": "R", "state": "TX", "chamber": "house", "district": 23,
+        "anti_intervention": True, "anti_intervention_level": "yes",
+        "type": "challenger",
+        "status": "pending_general",
+        "primary_date": "2026-03-03", "primary_result": "WON",
+        "primary_pct": 43.0, "primary_opponent_pct": 41.0,
+        "primary_opponent": "Tony Gonzales (withdrew Mar 5 amid ethics scandal)",
+        "general_date": "2026-11-03",
+        "general_opponent": "Katy Padilla Stout (D)",
+        "cook_rating": "Solid Republican",
+        "win_prob": 0.82,
+        "impact_if_wins": "+1 anti-foreign-aid R in Congress (TX-23 open seat)",
+        "impact_if_loses": "No change — seat stays R, Stout not anti-intervention",
+        "note": "YouTube gun influencer 'The AK Guy'. Anti-AIPAC: 'I'm not anti-Israel, I'm anti-Israel buying US elections.' Lost TX-23 primary by 354 votes in 2024. Won 2026 primary 43%-41%; Gonzales withdrew Mar 5 amid sexual coercion scandal involving a staffer who died by suicide. AIPAC did not intervene this cycle. Cook: Solid R. General vs Katy Padilla Stout (D).",
+        "polymarket_url": None,
+    },
 ]
 
 # ── Clerk House Vote XML scraper ───────────────────────────────────────────────
@@ -1451,21 +1469,89 @@ def fetch_poly(members, races=None):
     if not candidates:
         return {}
 
+    # ── Market validation helper ──────────────────────────────────────────
+    # US state names/abbrevs for cross-checking
+    US_STATES = {
+        "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA",
+        "KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ",
+        "NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT",
+        "VA","WA","WV","WI","WY",
+        "alabama","alaska","arizona","arkansas","california","colorado","connecticut",
+        "delaware","florida","georgia","hawaii","idaho","illinois","indiana","iowa",
+        "kansas","kentucky","louisiana","maine","maryland","massachusetts","michigan",
+        "minnesota","mississippi","missouri","montana","nebraska","nevada",
+        "new hampshire","new jersey","new mexico","new york","north carolina",
+        "north dakota","ohio","oklahoma","oregon","pennsylvania","rhode island",
+        "south carolina","south dakota","tennessee","texas","utah","vermont",
+        "virginia","washington","west virginia","wisconsin","wyoming",
+    }
+    # Terms that disqualify a market from being a congressional race
+    DISQUALIFY_TERMS = [
+        "president","presidential","white house","governor","gubernatorial",
+        "2024","2028","2030","senate majority","house majority",  # control questions
+        "peruvian","peru","uk","british","canada","canadian","australian","french",
+        "german","mexican","chinese","russian","european","israeli","ukrainian",
+        "mayor","attorney general","secretary of state","comptroller","treasurer",
+        "2028 democratic","2028 republican","democratic nomination for president",
+        "republican nomination for president",
+    ]
+
+    def validate_market_for_candidate(q_text, cand_name, cand_info):
+        """
+        Returns True only if this market question plausibly refers to
+        this candidate's 2026 US congressional race.
+
+        Rules (all must pass):
+          1. Contains candidate's full name OR (last name + state + 2026 + chamber keywords)
+          2. Does NOT contain any disqualifying term
+          3. Contains '2026' or has no year (exclude 2024/2028 explicitly)
+          4. Is a US congressional race (not president, governor, foreign)
+        """
+        q = q_text.lower()
+        first = cand_name.split()[0].lower()
+        last  = cand_name.split()[-1].lower()
+        state = (cand_info.get("state") or "").lower()
+        chamber = cand_info.get("chamber", "house")
+
+        # Rule 2: disqualify immediately on bad keywords
+        for bad in DISQUALIFY_TERMS:
+            if bad in q:
+                return False, f"disqualified by '{bad}'"
+
+        # Rule 3: year check — must be 2026 or no year at all
+        has_bad_year = any(yr in q for yr in ["2024","2028","2030","2032"])
+        if has_bad_year:
+            return False, "wrong year in title"
+
+        # Rule 1a: full name match (strongest signal)
+        full_name_match = (first in q and last in q)
+
+        # Rule 1b: last name + state + chamber keyword
+        chamber_words = ["senate","senator"] if chamber == "senate" else ["house","congress","congressional","representative","rep.","district","cd-"]
+        state_match = state in q or (cand_info.get("state","").upper() in q_text)
+        chamber_match = any(w in q for w in chamber_words)
+        contextual_match = (last in q and state_match and chamber_match)
+
+        if not full_name_match and not contextual_match:
+            return False, f"no name+context match (last='{last}', state='{state}')"
+
+        return True, "ok"
+
     # ── PASS 1: catalog sweep across all election markets ─────────────────
-    catalog = {}  # last_name_lower → market dict
+    catalog = {}  # candidate_name → market dict
 
     def ingest_markets(market_list):
-        """Index markets by candidate last name."""
+        """Index markets by candidate full-name match with strict validation."""
         for mk in market_list:
-            q = (mk.get("question") or mk.get("title") or "").lower()
-            if not any(kw in q for kw in ["win","elect","primary","congress","senate","house","seat","race","general"]):
+            q = (mk.get("question") or mk.get("title") or "")
+            if not q:
                 continue
-            # Try to extract last name from question
-            for name, _ in candidates.items():
-                last = name.split()[-1].lower()
-                if last in q:
-                    if last not in catalog:
-                        catalog[last] = mk
+            for name, info in candidates.items():
+                if name in catalog:
+                    continue  # already matched
+                ok, reason = validate_market_for_candidate(q, name, info)
+                if ok:
+                    catalog[name] = mk
 
     catalog_tags = [
         "elections", "us-elections", "politics", "us-politics",
@@ -1503,10 +1589,17 @@ def fetch_poly(members, races=None):
     print(f"  Catalog: {len(catalog)} named candidates found in Gamma")
 
     # ── PASS 2: per-candidate search for those not in catalog ─────────────
-    def gamma_search_candidate(name):
-        """Search Gamma for a specific candidate not found in catalog."""
-        last = name.split()[-1]
-        queries = [name, last + " 2026", last + " congress", last + " senate", last + " primary"]
+    def gamma_search_candidate(name, info):
+        """Search Gamma for a specific candidate not found in catalog.
+        Uses full name search and validates every result against the candidate's
+        known state, chamber, and year — never returns a false match."""
+        # Search by full name first (most precise), then fall back to broader queries
+        queries = [
+            f'"{name}" 2026',
+            f'{name} 2026',
+            f'{name.split()[-1]} {info.get("state","")} 2026',
+            f'{name.split()[-1]} 2026 {info.get("chamber","house")}',
+        ]
         for q in queries:
             for endpoint in ["markets", "events"]:
                 url = f"{GAMMA}/{endpoint}?q={urllib.parse.quote(q)}&limit=10"
@@ -1518,12 +1611,10 @@ def fetch_poly(members, races=None):
                         markets.extend(item["markets"])
                     else:
                         markets.append(item)
-                last_lower = last.lower()
                 for mk in markets:
-                    mq = (mk.get("question") or mk.get("title") or "").lower()
-                    if last_lower not in mq:
-                        continue
-                    if any(kw in mq for kw in ["win","elect","primary","congress","senate","house","seat","general"]):
+                    mq = mk.get("question") or mk.get("title") or ""
+                    ok, reason = validate_market_for_candidate(mq, name, info)
+                    if ok:
                         return mk
             time.sleep(0.2)
         return None
@@ -1563,9 +1654,9 @@ def fetch_poly(members, races=None):
         last = name.split()[-1].lower()
         try:
             # Find market — catalog first, then search
-            mk = catalog.get(last)
+            mk = catalog.get(name)
             if not mk:
-                mk = gamma_search_candidate(name)
+                mk = gamma_search_candidate(name, cand)
                 if mk:
                     print(f"  ↳ {name}: found via search")
             if not mk:
@@ -1690,55 +1781,72 @@ def fetch_predictit(candidates, existing_poly):
 
         for cand_name, cand_info in need.items():
             if cand_name in results:
-                continue  # already matched
+                continue
 
-            last  = cand_name.split()[-1].lower()
-            state = (cand_info.get("state") or "").lower()
             party = cand_info.get("party", "D")
 
-            # Strategy A: candidate last name appears in a contract name
+            # Strategy A: validate the overall market title against this candidate
+            mkt_title = mkt.get("name") or mkt.get("shortName") or ""
+            ok, reason = validate_market_for_candidate(mkt_title, cand_name, cand_info)
+            if not ok:
+                # Also check individual contract names combined with market title
+                ok = False
+                for ct in contracts:
+                    ct_full = f"{mkt_title} {ct.get('name','')}"
+                    ok2, _ = validate_market_for_candidate(ct_full, cand_name, cand_info)
+                    if ok2:
+                        ok = True
+                        break
+            if not ok:
+                continue
+
+            # Strategy A: individual contract name contains candidate last name
+            first = cand_name.split()[0].lower()
+            last  = cand_name.split()[-1].lower()
             for ct in contracts:
                 ct_name = (ct.get("name") or ct.get("shortName") or "").lower()
-                if last in ct_name:
+                # Require first OR (last + some identifying context)
+                if first in ct_name or (last in ct_name and len(last) > 4):
                     p = best_price(ct)
                     if p is not None:
                         results[cand_name] = {
                             "prob":       p,
                             "src":        "predictit_contract",
-                            "question":   f"{mkt.get('name','')} → {ct.get('name','')}",
+                            "question":   f"{mkt_title} → {ct.get('name','')}",
                             "url":        mkt_url,
                             "fetched_at": datetime.now(timezone.utc).isoformat(),
                         }
-                        print(f"  ◈ {cand_name}: {round(p*100)}% (PredictIt contract match)")
+                        print(f"  ◈ {cand_name}: {round(p*100)}% (PredictIt direct match)")
                         break
 
             if cand_name in results:
                 continue
 
-            # Strategy B: state-based party-level market
-            # e.g. "Which party will win the 2026 Texas Senate election?"
-            if state and state in mkt_name and "2026" in mkt_name:
-                chamber = cand_info.get("chamber", "house")
-                if chamber == "senate" and "senate" not in mkt_name:
-                    continue
-                if chamber == "house" and "house" not in mkt_name and "congress" not in mkt_name:
-                    continue
+            # Strategy B: party-level market — only use if both state AND chamber
+            # appear in the market title AND the market has exactly 2 contracts (R vs D)
+            mkt_lower = mkt_title.lower()
+            state_lower = (cand_info.get("state") or "").lower()
+            chamber = cand_info.get("chamber","house")
+            chamber_words = ["senate"] if chamber == "senate" else ["house","congressional","congress"]
+            state_in_title = state_lower in mkt_lower or cand_info.get("state","") in mkt_title
+            chamber_in_title = any(w in mkt_lower for w in chamber_words)
+            two_contracts = len(contracts) == 2
 
-                # Find the D or R contract
-                target_party_name = "democratic" if party == "D" else "republican"
+            if state_in_title and chamber_in_title and two_contracts and "2026" in mkt_title:
+                target = "democratic" if party == "D" else "republican"
                 for ct in contracts:
                     ct_name = (ct.get("name") or "").lower()
-                    if target_party_name in ct_name:
+                    if target in ct_name:
                         p = best_price(ct)
                         if p is not None:
                             results[cand_name] = {
                                 "prob":       p,
                                 "src":        "predictit_party",
-                                "question":   f"{mkt.get('name','')} [party proxy]",
+                                "question":   f"{mkt_title} [party proxy for {cand_name}]",
                                 "url":        mkt_url,
                                 "fetched_at": datetime.now(timezone.utc).isoformat(),
                             }
-                            print(f"  ◇ {cand_name}: {round(p*100)}% (PredictIt party-level proxy)")
+                            print(f"  ◇ {cand_name}: {round(p*100)}% (PredictIt party proxy)")
                             break
 
     unmatched = [n for n in need if n not in results]
@@ -1831,12 +1939,13 @@ def fetch_metaculus(candidates, existing_poly, existing_predictit):
 
     def ingest_questions(questions):
         for q in questions:
-            title = (q.get("title") or q.get("url_title") or "").lower()
-            for cand_name in need:
-                last = cand_name.split()[-1].lower()
-                if last in title:
-                    if last not in catalog:
-                        catalog[last] = q
+            title = q.get("title") or q.get("url_title") or ""
+            for cand_name, cand_info in need.items():
+                if cand_name in catalog:
+                    continue
+                ok, _ = validate_market_for_candidate(title, cand_name, cand_info)
+                if ok:
+                    catalog[cand_name] = q
 
     # Bulk-fetch tournament
     for project_search in ["midterms-2026", "2026 midterm", "2026 congressional"]:
@@ -1855,8 +1964,8 @@ def fetch_metaculus(candidates, existing_poly, existing_predictit):
         last  = cand_name.split()[-1].lower()
         state = cand_info.get("state", "")
 
-        # Check catalog first
-        q = catalog.get(last)
+        # Check catalog first (keyed by full name)
+        q = catalog.get(cand_name)
 
         # If not found, search directly
         if not q:
@@ -1868,8 +1977,9 @@ def fetch_metaculus(candidates, existing_poly, existing_predictit):
             ]:
                 qs = search_questions(query, limit=8)
                 for candidate_q in qs:
-                    title = (candidate_q.get("title") or "").lower()
-                    if last in title and "2026" in title:
+                    title = candidate_q.get("title") or ""
+                    ok, _ = validate_market_for_candidate(title, cand_name, cand_info)
+                    if ok:
                         q = candidate_q
                         break
                 if q:
