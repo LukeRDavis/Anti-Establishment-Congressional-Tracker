@@ -1362,6 +1362,55 @@ def fetch_legiscan_votes(members_by_name):
 # 6. FEC + POLYMARKET
 # ─────────────────────────────────────────────────────────────────────────────
 
+# ── Market validation helper (module-level — used by all three fetchers) ──────
+_MARKET_DISQUALIFY_TERMS = [
+    "president","presidential","white house","governor","gubernatorial",
+    "2024","2028","2030","senate majority","house majority",
+    "peruvian","peru","uk","british","canada","canadian","australian","french",
+    "german","mexican","chinese","russian","european","israeli","ukrainian",
+    "mayor","attorney general","secretary of state","comptroller","treasurer",
+    "2028 democratic","2028 republican","democratic nomination for president",
+    "republican nomination for president",
+]
+
+def validate_market_for_candidate(q_text, cand_name, cand_info):
+    """
+    Returns (True, "ok") only if this market question plausibly refers to
+    this candidate's 2026 US congressional race.
+
+    Rules:
+      1. Full name in title  OR  (last name + correct state + correct chamber)
+      2. No disqualifying terms (foreign country, wrong office, wrong year)
+      3. Year is 2026 or absent — rejects 2024/2028/2030
+    Module-level so fetch_poly, fetch_predictit, fetch_metaculus all share it.
+    """
+    q      = q_text.lower()
+    parts  = cand_name.split()
+    first  = parts[0].lower()
+    last   = parts[-1].lower()
+    state  = (cand_info.get("state") or "").lower()
+    chamber = cand_info.get("chamber", "house")
+
+    for bad in _MARKET_DISQUALIFY_TERMS:
+        if bad in q:
+            return False, f"disqualified by '{bad}'"
+
+    has_bad_year = any(yr in q for yr in ["2024","2028","2030","2032"])
+    if has_bad_year:
+        return False, "wrong year in title"
+
+    full_name_match = (first in q and last in q)
+
+    chamber_words = ["senate","senator"] if chamber == "senate"                     else ["house","congress","congressional","representative","rep.","district","cd-"]
+    state_match    = (state in q) or (cand_info.get("state","") in q_text)
+    chamber_match  = any(w in q for w in chamber_words)
+    contextual_match = (last in q and state_match and chamber_match)
+
+    if not full_name_match and not contextual_match:
+        return False, f"no match (last='{last}', state='{state}')"
+
+    return True, "ok"
+
 def fetch_fec(members):
     if not FEC_KEY: return {}
     print("\nFetching FEC finance …")
@@ -1455,7 +1504,17 @@ def fetch_poly(members, races=None):
     """
     GAMMA = "https://gamma-api.polymarket.com"
     CLOB  = "https://clob.polymarket.com"
-    print("\nFetching Polymarket (Gamma catalog + CLOB midpoint, no auth) …")
+    # Gamma API blocks CI/datacenter IPs with HTTP 403. Use CLOB /markets as
+    # the catalog source instead — same data, different IP allowlist.
+    CLOB_MARKETS = "https://clob.polymarket.com/markets"
+    POLY_HEADERS = {
+        "User-Agent":      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+        "Accept":          "application/json, text/plain, */*",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Origin":          "https://polymarket.com",
+        "Referer":         "https://polymarket.com/",
+    }
+    print("\nFetching Polymarket (CLOB catalog + CLOB midpoint, no auth) …")
     results = {}
 
     # Build candidate list: anti-intervention incumbents + all race entries
@@ -1468,74 +1527,6 @@ def fetch_poly(members, races=None):
             candidates[r["name"]] = {"name": r["name"], "type": "race"}
     if not candidates:
         return {}
-
-    # ── Market validation helper ──────────────────────────────────────────
-    # US state names/abbrevs for cross-checking
-    US_STATES = {
-        "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN","IA",
-        "KS","KY","LA","ME","MD","MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ",
-        "NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VT",
-        "VA","WA","WV","WI","WY",
-        "alabama","alaska","arizona","arkansas","california","colorado","connecticut",
-        "delaware","florida","georgia","hawaii","idaho","illinois","indiana","iowa",
-        "kansas","kentucky","louisiana","maine","maryland","massachusetts","michigan",
-        "minnesota","mississippi","missouri","montana","nebraska","nevada",
-        "new hampshire","new jersey","new mexico","new york","north carolina",
-        "north dakota","ohio","oklahoma","oregon","pennsylvania","rhode island",
-        "south carolina","south dakota","tennessee","texas","utah","vermont",
-        "virginia","washington","west virginia","wisconsin","wyoming",
-    }
-    # Terms that disqualify a market from being a congressional race
-    DISQUALIFY_TERMS = [
-        "president","presidential","white house","governor","gubernatorial",
-        "2024","2028","2030","senate majority","house majority",  # control questions
-        "peruvian","peru","uk","british","canada","canadian","australian","french",
-        "german","mexican","chinese","russian","european","israeli","ukrainian",
-        "mayor","attorney general","secretary of state","comptroller","treasurer",
-        "2028 democratic","2028 republican","democratic nomination for president",
-        "republican nomination for president",
-    ]
-
-    def validate_market_for_candidate(q_text, cand_name, cand_info):
-        """
-        Returns True only if this market question plausibly refers to
-        this candidate's 2026 US congressional race.
-
-        Rules (all must pass):
-          1. Contains candidate's full name OR (last name + state + 2026 + chamber keywords)
-          2. Does NOT contain any disqualifying term
-          3. Contains '2026' or has no year (exclude 2024/2028 explicitly)
-          4. Is a US congressional race (not president, governor, foreign)
-        """
-        q = q_text.lower()
-        first = cand_name.split()[0].lower()
-        last  = cand_name.split()[-1].lower()
-        state = (cand_info.get("state") or "").lower()
-        chamber = cand_info.get("chamber", "house")
-
-        # Rule 2: disqualify immediately on bad keywords
-        for bad in DISQUALIFY_TERMS:
-            if bad in q:
-                return False, f"disqualified by '{bad}'"
-
-        # Rule 3: year check — must be 2026 or no year at all
-        has_bad_year = any(yr in q for yr in ["2024","2028","2030","2032"])
-        if has_bad_year:
-            return False, "wrong year in title"
-
-        # Rule 1a: full name match (strongest signal)
-        full_name_match = (first in q and last in q)
-
-        # Rule 1b: last name + state + chamber keyword
-        chamber_words = ["senate","senator"] if chamber == "senate" else ["house","congress","congressional","representative","rep.","district","cd-"]
-        state_match = state in q or (cand_info.get("state","").upper() in q_text)
-        chamber_match = any(w in q for w in chamber_words)
-        contextual_match = (last in q and state_match and chamber_match)
-
-        if not full_name_match and not contextual_match:
-            return False, f"no name+context match (last='{last}', state='{state}')"
-
-        return True, "ok"
 
     # ── PASS 1: catalog sweep across all election markets ─────────────────
     catalog = {}  # candidate_name → market dict
@@ -1553,38 +1544,25 @@ def fetch_poly(members, races=None):
                 if ok:
                     catalog[name] = mk
 
-    catalog_tags = [
-        "elections", "us-elections", "politics", "us-politics",
-        "2026-elections", "congressional-elections",
-    ]
-    for tag in catalog_tags:
-        for endpoint in ["events", "markets"]:
-            url = f"{GAMMA}/{endpoint}?tag={urllib.parse.quote(tag)}&active=true&limit=200"
-            d = fetch_json(url) or {}
-            items = d if isinstance(d, list) else d.get(endpoint, d.get("data", []))
-            markets = []
-            for item in items:
-                if "markets" in item:
-                    markets.extend(item["markets"])
-                else:
-                    markets.append(item)
-            ingest_markets(markets)
-            time.sleep(0.3)
-
-    # Also search for "2026 congress" and "2026 senate" broadly
-    for broad_q in ["2026 congressional", "2026 senate election", "2026 house election", "midterm 2026"]:
-        for endpoint in ["markets", "events"]:
-            url = f"{GAMMA}/{endpoint}?q={urllib.parse.quote(broad_q)}&active=true&limit=50"
-            d = fetch_json(url) or {}
-            items = d if isinstance(d, list) else d.get(endpoint, d.get("markets", d.get("data", [])))
-            markets = []
-            for item in items:
-                if "markets" in item:
-                    markets.extend(item["markets"])
-                else:
-                    markets.append(item)
-            ingest_markets(markets)
-            time.sleep(0.3)
+    # CLOB /markets bulk catalog — paginate through all active markets
+    # (Gamma tag endpoints 403 on CI IPs; CLOB /markets is more permissive)
+    next_cursor = ""
+    page = 0
+    max_pages = 15  # 100 markets/page → up to 1500 markets scanned
+    while page < max_pages:
+        url = CLOB_MARKETS + "?active=true&closed=false&limit=100"
+        if next_cursor:
+            url += f"&next_cursor={urllib.parse.quote(next_cursor)}"
+        d = fetch_json(url, headers=POLY_HEADERS) or {}
+        items = d.get("data") or (d if isinstance(d, list) else [])
+        if not items:
+            break
+        ingest_markets(items)
+        next_cursor = d.get("next_cursor", "")
+        if not next_cursor or next_cursor == "LTE=":  # LTE= = end of pagination
+            break
+        page += 1
+        time.sleep(0.3)
 
     print(f"  Catalog: {len(catalog)} named candidates found in Gamma")
 
@@ -1601,17 +1579,15 @@ def fetch_poly(members, races=None):
             f'{name.split()[-1]} 2026 {info.get("chamber","house")}',
         ]
         for q in queries:
-            for endpoint in ["markets", "events"]:
-                url = f"{GAMMA}/{endpoint}?q={urllib.parse.quote(q)}&limit=10"
-                d = fetch_json(url) or {}
-                items = d if isinstance(d, list) else d.get(endpoint, d.get("markets", d.get("data", [])))
-                markets = []
-                for item in items:
-                    if "markets" in item:
-                        markets.extend(item["markets"])
-                    else:
-                        markets.append(item)
-                for mk in markets:
+            # Try CLOB search first (works on CI); fall back to Gamma if needed
+            for base_url in [
+                f"{CLOB_MARKETS}?q={urllib.parse.quote(q)}&limit=10",
+                f"{GAMMA}/markets?q={urllib.parse.quote(q)}&limit=10",
+            ]:
+                d = fetch_json(base_url, headers=POLY_HEADERS) or {}
+                items = d.get("data") or d if isinstance(d, list) else d.get("markets", [])
+                if isinstance(items, dict): items = []
+                for mk in items:
                     mq = mk.get("question") or mk.get("title") or ""
                     ok, reason = validate_market_for_candidate(mq, name, info)
                     if ok:
@@ -1640,11 +1616,11 @@ def fetch_poly(members, races=None):
         """Live CLOB midpoint — the actual market probability."""
         if not token_id:
             return None
-        d = fetch_json(f"{CLOB}/midpoint?token_id={token_id}")
+        d = fetch_json(f"{CLOB}/midpoint?token_id={token_id}", headers=POLY_HEADERS)
         if d and "mid" in d:
             try: return float(d["mid"])
             except: pass
-        d2 = fetch_json(f"{CLOB}/last-trade-price?token_id={token_id}")
+        d2 = fetch_json(f"{CLOB}/last-trade-price?token_id={token_id}", headers=POLY_HEADERS)
         if d2 and "price" in d2:
             try: return float(d2["price"])
             except: pass
@@ -2195,17 +2171,22 @@ def scrape_ballotpedia_race(name, state, chamber, district=None):
         "WV":"West_Virginia","WI":"Wisconsin","WY":"Wyoming",
     }.get(state, state)
 
-    if chamber == "senate":
-        url = f"https://ballotpedia.org/{name_slug},_United_States_Senate_election_in_{state_full}_(2026)"
-    else:
-        dist_str = f"{'st' if district==1 else 'nd' if district==2 else 'rd' if district==3 else 'th'}_{district}" if district else ""
-        url = f"https://ballotpedia.org/{name_slug},_United_States_Representative,_{state_full}_{district}{dist_str}_Congressional_District_(2026)"
+    # Ballotpedia uses Title_Case for politician pages: /Thomas_Massie
+    # Race pages use state possessive: /Kentucky%27s_4th_Congressional_District_election,_2026
+    title_slug = "_".join(p.capitalize() for p in name.replace("'","").replace(".","").split())
 
+    # Try 1: politician's own page (most likely to exist)
+    url = f"https://ballotpedia.org/{title_slug}"
     html = fetch_html(url)
-    if not html or "does not exist" in html.lower()[:500]:
-        # Try simpler slug: just first_last_state_2026
-        url2 = f"https://ballotpedia.org/{name_slug}_(politician)"
-        html = fetch_html(url2)
+
+    if not html or "does not exist" in html.lower()[:500] or "<title>Ballotpedia</title>" in html[:200]:
+        # Try 2: race-specific page
+        if chamber == "senate":
+            url = f"https://ballotpedia.org/United_States_Senate_election_in_{state_full},_2026"
+        else:
+            ordinal = "1st" if district==1 else "2nd" if district==2 else "3rd" if district==3 else f"{district}th"
+            url = f"https://ballotpedia.org/{state_full}%27s_{ordinal}_Congressional_District_election,_2026"
+        html = fetch_html(url)
     if not html: return {}
 
     result = {}
