@@ -1213,6 +1213,7 @@ function useData() {
     polyUpdated: polyUpdated,
     polyLoading,
     fetchedAt,   status, loaded,
+    descriptions: (window._appData && window._appData.descriptions) || {},
   };
 }
 
@@ -1402,9 +1403,15 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
     const pd = polyData && (polyData[c.name] || polyData[normName(c.name)]);
     if (pd && pd.prob != null) {
       c.win_prob     = pd.prob;
-      c.win_prob_src = pd.src || "polymarket";  // keep real source (polymarket/predictit/metaculus)
+      c.win_prob_src = pd.src || "polymarket";
       c.forecast_url = pd.url || "";
+      if (pd.src === "grok_estimate" && pd.question && !c.win_prob_reasoning) {
+        c.win_prob_reasoning = pd.question;
+      }
     }
+    // Overlay Grok description if not already set
+    const desc = descriptions && (descriptions[c.name] || descriptions[normName(c.name)]);
+    if (desc && !c.description) c.description = desc;
   });
 
   // ── Status tag ─────────────────────────────────────────────────────────────
@@ -1501,6 +1508,8 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
       ? html`<span style=${{fontSize:6,color:"#6b7280",fontFamily:"monospace",lineHeight:1}}>◇ PI~</span>`
       : src==="metaculus"
       ? html`<span style=${{fontSize:6,color:"#a78bfa",fontFamily:"monospace",lineHeight:1}}>△ Meta</span>`
+      : src==="grok_estimate"
+      ? html`<span style=${{fontSize:6,color:"#38bdf8",fontFamily:"monospace",lineHeight:1}}>✦ Grok</span>`
       : null;
     return html`
       <div style=${{display:"flex",flexDirection:"column",alignItems:"center",gap:1,width:44}}>
@@ -1536,7 +1545,9 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
           borderLeft:"3px solid "+st.color+(exp?"90":"40"),
           background: exp?"#0a0c10":"transparent",
         }}>
-          <${WinGauge} prob=${c.win_prob} src=${c.win_prob_src}/>
+          <div title=${c.win_prob_reasoning || c.win_prob_src || ""}>
+            <${WinGauge} prob=${c.win_prob} src=${c.win_prob_src}/>
+          </div>
           ${c.win_prob == null ? html`<div style=${{width:44,flexShrink:0,textAlign:"center",fontSize:7,color:"#374151",fontFamily:"monospace",lineHeight:1.2}}>no %<br/>data</div>` : null}
 
           <div style=${{flex:"0 0 148px",minWidth:0}}>
@@ -1568,6 +1579,7 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
           <div style=${{padding:"6px 12px 8px 63px",background:"#0a0c10",
             borderLeft:"3px solid "+st.color+"20",
             fontSize:8,color:"#6b7280",fontFamily:"monospace",lineHeight:1.6}}>
+            ${c.description ? html`<div style=${{color:"#9ca3af",fontStyle:"italic",marginBottom:4}}>${c.description}</div>` : null}
             ${c.note||"No additional detail available."}
             ${c.website ? html`<br/><a href=${c.website} target="_blank"
               style=${{color:"#4b5563",textDecoration:"none"}}>→ campaign site</a>` : null}
@@ -1620,7 +1632,7 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
       </div>
 
       <div style=${{marginTop:6,fontSize:7,color:"#374151",fontFamily:"monospace",lineHeight:1.7}}>
-        ◉ Poly = Polymarket live · ◈ PI = PredictIt direct · ◇ PI~ = PredictIt party proxy · △ Meta = Metaculus crowd forecast · no % data = no validated market found · TrackAIPAC/RLC = endorsing orgs
+        ◉ Poly = Polymarket · ◈ PI = PredictIt · ◇ PI~ = PredictIt proxy · △ Meta = Metaculus · ✦ Grok = Grok web estimate · no % data = no forecast found · TrackAIPAC/RLC = endorsing orgs
       </div>
     </div>`;
 }
@@ -1634,7 +1646,7 @@ function App() {
   const [showAnti, setShowAnti] = useState(false);
   const [showTimeline, setShowTimeline] = useState(false);
 
-  const {allMembers, bills, challengers, history, races, fecData, polyData, polyLive, polyUpdated, polyLoading, fetchedAt, status, loaded} = useData();
+  const {allMembers, bills, challengers, history, races, fecData, polyData, polyLive, polyUpdated, polyLoading, fetchedAt, status, loaded, descriptions} = useData();
 
   // URL deep-link (mount only)
   useEffect(() => {
@@ -1757,7 +1769,7 @@ function App() {
       <!-- Three columns / Timeline toggle -->
       ${showTimeline ? html`
         <div style=${{width:"100%",maxWidth:860,display:"flex",flexDirection:"column",alignItems:"center",gap:10}}>
-          <${CandidateTimeline} allMembers=${allMembers} challengers=${challengers} polyData=${polyData} racesData=${races}/>
+          <${CandidateTimeline} allMembers=${allMembers} challengers=${challengers} polyData=${polyData} racesData=${races} descriptions=${descData || {}}/>
         </div>`
       : html`
       <div class="three-col" style=${{display:"flex",gap:10,alignItems:"flex-start",flexWrap:"wrap",justifyContent:"center",width:"100%",maxWidth:1080}}>
