@@ -22,11 +22,20 @@ Challengers:
   RLC /endorsements blog posts                 → anti-intervention R challengers
   FEC /candidates 2026                         → cross-reference for FEC IDs
 
-GitHub Secrets:
+Win Probability Sources (priority order, no extra keys needed):
+  1. Polymarket CLOB live    polymarket.com (no key needed for read)
+  2. PredictIt               predictit.org/api/marketdata/all/ (public, no auth)
+  3. Metaculus               metaculus.com/api2/questions/ (public, no auth)
+  4. Manual estimate         RACES_2026 hardcoded win_prob fields
+
+GitHub Secrets (optional — pipeline degrades gracefully without them):
   CONGRESS_KEY   api.congress.gov
   FEC_KEY        api.open.fec.gov
   POLY_KEY       polymarket.com (optional — Level 0 read is public, no key needed)
   LEGISCAN_KEY   legiscan.com (optional)
+  GEMINI_KEY     AI classification (optional)
+  OPENROUTER_API_KEY  AI classification fallback (optional)
+  GROQ_API_KEY        AI classification fallback (optional)
 """
 
 import os, io, json, re, time, hashlib, urllib.request, urllib.parse, urllib.error
@@ -1616,6 +1625,333 @@ def fetch_poly(members, races=None):
     return results
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# FORECAST FALLBACK — PredictIt + Metaculus
+# Called after fetch_poly(); fills in win_prob for any candidate/race still
+# missing odds. Priority chain per candidate:
+#   1. Polymarket CLOB live      (real money, highest resolution)
+#   2. PredictIt lastTradePrice  (real money, political focus, party-level)
+#   3. Metaculus community pred  (expert crowd, individual + party questions)
+#   4. Manual estimate from RACES_2026 (static, written by hand)
+# ─────────────────────────────────────────────────────────────────────────────
+
+def fetch_predictit(candidates, existing_poly):
+    """
+    Scrape PredictIt public API (no auth required) for 2026 election markets.
+
+    Endpoint: GET https://www.predictit.org/api/marketdata/all/
+    Updates every ~60 seconds. Non-commercial use only per PredictIt ToS.
+
+    Two matching strategies:
+      A. Direct contract match  — contract name contains candidate last name
+         → returns that candidate's win probability directly
+      B. Party-level market match — market title contains state (e.g. "Texas
+         Senate 2026") → returns Democratic contract's lastTradePrice as a
+         D-candidate's implied prob, or Republican contract for R-candidates.
+
+    Returns dict keyed by candidate name:
+        { prob, src, question, url, fetched_at }
+    """
+    PREDICTIT_ALL = "https://www.predictit.org/api/marketdata/all/"
+    results = {}
+
+    # Only process candidates not already covered by Polymarket
+    need = {name: info for name, info in candidates.items()
+            if name not in existing_poly}
+    if not need:
+        print("  PredictIt: all candidates already have Polymarket coverage, skipping")
+        return {}
+
+    print(f"\nFetching PredictIt (public, no auth) for {len(need)} candidates …")
+
+    data = fetch_json(PREDICTIT_ALL)
+    if not data or "markets" not in data:
+        print("  PredictIt: no data returned")
+        return {}
+
+    markets = data["markets"]
+    print(f"  PredictIt: {len(markets)} active markets")
+
+    def best_price(contract):
+        """Use bestBuyYesCost if available, else lastTradePrice."""
+        p = contract.get("bestBuyYesCost") or contract.get("lastTradePrice")
+        try:
+            p = float(p)
+            return round(p, 4) if 0 < p <= 1 else None
+        except (TypeError, ValueError):
+            return None
+
+    # Pre-index markets for fast lookup
+    # Index by: set of words in market name + each contract name
+    for mkt in markets:
+        mkt_name  = (mkt.get("name") or mkt.get("shortName") or "").lower()
+        mkt_url   = mkt.get("url") or f"https://www.predictit.org/markets/detail/{mkt.get('id','')}"
+        contracts = mkt.get("contracts") or []
+
+        for cand_name, cand_info in need.items():
+            if cand_name in results:
+                continue  # already matched
+
+            last  = cand_name.split()[-1].lower()
+            state = (cand_info.get("state") or "").lower()
+            party = cand_info.get("party", "D")
+
+            # Strategy A: candidate last name appears in a contract name
+            for ct in contracts:
+                ct_name = (ct.get("name") or ct.get("shortName") or "").lower()
+                if last in ct_name:
+                    p = best_price(ct)
+                    if p is not None:
+                        results[cand_name] = {
+                            "prob":       p,
+                            "src":        "predictit_contract",
+                            "question":   f"{mkt.get('name','')} → {ct.get('name','')}",
+                            "url":        mkt_url,
+                            "fetched_at": datetime.now(timezone.utc).isoformat(),
+                        }
+                        print(f"  ◈ {cand_name}: {round(p*100)}% (PredictIt contract match)")
+                        break
+
+            if cand_name in results:
+                continue
+
+            # Strategy B: state-based party-level market
+            # e.g. "Which party will win the 2026 Texas Senate election?"
+            if state and state in mkt_name and "2026" in mkt_name:
+                chamber = cand_info.get("chamber", "house")
+                if chamber == "senate" and "senate" not in mkt_name:
+                    continue
+                if chamber == "house" and "house" not in mkt_name and "congress" not in mkt_name:
+                    continue
+
+                # Find the D or R contract
+                target_party_name = "democratic" if party == "D" else "republican"
+                for ct in contracts:
+                    ct_name = (ct.get("name") or "").lower()
+                    if target_party_name in ct_name:
+                        p = best_price(ct)
+                        if p is not None:
+                            results[cand_name] = {
+                                "prob":       p,
+                                "src":        "predictit_party",
+                                "question":   f"{mkt.get('name','')} [party proxy]",
+                                "url":        mkt_url,
+                                "fetched_at": datetime.now(timezone.utc).isoformat(),
+                            }
+                            print(f"  ◇ {cand_name}: {round(p*100)}% (PredictIt party-level proxy)")
+                            break
+
+    unmatched = [n for n in need if n not in results]
+    print(f"  PredictIt: {len(results)} matched, {len(unmatched)} unmatched")
+    if unmatched[:5]:
+        print(f"    Unmatched sample: {unmatched[:5]}")
+    return results
+
+
+def fetch_metaculus(candidates, existing_poly, existing_predictit):
+    """
+    Fetch Metaculus community predictions for 2026 races.
+    No API key required — all public questions are readable unauthenticated.
+
+    Two passes:
+      Pass 1 — 2026 Midterms tournament sweep (project_id=3349 or search by tag)
+               Bulk-fetches all open questions in the tournament, indexes by
+               candidate last name / state / chamber.
+      Pass 2 — Per-candidate search for those not found in Pass 1.
+               GET /api2/questions/?search=<name+2026>&status=open&limit=8
+
+    Probability field: question.community_prediction.q2 (median) for binary
+    questions, or aggregations.recency_weighted.latest.centers[0] in newer API.
+
+    Returns dict keyed by candidate name:
+        { prob, src, question, url, metaculus_id, fetched_at }
+    """
+    BASE = "https://www.metaculus.com/api2"
+    results = {}
+
+    # Only process candidates not covered by Polymarket or PredictIt
+    need = {name: info for name, info in candidates.items()
+            if name not in existing_poly and name not in existing_predictit}
+    if not need:
+        print("  Metaculus: all candidates covered by upstream sources, skipping")
+        return {}
+
+    print(f"\nFetching Metaculus (public, no auth) for {len(need)} candidates …")
+
+    def extract_prob(q):
+        """
+        Extract probability from a Metaculus question dict.
+        Handles both api2 (community_prediction) and newer aggregation formats.
+        """
+        # Newer format: aggregations.recency_weighted.latest
+        try:
+            agg = q.get("aggregations", {})
+            rw  = agg.get("recency_weighted", {})
+            lat = rw.get("latest", {})
+            if lat and lat.get("centers"):
+                return round(float(lat["centers"][0]), 4)
+        except (TypeError, ValueError, KeyError):
+            pass
+
+        # api2 format: community_prediction dict
+        try:
+            cp = q.get("community_prediction") or {}
+            # Binary question: q2 = median
+            if cp.get("q2") is not None:
+                return round(float(cp["q2"]), 4)
+            # Fallback: full object with history
+            hist = cp.get("history") or []
+            if hist:
+                last = hist[-1]
+                if isinstance(last, dict) and last.get("q2") is not None:
+                    return round(float(last["q2"]), 4)
+        except (TypeError, ValueError, KeyError):
+            pass
+
+        # metaculus_prediction (their own model)
+        try:
+            mp = q.get("metaculus_prediction") or {}
+            if mp.get("q2") is not None:
+                return round(float(mp["q2"]), 4)
+        except (TypeError, ValueError, KeyError):
+            pass
+
+        return None
+
+    def search_questions(query, limit=10):
+        """Search Metaculus questions by text."""
+        url = f"{BASE}/questions/?search={urllib.parse.quote(query)}&status=open&type=forecast&limit={limit}"
+        d = fetch_json(url) or {}
+        return d.get("results", [])
+
+    # ── Pass 1: 2026 Midterms tournament bulk fetch ─────────────────────────
+    # Tournament slug: midterms-2026, project ID discovered dynamically
+    # Try fetching the tournament questions page
+    catalog = {}  # last_name_lower → question dict
+
+    def ingest_questions(questions):
+        for q in questions:
+            title = (q.get("title") or q.get("url_title") or "").lower()
+            for cand_name in need:
+                last = cand_name.split()[-1].lower()
+                if last in title:
+                    if last not in catalog:
+                        catalog[last] = q
+
+    # Bulk-fetch tournament
+    for project_search in ["midterms-2026", "2026 midterm", "2026 congressional"]:
+        url = f"{BASE}/questions/?search={urllib.parse.quote(project_search)}&status=open&type=forecast&limit=100"
+        d   = fetch_json(url) or {}
+        ingest_questions(d.get("results", []))
+        time.sleep(0.5)
+
+    print(f"  Metaculus Pass 1: {len(catalog)} candidate names found in tournament")
+
+    # ── Pass 2: per-candidate search for those not in catalog ───────────────
+    for cand_name, cand_info in need.items():
+        if cand_name in results:
+            continue
+
+        last  = cand_name.split()[-1].lower()
+        state = cand_info.get("state", "")
+
+        # Check catalog first
+        q = catalog.get(last)
+
+        # If not found, search directly
+        if not q:
+            for query in [
+                f"{cand_name} 2026",
+                f"{last} {state} 2026",
+                f"{last} congress 2026",
+                f"{last} senate 2026",
+            ]:
+                qs = search_questions(query, limit=8)
+                for candidate_q in qs:
+                    title = (candidate_q.get("title") or "").lower()
+                    if last in title and "2026" in title:
+                        q = candidate_q
+                        break
+                if q:
+                    break
+                time.sleep(0.3)
+
+        if not q:
+            continue
+
+        prob = extract_prob(q)
+        if prob is None or not (0 < prob < 1):
+            continue
+
+        q_id  = q.get("id", "")
+        slug  = q.get("slug") or q.get("url_title") or ""
+        url   = f"https://www.metaculus.com/questions/{q_id}/" if q_id else "https://www.metaculus.com"
+
+        results[cand_name] = {
+            "prob":         prob,
+            "src":          "metaculus",
+            "question":     q.get("title") or q.get("url_title") or "",
+            "metaculus_id": q_id,
+            "url":          url,
+            "fetched_at":   datetime.now(timezone.utc).isoformat(),
+        }
+        print(f"  △ {cand_name}: {round(prob*100)}% (Metaculus: '{q.get('title','')[:60]}')")
+        time.sleep(0.3)
+
+    unmatched = [n for n in need if n not in results]
+    print(f"  Metaculus: {len(results)} matched, {len(unmatched)} unmatched")
+    return results
+
+
+def merge_forecast_sources(poly, predictit, metaculus, races):
+    """
+    Merge all forecast sources into a single poly dict and update races in-place.
+    Priority: Polymarket > PredictIt > Metaculus > existing manual estimate.
+
+    Also adds a 'win_prob_src_detail' field to races for the frontend to display.
+    """
+    merged = dict(poly)  # start with Polymarket
+
+    # Layer in PredictIt for any not already covered
+    for name, data in predictit.items():
+        if name not in merged:
+            merged[name] = data
+        # Also upgrade party-proxy to contract match if available
+        elif (merged[name].get("src") or "").startswith("predictit_party") \
+             and data.get("src") == "predictit_contract":
+            merged[name] = data
+
+    # Layer in Metaculus for any still not covered
+    for name, data in metaculus.items():
+        if name not in merged:
+            merged[name] = data
+
+    # Wire into races
+    src_priority = {
+        "polymarket_live": 0, "polymarket_gamma": 1,
+        "predictit_contract": 2, "predictit_party": 3,
+        "metaculus": 4,
+    }
+    for race in races:
+        name = race["name"]
+        if name not in merged:
+            continue
+        mk   = merged[name]
+        prob = mk.get("prob")
+        src  = mk.get("src", "")
+        if prob is None:
+            continue
+        # Only overwrite if new source is equal or better priority
+        existing_src = race.get("win_prob_src", "manual")
+        if src_priority.get(src, 99) <= src_priority.get(existing_src, 99):
+            race["win_prob"]     = round(prob, 3)
+            race["win_prob_src"] = src
+            race["forecast_url"] = mk.get("url", "")
+            print(f"  {src} → {name}: {round(prob*100)}%")
+
+    return merged
+
+
 def load_history():
     try:
         with open("history.json") as f: return json.load(f)
@@ -1920,7 +2256,24 @@ def main():
 
     poly  = fetch_poly(members, races=races) or existing.get("poly", {})
 
-    # Wire live Polymarket odds into race cards
+    # ── Forecast fallback chain: PredictIt → Metaculus ─────────────────────
+    # Build candidate lookup for the fetchers
+    forecast_candidates = {}
+    for m in members:
+        if m.get("antiArms"):
+            forecast_candidates[m["name"]] = {"state": m.get("state",""), "party": m.get("party","D"), "chamber": m.get("chamber","house")}
+    for r in races:
+        if r.get("name"):
+            forecast_candidates[r["name"]] = {"state": r.get("state",""), "party": r.get("party","D"), "chamber": r.get("chamber","house")}
+    for c in challengers:
+        if c.get("name"):
+            forecast_candidates[c["name"]] = {"state": c.get("state",""), "party": c.get("party","D"), "chamber": c.get("chamber","house")}
+
+    predictit_data  = fetch_predictit(forecast_candidates, poly)
+    metaculus_data  = fetch_metaculus(forecast_candidates, poly, predictit_data)
+    poly            = merge_forecast_sources(poly, predictit_data, metaculus_data, races)
+
+    # Wire all odds into race cards (Polymarket already wired above in merge)
     races = wire_polymarket_to_races(races, poly)
 
     anti = sum(1 for m in members if m["antiArms"])
@@ -1942,6 +2295,8 @@ def main():
                 "votes":       "legiscan.com" if LEGISCAN_KEY else "pending key",
                 "fec":         "api.open.fec.gov",
                 "polymarket":  "polymarket.com",
+                "predictit":   "predictit.org (public API, no auth)",
+                "metaculus":   "metaculus.com (public API, no auth)",
             },
         },
         "members":             members,
