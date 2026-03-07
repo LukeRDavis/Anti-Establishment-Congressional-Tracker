@@ -246,115 +246,124 @@ function ArmsBadge({member}) {
 }
 
 
-function ProgressBars({chamber, members, allMembers, racesData, polyData}) {
+function ProgressBars({chamber, members, allMembers, challengers, racesData, polyData}) {
   const current = members.filter(m => m.antiArms).length;
+  const ch = chamber;
 
-  // ── Probability model (Poisson-binomial normal approximation) ──────────
-  const races  = (racesData && racesData.length > 0) ? racesData : KEY_RACES_2026;
-  const ch     = chamber;
+  // ── Build trials: incumbents + ALL challengers ──────────────────────────
+  const races = (racesData && racesData.length > 0) ? racesData : KEY_RACES_2026;
 
   const trials = [];
-  members.filter(m => m.antiArms).forEach(m => {
-    const race    = races.find(r => r.name === m.name && r.chamber === ch);
-    const polyMkt = polyData && polyData[m.name];
-    let   p;
-    if (polyMkt && polyMkt.prob != null)      p = polyMkt.prob;
-    else if (race && race.win_prob != null)    p = race.win_prob;
-    else if (race && race.winProb != null)     p = race.winProb;
-    else if (race && race.departing)           p = 0;
-    else                                       p = 0.88;
-    trials.push({name: m.name, p});
-  });
-  races
-    .filter(r => r.chamber === ch && (r.type === "challenger" || r.raceType === "CHALLENGER"))
-    .forEach(r => {
-      const pm = polyData && polyData[r.name];
-      const p  = pm && pm.prob != null ? pm.prob : r.win_prob != null ? r.win_prob : 0.20;
-      trials.push({name: r.name, p});
-    });
 
-  const mu     = trials.reduce((s, t) => s + t.p, 0);
-  const sigma2 = trials.reduce((s, t) => s + t.p * (1 - t.p), 0);
+  // Incumbent anti-intervention members (retention probability)
+  members.filter(m => m.antiArms).forEach(m => {
+    const race   = races.find(r => r.name === m.name && r.chamber === ch);
+    const pm     = polyData && polyData[m.name];
+    let p;
+    if (pm && pm.prob != null)              p = pm.prob;
+    else if (race && race.win_prob != null) p = race.win_prob;
+    else if (race && race.winProb != null)  p = race.winProb;
+    else if (race && race.departing)        p = 0;
+    else                                    p = 0.88;
+    trials.push({name: m.name, p, src: pm ? "poly" : "est"});
+  });
+
+  // Challengers — trackaipac + rlc + races_2026 in this chamber
+  const challSeen = new Set(trials.map(t => t.name.toLowerCase()));
+  const allChalls = [
+    ...(challengers||[]).filter(c => (c.chamber||"house") === ch),
+    ...races.filter(r => r.chamber === ch && (r.type==="challenger" || r.raceType==="CHALLENGER")),
+  ];
+  allChalls.forEach(r => {
+    const key = (r.name||"").toLowerCase();
+    if (challSeen.has(key)) return;
+    challSeen.add(key);
+    const pm = polyData && polyData[r.name];
+    // Only non-eliminated challengers (no LOST/WITHDREW status)
+    const ps = r.ps || r.status || "";
+    if (["LOST","WITHDREW","DEFEATED","FAILED_PRIMARY"].includes(ps)) return;
+    const p = pm && pm.prob != null ? pm.prob
+            : r.win_prob != null ? r.win_prob
+            : r.winProb  != null ? r.winProb
+            : 0.12;  // default challenger win probability
+    trials.push({name: r.name, p, src: pm ? "poly" : "est", isChallenger: true});
+  });
+
+  const mu     = trials.reduce((s,t) => s+t.p, 0);
+  const sigma2 = trials.reduce((s,t) => s+t.p*(1-t.p), 0);
   const sigma  = Math.sqrt(Math.max(sigma2, 0.01));
-  const polyCount = trials.filter(t => {
-    const pm = polyData && polyData[t.name];
-    return pm && pm.prob != null;
-  }).length;
+  const challCount = trials.filter(t => t.isChallenger).length;
+  const polyCount  = trials.filter(t => t.src === "poly").length;
 
   function normCDF(z) {
-    if (z > 6) return 1; if (z < -6) return 0;
-    const t = 1 / (1 + 0.2315419 * Math.abs(z));
-    const d = 0.3989423 * Math.exp(-z * z / 2);
-    const p = d * t * (0.3193815 + t * (-0.3565638 + t * (1.7814779 + t * (-1.8212560 + t * 1.3302744))));
-    return z > 0 ? 1 - p : p;
+    if (z>6) return 1; if (z<-6) return 0;
+    const t = 1/(1+0.2315419*Math.abs(z));
+    const d = 0.3989423*Math.exp(-z*z/2);
+    const p = d*t*(0.3193815+t*(-0.3565638+t*(1.7814779+t*(-1.8212560+t*1.3302744))));
+    return z>0?1-p:p;
   }
   function pReach(n) {
-    return Math.max(0, Math.min(1, normCDF(-(n - 0.5 - mu) / sigma)));
+    return Math.max(0, Math.min(1, normCDF(-(n-0.5-mu)/sigma)));
   }
   function probColor(p) {
-    if (p >= 0.7)  return "#4ade80";
-    if (p >= 0.4)  return "#fbbf24";
-    if (p >= 0.15) return "#f97316";
-    return "#f87171";
+    if (p>=0.7) return "#4ade80"; if (p>=0.4) return "#fbbf24";
+    if (p>=0.15) return "#f97316"; return "#f87171";
   }
   function probLabel(p) {
-    if (p >= 0.85) return "Very Likely";
-    if (p >= 0.65) return "Likely";
-    if (p >= 0.40) return "Possible";
-    if (p >= 0.15) return "Unlikely";
+    if (p>=0.85) return "Very Likely"; if (p>=0.65) return "Likely";
+    if (p>=0.40) return "Possible"; if (p>=0.15) return "Unlikely";
     return "Very Unlikely";
   }
 
   return html`
     <div style=${{background:"#0f1117",border:"1px solid #1e2230",borderRadius:12,padding:"12px 14px",width:"100%",boxSizing:"border-box"}}>
       <div style=${{fontSize:9,color:"#a78bfa",fontFamily:"monospace",letterSpacing:"0.14em",textTransform:"uppercase",marginBottom:7}}>
-        ◈ Anti-Intervention Coalition · ${chamber === "senate" ? "Senate" : "House"}
+        ◈ Anti-Intervention Coalition · ${chamber==="senate"?"Senate":"House"}
       </div>
 
       <div style=${{display:"flex",gap:8,marginBottom:7,flexWrap:"wrap",alignItems:"center",fontFamily:"monospace",fontSize:8}}>
         <span style=${{display:"flex",alignItems:"center",gap:4}}>
           <span style=${{width:9,height:9,borderRadius:2,background:"#818cf8",display:"inline-block"}}/>
-          <span style=${{color:"#818cf8",fontWeight:600}}>${current} Anti-Intervention</span>
+          <span style=${{color:"#818cf8",fontWeight:600}}>${current} members</span>
         </span>
+        ${challCount>0 ? html`
+          <span style=${{color:"#4b5563"}}>+</span>
+          <span style=${{color:"#a78bfa"}}>${challCount} challengers</span>` : null}
         <span style=${{color:"#4b5563"}}>·</span>
-        <span style=${{color:"#374151"}}>Expected by Nov 2026:
+        <span style=${{color:"#374151"}}>Expected Nov 2026:
           <span style=${{color:"#a5b4fc",fontWeight:600}}> μ=${mu.toFixed(1)}</span>
           <span style=${{color:"#374151"}}> ± ${sigma.toFixed(1)}</span>
         </span>
-        ${polyCount > 0 ? html`<span style=${{color:"#4ade80",fontSize:7}}>◉ ${polyCount} live</span>` : null}
+        ${polyCount>0 ? html`<span style=${{color:"#4ade80",fontSize:7}}>◉ ${polyCount} live</span>` : null}
       </div>
 
-      ${THRESHOLDS[chamber].map((th, i) => {
-        const pct     = Math.min(100, Math.round((current / th.n) * 100));
+      ${THRESHOLDS[chamber].map((th,i) => {
+        const pct     = Math.min(100, Math.round((current/th.n)*100));
         const reached = current >= th.n;
         const prob    = pReach(th.n);
         const pc      = probColor(prob);
         const pl      = probLabel(prob);
-        const need    = Math.max(0, th.n - current);
-        const muPct   = Math.min(99, Math.round((mu / th.n) * 100));
+        const need    = Math.max(0, th.n-current);
+        const muPct   = Math.min(99, Math.round((mu/th.n)*100));
 
         return html`
-          <div key=${i} style=${{marginBottom: i < THRESHOLDS[chamber].length - 1 ? 16 : 0}}>
+          <div key=${i} style=${{marginBottom: i<THRESHOLDS[chamber].length-1?16:0}}>
             <div style=${{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:3,flexWrap:"wrap",gap:3}}>
               <span style=${{fontSize:10,color:reached?"#4ade80":th.color,fontWeight:600,fontFamily:"monospace"}}>
-                ${th.label}
-                <span style=${{fontSize:9,fontWeight:400,color:"#374151"}}> / ${th.n}</span>
+                ${th.label}<span style=${{fontSize:9,fontWeight:400,color:"#374151"}}> / ${th.n}</span>
               </span>
               <div style=${{display:"flex",gap:5,alignItems:"center"}}>
                 <span style=${{fontSize:9,fontFamily:"monospace",color:reached?"#4ade80":"#6b7280"}}>
-                  ${current}/${th.n}${reached ? " ✓" : ""}
+                  ${current}/${th.n}${reached?" ✓":""}
                 </span>
-                <span style=${{
-                  fontSize:9,fontFamily:"monospace",fontWeight:700,
+                <span style=${{fontSize:9,fontFamily:"monospace",fontWeight:700,
                   padding:"1px 7px",borderRadius:4,
                   background:pc+"18",color:pc,border:"1px solid "+pc+"40",
-                  minWidth:44,textAlign:"center",
-                }}>
-                  ${reached ? "100%" : Math.round(prob*100)+"%"}
+                  minWidth:44,textAlign:"center"}}>
+                  ${reached?"100%":Math.round(prob*100)+"%"}
                 </span>
               </div>
             </div>
-
             <div style=${{height:7,borderRadius:4,background:"#1a1d27",overflow:"hidden",marginBottom:4,position:"relative"}}>
               <div style=${{position:"absolute",left:0,top:0,height:"100%",
                 width:pct+"%",background:reached?"#4ade80":"#818cf8",
@@ -363,12 +372,11 @@ function ProgressBars({chamber, members, allMembers, racesData, polyData}) {
                 <div style=${{position:"absolute",top:0,height:"100%",width:2,
                   background:"#a5b4fc",opacity:0.5,left:muPct+"%"}}/>` : null}
             </div>
-
             <div style=${{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:3}}>
               <div style=${{fontSize:8,fontFamily:"monospace",color:pc,flex:1}}>
                 ${reached
                   ? "✓ Threshold reached with current coalition"
-                  : pl + " by Nov 2026 — need " + need + " more (μ=" + mu.toFixed(1) + ", σ=" + sigma.toFixed(1) + ")"}
+                  : pl+" by Nov 2026 — need "+need+" more (μ="+mu.toFixed(1)+", σ="+sigma.toFixed(1)+")"}
               </div>
             </div>
             <div style=${{fontSize:9,color:"#374151",lineHeight:1.5,marginTop:2}}>${th.desc}</div>
@@ -377,10 +385,13 @@ function ProgressBars({chamber, members, allMembers, racesData, polyData}) {
 
       <div style=${{marginTop:10,paddingTop:7,borderTop:"1px solid #1a1d27",
         fontSize:7,color:"#1e2230",fontFamily:"monospace",lineHeight:1.7}}>
-        P(reach N) = Φ((μ−N+0.5)/σ). Win probs: Polymarket live → race data → 0.88 default retention.
+        P(reach N) = Φ((μ−N+0.5)/σ). Members default retention p=0.88 · challengers default p=0.12 · Polymarket live where available.
       </div>
     </div>`;
 }
+
+
+
 
 
 function BillsPanel({bills}) {
@@ -1311,247 +1322,294 @@ const KEY_RACES_2026 = [
 
 // ── Timeline Components ───────────────────────────────────────────────────────
 
-function ProbabilityGauge({prob, color, label, note}) {
-  if (prob === null || prob === undefined) {
-    return html`<div style=${{fontSize:9,color:"#4b5563",fontFamily:"monospace",textAlign:"center"}}>${label||"—"}</div>`;
+function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
+  const [filter, setFilter] = useState("all");
+
+  const today = new Date(); today.setHours(0,0,0,0);
+
+  function parseDate(s) {
+    if (!s) return null;
+    const d = new Date(s + "T12:00:00");
+    return isNaN(d) ? null : d;
   }
-  const pct = Math.round(prob * 100);
-  const r = 20;
-  const circumference = Math.PI * r;
-  const dash = prob * circumference;
-  return html`
-    <div style=${{display:"flex",flexDirection:"column",alignItems:"center",gap:2}}>
-      <svg width="50" height="28" viewBox="0 0 50 28">
-        <path d="M 5 25 A 20 20 0 0 1 45 25" fill="none" stroke="#1e2230" stroke-width="5" stroke-linecap="round"/>
-        <path d="M 5 25 A 20 20 0 0 1 45 25" fill="none" stroke=${color} stroke-width="5"
-          stroke-linecap="round"
-          stroke-dasharray="${dash} ${circumference}"
-          transform="rotate(0 25 25)"/>
-        <text x="25" y="23" text-anchor="middle" font-size="9" font-family="monospace" fill=${color} font-weight="700">${pct}%</text>
-      </svg>
-      ${note ? html`<div style=${{fontSize:7,color:"#4b5563",fontFamily:"monospace",textAlign:"center",maxWidth:90,lineHeight:1.3}}>${note}</div>` : null}
-    </div>`;
-}
+  function fmtDate(d) {
+    if (!d) return "";
+    return d.toLocaleDateString("en-US", {month:"short", day:"numeric", year:"numeric"});
+  }
 
-function RaceCard({race, liveRacesData}) {
-  const [expanded, setExpanded] = useState(false);
+  // ── Merge all sources into unified candidate list ──────────────────────────
+  const allCands = [];
+  const seen = new Set();
 
-  // Accept both camelCase (hardcoded) and snake_case (from data.json)
-  const winProb     = race.win_prob != null ? race.win_prob : (race.winProb != null ? race.winProb : null);
-  const opponent    = race.general_opponent || race.primary_opponent || race.opponent || "";
-  const departing   = race.departing != null ? race.departing : (race.status === "departed");
-  const wonPrimary  = race.justWonPrimary != null ? race.justWonPrimary : (race.primary_result === "WON");
-  const probSrc     = race.win_prob_src || "estimate";
-  const impact      = race.impact || race.impact_if_wins || "";
-  const cookRating  = race.cook_rating || race.cookRating || null;
-  const probNote    = race.probNote || cookRating || (probSrc === "polymarket" ? "Live Polymarket" : "Manual estimate");
-  const raceType    = race.raceType || (race.type === "challenger" ? "CHALLENGER" : race.status === "safe" ? "SAFE SEAT" : "INCUMBENT");
-  const raceColor   = race.raceColor || "#6b7280";
+  function normName(n) {
+    return (n||"").replace(/^(congressman|senator|representative)\s+/i,"").trim().toLowerCase();
+  }
+  function addCand(c) {
+    const key = normName(c.name);
+    if (seen.has(key)) {
+      const ex = allCands.find(x => x._key === key);
+      if (ex) {
+        if (c.primary_date && !ex.primary_date)   ex.primary_date   = c.primary_date;
+        if (c.general_date && !ex.general_date)   ex.general_date   = c.general_date;
+        if (c.primary_result && !ex.primary_result) ex.primary_result = c.primary_result;
+        if (c.win_prob != null && ex.win_prob == null) ex.win_prob   = c.win_prob;
+        if (c.primary_pct && !ex.primary_pct)     ex.primary_pct    = c.primary_pct;
+        if (c.general_opponent && !ex.general_opponent) ex.general_opponent = c.general_opponent;
+        if (c.primary_opponent && !ex.primary_opponent) ex.primary_opponent = c.primary_opponent;
+        if (c.note && !ex.note)                   ex.note           = c.note;
+        if (c.win_prob_src && !ex.win_prob_src)   ex.win_prob_src   = c.win_prob_src;
+      }
+      return;
+    }
+    seen.add(key);
+    allCands.push({...c, _key: key,
+      name: c.name.replace(/^(congressman|senator|representative)\s+/i,"").trim()});
+  }
 
-  const electionLabel = race.electionLabel || (
-    race.general_date ? "General: " + new Date(race.general_date + "T12:00:00").toLocaleDateString("en-US", {month:"short", day:"numeric", year:"numeric"}) :
-    race.primary_date ? "Primary: " + new Date(race.primary_date + "T12:00:00").toLocaleDateString("en-US", {month:"short", day:"numeric"}) : ""
-  );
-
-  const partyColor  = race.party === "R" ? "#ef4444" : race.party === "D" ? "#60a5fa" : "#a3e635";
-  const impactColor = race.impactDir > 0 ? "#4ade80" : race.impactDir < 0 ? "#f87171" : "#9ca3af";
-
-  return html`
-    <div onClick=${() => setExpanded(v => !v)} style=${{
-      background:"#0f1117", border:"1px solid " + raceColor + "30",
-      borderLeft:"3px solid " + raceColor, borderRadius:8,
-      padding:"8px 10px", cursor:"pointer",
-      minWidth:185, maxWidth:235, flex:"1 1 185px",
-    }}>
-      <div style=${{display:"flex",justifyContent:"space-between",alignItems:"flex-start",marginBottom:4}}>
-        <div>
-          <div style=${{fontSize:11,fontWeight:700,color:"#f0ebe0",fontFamily:"monospace"}}>${race.name}</div>
-          <div style=${{fontSize:8,color:partyColor,fontFamily:"monospace",marginTop:1}}>${race.party} · ${race.state}</div>
-        </div>
-        <div style=${{textAlign:"right"}}>
-          <div style=${{fontSize:7,fontFamily:"monospace",padding:"1px 5px",borderRadius:3,
-            background:raceColor+"18",color:raceColor,border:"1px solid "+raceColor+"40",
-            letterSpacing:"0.06em",marginBottom:3}}>${raceType}</div>
-          ${wonPrimary ? html`<div style=${{fontSize:7,fontFamily:"monospace",padding:"1px 5px",borderRadius:3,
-            background:"rgba(74,222,128,.12)",color:"#4ade80",border:"1px solid #4ade8030"}}>WON PRIMARY</div>` : null}
-        </div>
-      </div>
-
-      <div style=${{fontSize:8,color:"#6b7280",fontFamily:"monospace",marginBottom:4,lineHeight:1.4}}>
-        <span style=${{color:raceColor}}>${electionLabel}</span>
-        ${opponent && !departing ? html` · vs ${opponent.slice(0,38)}${opponent.length>38?"…":""}` : ""}
-      </div>
-
-      <div style=${{display:"flex",gap:4,marginBottom:5,flexWrap:"wrap",alignItems:"center"}}>
-        <span style=${{fontSize:8,fontFamily:"monospace",padding:"1px 5px",borderRadius:3,
-          background:"#818cf840",color:"#818cf8",border:"1px solid #818cf830"}}>
-          ◈ Anti-Intervention
-        </span>
-        ${impact ? html`<span style=${{fontSize:8,fontFamily:"monospace",padding:"1px 5px",borderRadius:3,
-          background:impactColor+"18",color:impactColor,border:"1px solid "+impactColor+"25"}}>${impact}</span>` : null}
-        ${probSrc === "polymarket" ? html`<span style=${{fontSize:7,color:"#4ade80",fontFamily:"monospace"}}>◉ live</span>` : null}
-      </div>
-
-      <div style=${{display:"flex",gap:8,alignItems:"flex-start"}}>
-        <${ProbabilityGauge} prob=${winProb} color=${raceColor} label=${winProb !== null ? Math.round(winProb*100)+"%" : "—"} note=${probNote}/>
-        <div style=${{flex:1,fontSize:8,color:"#6b7280",fontFamily:"monospace",lineHeight:1.5}}>
-          ${expanded ? race.status : (race.status||"").slice(0,85) + (race.status && race.status.length > 85 ? "…" : "")}
-          ${race.status && race.status.length > 85 ? html`<span style=${{color:"#374151"}}> ${expanded ? "▲" : "▼ more"}</span>` : null}
-        </div>
-      </div>
-    </div>`;
-}
-
-function CongressTimeline({allMembers, polyData, racesData}) {
-  const [hovered, setHovered] = useState(null);
-  const [showProj, setShowProj] = useState(true);
-
-  // Use live races from data.json if available, else hardcoded
-  const races = (racesData && racesData.length > 0) ? racesData : KEY_RACES_2026;
-
-  // Live 119th counts from members[]
-  const live = {
-    D: allMembers.filter(m => m.antiArms && m.party !== "R").length,
-    R: allMembers.filter(m => m.antiArms && m.party === "R").length,
-  };
-  live.total = live.D + live.R;
-
-  // 120th projection: stable incumbents * 0.88 + race win probabilities
-  const stableMembers = allMembers.filter(m => {
-    if (!m.antiArms) return false;
-    return !races.find(r => r.name === m.name);
+  // races_2026 challengers first (richest data)
+  (racesData || []).filter(r => r.type === "challenger" || r.primary_result).forEach(r => {
+    addCand({
+      name: r.name, party: r.party||"D", state: r.state||"", district: r.district,
+      chamber: r.chamber||"house",
+      primary_date: r.primary_date||"", general_date: r.general_date||"",
+      primary_result: r.primary_result||"", primary_pct: r.primary_pct,
+      primary_opponent: r.primary_opponent||"", general_opponent: r.general_opponent||"",
+      win_prob: r.win_prob != null ? r.win_prob : null,
+      win_prob_src: r.win_prob_src||"",
+      note: r.note||"", source: "tracked",
+    });
   });
-  let p = {D:0, R:0};
-  stableMembers.forEach(m => {
-    p[m.party === "R" ? "R" : "D"] += 0.88;
+
+  // All challengers (trackaipac + rlc from useData)
+  (challengers || []).forEach(c => {
+    const wonOrGen = c.ps === "WON" || c.ps === "GENERAL" || c.primary_result === "WON";
+    addCand({
+      name: c.name, party: c.party||"D",
+      state: c.state||"", district: c.district,
+      chamber: c.chamber||"house",
+      primary_date: c.primaryDate || c.primary_date || "",
+      general_date: c.general_date || (c.ps === "GENERAL" ? "2026-11-03" : ""),
+      primary_result: wonOrGen ? "WON" : "",
+      primary_pct: null, primary_opponent: "", general_opponent: "",
+      win_prob: null, win_prob_src: "",
+      note: c.note||"",
+      source: c.source === "rlc_endorsed" ? "rlc" : "trackaipac",
+    });
   });
-  races.forEach(r => {
-    if (r.departing || r.impactDir <= 0 || r.winProb == null) return;
-    const wp = r.win_prob != null ? r.win_prob : (r.winProb || 0);
-    p[r.party === "R" ? "R" : "D"] += wp;
+
+  // Overlay live Polymarket odds
+  allCands.forEach(c => {
+    const pd = polyData && (polyData[c.name] || polyData[normName(c.name)]);
+    if (pd && pd.prob != null) { c.win_prob = pd.prob; c.win_prob_src = "polymarket"; }
   });
-  const proj = {D: Math.round(p.D), R: Math.round(p.R)};
-  proj.total = proj.D + proj.R;
 
-  // Fill live and projected into history
-  const data = CONGRESS_HISTORY.map(d => {
-    if (d.isLive) return {...d, D: live.D, R: live.R, total: live.total};
-    if (d.isProjected) return {...d, D: proj.D, R: proj.R, total: proj.total};
-    return d;
-  }).filter(d => showProj || !d.isProjected);
+  // ── Status tag ─────────────────────────────────────────────────────────────
+  function getStatus(c) {
+    const pd = parseDate(c.primary_date);
+    const gd = parseDate(c.general_date);
+    const won = c.primary_result === "WON";
 
-  const chartW = 470, chartH = 175, padL = 36, padB = 32, padT = 12, padR = 12;
-  const innerW = chartW - padL - padR;
-  const innerH = chartH - padT - padB;
-  const maxVal = Math.max(...data.map(d => (d.D||0)+(d.R||0))) * 1.15 || 50;
-  const barW   = Math.min(50, innerW / data.length * 0.62);
-  const gap    = innerW / data.length;
-  const ys = v => innerH - (v / maxVal) * innerH;
+    if (won || c.ps === "GENERAL") {
+      if (!gd) return {tag:"WON PRIMARY",      sub:"general date TBD",       color:"#4ade80", phase:"general"};
+      const diff = Math.ceil((gd - today) / 86400000);
+      if (diff < -3) return {tag:"GENERAL PENDING", sub:"results awaited "+fmtDate(gd), color:"#fbbf24", phase:"general"};
+      if (diff < 0)  return {tag:"RECOUNT WINDOW",  sub:fmtDate(gd),                  color:"#f97316", phase:"general"};
+      if (diff === 0)return {tag:"VOTING TODAY",     sub:"general election",            color:"#4ade80", phase:"general"};
+      if (diff <= 14)return {tag:"GENERAL SOON",     sub:fmtDate(gd),                  color:"#4ade80", phase:"general"};
+      return               {tag:"WON PRIMARY",       sub:"general "+fmtDate(gd),        color:"#4ade80", phase:"general"};
+    }
+    if (!pd)    return     {tag:"UPCOMING",          sub:"date TBD",                    color:"#4b5563", phase:"primary"};
+    const diff = Math.ceil((pd - today) / 86400000);
+    if (diff < -10) return {tag:"PENDING RESULTS",   sub:"primary "+fmtDate(pd),        color:"#f59e0b", phase:"primary"};
+    if (diff < -1)  return {tag:"RUNOFF WINDOW",     sub:"primary "+fmtDate(pd),        color:"#f97316", phase:"primary"};
+    if (diff < 0)   return {tag:"RESULTS TODAY",     sub:fmtDate(pd),                   color:"#4ade80", phase:"primary"};
+    if (diff === 0) return {tag:"VOTING TODAY",      sub:"primary",                      color:"#4ade80", phase:"primary"};
+    if (diff <= 7)  return {tag:"THIS WEEK",         sub:fmtDate(pd),                   color:"#a78bfa", phase:"primary"};
+    if (diff <= 30) return {tag:"PRIMARY SOON",      sub:fmtDate(pd),                   color:"#818cf8", phase:"primary"};
+    return               {tag:"UPCOMING PRIMARY",    sub:fmtDate(pd),                   color:"#4b5563", phase:"primary"};
+  }
 
-  const bands = [
-    {k:"D", c:"#818cf8", l:"Dem"},
-    {k:"R", c:"#e879f9", l:"Rep"},
+  // ── Sort by next relevant date ─────────────────────────────────────────────
+  function nextDate(c) {
+    const won = c.primary_result === "WON" || c.ps === "GENERAL";
+    const d = won ? parseDate(c.general_date)||parseDate(c.primary_date)
+                  : parseDate(c.primary_date);
+    return d ? d.getTime() : 9e15;
+  }
+
+  const filters = [
+    {k:"all",     label:"All"},
+    {k:"soon",    label:"< 30 days"},
+    {k:"general", label:"In general"},
+    {k:"pending", label:"Pending"},
+    {k:"R",       label:"R candidates"},
+    {k:"D",       label:"D candidates"},
   ];
-  const hov = hovered !== null ? data[hovered] : null;
+
+  const sorted = [...allCands].sort((a,b) => nextDate(a)-nextDate(b));
+
+  const displayed = sorted.filter(c => {
+    if (filter === "R") return c.party === "R";
+    if (filter === "D") return c.party !== "R";
+    if (filter === "general") return c.primary_result === "WON" || c.ps === "GENERAL";
+    if (filter === "pending") {
+      const t = getStatus(c).tag;
+      return t.includes("PENDING") || t.includes("RUNOFF") || t.includes("RESULTS");
+    }
+    if (filter === "soon") {
+      const won = c.primary_result === "WON" || c.ps === "GENERAL";
+      const d = won ? parseDate(c.general_date) : parseDate(c.primary_date);
+      if (!d) return false;
+      return Math.ceil((d-today)/86400000) <= 30;
+    }
+    return true;
+  });
+
+  // Group by month of next date
+  function monthKey(c) {
+    const won = c.primary_result === "WON" || c.ps === "GENERAL";
+    const d = won ? parseDate(c.general_date)||parseDate(c.primary_date) : parseDate(c.primary_date);
+    return d ? d.toLocaleDateString("en-US",{month:"long",year:"numeric"}) : "Date TBD";
+  }
+
+  const groups = [];
+  displayed.forEach(c => {
+    const mk = monthKey(c);
+    let g = groups.find(x => x.key===mk);
+    if (!g) { g = {key:mk, cands:[]}; groups.push(g); }
+    g.cands.push(c);
+  });
+
+  function WinGauge({prob, src}) {
+    if (prob == null) return null;
+    const pct = Math.round(prob*100);
+    const col = prob>=0.6 ? "#4ade80" : prob>=0.35 ? "#fbbf24" : "#f87171";
+    const r=16, circ=Math.PI*r, dash=Math.min(1,prob)*circ;
+    const w=44, h=24;
+    return html`
+      <div style=${{display:"flex",flexDirection:"column",alignItems:"center",gap:1,width:44}}>
+        <svg width=${w} height=${h} viewBox=${"0 0 "+w+" "+h}>
+          <path d=${"M 6 "+(h-2)+" A "+r+" "+r+" 0 0 1 "+(w-6)+" "+(h-2)}
+            fill="none" stroke="#1e2230" stroke-width="4" stroke-linecap="round"/>
+          <path d=${"M 6 "+(h-2)+" A "+r+" "+r+" 0 0 1 "+(w-6)+" "+(h-2)}
+            fill="none" stroke=${col} stroke-width="4" stroke-linecap="round"
+            stroke-dasharray=${dash+" "+circ}/>
+          <text x=${w/2} y=${h-5} text-anchor="middle" font-size="8"
+            font-family="monospace" fill=${col} font-weight="700">${pct}%</text>
+        </svg>
+        ${src==="polymarket" ? html`<span style=${{fontSize:6,color:"#4ade80",fontFamily:"monospace",lineHeight:1}}>◉ live</span>` : null}
+      </div>`;
+  }
+
+  function CandRow({c}) {
+    const [exp, setExp] = useState(false);
+    const st = getStatus(c);
+    const pc = c.party==="R" ? "#ef4444" : c.party==="D" ? "#60a5fa" : "#a3e635";
+    const loc = c.district
+      ? c.state+"-"+(c.chamber==="senate"?"Sen":c.district)
+      : c.state+(c.chamber==="senate"?" Senate":"");
+    const won = c.primary_result==="WON" || c.ps==="GENERAL";
+    const opp = won ? c.general_opponent : c.primary_opponent;
+    const srcLabel = c.source==="rlc" ? "RLC" : c.source==="tracked" ? "Tracked" : "TrackAIPAC";
+
+    return html`
+      <div style=${{borderBottom:"1px solid #0d1018"}}>
+        <div onClick=${()=>setExp(v=>!v)} style=${{
+          display:"flex", alignItems:"center", gap:8,
+          padding:"7px 10px", cursor:"pointer",
+          borderLeft:"3px solid "+st.color+(exp?"90":"40"),
+          background: exp?"#0a0c10":"transparent",
+        }}>
+          <${WinGauge} prob=${c.win_prob} src=${c.win_prob_src}/>
+          ${c.win_prob == null ? html`<div style=${{width:44,flexShrink:0,textAlign:"center",fontSize:6,color:"#1e2230",fontFamily:"monospace"}}>–</div>` : null}
+
+          <div style=${{flex:"0 0 148px",minWidth:0}}>
+            <div style=${{fontSize:10,fontWeight:700,color:"#f0ebe0",fontFamily:"monospace",
+              whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>${c.name}</div>
+            <div style=${{fontSize:7,color:pc,fontFamily:"monospace",marginTop:1}}>
+              ${c.party} · ${loc||"?"}
+              <span style=${{color:"#374151",marginLeft:4}}>${srcLabel}</span>
+            </div>
+          </div>
+
+          <div style=${{flex:1,minWidth:0}}>
+            <div style=${{display:"flex",alignItems:"center",gap:5,flexWrap:"wrap"}}>
+              <span style=${{fontSize:7,fontFamily:"monospace",padding:"1px 6px",borderRadius:3,
+                background:st.color+"18",color:st.color,border:"1px solid "+st.color+"40",
+                whiteSpace:"nowrap",letterSpacing:"0.05em"}}>${st.tag}</span>
+              ${won && c.primary_pct ? html`
+                <span style=${{fontSize:7,color:"#4ade80",fontFamily:"monospace"}}>won ${c.primary_pct}%</span>` : null}
+            </div>
+            <div style=${{fontSize:7,color:"#4b5563",fontFamily:"monospace",marginTop:2,
+              whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>
+              ${st.sub}${opp ? " · vs "+opp.slice(0,32)+(opp.length>32?"…":"") : ""}
+            </div>
+          </div>
+
+          <span style=${{color:"#374151",fontSize:9,flexShrink:0}}>${exp?"▴":"▾"}</span>
+        </div>
+        ${exp && html`
+          <div style=${{padding:"6px 12px 8px 63px",background:"#0a0c10",
+            borderLeft:"3px solid "+st.color+"20",
+            fontSize:8,color:"#6b7280",fontFamily:"monospace",lineHeight:1.6}}>
+            ${c.note||"No additional detail available."}
+            ${c.website ? html`<br/><a href=${c.website} target="_blank"
+              style=${{color:"#4b5563",textDecoration:"none"}}>→ campaign site</a>` : null}
+          </div>`}
+      </div>`;
+  }
+
+  const wonCount  = allCands.filter(c => c.primary_result==="WON"||c.ps==="GENERAL").length;
+  const liveCount = allCands.filter(c => c.win_prob_src==="polymarket").length;
 
   return html`
-    <div style=${{background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,padding:"13px 15px",width:"100%",maxWidth:610}}>
-      <div style=${{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10,flexWrap:"wrap",gap:5}}>
+    <div style=${{width:"100%",maxWidth:610}}>
+      <div style=${{display:"flex",justifyContent:"space-between",alignItems:"flex-start",
+        marginBottom:8,flexWrap:"wrap",gap:6}}>
         <div>
-          <div style=${{fontSize:11,fontWeight:700,color:"#f0ebe0",fontFamily:"monospace"}}>Anti-Intervention Congress Over Time</div>
-          <div style=${{fontSize:8,color:"#4b5563",fontFamily:"monospace",marginTop:1}}>115th (2017) → projected 120th (2027) · hover bars for detail</div>
+          <div style=${{fontSize:11,fontWeight:700,color:"#f0ebe0",fontFamily:"monospace"}}>
+            2026 Anti-Intervention Candidates
+          </div>
+          <div style=${{fontSize:8,color:"#4b5563",fontFamily:"monospace",marginTop:1}}>
+            ${allCands.length} candidates · ${wonCount} in/past primary · ${allCands.length-wonCount} upcoming
+            ${liveCount>0 ? html` · <span style=${{color:"#4ade80"}}>◉ ${liveCount} live odds</span>` : null}
+          </div>
         </div>
-        <div style=${{display:"flex",gap:5,flexWrap:"wrap",alignItems:"center"}}>
-          ${bands.map(b => html`
-            <span key=${b.k} style=${{display:"inline-flex",alignItems:"center",gap:3,fontSize:8,color:b.c,fontFamily:"monospace"}}>
-              <span style=${{width:7,height:7,borderRadius:2,background:b.c,display:"inline-block"}}/>
-              ${b.l}
-            </span>`)}
-          <button onClick=${() => setShowProj(v => !v)}
-            style=${{padding:"1px 6px",borderRadius:4,border:"1px solid #1e2230",background:"transparent",
-              color:showProj?"#a5b4fc":"#374151",fontFamily:"monospace",fontSize:8,cursor:"pointer",marginLeft:2}}>
-            ${showProj ? "Hide 120th" : "Show 120th"}
-          </button>
+        <div style=${{display:"flex",gap:4,flexWrap:"wrap"}}>
+          ${filters.map(f => html`
+            <button key=${f.k} onClick=${e=>{e.stopPropagation();setFilter(f.k)}}
+              style=${{padding:"2px 7px",borderRadius:4,cursor:"pointer",
+                border:"1px solid #1e2230",fontFamily:"monospace",fontSize:7,
+                background:filter===f.k?"#1e2230":"transparent",
+                color:filter===f.k?"#a5b4fc":"#4b5563"}}>
+              ${f.label}
+            </button>`)}
         </div>
       </div>
 
-      <svg width=${chartW} height=${chartH} viewBox=${"0 0 "+chartW+" "+chartH}
-        style=${{fontFamily:"monospace",display:"block",maxWidth:"100%",overflow:"visible"}}>
-
-        ${[0,10,20,30].filter(v => v <= maxVal).map(v => html`
-          <g key=${v}>
-            <line x1=${padL} y1=${padT+ys(v)} x2=${chartW-padR} y2=${padT+ys(v)}
-              stroke="#1e2230" stroke-width="1" stroke-dasharray=${v===0?"none":"3,3"}/>
-            <text x=${padL-4} y=${padT+ys(v)+3} text-anchor="end" font-size="7" fill="#374151">${v}</text>
-          </g>`)}
-
-        ${data.map((d, i) => {
-          const cx = padL + i * gap + gap / 2;
-          const x  = cx - barW / 2;
-          const isProj = d.isProjected, isLive = d.isLive;
-          let cumY = innerH;
-          const tot = (d.D||0)+(d.R||0);
-          return html`
-            <g key=${i} onMouseEnter=${() => setHovered(i)} onMouseLeave=${() => setHovered(null)} style=${{cursor:"pointer"}}>
-              ${bands.map((b, bi) => {
-                const val = d[b.k] || 0;
-                const h   = (val / maxVal) * innerH;
-                const y   = padT + cumY - h;
-                cumY -= h;
-                if (!h) return null;
-                return html`<rect key=${bi} x=${x} y=${y} width=${barW} height=${h}
-                  fill=${b.c} opacity=${isProj ? 0.45 : isLive ? 1 : 0.75} rx="2"
-                  stroke=${isProj ? "#a5b4fc" : "none"} stroke-width=${isProj ? "1" : "0"}
-                  stroke-dasharray=${isProj ? "4,3" : "none"}/>`;
-              })}
-              <text x=${cx} y=${padT+ys(tot)-4} text-anchor="middle" font-size="8"
-                fill=${isProj?"#a5b4fc":isLive?"#f0ebe0":"#9ca3af"} font-weight=${isLive?"700":"400"}>
-                ${tot}${isProj?"*":""}
-              </text>
-              <text x=${cx} y=${chartH-padB+11} text-anchor="middle" font-size="8"
-                fill=${isProj?"#a5b4fc":isLive?"#f0ebe0":"#6b7280"}>${d.congress}</text>
-              <text x=${cx} y=${chartH-padB+21} text-anchor="middle" font-size="6.5" fill="#374151">${d.years}</text>
-              ${isLive ? html`<text x=${cx} y=${chartH-padB+31} text-anchor="middle" font-size="6" fill="#4ade80">LIVE</text>` : null}
-              ${isProj ? html`<text x=${cx} y=${chartH-padB+31} text-anchor="middle" font-size="6" fill="#a5b4fc">PROJ</text>` : null}
-            </g>`;
-        })}
-      </svg>
-
-      ${hov ? html`
-        <div style=${{background:"#161920",border:"1px solid #1e2230",borderRadius:7,padding:"7px 10px",
-          marginTop:5,fontSize:8,fontFamily:"monospace",color:"#9ca3af",lineHeight:1.7}}>
-          <span style=${{color:"#f0ebe0",fontWeight:700}}>${hov.congress} · ${hov.years}</span>
-          ${hov.isProjected?" — PROJECTED":hov.isLive?" — LIVE":""}<br/>
-          <span style=${{color:"#818cf8"}}>D:${hov.D||0}</span>
-          · <span style=${{color:"#e879f9"}}>R:${hov.R||0}</span>
-          · Total:${(hov.D||0)+(hov.R||0)}
-          ${hov.isProjected ? html`<br/><span style=${{color:"#374151"}}>*Expected value. Actual outcome will vary.</span>` : null}
-        </div>` : null}
-
-      <div style=${{display:"flex",gap:6,justifyContent:"center",alignItems:"center",
-        marginTop:8,fontSize:8,color:"#374151",fontFamily:"monospace",flexWrap:"wrap"}}>
-        <span style=${{color:"#818cf8"}}>2 members (2017)</span>
-        <span>→</span>
-        <span style=${{color:"#4ade80",fontWeight:700}}>${live.total} members (live)</span>
-        <span>→</span>
-        <span style=${{color:"#a5b4fc"}}>${proj.total} projected (2027)</span>
+      <div style=${{background:"#0f1117",border:"1px solid #1a1d27",borderRadius:11,overflow:"hidden"}}>
+        ${groups.length===0
+          ? html`<div style=${{padding:"18px",textAlign:"center",color:"#374151",fontFamily:"monospace",fontSize:8}}>
+              No candidates match this filter.</div>`
+          : groups.map(g => html`
+            <div key=${g.key}>
+              <div style=${{padding:"4px 10px",background:"#090b0e",fontSize:7,
+                color:"#374151",fontFamily:"monospace",letterSpacing:"0.12em",
+                textTransform:"uppercase",borderBottom:"1px solid #0d1018"}}>
+                ${g.key}
+                <span style=${{color:"#1e2230",marginLeft:5}}>${g.cands.length} candidate${g.cands.length!==1?"s":""}</span>
+              </div>
+              ${g.cands.map(c => html`<${CandRow} key=${c.name+c.state} c=${c}/>`)}
+            </div>`)}
       </div>
-    </div>
 
-    <div style=${{width:"100%",maxWidth:610,marginTop:12}}>
-      <div style=${{fontSize:9,fontFamily:"monospace",color:"#6b7280",marginBottom:6,letterSpacing:"0.1em"}}>
-        KEY 2026 RACES
-        <span style=${{color:"#374151",letterSpacing:"normal",fontWeight:400,marginLeft:6}}>click cards for detail</span>
-      </div>
-      <div style=${{display:"flex",flexWrap:"wrap",gap:6}}>
-        ${races.map((r, i) => html`<${RaceCard} key=${i} race=${r} liveRacesData=${races}/>`)}
-      </div>
-      <div style=${{marginTop:7,fontSize:7,color:"#374151",fontFamily:"monospace",lineHeight:1.7}}>
-        Win probabilities: Polymarket where available (marked ◉ live), else Cook Political / manual estimate.
-        120th projection = expected value (sum of win_prob × seats). Actual outcome varies.
+      <div style=${{marginTop:6,fontSize:7,color:"#374151",fontFamily:"monospace",lineHeight:1.7}}>
+        ◉ Polymarket live odds where available · TrackAIPAC = Citizens Against AIPAC Corruption endorsees · RLC = Republican Liberty Caucus endorsees
       </div>
     </div>`;
 }
+
+
 
 function App() {
   const [chamber,  setChamber]  = useState("house");
@@ -1683,7 +1741,7 @@ function App() {
       <!-- Three columns / Timeline toggle -->
       ${showTimeline ? html`
         <div style=${{width:"100%",maxWidth:860,display:"flex",flexDirection:"column",alignItems:"center",gap:10}}>
-          <${CongressTimeline} allMembers=${allMembers} polyData=${polyData} racesData=${races}/>
+          <${CandidateTimeline} allMembers=${allMembers} challengers=${challengers} polyData=${polyData} racesData=${races}/>
         </div>`
       : html`
       <div class="three-col" style=${{display:"flex",gap:10,alignItems:"flex-start",flexWrap:"wrap",justifyContent:"center",width:"100%",maxWidth:1080}}>
@@ -1740,7 +1798,7 @@ function App() {
 
           <!-- Progress bars -->
           <div style=${{width:"100%",maxWidth:610}}>
-            <${ProgressBars} chamber=${chamber} members=${chMem} allMembers=${allMembers} racesData=${races} polyData=${polyData}/>
+            <${ProgressBars} chamber=${chamber} members=${chMem} allMembers=${allMembers} challengers=${challengers} racesData=${races} polyData=${polyData}/>
           </div>
 
           <!-- Legislation -->
