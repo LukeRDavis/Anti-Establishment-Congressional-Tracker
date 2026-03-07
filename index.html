@@ -526,7 +526,24 @@ function DetailPanel({member, fecData, polyData, bills, chamber}) {
     </div>`;
 
   const fec    = fecData[member.name];
-  const poly   = polyData[member.name];
+  const poly   = (() => {
+    const pd = polyData[member.name];
+    if (!pd || pd.prob == null) return null;
+    // Validate the market question is actually about this member's election
+    // (data.json may contain stale bad matches from old Python code)
+    const q = (pd.question || "").toLowerCase();
+    const BAD = ["dnc","rnc","running mate","speak at","expelled","censure",
+                 "resignation","retire","cabinet","ambassador","2028","2024",
+                 "vice president","peruvian","peru"," uk ","canadian","gubernatorial",
+                 "governor","president","white house","senate majority","house majority"];
+    if (BAD.some(b => q.includes(b))) return null;
+    // If question has a year, it must be 2026
+    if (/20(2[0-4]|2[7-9]|3\d)/.test(q)) return null;
+    // Must contain the member's last name
+    const last = member.name.split(" ").pop().toLowerCase();
+    if (last.length > 3 && !q.includes(last)) return null;
+    return pd;
+  })();
   const color  = dotColor(member);
   const mBills = (member.bills||[]).map(id=>bills.find(b=>b.id===id)).filter(Boolean);
   const votes  = member.votes||[];
@@ -615,7 +632,10 @@ function DetailPanel({member, fecData, polyData, bills, chamber}) {
         ${poly?html`
           <div style=${{flex:"1 1 130px",borderRadius:7,border:"1px solid #1a1d27",overflow:"hidden"}}>
             <div style=${{padding:"3px 7px",background:"#090b0e",fontSize:8,color:"#a78bfa",fontFamily:"monospace"}}>${(s=>(s==="predictit_contract"||s==="predictit_party"?"PREDICTIT":s==="metaculus"?"METACULUS":"POLYMARKET"))(poly.src||"")}</div>
-            <div style=${{padding:"4px 7px",borderTop:"1px solid #0e1016",fontSize:9,color:"#6b7280",lineHeight:1.4}}>${poly.question}</div>
+            <div style=${{padding:"4px 7px",borderTop:"1px solid #0e1016",fontSize:9,color:"#6b7280",lineHeight:1.4}}>
+              ${poly.question}
+              ${(poly.src==="predictit_party"||poly.src==="grok_estimate") && poly.question ? html`<span style=${{color:"#4b5563",fontSize:8}}> · ${poly.src==="predictit_party"?"party-level proxy":"AI estimate"}</span>` : null}
+            </div>
             ${poly.prob!=null?html`
               <div style=${{padding:"4px 7px",borderTop:"1px solid #0e1016",display:"flex",alignItems:"center",gap:6}}>
                 <div style=${{flex:1,height:5,borderRadius:3,background:"#1a1d27",overflow:"hidden"}}>
@@ -880,39 +900,75 @@ function useData() {
 
   // ── Gamma search for candidates NOT yet in poly data ─────────────────────
   async function searchGammaForNew(memberList, racesList, existingPoly) {
-    const missing = [];
-    const seen    = new Set(Object.keys(existingPoly));
+    // ── Strict market validation — same rules as Python validate_market_for_candidate ──
+    const DISQUALIFY = [
+      "president","presidential","white house","governor","gubernatorial",
+      "2024","2028","2030","senate majority","house majority",
+      "peruvian","peru"," uk ","british","canada","canadian","australian","french",
+      "german","mexican","chinese","russian","european","israeli","ukrainian",
+      "mayor","attorney general","secretary of state","dnc","rnc",
+      "running mate","vice president","cabinet","ambassador","speak at",
+      "expelled","censured","resignation","resign","retire",
+    ];
+    function validateMarket(title, name, info) {
+      const t = title.toLowerCase();
+      const parts = name.split(" ");
+      const first = parts[0].toLowerCase();
+      const last  = parts[parts.length - 1].toLowerCase();
+      const state = (info.state || "").toLowerCase();
+      const chamber = info.chamber || "house";
 
+      // Disqualify on any bad keyword
+      for (const bad of DISQUALIFY) {
+        if (t.includes(bad)) return false;
+      }
+      // Disqualify on wrong year
+      if (/2024|2028|2030|2032/.test(t)) return false;
+
+      // Full name match (strongest signal — both first AND last present)
+      const fullMatch = t.includes(first) && t.includes(last);
+
+      // Contextual match: last name + state + chamber keyword
+      const chamberWords = chamber === "senate"
+        ? ["senate","senator"]
+        : ["house","congress","congressional","representative","district","cd-"];
+      const stateMatch   = state ? t.includes(state) : false;
+      const chamberMatch = chamberWords.some(w => t.includes(w));
+      const contextMatch = t.includes(last) && stateMatch && chamberMatch;
+
+      return fullMatch || contextMatch;
+    }
+
+    // Build name → info lookup for validation
+    const nameInfo = {};
     memberList.filter(m => m.antiArms).forEach(m => {
-      if (!seen.has(m.name)) missing.push(m.name);
+      nameInfo[m.name] = {state: (m.state||"").toLowerCase(), chamber: m.chamber||"house"};
     });
     racesList.forEach(r => {
-      if (r.name && !seen.has(r.name)) missing.push(r.name);
+      if (r.name) nameInfo[r.name] = {state: (r.state||"").toLowerCase(), chamber: r.chamber||"house"};
     });
 
+    const missing = Object.keys(nameInfo).filter(n => !existingPoly[n]);
     if (missing.length === 0) return {};
 
-    // Pass 1: catalog sweep for all missing names at once
-    const catalog = {};  // last_name_lower → market
-    const catalogQueries = [
-      "2026 congressional", "2026 senate", "2026 house", "midterm 2026"
-    ];
+    // Pass 1: catalog sweep — keyed by FULL NAME, validated strictly
+    const catalog = {};  // full_name → market (not last name!)
+    const catalogQueries = ["2026 congressional", "2026 senate", "2026 house", "midterm 2026"];
     for (const q of catalogQueries) {
       try {
         for (const ep of ["markets", "events"]) {
           const r = await fetch(GAMMA + "/" + ep + "?q=" + encodeURIComponent(q) + "&active=true&limit=50");
           if (!r.ok) continue;
           const data = await r.json();
-          const items = Array.isArray(data) ? data :
-            (data[ep] || data.data || data.markets || []);
+          const items = Array.isArray(data) ? data : (data[ep] || data.data || data.markets || []);
           for (const item of items) {
             const markets = item.markets || [item];
             for (const mk of markets) {
-              const title = (mk.question || mk.title || "").toLowerCase();
-              if (!/win|elect|primary|congress|senate|house|seat|race|general/i.test(title)) continue;
+              const title = mk.question || mk.title || "";
               for (const name of missing) {
-                const last = name.split(" ").pop().toLowerCase();
-                if (title.includes(last) && !catalog[last]) catalog[last] = mk;
+                if (!catalog[name] && validateMarket(title, name, nameInfo[name])) {
+                  catalog[name] = mk;
+                }
               }
             }
           }
@@ -921,24 +977,27 @@ function useData() {
       await new Promise(r => setTimeout(r, 200));
     }
 
-    // Pass 2: per-candidate search for remaining
+    // Pass 2: per-candidate search for remaining — still validated
     const fresh = {};
     for (const name of missing) {
-      const last = name.split(" ").pop().toLowerCase();
-      let mk = catalog[last];
+      const last  = name.split(" ").pop();
+      const info  = nameInfo[name];
+      let mk = catalog[name];  // full-name keyed, not last-name
 
       if (!mk) {
-        // Individual search
-        for (const q of [name, last + " 2026", last + " congress"]) {
+        // Targeted search: full name first, then last+state
+        const queries = [
+          `"${name}" 2026`,
+          `${name} 2026`,
+          `${last} ${info.state||""} 2026`,
+        ];
+        for (const q of queries) {
           try {
             const r = await fetch(GAMMA + "/markets?q=" + encodeURIComponent(q) + "&limit=8");
             if (!r.ok) continue;
             const data = await r.json();
             const items = Array.isArray(data) ? data : (data.markets || []);
-            mk = items.find(m => {
-              const t = (m.question || m.title || "").toLowerCase();
-              return t.includes(last) && /win|elect|primary|congress|senate|house|general/i.test(t);
-            });
+            mk = items.find(m => validateMarket(m.question || m.title || "", name, info));
             if (mk) break;
           } catch {}
           await new Promise(r => setTimeout(r, 250));
@@ -1769,7 +1828,7 @@ function App() {
       <!-- Three columns / Timeline toggle -->
       ${showTimeline ? html`
         <div style=${{width:"100%",maxWidth:860,display:"flex",flexDirection:"column",alignItems:"center",gap:10}}>
-          <${CandidateTimeline} allMembers=${allMembers} challengers=${challengers} polyData=${polyData} racesData=${races} descriptions=${descData || {}}/>
+          <${CandidateTimeline} allMembers=${allMembers} challengers=${challengers} polyData=${polyData} racesData=${races} descriptions=${descriptions || {}}/>
         </div>`
       : html`
       <div class="three-col" style=${{display:"flex",gap:10,alignItems:"flex-start",flexWrap:"wrap",justifyContent:"center",width:"100%",maxWidth:1080}}>
