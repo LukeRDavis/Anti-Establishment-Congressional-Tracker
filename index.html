@@ -58,14 +58,12 @@ const { h, render, Fragment } = preact;
 const { useState, useEffect, useMemo } = preactHooks;
 const html = htm.bind(h);
 
-// ── Config ────────────────────────────────────────────────────────────────────
 const CIVIC_KEY       = "AIzaSyCvHP-sSilnAIM53RtZ6pP2JigX-k0ckYk";
 const DATA_URL        = "./data.json";
 const CHALLENGERS_URL = "./challengers.json";
 const HISTORY_URL     = "./history.json";
 const GUN_PEERS       = ["https://gun-us.herokuapp.com/gun","https://gun-manhattan.herokuapp.com/gun"];
 
-// ── Legislative thresholds — constitutional facts, never change ───────────────
 const THRESHOLDS = {
   senate: [
     { n:41,  label:"Filibuster Bloc",     color:"#a78bfa",
@@ -85,12 +83,16 @@ const THRESHOLDS = {
   ],
 };
 
-// ── Color scheme ──────────────────────────────────────────────────────────────
-// Hard = legislative action (co-sponsored bill / on-record vote)
-// Soft = TrackAIPAC approved (rejects AIPAC money, no legislative vote yet)
-//
-// R (red) ── Anti-Intv. R (fuchsia) ── Anti-Intv. D (indigo) ── D (blue)
-// #991b1b           #e879f9                  #818cf8                #1e40af
+const MARKET_DISQUALIFY = [
+  "president","presidential","white house","governor","gubernatorial",
+  "2024","2028","2030","2032","senate majority","house majority",
+  "dnc","rnc","running mate","speak at","expelled","censure",
+  "resignation","retire","cabinet","ambassador","vice president",
+  "peruvian","peru"," uk ","british","canada","canadian","australian","french",
+  "german","mexican","chinese","russian","european","israeli","ukrainian",
+  "mayor","attorney general","secretary of state","comptroller","treasurer",
+];
+const FM = "monospace";
 
 function dotColor(m) {
   if (m.antiArms) {
@@ -104,12 +106,10 @@ function dotColor(m) {
   return "#1e2230";                         // grey — unknown
 }
 
-
 function antiArmsTag(m) {
   if (!m.antiArms) return null;
   return "Anti-Intervention";
 }
-
 
 function antiArmsTagColor(m) {
   if (!m.antiArms) return "#374151";
@@ -118,96 +118,93 @@ function antiArmsTagColor(m) {
   return "#818cf8";
 }
 
-
 function computeHemicycle(allMembers, chamber, cx, cy) {
   const ch = chamber === "senate" ? "senate" : "house";
 
-  // Row counts sized to fill the 610×300 SVG
-  // House: 9 rows, innerR=52, spacing=22 → outerR=228
-  // Senate: 4 rows, innerR=80, spacing=28 → outerR=164
-  const rowCounts = ch === "senate"
-    ? [16, 22, 28, 34]
-    : [18, 26, 33, 41, 48, 56, 64, 71, 78];
-  const innerR  = ch === "senate" ? 80 : 52;
-  const spacing = ch === "senate" ? 28 : 22;
-  const total   = rowCounts.reduce((s,c) => s+c, 0);
-  const filler  = {_filler:true, antiArms:false, party:"", name:""};
-
-  // Active members in this chamber
   const active = allMembers.filter(m =>
     m.chamber === ch &&
     !["RETIRED","RESIGNED","DEFEATED","RETIRING","FAILED_PRIMARY"].includes(m.ps)
   );
 
-  const antiR = active.filter(m =>  m.antiArms && m.party === "R");
-  const antiD = active.filter(m =>  m.antiArms && m.party !== "R");
-  const restR = active.filter(m => !m.antiArms && m.party === "R");
-  const restD = active.filter(m => !m.antiArms && m.party === "D");
-  const restOther = active.filter(m => !m.antiArms && m.party !== "R" && m.party !== "D");
-  const antiCount = antiR.length + antiD.length;
+  const antiR    = active.filter(m =>  m.antiArms && m.party === "R");
+  const antiD    = active.filter(m =>  m.antiArms && m.party !== "R");
+  const restR    = active.filter(m => !m.antiArms && m.party === "R");
+  const restD    = active.filter(m => !m.antiArms && m.party === "D");
+  const restOther= active.filter(m => !m.antiArms && m.party !== "R" && m.party !== "D");
+  const antiCount= antiR.length + antiD.length;
+  const filler   = {_filler:true, antiArms:false, party:"", name:""};
 
-  // Distribute anti seats proportionally across rows, centered in each row.
-  // Non-anti R fills right side, non-anti D fills left side.
-  // Within anti bloc: D on left, R on right.
+  // ── Best-practice geometry (parliamentarch algorithm) ────────────────────
+  // innerR and nRows fixed per chamber for stable visual; rowCounts derived
+  // proportionally to arc circumference so outer rows have more seats.
+  const innerR  = ch === "senate" ? 80 : 52;
+  const nRows   = ch === "senate" ? 4  : 9;
+  const spacing = ch === "senate" ? 28 : 22;
+  const nSeats  = ch === "senate" ? 100 : 435;
+
+  // Row radii
+  const radii = Array.from({length:nRows}, (_,i) => innerR + i * spacing);
+
+  // Seats per row proportional to circumference (r × π) so density is uniform.
+  // Then scale so sum == nSeats.
+  const rawCounts = radii.map(r => r * Math.PI);
+  const rawSum    = rawCounts.reduce((s,v) => s+v, 0);
+  let rowCounts   = rawCounts.map(v => Math.round(v / rawSum * nSeats));
+
+  // Correction: adjust largest row up/down until sum matches exactly
+  let total = rowCounts.reduce((s,v) => s+v, 0);
+  let adj = nSeats - total;
+  // distribute correction across the largest rows first
+  const order = rowCounts.map((_,i) => i).sort((a,b) => rowCounts[b]-rowCounts[a]);
+  for (let k = 0; k < Math.abs(adj); k++) {
+    const idx = order[k % order.length];
+    rowCounts[idx] += adj > 0 ? 1 : -1;
+  }
+  total = rowCounts.reduce((s,v) => s+v, 0);
+
+  // ── Anti-bloc allocation per row (proportional with rounding correction) ─
   const antiPerRow = rowCounts.map(c => Math.round(antiCount * c / total));
-  let diff = antiCount - antiPerRow.reduce((s,n) => s+n, 0);
-  for (let i = antiPerRow.length-1; i >= 0 && diff !== 0; i--) {
-    if (diff > 0) { antiPerRow[i]++; diff--; }
-    else if (antiPerRow[i] > 0) { antiPerRow[i]--; diff++; }
+  let antiDiff = antiCount - antiPerRow.reduce((s,n) => s+n, 0);
+  for (let i = antiPerRow.length-1; i >= 0 && antiDiff !== 0; i--) {
+    if (antiDiff > 0 && antiPerRow[i] < rowCounts[i]) { antiPerRow[i]++; antiDiff--; }
+    else if (antiDiff < 0 && antiPerRow[i] > 0)        { antiPerRow[i]--; antiDiff++; }
   }
 
-  // Build ordered seat arrays for each row
   let antiDq = [...antiD], antiRq = [...antiR];
   let restDq  = [...restD, ...restOther], restRq = [...restR];
 
   const result = [];
-  for (let ri = 0; ri < rowCounts.length; ri++) {
+  for (let ri = 0; ri < nRows; ri++) {
     const count  = rowCounts[ri];
-    const r      = innerR + ri * spacing;
+    const r      = radii[ri];
     const aN     = antiPerRow[ri];
-    const leftN  = Math.floor((count - aN) / 2);   // D seats (left of anti bloc)
-    const rightN = count - aN - leftN;               // R seats (right of anti bloc)
+    // Center the anti bloc: equal D seats left, R seats right
+    const leftN  = Math.floor((count - aN) / 2);
+    const rightN = count - aN - leftN;
 
     const row = [];
-    // Left: D members (or fillers)
     for (let s = 0; s < leftN; s++)
-      row.push(restDq.length ? restDq.shift() : filler);
-    // Center: anti-D then anti-R
+      row.push(restDq.length  ? restDq.shift()  : filler);
     for (let s = 0; s < aN; s++) {
-      if (s < Math.ceil(aN * antiD.length / antiCount) && antiDq.length)
+      // antiD-first within bloc (D side of center)
+      if (antiDq.length && s < Math.ceil(aN * antiD.length / (antiCount || 1)))
         row.push(antiDq.shift());
-      else if (antiRq.length)
-        row.push(antiRq.shift());
-      else if (antiDq.length)
-        row.push(antiDq.shift());
-      else
-        row.push(filler);
+      else if (antiRq.length) row.push(antiRq.shift());
+      else if (antiDq.length) row.push(antiDq.shift());
+      else                    row.push(filler);
     }
-    // Right: R members (or fillers)
     for (let s = 0; s < rightN; s++)
-      row.push(restRq.length ? restRq.shift() : filler);
+      row.push(restRq.length  ? restRq.shift()  : filler);
 
-    // Place seats along arc
+    // Seat positions: equal angular spacing across the semicircle
     for (let s = 0; s < count; s++) {
       const m     = row[s] || filler;
-      const angle = count === 1 ? Math.PI/2 : (Math.PI / (count-1)) * s;
-      result.push({
-        ...m,
-        _x: cx - r * Math.cos(angle),
-        _y: cy - r * Math.sin(angle),
-      });
+      const angle = count === 1 ? Math.PI/2 : (Math.PI / (count - 1)) * s;
+      result.push({...m, _x: cx - r * Math.cos(angle), _y: cy - r * Math.sin(angle)});
     }
   }
   return result;
 }
-
-
-
-
-
-
-
-
 
 function fmtM(n) {
   if (!n&&n!==0) return "—";
@@ -228,34 +225,30 @@ function StatusBadge({ps}) {
   };
   const [bg, fg] = MAP[ps] || ["#1a1d27","#4b5563"];
   return html`<span style=${{
-    fontSize:7, fontFamily:"monospace", padding:"1px 5px",
+    fontSize:7, fontFamily:FM, padding:"1px 5px",
     borderRadius:3, background:bg, color:fg,
     border:"1px solid "+fg+"30", letterSpacing:"0.06em",
   }}>${ps||"?"}</span>`;
 }
 
-
 function ArmsBadge({member}) {
   if (!member.antiArms) return null;
   const color = antiArmsTagColor(member);
   return html`<span style=${{
-    fontSize:7, fontFamily:"monospace", padding:"1px 6px",
+    fontSize:7, fontFamily:FM, padding:"1px 6px",
     borderRadius:3, background:color+"18", color,
     border:"1px solid "+color+"30", letterSpacing:"0.06em",
   }}>◈ Anti-Intervention</span>`;
 }
 
-
 function ProgressBars({chamber, members, allMembers, challengers, racesData, polyData}) {
   const current = members.filter(m => m.antiArms).length;
   const ch = chamber;
 
-  // ── Build trials: incumbents + ALL challengers ──────────────────────────
   const races = (racesData && racesData.length > 0) ? racesData : KEY_RACES_2026;
 
   const trials = [];
 
-  // Incumbent anti-intervention members (retention probability)
   members.filter(m => m.antiArms).forEach(m => {
     const race   = races.find(r => r.name === m.name && r.chamber === ch);
     const pm     = polyData && polyData[m.name];
@@ -268,7 +261,6 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
     trials.push({name: m.name, p, src: pm ? "poly" : "est"});
   });
 
-  // Challengers — trackaipac + rlc + races_2026 in this chamber
   const challSeen = new Set(trials.map(t => t.name.toLowerCase()));
   const allChalls = [
     ...(challengers||[]).filter(c => (c.chamber||"house") === ch),
@@ -279,7 +271,6 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
     if (challSeen.has(key)) return;
     challSeen.add(key);
     const pm = polyData && polyData[r.name];
-    // Only non-eliminated challengers (no LOST/WITHDREW status)
     const ps = r.ps || r.status || "";
     if (["LOST","WITHDREW","DEFEATED","FAILED_PRIMARY"].includes(ps)) return;
     const p = pm && pm.prob != null ? pm.prob
@@ -317,11 +308,11 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
 
   return html`
     <div style=${{background:"#0f1117",border:"1px solid #1e2230",borderRadius:12,padding:"12px 14px",width:"100%",boxSizing:"border-box"}}>
-      <div style=${{fontSize:9,color:"#a78bfa",fontFamily:"monospace",letterSpacing:"0.14em",textTransform:"uppercase",marginBottom:7}}>
+      <div style=${{fontSize:9,color:"#a78bfa",fontFamily:FM,letterSpacing:"0.14em",textTransform:"uppercase",marginBottom:7}}>
         ◈ Anti-Intervention Coalition · ${chamber==="senate"?"Senate":"House"}
       </div>
 
-      <div style=${{display:"flex",gap:8,marginBottom:7,flexWrap:"wrap",alignItems:"center",fontFamily:"monospace",fontSize:8}}>
+      <div style=${{display:"flex",gap:8,marginBottom:7,flexWrap:"wrap",alignItems:"center",fontFamily:FM,fontSize:8}}>
         <span style=${{display:"flex",alignItems:"center",gap:4}}>
           <span style=${{width:9,height:9,borderRadius:2,background:"#818cf8",display:"inline-block"}}/>
           <span style=${{color:"#818cf8",fontWeight:600}}>${current} members</span>
@@ -349,14 +340,14 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
         return html`
           <div key=${i} style=${{marginBottom: i<THRESHOLDS[chamber].length-1?16:0}}>
             <div style=${{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:3,flexWrap:"wrap",gap:3}}>
-              <span style=${{fontSize:10,color:reached?"#4ade80":th.color,fontWeight:600,fontFamily:"monospace"}}>
+              <span style=${{fontSize:10,color:reached?"#4ade80":th.color,fontWeight:600,fontFamily:FM}}>
                 ${th.label}<span style=${{fontSize:9,fontWeight:400,color:"#374151"}}> / ${th.n}</span>
               </span>
               <div style=${{display:"flex",gap:5,alignItems:"center"}}>
-                <span style=${{fontSize:9,fontFamily:"monospace",color:reached?"#4ade80":"#6b7280"}}>
+                <span style=${{fontSize:9,fontFamily:FM,color:reached?"#4ade80":"#6b7280"}}>
                   ${current}/${th.n}${reached?" ✓":""}
                 </span>
-                <span style=${{fontSize:9,fontFamily:"monospace",fontWeight:700,
+                <span style=${{fontSize:9,fontFamily:FM,fontWeight:700,
                   padding:"1px 7px",borderRadius:4,
                   background:pc+"18",color:pc,border:"1px solid "+pc+"40",
                   minWidth:44,textAlign:"center"}}>
@@ -373,7 +364,7 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
                   background:"#a5b4fc",opacity:0.5,left:muPct+"%"}}/>` : null}
             </div>
             <div style=${{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:3}}>
-              <div style=${{fontSize:8,fontFamily:"monospace",color:pc,flex:1}}>
+              <div style=${{fontSize:8,fontFamily:FM,color:pc,flex:1}}>
                 ${reached
                   ? "✓ Threshold reached with current coalition"
                   : pl+" by Nov 2026 — need "+need+" more (μ="+mu.toFixed(1)+", σ="+sigma.toFixed(1)+")"}
@@ -384,15 +375,11 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
       })}
 
       <div style=${{marginTop:10,paddingTop:7,borderTop:"1px solid #1a1d27",
-        fontSize:7,color:"#1e2230",fontFamily:"monospace",lineHeight:1.7}}>
+        fontSize:7,color:"#1e2230",fontFamily:FM,lineHeight:1.7}}>
         P(reach N) = Φ((μ−N+0.5)/σ). Members default retention p=0.88 · challengers default p=0.12 · Polymarket live where available.
       </div>
     </div>`;
 }
-
-
-
-
 
 function BillsPanel({bills}) {
   if (!bills||bills.length===0) return null;
@@ -406,7 +393,7 @@ function BillsPanel({bills}) {
           ${b.type} ${b.number}
           <span style=${{fontSize:8,color:"#374151",marginLeft:3}}>↗</span>
         </a>
-        <span style=${{fontSize:8,padding:"1px 5px",borderRadius:3,fontFamily:"monospace",whiteSpace:"nowrap",
+        <span style=${{fontSize:8,padding:"1px 5px",borderRadius:3,fontFamily:FM,whiteSpace:"nowrap",
           background:b.classification==="anti_arms"?"rgba(124,58,237,.15)":"rgba(239,68,68,.13)",
           color:b.classification==="anti_arms"?"#a78bfa":"#f87171"}}>
           ${b.classification==="anti_arms"?"🚫 Restricts":"🔫 Authorizes"}
@@ -416,21 +403,21 @@ function BillsPanel({bills}) {
         ${(b.title||"").slice(0,90)}${(b.title||"").length>90?"…":""}
       </div>
       <div style=${{display:"flex",gap:6,flexWrap:"wrap"}}>
-        ${b.sponsor_count?html`<span style=${{fontSize:8,fontFamily:"monospace",color:"#374151"}}>${b.sponsor_count} sponsors</span>`:null}
-        ${b.last_action_date?html`<span style=${{fontSize:8,fontFamily:"monospace",color:"#374151"}}>${b.last_action_date}</span>`:null}
+        ${b.sponsor_count?html`<span style=${_SB}>${b.sponsor_count} sponsors</span>`:null}
+        ${b.last_action_date?html`<span style=${_SB}>${b.last_action_date}</span>`:null}
       </div>
     </div>`;
   return html`
     <div style=${{background:"#0f1117",border:"1px solid #1e2230",borderRadius:12,overflow:"hidden",width:"100%",boxSizing:"border-box"}}>
       <div style=${{padding:"8px 11px",background:"#090b0e",borderBottom:"1px solid #1e2230"}}>
-        <div style=${{fontSize:9,color:"#a78bfa",fontFamily:"monospace",letterSpacing:"0.14em",textTransform:"uppercase"}}>◈ Tracked Legislation · Auto-discovered</div>
-        <div style=${{fontSize:8,color:"#374151",marginTop:2}}>${anti.length} arms-restricting · ${pro.length} arms-authorizing · refreshed from api.congress.gov</div>
+        <div style=${{fontSize:9,color:"#a78bfa",fontFamily:FM,letterSpacing:"0.14em",textTransform:"uppercase"}}>◈ Tracked Legislation · Auto-discovered</div>
+        <div style=${_SM}>${anti.length} arms-restricting · ${pro.length} arms-authorizing · refreshed from api.congress.gov</div>
       </div>
       ${anti.length>0?html`
-        <div style=${{padding:"3px 9px",background:"#0a0c10",fontSize:8,color:"#374151",fontFamily:"monospace",letterSpacing:"0.1em",textTransform:"uppercase"}}>Anti-Intervention Legislation</div>
+        <div style=${{padding:"3px 9px",background:"#0a0c10",fontSize:8,color:"#374151",fontFamily:FM,letterSpacing:"0.1em",textTransform:"uppercase"}}>Anti-Intervention Legislation</div>
         ${anti.map((b,i)=>html`<${BillRow} key=${i} b=${b}/>`)}`:null}
       ${pro.length>0?html`
-        <div style=${{padding:"3px 9px",background:"#0a0c10",fontSize:8,color:"#374151",fontFamily:"monospace",letterSpacing:"0.1em",textTransform:"uppercase"}}>Pro-Arms (tracked for No votes)</div>
+        <div style=${{padding:"3px 9px",background:"#0a0c10",fontSize:8,color:"#374151",fontFamily:FM,letterSpacing:"0.1em",textTransform:"uppercase"}}>Pro-Arms (tracked for No votes)</div>
         ${pro.map((b,i)=>html`<${BillRow} key=${i} b=${b}/>`)}`:null}
     </div>`;
 }
@@ -463,15 +450,15 @@ function MemberBox({title, color, members, challengers, fecData, polyData, onSel
           <${StatusBadge} ps=${m.ps||"INCUMBENT"} prob=${poly?.prob}/>
         </div>
         <div style=${{display:"flex",gap:5,flexWrap:"wrap",marginBottom:2}}>
-          <span style=${{fontSize:8,fontFamily:"monospace",color:"#374151"}}>${loc}${isChallenger&&m.primaryDate?" · "+m.primaryDate:""}</span>
+          <span style=${_SB}>${loc}${isChallenger&&m.primaryDate?" · "+m.primaryDate:""}</span>
           ${!isChallenger?html`<${ArmsBadge} member=${m}/>`:null}
         </div>
         ${m.note?html`<div style=${{fontSize:8,color:"#374151",lineHeight:1.3,marginBottom:2}}>${m.note.slice(0,70)}${m.note.length>70?"…":""}</div>`:null}
-        ${m.rlc_score?html`<span style=${{fontSize:8,fontFamily:"monospace",color:"#fbbf24",opacity:.7}}>RLC ${m.rlc_score}/100</span>`:null}
+        ${m.rlc_score?html`<span style=${{fontSize:8,fontFamily:FM,color:"#fbbf24",opacity:.7}}>RLC ${m.rlc_score}/100</span>`:null}
         ${fec?html`
           <div style=${{display:"flex",gap:8,flexWrap:"wrap"}}>
-            ${fec.raised!=null?html`<span style=${{fontSize:8,fontFamily:"monospace",color:"#4b5563"}}>↑${fmtM(fec.raised)}</span>`:null}
-            ${fec.ie_against>0?html`<span style=${{fontSize:8,fontFamily:"monospace",color:"#f87171"}}>⚡${fmtM(fec.ie_against)} vs</span>`:null}
+            ${fec.raised!=null?html`<span style=${{fontSize:8,fontFamily:FM,color:"#4b5563"}}>↑${fmtM(fec.raised)}</span>`:null}
+            ${fec.ie_against>0?html`<span style=${{fontSize:8,fontFamily:FM,color:"#f87171"}}>⚡${fmtM(fec.ie_against)} vs</span>`:null}
           </div>`:null}
       </div>`;
   };
@@ -479,7 +466,7 @@ function MemberBox({title, color, members, challengers, fecData, polyData, onSel
   const Section = ({label, items, isChallenger}) => {
     if (!items||!items.length) return null;
     return html`<${Fragment}>
-      ${label?html`<div style=${{padding:"3px 9px",background:"#090b0e",fontSize:8,color:"#374151",fontFamily:"monospace",letterSpacing:"0.1em",textTransform:"uppercase"}}>${label}</div>`:null}
+      ${label?html`<div style=${{padding:"3px 9px",background:"#090b0e",fontSize:8,color:"#374151",fontFamily:FM,letterSpacing:"0.1em",textTransform:"uppercase"}}>${label}</div>`:null}
       ${items.map((m,i)=>html`<${Row} key=${i} m=${m} isChallenger=${isChallenger}/>`)}
     </${Fragment}>`;
   };
@@ -487,15 +474,15 @@ function MemberBox({title, color, members, challengers, fecData, polyData, onSel
   return html`
     <div class="side-box" style=${{width:222,background:"#0f1117",border:"1px solid "+color+"22",borderRadius:12,overflow:"hidden",flexShrink:0}}>
       <div style=${{background:"linear-gradient(135deg,"+color+"16,"+color+"05)",borderBottom:"1px solid "+color+"22",padding:"9px 11px"}}>
-        <div style=${{fontSize:9,fontWeight:700,letterSpacing:"0.14em",textTransform:"uppercase",color,fontFamily:"monospace"}}>${title}</div>
-        <div style=${{fontSize:8,color:"#374151",marginTop:2}}>
+        <div style=${{fontSize:9,fontWeight:700,letterSpacing:"0.14em",textTransform:"uppercase",color,fontFamily:FM}}>${title}</div>
+        <div style=${_SM}>
           ${active.length} active · ${departed.length} departed · ${challengers.length} challengers
         </div>
       </div>
       <div style=${{display:"flex",borderBottom:"1px solid #0e1016"}}>
         ${[["members","Members"],["challengers","Challengers"]].map(([k,l])=>html`
           <button key=${k} onClick=${()=>setTab(k)} style=${{
-            flex:1,padding:"5px",border:"none",cursor:"pointer",fontFamily:"monospace",fontSize:9,
+            flex:1,padding:"5px",border:"none",cursor:"pointer",fontFamily:FM,fontSize:9,
             background:tab===k?"#161920":"transparent",color:tab===k?color:"#374151",
             borderBottom:tab===k?"2px solid "+color:"none"}}>
             ${l}
@@ -503,7 +490,7 @@ function MemberBox({title, color, members, challengers, fecData, polyData, onSel
       </div>
       <div style=${{maxHeight:440,overflowY:"auto"}}>
         ${tab==="members"?html`
-          ${active.length>0?html`<div style=${{padding:"3px 9px",background:"#090b0e",fontSize:8,color:"#374151",fontFamily:"monospace",letterSpacing:"0.1em",textTransform:"uppercase"}}>◈ Anti-Intervention</div>`:null}
+          ${active.length>0?html`<div style=${{padding:"3px 9px",background:"#090b0e",fontSize:8,color:"#374151",fontFamily:FM,letterSpacing:"0.1em",textTransform:"uppercase"}}>◈ Anti-Intervention</div>`:null}
           <${Section} items=${active}/>
           <${Section} label="Departed" items=${departed}/>
         `:html`
@@ -529,17 +516,9 @@ function DetailPanel({member, fecData, polyData, bills, chamber}) {
   const poly   = (() => {
     const pd = polyData[member.name];
     if (!pd || pd.prob == null) return null;
-    // Validate the market question is actually about this member's election
-    // (data.json may contain stale bad matches from old Python code)
     const q = (pd.question || "").toLowerCase();
-    const BAD = ["dnc","rnc","running mate","speak at","expelled","censure",
-                 "resignation","retire","cabinet","ambassador","2028","2024",
-                 "vice president","peruvian","peru"," uk ","canadian","gubernatorial",
-                 "governor","president","white house","senate majority","house majority"];
-    if (BAD.some(b => q.includes(b))) return null;
-    // If question has a year, it must be 2026
+    if (MARKET_DISQUALIFY.some(b => q.includes(b))) return null;
     if (/20(2[0-4]|2[7-9]|3\d)/.test(q)) return null;
-    // Must contain the member's last name
     const last = member.name.split(" ").pop().toLowerCase();
     if (last.length > 3 && !q.includes(last)) return null;
     return pd;
@@ -564,7 +543,7 @@ function DetailPanel({member, fecData, polyData, bills, chamber}) {
         </div>
         <div style=${{flex:1}}>
           <div style=${{fontSize:12,fontWeight:700,color:"#f0ebe0",lineHeight:1.2}}>${member.name}</div>
-          <div style=${{fontSize:9,color:"#374151",fontFamily:"monospace",marginTop:1}}>
+          <div style=${{fontSize:9,color:"#374151",fontFamily:FM,marginTop:1}}>
             ${member.state}${member.district!=null?"-"+member.district:""} ·
             ${member.party==="D"?"Democrat":member.party==="R"?"Republican":"Independent"}
           </div>
@@ -583,7 +562,7 @@ function DetailPanel({member, fecData, polyData, bills, chamber}) {
             "Opposes foreign interventionism — opposed arms sales or aid to foreign countries by vote or TrackAIPAC endorsement."
           </div>
           ${member.lobby_total>0?html`
-            <div style=${{fontSize:8,color:"#374151",fontFamily:"monospace",marginTop:3}}>
+            <div style=${{fontSize:8,color:"#374151",fontFamily:FM,marginTop:3}}>
               Israel lobby receipts: ${fmtM(member.lobby_total)}
               ${member.pacs&&member.pacs.length>0?html` · ${member.pacs.slice(0,4).join(", ")}`:null}
             </div>`:null}
@@ -593,9 +572,9 @@ function DetailPanel({member, fecData, polyData, bills, chamber}) {
 
       ${mBills.length>0?html`
         <div style=${{marginBottom:8}}>
-          <div style=${{fontSize:8,color:"#374151",fontFamily:"monospace",letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:4}}>Co-sponsored legislation</div>
+          <div style=${{fontSize:8,color:"#374151",fontFamily:FM,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:4}}>Co-sponsored legislation</div>
           ${mBills.map((b,i)=>html`
-            <div key=${i} style=${{fontSize:9,fontFamily:"monospace",marginBottom:2}}>
+            <div key=${i} style=${{fontSize:9,fontFamily:FM,marginBottom:2}}>
               <a href=${b.url} target="_blank" rel="noreferrer" style=${{color:"#a78bfa",textDecoration:"none"}}>${b.type} ${b.number} ↗</a>
               <span style=${{color:"#4b5563",marginLeft:5}}>${(b.title||"").slice(0,55)}${(b.title||"").length>55?"…":""}</span>
             </div>`)}
@@ -603,9 +582,9 @@ function DetailPanel({member, fecData, polyData, bills, chamber}) {
 
       ${votes.length>0?html`
         <div style=${{marginBottom:8}}>
-          <div style=${{fontSize:8,color:"#374151",fontFamily:"monospace",letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:4}}>On-record votes</div>
+          <div style=${{fontSize:8,color:"#374151",fontFamily:FM,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:4}}>On-record votes</div>
           ${votes.map((v,i)=>html`
-            <div key=${i} style=${{fontSize:9,fontFamily:"monospace",marginBottom:2}}>
+            <div key=${i} style=${{fontSize:9,fontFamily:FM,marginBottom:2}}>
               <span style=${{color:v.vote==="No"?"#f87171":"#4ade80",marginRight:4}}>${v.vote}</span>
               <span style=${{color:"#4b5563"}}>${v.bill} — ${(v.desc||"").slice(0,50)}</span>
             </div>`)}
@@ -614,24 +593,24 @@ function DetailPanel({member, fecData, polyData, bills, chamber}) {
       <div style=${{display:"flex",gap:7,flexWrap:"wrap"}}>
         ${fec?html`
           <div style=${{flex:"1 1 130px",borderRadius:7,border:"1px solid #1a1d27",overflow:"hidden"}}>
-            <div style=${{padding:"3px 7px",background:"#090b0e",fontSize:8,color:"#fbbf24",fontFamily:"monospace"}}>FEC 2024</div>
+            <div style=${{padding:"3px 7px",background:"#090b0e",fontSize:8,color:"#fbbf24",fontFamily:FM}}>FEC 2024</div>
             ${[["Raised",fmtM(fec.raised)],["Spent",fmtM(fec.spent)],["Cash",fmtM(fec.cash)],
                ...(fec.ie_against>0?[["vs IEs",fmtM(fec.ie_against)]]:[] ),
                ...(fec.ie_support>0?[["for IEs",fmtM(fec.ie_support)]]:[] ),
             ].map(([k,v])=>html`
               <div key=${k} style=${{display:"flex",justifyContent:"space-between",padding:"3px 7px",borderTop:"1px solid #0e1016"}}>
                 <span style=${{fontSize:9,color:"#4b5563"}}>${k}</span>
-                <span style=${{fontSize:9,color:"#e8e4dc",fontFamily:"monospace"}}>${v}</span>
+                <span style=${{fontSize:9,color:"#e8e4dc",fontFamily:FM}}>${v}</span>
               </div>`)}
             ${fec.cid?html`<div style=${{padding:"3px 7px",borderTop:"1px solid #0e1016"}}>
               <a href=${"https://www.fec.gov/data/candidate/"+fec.cid+"/"} target="_blank" rel="noreferrer"
-                style=${{fontSize:8,color:"#374151",fontFamily:"monospace",textDecoration:"none"}}>→ FEC profile ↗</a>
+                style=${{fontSize:8,color:"#374151",fontFamily:FM,textDecoration:"none"}}>→ FEC profile ↗</a>
             </div>`:null}
           </div>`:null}
 
         ${poly?html`
           <div style=${{flex:"1 1 130px",borderRadius:7,border:"1px solid #1a1d27",overflow:"hidden"}}>
-            <div style=${{padding:"3px 7px",background:"#090b0e",fontSize:8,color:"#a78bfa",fontFamily:"monospace"}}>${(s=>(s==="predictit_contract"||s==="predictit_party"?"PREDICTIT":s==="metaculus"?"METACULUS":"POLYMARKET"))(poly.src||"")}</div>
+            <div style=${{padding:"3px 7px",background:"#090b0e",fontSize:8,color:"#a78bfa",fontFamily:FM}}>${(s=>(s==="predictit_contract"||s==="predictit_party"?"PREDICTIT":s==="metaculus"?"METACULUS":"POLYMARKET"))(poly.src||"")}</div>
             <div style=${{padding:"4px 7px",borderTop:"1px solid #0e1016",fontSize:9,color:"#6b7280",lineHeight:1.4}}>
               ${poly.question}
               ${(poly.src==="predictit_party"||poly.src==="grok_estimate") && poly.question ? html`<span style=${{color:"#4b5563",fontSize:8}}> · ${poly.src==="predictit_party"?"party-level proxy":"AI estimate"}</span>` : null}
@@ -641,11 +620,11 @@ function DetailPanel({member, fecData, polyData, bills, chamber}) {
                 <div style=${{flex:1,height:5,borderRadius:3,background:"#1a1d27",overflow:"hidden"}}>
                   <div style=${{height:"100%",width:Math.round(poly.prob*100)+"%",background:poly.prob>=.65?"#4ade80":"#fbbf24",borderRadius:3}}/>
                 </div>
-                <span style=${{fontSize:9,fontFamily:"monospace",color:poly.prob>=.65?"#4ade80":"#fbbf24"}}>${Math.round(poly.prob*100)+"%"}</span>
+                <span style=${{fontSize:9,fontFamily:FM,color:poly.prob>=.65?"#4ade80":"#fbbf24"}}>${Math.round(poly.prob*100)+"%"}</span>
               </div>`:null}
             ${poly.url?html`<div style=${{padding:"3px 7px",borderTop:"1px solid #0e1016"}}>
               <a href=${poly.url} target="_blank" rel="noreferrer"
-                style=${{fontSize:8,color:"#374151",fontFamily:"monospace",textDecoration:"none"}}>${(s=>(s==="predictit_contract"||s==="predictit_party"?"→ PredictIt ↗":s==="metaculus"?"→ Metaculus ↗":"→ Polymarket ↗"))(poly.src||"")}</a>
+                style=${{fontSize:8,color:"#374151",fontFamily:FM,textDecoration:"none"}}>${(s=>(s==="predictit_contract"||s==="predictit_party"?"→ PredictIt ↗":s==="metaculus"?"→ Metaculus ↗":"→ Polymarket ↗"))(poly.src||"")}</a>
             </div>`:null}
           </div>`:null}
       </div>
@@ -653,7 +632,7 @@ function DetailPanel({member, fecData, polyData, bills, chamber}) {
       <div style=${{marginTop:8}}>
         <button onClick=${copyLink}
           style=${{padding:"4px 10px",borderRadius:6,border:"1px solid #1e2230",background:"transparent",
-            color:"#6b7280",fontFamily:"monospace",fontSize:9,cursor:"pointer"}}>
+            color:"#6b7280",fontFamily:FM,fontSize:9,cursor:"pointer"}}>
           ⎘ Copy member link
         </button>
       </div>
@@ -676,15 +655,15 @@ function HistoryTimeline({history}) {
     catch { return iso; }
   };
   if (!history.events||history.events.length===0) return html`
-    <div style=${{background:"#0f1117",border:"1px solid #1e2230",borderRadius:12,padding:"16px",width:"100%",boxSizing:"border-box",textAlign:"center",color:"#374151",fontSize:10,fontFamily:"monospace"}}>
+    <div style=${{background:"#0f1117",border:"1px solid #1e2230",borderRadius:12,padding:"16px",width:"100%",boxSizing:"border-box",textAlign:"center",color:"#374151",fontSize:10,fontFamily:FM}}>
       ◈ Status History — populates automatically as members flip positions or depart
     </div>`;
   return html`
     <div style=${{background:"#0f1117",border:"1px solid #1e2230",borderRadius:12,overflow:"hidden",width:"100%",boxSizing:"border-box"}}>
       <div style=${{padding:"10px 14px",background:"#090b0e",borderBottom:"1px solid #1e2230",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:6}}>
         <div>
-          <div style=${{fontSize:9,color:"#a78bfa",fontFamily:"monospace",letterSpacing:"0.14em",textTransform:"uppercase"}}>◈ Member Status History</div>
-          <div style=${{fontSize:8,color:"#374151",marginTop:2}}>
+          <div style=${{fontSize:9,color:"#a78bfa",fontFamily:FM,letterSpacing:"0.14em",textTransform:"uppercase"}}>◈ Member Status History</div>
+          <div style=${_SM}>
             Auto-detected every 4h · ${history.events.length} events recorded
             ${history.last_updated?html` · ${fmtDate(history.last_updated)}`:""}
           </div>
@@ -692,20 +671,20 @@ function HistoryTimeline({history}) {
         <div style=${{display:"flex",gap:2,background:"#0a0c10",borderRadius:6,padding:2,border:"1px solid #1e2230"}}>
           ${[["all","All"],["flips","Flips"],["departures","Departures"]].map(([k,l])=>html`
             <button key=${k} onClick=${()=>setFilter(k)}
-              style=${{padding:"3px 8px",borderRadius:4,border:"none",cursor:"pointer",fontFamily:"monospace",fontSize:8,
+              style=${{padding:"3px 8px",borderRadius:4,border:"none",cursor:"pointer",fontFamily:FM,fontSize:8,
                 background:filter===k?"#161920":"transparent",color:filter===k?"#a78bfa":"#374151"}}>
               ${l}
             </button>`)}
         </div>
       </div>
-      ${events.length===0?html`<div style=${{padding:14,color:"#374151",fontSize:9,textAlign:"center",fontFamily:"monospace"}}>No events match this filter.</div>`:
+      ${events.length===0?html`<div style=${{padding:14,color:"#374151",fontSize:9,textAlign:"center",fontFamily:FM}}>No events match this filter.</div>`:
         html`<div style=${{maxHeight:340,overflowY:"auto"}}>
           ${events.map((e,i)=>{
             const s=STYLE[e.change]||{color:"#9ca3af",bg:"rgba(156,163,175,.05)",icon:"·",label:e.change};
             return html`
               <div key=${i} style=${{display:"flex",borderBottom:"1px solid #0e1016"}}>
                 <div style=${{width:66,flexShrink:0,padding:"8px 6px 8px 10px",borderRight:"1px solid #0e1016",display:"flex",flexDirection:"column",justifyContent:"center"}}>
-                  <div style=${{fontSize:8,fontFamily:"monospace",color:"#4b5563",lineHeight:1.3}}>${fmtDate(e.date)}</div>
+                  <div style=${{fontSize:8,fontFamily:FM,color:"#4b5563",lineHeight:1.3}}>${fmtDate(e.date)}</div>
                 </div>
                 <div style=${{width:28,flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center",borderRight:"1px solid #0e1016",background:s.bg}}>
                   <span style=${{fontSize:12,color:s.color}}>${s.icon}</span>
@@ -713,8 +692,8 @@ function HistoryTimeline({history}) {
                 <div style=${{flex:1,padding:"8px 10px"}}>
                   <div style=${{display:"flex",alignItems:"center",gap:6,flexWrap:"wrap",marginBottom:2}}>
                     <span style=${{fontSize:11,color:"#e8e4dc",fontWeight:600}}>${e.member}</span>
-                    <span style=${{fontSize:8,padding:"1px 5px",borderRadius:3,fontFamily:"monospace",background:s.bg,color:s.color,whiteSpace:"nowrap"}}>${s.label}</span>
-                    <span style=${{fontSize:8,fontFamily:"monospace",color:"#374151"}}>
+                    <span style=${{fontSize:8,padding:"1px 5px",borderRadius:3,fontFamily:FM,background:s.bg,color:s.color,whiteSpace:"nowrap"}}>${s.label}</span>
+                    <span style=${_SB}>
                       ${e.state}${e.chamber?" · "+e.chamber.charAt(0).toUpperCase()+e.chamber.slice(1):""}
                       ${e.party?" ["+e.party+"]":""}
                     </span>
@@ -752,17 +731,17 @@ function FindMyRep({members, onHighlight}) {
   const pc = p=>p==="Democratic"||p==="Democrat"?"#1e40af":p==="Republican"?"#991b1b":"#9ca3af";
   return html`
     <div style=${{background:"#0f1117",border:"1px solid #1e2230",borderRadius:12,padding:"11px 13px",width:"100%",boxSizing:"border-box"}}>
-      <div style=${{fontSize:9,color:"#fbbf24",fontFamily:"monospace",letterSpacing:"0.12em",marginBottom:6,textTransform:"uppercase"}}>⊙ Find My Representatives · Google Civic API</div>
+      <div style=${{fontSize:9,color:"#fbbf24",fontFamily:FM,letterSpacing:"0.12em",marginBottom:6,textTransform:"uppercase"}}>⊙ Find My Representatives · Google Civic API</div>
       <div style=${{display:"flex",gap:5}}>
         <input value=${addr} onInput=${e=>setAddr(e.target.value)} onKeyDown=${e=>e.key==="Enter"&&lookup()}
           placeholder="Enter your US address and press Enter…"
-          style=${{flex:1,background:"#090b0e",border:"1px solid #1e2230",borderRadius:7,padding:"5px 9px",color:"#e8e4dc",fontSize:11,fontFamily:"monospace",outline:"none"}}/>
+          style=${{flex:1,background:"#090b0e",border:"1px solid #1e2230",borderRadius:7,padding:"5px 9px",color:"#e8e4dc",fontSize:11,fontFamily:FM,outline:"none"}}/>
         <button onClick=${lookup} disabled=${loading}
-          style=${{padding:"5px 12px",borderRadius:7,border:"none",cursor:"pointer",background:loading?"#1a1d27":"#fbbf24",color:"#0a0c10",fontFamily:"monospace",fontSize:11,fontWeight:700}}>
+          style=${{padding:"5px 12px",borderRadius:7,border:"none",cursor:"pointer",background:loading?"#1a1d27":"#fbbf24",color:"#0a0c10",fontFamily:FM,fontSize:11,fontWeight:700}}>
           ${loading?"…":"Look up"}
         </button>
       </div>
-      ${err?html`<div style=${{fontSize:9,color:"#f87171",marginTop:4,fontFamily:"monospace"}}>${err}</div>`:null}
+      ${err?html`<div style=${{fontSize:9,color:"#f87171",marginTop:4,fontFamily:FM}}>${err}</div>`:null}
       ${reps&&reps.length?html`
         <div style=${{marginTop:8,display:"flex",flexWrap:"wrap",gap:7}}>
           ${reps.map((rep,i)=>html`
@@ -771,18 +750,23 @@ function FindMyRep({members, onHighlight}) {
                 ${rep.photo?html`<img src=${rep.photo} alt=${rep.name} style=${{width:24,height:24,borderRadius:"50%",objectFit:"cover",flexShrink:0}} onError=${e=>{e.target.style.display="none";}}/>`:null}
                 <div>
                   <div style=${{fontSize:11,fontWeight:700,color:"#f0ebe0",lineHeight:1.2}}>${rep.name}</div>
-                  <div style=${{fontSize:8,color:"#374151",fontFamily:"monospace"}}>${rep.office}</div>
+                  <div style=${{fontSize:8,color:"#374151",fontFamily:FM}}>${rep.office}</div>
                 </div>
               </div>
               <div style=${{display:"flex",gap:5,flexWrap:"wrap"}}>
-                <span style=${{fontSize:8,padding:"1px 5px",borderRadius:3,background:pc(rep.party)+"18",color:pc(rep.party),fontFamily:"monospace"}}>${rep.party}</span>
-                ${rep.phones?.[0]?html`<a href=${"tel:"+rep.phones[0]} style=${{fontSize:8,color:"#4b5563",fontFamily:"monospace",textDecoration:"none"}}>📞 ${rep.phones[0]}</a>`:null}
-                ${rep.urls?.[0]?html`<a href=${rep.urls[0]} target="_blank" rel="noreferrer" style=${{fontSize:8,color:"#4b9cd3",fontFamily:"monospace",textDecoration:"none"}}>↗ Web</a>`:null}
+                <span style=${{fontSize:8,padding:"1px 5px",borderRadius:3,background:pc(rep.party)+"18",color:pc(rep.party),fontFamily:FM}}>${rep.party}</span>
+                ${rep.phones?.[0]?html`<a href=${"tel:"+rep.phones[0]} style=${{fontSize:8,color:"#4b5563",fontFamily:FM,textDecoration:"none"}}>📞 ${rep.phones[0]}</a>`:null}
+                ${rep.urls?.[0]?html`<a href=${rep.urls[0]} target="_blank" rel="noreferrer" style=${{fontSize:8,color:"#4b9cd3",fontFamily:FM,textDecoration:"none"}}>↗ Web</a>`:null}
               </div>
             </div>`)}
         </div>`:null}
     </div>`;
 }
+const _SP={width:"100%",maxWidth:610};
+const _SB={fontSize:8,fontFamily:FM,color:"#374151"};
+const _SD={fontSize:8,color:"#6b7280"};
+const _SM={fontSize:8,color:"#374151",marginTop:2};
+
 function useData() {
   const [allMembers,   setMembers]   = useState([]);
   const [races,        setRaces]     = useState([]);
@@ -798,8 +782,6 @@ function useData() {
   const [status,       setStatus]    = useState("Loading…");
   const [loaded,       setLoaded]    = useState(false);
 
-  // ── Helpers ──────────────────────────────────────────────────────────────
-
   const GAMMA = "https://gamma-api.polymarket.com";
   const CLOB  = "https://clob.polymarket.com";
 
@@ -808,7 +790,6 @@ function useData() {
     return isNaN(n) ? null : n;
   }
 
-  // Extract YES token_id from a Gamma market object
   function extractYesToken(mk) {
     const tokens = mk.tokens || mk.clobTokenIds || [];
     let yes = null, no = null;
@@ -826,9 +807,7 @@ function useData() {
     return {yes, no};
   }
 
-  // ── Batch CLOB refresh (fast: 1 request for all known tokens) ────────────
   async function batchRefreshCLOB(basePolyData) {
-    // Collect all YES token_ids from the data.json snapshot
     const tokenMap = {};  // token_id → candidate name
     for (const [name, pd] of Object.entries(basePolyData)) {
       if (pd.token_id) tokenMap[pd.token_id] = name;
@@ -836,16 +815,12 @@ function useData() {
     const tokenIds = Object.keys(tokenMap);
     if (tokenIds.length === 0) return {};
 
-    // CLOB batch midpoints endpoint — GET with comma-separated token_ids
-    // Falls back to individual calls if batch fails
     const fresh = {};
     try {
-      // Try batch GET (up to 500 ids)
       const qs = tokenIds.map(id => "token_ids=" + encodeURIComponent(id)).join("&");
       const r  = await fetch(CLOB + "/midpoints?" + qs);
       if (r.ok) {
         const data = await r.json();
-        // Response: [{token_id, mid}, ...] or {results: [...]}
         const items = Array.isArray(data) ? data : (data.results || data.midpoints || []);
         for (const item of items) {
           const tid  = item.token_id || item.tokenId;
@@ -869,7 +844,6 @@ function useData() {
       console.warn("Poly batch failed, falling back to individual:", e);
     }
 
-    // Fallback: individual CLOB calls (in parallel, max 8 at once)
     const chunkSize = 8;
     for (let i = 0; i < tokenIds.length; i += chunkSize) {
       const chunk = tokenIds.slice(i, i + chunkSize);
@@ -898,18 +872,7 @@ function useData() {
     return fresh;
   }
 
-  // ── Gamma search for candidates NOT yet in poly data ─────────────────────
   async function searchGammaForNew(memberList, racesList, existingPoly) {
-    // ── Strict market validation — same rules as Python validate_market_for_candidate ──
-    const DISQUALIFY = [
-      "president","presidential","white house","governor","gubernatorial",
-      "2024","2028","2030","senate majority","house majority",
-      "peruvian","peru"," uk ","british","canada","canadian","australian","french",
-      "german","mexican","chinese","russian","european","israeli","ukrainian",
-      "mayor","attorney general","secretary of state","dnc","rnc",
-      "running mate","vice president","cabinet","ambassador","speak at",
-      "expelled","censured","resignation","resign","retire",
-    ];
     function validateMarket(title, name, info) {
       const t = title.toLowerCase();
       const parts = name.split(" ");
@@ -918,17 +881,13 @@ function useData() {
       const state = (info.state || "").toLowerCase();
       const chamber = info.chamber || "house";
 
-      // Disqualify on any bad keyword
-      for (const bad of DISQUALIFY) {
+      for (const bad of MARKET_DISQUALIFY) {
         if (t.includes(bad)) return false;
       }
-      // Disqualify on wrong year
       if (/2024|2028|2030|2032/.test(t)) return false;
 
-      // Full name match (strongest signal — both first AND last present)
       const fullMatch = t.includes(first) && t.includes(last);
 
-      // Contextual match: last name + state + chamber keyword
       const chamberWords = chamber === "senate"
         ? ["senate","senator"]
         : ["house","congress","congressional","representative","district","cd-"];
@@ -939,7 +898,6 @@ function useData() {
       return fullMatch || contextMatch;
     }
 
-    // Build name → info lookup for validation
     const nameInfo = {};
     memberList.filter(m => m.antiArms).forEach(m => {
       nameInfo[m.name] = {state: (m.state||"").toLowerCase(), chamber: m.chamber||"house"};
@@ -951,7 +909,6 @@ function useData() {
     const missing = Object.keys(nameInfo).filter(n => !existingPoly[n]);
     if (missing.length === 0) return {};
 
-    // Pass 1: catalog sweep — keyed by FULL NAME, validated strictly
     const catalog = {};  // full_name → market (not last name!)
     const catalogQueries = ["2026 congressional", "2026 senate", "2026 house", "midterm 2026"];
     for (const q of catalogQueries) {
@@ -977,7 +934,6 @@ function useData() {
       await new Promise(r => setTimeout(r, 200));
     }
 
-    // Pass 2: per-candidate search for remaining — still validated
     const fresh = {};
     for (const name of missing) {
       const last  = name.split(" ").pop();
@@ -985,7 +941,6 @@ function useData() {
       let mk = catalog[name];  // full-name keyed, not last-name
 
       if (!mk) {
-        // Targeted search: full name first, then last+state
         const queries = [
           `"${name}" 2026`,
           `${name} 2026`,
@@ -1020,7 +975,6 @@ function useData() {
         } catch {}
       }
 
-      // Fallback: Gamma lastTradePrice / outcomePrices
       if (prob === null) {
         const ltp = mk.lastTradePrice || mk.last_trade_price;
         if (ltp != null) { prob = safeFloat(ltp); }
@@ -1059,14 +1013,11 @@ function useData() {
     return fresh;
   }
 
-  // ── Full poly refresh cycle ───────────────────────────────────────────────
   async function refreshPoly(memberList, racesList, basePolyData) {
     setPolyLoad(true);
     try {
-      // Step 1: fast batch refresh for known tokens
       const batchFresh = await batchRefreshCLOB(basePolyData);
 
-      // Step 2: Gamma search for new candidates
       const merged = {...basePolyData, ...batchFresh};
       const newFresh = await searchGammaForNew(memberList, racesList, merged);
 
@@ -1074,7 +1025,6 @@ function useData() {
       if (Object.keys(allFresh).length > 0) {
         setPolyLive(prev => ({...prev, ...allFresh}));
         setPolyUpd(new Date().toISOString());
-        // Update polyBase if we found new token_ids
         const newTokens = Object.entries(newFresh).filter(([,v]) => v.token_id);
         if (newTokens.length > 0) {
           setPolyBase(prev => {
@@ -1090,7 +1040,6 @@ function useData() {
     setPolyLoad(false);
   }
 
-  // ── Load data.json ────────────────────────────────────────────────────────
   useEffect(() => {
     fetch(HISTORY_URL + "?_=" + Date.now()).then(r => r.json()).then(d => {
       if (d.events) setHistory(d);
@@ -1117,14 +1066,14 @@ function useData() {
             }));
         }
         const KNOWN_ANTI_INTERVENTION = {
-          "Thomas Massie":    {reason:"Co-sponsored HR 3565; consistent No votes on Israel arms"},
+          "Thomas Massie":    {reason:"Co-sponsored HR 3565"},
           "Warren Davidson":  {reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
-          "Andy Biggs":       {reason:"Voted No on HR 8034 and HR 8035 (Israel/Ukraine aid, Apr 2024)"},
+          "Andy Biggs":       {reason:"Voted No on HR 8034 and HR 8035 (Israel/Ukraine aid, Ap"},
           "Scott Perry":      {reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
           "Paul Gosar":       {reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
           "Chip Roy":         {reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
           "Thomas Tiffany":   {reason:"Voted No on HR 8034 (Israel aid supplemental, Apr 2024)"},
-          "Rand Paul":        {reason:"Led Senate holds on Israel arms sales; co-sponsored FMS disapproval resolutions"},
+          "Rand Paul":        {reason:"Led Senate holds on Israel arms sales"},
           "Lauren Boebert":   {reason:"Voted No on HR 8034; positions have shifted"},
           "Barry Moore":      {reason:"Voted No on some Israel aid provisions"},
           "Eli Crane":        {reason:"No on HR 8034; RLC Liberty Index 97/100"},
@@ -1132,7 +1081,7 @@ function useData() {
           "Andrew Ogles":     {reason:"RLC Liberty Index 95/100"},
           "Anna Paulina Luna":{reason:"RLC Liberty Index 94/100"},
           "Mike Lee":         {reason:"RLC Liberty Index 88/100"},
-          "Ro Khanna":        {reason:"Co-sponsored HR 3565; co-sponsored Senate JRD on Israel FMS"},
+          "Ro Khanna":        {reason:"Co-sponsored HR 3565"},
           "Lloyd Doggett":    {reason:"Co-sponsored HR 3565 Block the Bombs Act"},
           "Jim McGovern":     {reason:"Co-sponsored HR 3565 Block the Bombs Act"},
           "Jan Schakowsky":   {reason:"Co-sponsored HR 3565 Block the Bombs Act"},
@@ -1144,15 +1093,12 @@ function useData() {
           const ka = KNOWN_ANTI_INTERVENTION[m.name];
           return ka ? {...m, antiArms:true, note:m.note||ka.reason} : m;
         });
-        // Explicitly strip members whose TrackAIPAC classification is too weak
-        // (called for conditions/review only — not votes or bill co-sponsorship)
         const REMOVE_FROM_ANTI = new Set([
           "Elizabeth Warren","Brian Schatz","Chris Van Hollen","Peter Welch",
         ]);
         memberList = memberList.map(m =>
           REMOVE_FROM_ANTI.has(m.name) ? {...m, antiArms:false} : m
         );
-        // Fix lingering 'soft' language in notes
         memberList = memberList.map(m => ({
           ...m,
           note: (m.note||"").replace(/[-–—]?\s*classified soft\.?/gi,"").trim(),
@@ -1161,7 +1107,6 @@ function useData() {
         setMembers(memberList);
         setBills(d.bills || []);
 
-        // Populate challengers from embedded endorsed lists
         const taEndorsed  = (d.trackaipac_endorsed || []).map(c => ({
           ...c, ps: c.ps || "UPCOMING", chamber: c.chamber || "house",
         }));
@@ -1169,7 +1114,6 @@ function useData() {
           ...c, ps: c.ps || "UPCOMING", chamber: c.chamber || "house",
         }));
         const seenNames = new Set(taEndorsed.map(c => c.name));
-        // Also pull races_2026 challengers (e.g. Talarico won TX-D primary)
         const raceChalls = (d.races_2026||[])
           .filter(r => r.type === "challenger")
           .map(r => ({
@@ -1193,10 +1137,9 @@ function useData() {
         if (d.races_2026 && d.races_2026.length) setRaces(d.races_2026);
         if (d.fec && Object.keys(d.fec).length > 0) setFec(d.fec);
 
-        // Store poly snapshot (has token_ids) then immediately refresh
         const baseP = (d.poly && Object.keys(d.poly).length > 0) ? d.poly : {};
         setPolyBase(baseP);
-        
+
         if (d.meta && d.meta.fetched_at) setFetchedAt(d.meta.fetched_at);
         const anti  = memberList.filter(m => m.antiArms).length;
         const age   = (d.meta && d.meta.fetched_at)
@@ -1204,7 +1147,6 @@ function useData() {
         setStatus("✓ " + anti + " anti-intervention · " + memberList.length + " members · " + age + "m ago");
         clearTimeout(window._aectLoadTimeout);
 
-        // Kick off live refresh immediately after data loads
         const racesList = (d.races_2026 && d.races_2026.length) ? d.races_2026 : [];
         refreshPoly(memberList, racesList, baseP);
 
@@ -1217,18 +1159,15 @@ function useData() {
       }
       setLoaded(true);
     })().catch(e => {
-      // Final safety net — if the async IIFE itself rejects (should never happen)
       console.error("useData IIFE rejected:", e);
       setStatus("⚠ Unexpected load error: " + (e && e.message ? e.message : e));
       setLoaded(true);
     });
 
-    // Safety timeout — if data.json never resolves, unblock after 10s
     const _loadTimeout = setTimeout(() => {
       setLoaded(true);
       setStatus("⚠ Timed out loading data.json. Check GitHub Actions.");
     }, 10000);
-    // Store cleanup ref on window (effect deps=[])
     window._aectLoadTimeout = _loadTimeout;
 
     try {
@@ -1243,7 +1182,6 @@ function useData() {
     } catch (e) { console.warn("Gun.js:", e); }
   }, []);
 
-  // 5-minute refresh cycle (batch CLOB only — fast, no Gamma search)
   useEffect(() => {
     if (allMembers.length === 0) return;
     const id = setInterval(() => {
@@ -1257,14 +1195,13 @@ function useData() {
     return () => clearInterval(id);
   }, [allMembers.length, polyBase]);
 
-  // Helper: apply live prices over base snapshot
-  // polyLive always wins; polyBase provides token_ids even for un-refreshed entries
   const mergedPoly = {};
   const allPolyKeys = new Set([...Object.keys(polyBase), ...Object.keys(polyLive)]);
   for (const k of allPolyKeys) {
     mergedPoly[k] = polyLive[k] || polyBase[k];
   }
 
+  const descriptions = (typeof window !== "undefined" && window._appData && window._appData.descriptions) || {};
   return {
     allMembers, bills, challengers, history, races, fecData,
     polyData:    mergedPoly,
@@ -1272,13 +1209,10 @@ function useData() {
     polyUpdated: polyUpdated,
     polyLoading,
     fetchedAt,   status, loaded,
-    descriptions: (window._appData && window._appData.descriptions) || {},
+    descriptions,
   };
 }
 
-
-// ── Historical + Projected Data ───────────────────────────────────────────────
-// Verified counts per Congress from TrackAIPAC historical data, GovTrack, Clerk XML
 const CONGRESS_HISTORY = [
   {congress:"115th", years:"2017-19", D:0, R:2,
    note:"Pre-Gaza. Only anti-interventionist libertarian-R: Massie (House) + Rand Paul (Senate)."},
@@ -1300,7 +1234,7 @@ const KEY_RACES_2026 = [
     raceType:"PRIMARY RISK", raceColor:"#f59e0b",
     electionLabel:"Primary — May 19, 2026",
     opponent:"Ed Gallrein (R, Trump-endorsed)",
-    status:"Trump endorsed Gallrein Oct 2025. Massie claims +17 lead in own polling. Rand Paul is his only Congressional ally. $10M+ super PAC spend against him.",
+    status:"Trump endorsed Gallrein Oct 2025.",
     winProb:0.60, probNote:"Cook: Solid R general if primary won",
     impact:"-1 Anti-R if lost", impactDir:-1, departing:false,
   },
@@ -1309,7 +1243,7 @@ const KEY_RACES_2026 = [
     raceType:"CHALLENGER", raceColor:"#4ade80",
     electionLabel:"Primary — May 2026",
     opponent:"Tony Gonzales (R, incumbent)",
-    status:"2A YouTuber (3.4M subs). Ran in 2024, lost to Gonzales by 4pts. RLC-endorsed. Anti-foreign-aid, anti-interventionist.",
+    status:"2A YouTuber (3.4M subs).",
     winProb:0.38, probNote:"Rematch — closed gap 2024",
     impact:"+1 Anti-R House if wins", impactDir:1, departing:false,
   },
@@ -1318,7 +1252,7 @@ const KEY_RACES_2026 = [
     raceType:"CHALLENGER", raceColor:"#4ade80",
     electionLabel:"General — Nov 3, 2026",
     opponent:"Cornyn or Paxton (R runoff May 26)",
-    status:"Won Democratic primary Mar 3, 2026 (53% vs Crockett 46%). Opposes offensive arms to Israel. Heavy underdog in deep-red Texas — no D has won statewide since 1994.",
+    status:"Won Democratic primary Mar 3, 2026 (53% vs Crockett 46%).",
     winProb:0.14, probNote:"Texas: Trump +13 in 2024",
     impact:"+1 Anti-D Senate if wins", impactDir:1, departing:false,
     justWonPrimary:true,
@@ -1328,7 +1262,7 @@ const KEY_RACES_2026 = [
     raceType:"DEPARTING", raceColor:"#9ca3af",
     electionLabel:"Running for TX Attorney General",
     opponent:"Mayes Middleton (R) — TX AG primary",
-    status:"Left House to run for Texas AG. RLC score 97/100, voted No on HR 8034. TX-21 seat open — likely goes to AIPAC-aligned R regardless of AG outcome.",
+    status:"Left House to run for Texas AG.",
     winProb:0.42, probNote:"TX-21 House: -1 Anti-R regardless",
     impact:"-1 Anti-R regardless", impactDir:-1, departing:true,
   },
@@ -1337,7 +1271,7 @@ const KEY_RACES_2026 = [
     raceType:"AIPAC TARGET", raceColor:"#f87171",
     electionLabel:"Primary — May 2026",
     opponent:"TBD — AIPAC testing challengers",
-    status:"Introduced bill to ban AIPAC-style super PACs. Won 2024 primary by 20pts despite AIPAC opposition. Safe general if primary won.",
+    status:"Introduced bill to ban AIPAC-style super PACs.",
     winProb:0.76, probNote:"Survived AIPAC challenge before",
     impact:"+1 Anti-D retained", impactDir:1, departing:false,
   },
@@ -1346,7 +1280,7 @@ const KEY_RACES_2026 = [
     raceType:"AIPAC TARGET", raceColor:"#f87171",
     electionLabel:"Primary — Aug 2026",
     opponent:"TBD — no major challenger yet",
-    status:"Only Palestinian-American in Congress. Ran largely unopposed in 2024. AIPAC has polled her district but no credible challenger announced yet.",
+    status:"Only Palestinian-American in Congress.",
     winProb:0.84, probNote:"Ran unopposed in 2024 primary",
     impact:"+1 Anti-D retained", impactDir:1, departing:false,
   },
@@ -1355,7 +1289,7 @@ const KEY_RACES_2026 = [
     raceType:"AIPAC TARGET", raceColor:"#f87171",
     electionLabel:"Primary — Aug 2026",
     opponent:"Don Samuels (D, expected rematch)",
-    status:"Beat Samuels by wide margin in 2024. AIPAC spent $2.5M vs her in 2022. PAL PAC endorsed her for 2026.",
+    status:"Beat Samuels by wide margin in 2024.",
     winProb:0.80, probNote:"Widened margin in 2024",
     impact:"+1 Anti-D retained", impactDir:1, departing:false,
   },
@@ -1364,7 +1298,7 @@ const KEY_RACES_2026 = [
     raceType:"SAFE SEAT", raceColor:"#6b7280",
     electionLabel:"Primary — Aug 2026",
     opponent:"No Trump challenge expected",
-    status:"RLC Liberty Index 102/100. Voted No on HR 8034 and 8035. No Trump endorsement against him. Cook: Solid R.",
+    status:"RLC Liberty Index 102/100.",
     winProb:0.88, probNote:"Cook Political: Solid R",
     impact:"+1 Anti-R retained", impactDir:1, departing:false,
   },
@@ -1373,16 +1307,14 @@ const KEY_RACES_2026 = [
     raceType:"NOT UP 2026", raceColor:"#6b7280",
     electionLabel:"Up for reelection: 2028",
     opponent:"No 2026 race",
-    status:"Term ends Jan 2029. Not on 2026 ballot. Currently the lone Anti-R anti-intervention Senator. Campaigning with Massie in Kentucky.",
+    status:"Term ends Jan 2029. Not on 2026 ballot. Currently the lone Anti-R anti-intervention Senator. Camp…",
     winProb:null, probNote:"Safe — 2028 race",
     impact:"Stays in 120th Congress", impactDir:0, departing:false,
   },
 ];
 
-
-// ── Timeline Components ───────────────────────────────────────────────────────
-
-function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
+function CandidateTimeline({allMembers, challengers, racesData, polyData, descriptions}) {
+  descriptions = (descriptions && typeof descriptions === 'object') ? descriptions : {};
   const [filter, setFilter] = useState("all");
 
   const today = new Date(); today.setHours(0,0,0,0);
@@ -1397,7 +1329,6 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
     return d.toLocaleDateString("en-US", {month:"short", day:"numeric", year:"numeric"});
   }
 
-  // ── Merge all sources into unified candidate list ──────────────────────────
   const allCands = [];
   const seen = new Set();
 
@@ -1426,7 +1357,6 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
       name: c.name.replace(/^(congressman|senator|representative)\s+/i,"").trim()});
   }
 
-  // races_2026 challengers first (richest data)
   (racesData || []).filter(r => r.type === "challenger" || r.primary_result).forEach(r => {
     addCand({
       name: r.name, party: r.party||"D", state: r.state||"", district: r.district,
@@ -1440,7 +1370,6 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
     });
   });
 
-  // All challengers (trackaipac + rlc from useData)
   (challengers || []).forEach(c => {
     const wonOrGen = c.ps === "WON" || c.ps === "GENERAL" || c.primary_result === "WON";
     addCand({
@@ -1457,7 +1386,6 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
     });
   });
 
-  // Overlay odds from data.json poly dict — preserve the actual source tag
   allCands.forEach(c => {
     const pd = polyData && (polyData[c.name] || polyData[normName(c.name)]);
     if (pd && pd.prob != null) {
@@ -1468,12 +1396,10 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
         c.win_prob_reasoning = pd.question;
       }
     }
-    // Overlay Grok description if not already set
     const desc = descriptions && (descriptions[c.name] || descriptions[normName(c.name)]);
     if (desc && !c.description) c.description = desc;
   });
 
-  // ── Status tag ─────────────────────────────────────────────────────────────
   function getStatus(c) {
     const pd = parseDate(c.primary_date);
     const gd = parseDate(c.general_date);
@@ -1499,7 +1425,6 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
     return               {tag:"UPCOMING PRIMARY",    sub:fmtDate(pd),                   color:"#4b5563", phase:"primary"};
   }
 
-  // ── Sort by next relevant date ─────────────────────────────────────────────
   function nextDate(c) {
     const won = c.primary_result === "WON" || c.ps === "GENERAL";
     const d = won ? parseDate(c.general_date)||parseDate(c.primary_date)
@@ -1535,7 +1460,6 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
     return true;
   });
 
-  // Group by month of next date
   function monthKey(c) {
     const won = c.primary_result === "WON" || c.ps === "GENERAL";
     const d = won ? parseDate(c.general_date)||parseDate(c.primary_date) : parseDate(c.primary_date);
@@ -1551,24 +1475,21 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
   });
 
   function WinGauge({prob, src}) {
-    // Only display if we have a validated, source-attributed probability.
-    // "no % data" shown by parent when prob == null.
     if (prob == null) return null;
     const pct = Math.round(prob*100);
     const col = prob>=0.6 ? "#4ade80" : prob>=0.35 ? "#fbbf24" : "#f87171";
     const r=16, circ=Math.PI*r, dash=Math.min(1,prob)*circ;
     const w=44, h=24;
-    // Source label — must accurately reflect the data origin
     const srcLabel = src==="polymarket_live" || src==="polymarket_gamma" || src==="polymarket"
-      ? html`<span style=${{fontSize:6,color:"#4ade80",fontFamily:"monospace",lineHeight:1}}>◉ Poly</span>`
+      ? html`<span style=${{fontSize:6,color:"#4ade80",fontFamily:FM,lineHeight:1}}>◉ Poly</span>`
       : src==="predictit_contract"
-      ? html`<span style=${{fontSize:6,color:"#f59e0b",fontFamily:"monospace",lineHeight:1}}>◈ PI</span>`
+      ? html`<span style=${{fontSize:6,color:"#f59e0b",fontFamily:FM,lineHeight:1}}>◈ PI</span>`
       : src==="predictit_party"
-      ? html`<span style=${{fontSize:6,color:"#6b7280",fontFamily:"monospace",lineHeight:1}}>◇ PI~</span>`
+      ? html`<span style=${{fontSize:6,color:"#6b7280",fontFamily:FM,lineHeight:1}}>◇ PI~</span>`
       : src==="metaculus"
-      ? html`<span style=${{fontSize:6,color:"#a78bfa",fontFamily:"monospace",lineHeight:1}}>△ Meta</span>`
+      ? html`<span style=${{fontSize:6,color:"#a78bfa",fontFamily:FM,lineHeight:1}}>△ Meta</span>`
       : src==="grok_estimate"
-      ? html`<span style=${{fontSize:6,color:"#38bdf8",fontFamily:"monospace",lineHeight:1}}>✦ Grok</span>`
+      ? html`<span style=${{fontSize:6,color:"#38bdf8",fontFamily:FM,lineHeight:1}}>✦ Grok</span>`
       : null;
     return html`
       <div style=${{display:"flex",flexDirection:"column",alignItems:"center",gap:1,width:44}}>
@@ -1607,12 +1528,12 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
           <div title=${c.win_prob_reasoning || c.win_prob_src || ""}>
             <${WinGauge} prob=${c.win_prob} src=${c.win_prob_src}/>
           </div>
-          ${c.win_prob == null ? html`<div style=${{width:44,flexShrink:0,textAlign:"center",fontSize:7,color:"#374151",fontFamily:"monospace",lineHeight:1.2}}>no %<br/>data</div>` : null}
+          ${c.win_prob == null ? html`<div style=${{width:44,flexShrink:0,textAlign:"center",fontSize:7,color:"#374151",fontFamily:FM,lineHeight:1.2}}>no %<br/>data</div>` : null}
 
           <div style=${{flex:"0 0 148px",minWidth:0}}>
-            <div style=${{fontSize:10,fontWeight:700,color:"#f0ebe0",fontFamily:"monospace",
+            <div style=${{fontSize:10,fontWeight:700,color:"#f0ebe0",fontFamily:FM,
               whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>${c.name}</div>
-            <div style=${{fontSize:7,color:pc,fontFamily:"monospace",marginTop:1}}>
+            <div style=${{fontSize:7,color:pc,fontFamily:FM,marginTop:1}}>
               ${c.party} · ${loc||"?"}
               <span style=${{color:"#374151",marginLeft:4}}>${srcLabel}</span>
             </div>
@@ -1620,13 +1541,13 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
 
           <div style=${{flex:1,minWidth:0}}>
             <div style=${{display:"flex",alignItems:"center",gap:5,flexWrap:"wrap"}}>
-              <span style=${{fontSize:7,fontFamily:"monospace",padding:"1px 6px",borderRadius:3,
+              <span style=${{fontSize:7,fontFamily:FM,padding:"1px 6px",borderRadius:3,
                 background:st.color+"18",color:st.color,border:"1px solid "+st.color+"40",
                 whiteSpace:"nowrap",letterSpacing:"0.05em"}}>${st.tag}</span>
               ${won && c.primary_pct ? html`
-                <span style=${{fontSize:7,color:"#4ade80",fontFamily:"monospace"}}>won ${c.primary_pct}%</span>` : null}
+                <span style=${{fontSize:7,color:"#4ade80",fontFamily:FM}}>won ${c.primary_pct}%</span>` : null}
             </div>
-            <div style=${{fontSize:7,color:"#4b5563",fontFamily:"monospace",marginTop:2,
+            <div style=${{fontSize:7,color:"#4b5563",fontFamily:FM,marginTop:2,
               whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>
               ${st.sub}${opp ? " · vs "+opp.slice(0,32)+(opp.length>32?"…":"") : ""}
             </div>
@@ -1637,7 +1558,7 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
         ${exp && html`
           <div style=${{padding:"6px 12px 8px 63px",background:"#0a0c10",
             borderLeft:"3px solid "+st.color+"20",
-            fontSize:8,color:"#6b7280",fontFamily:"monospace",lineHeight:1.6}}>
+            fontSize:8,color:"#6b7280",fontFamily:FM,lineHeight:1.6}}>
             ${c.description ? html`<div style=${{color:"#9ca3af",fontStyle:"italic",marginBottom:4}}>${c.description}</div>` : null}
             ${c.note||"No additional detail available."}
             ${c.website ? html`<br/><a href=${c.website} target="_blank"
@@ -1650,14 +1571,14 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
   const liveCount = allCands.filter(c => c.win_prob != null && c.win_prob_src).length;
 
   return html`
-    <div style=${{width:"100%",maxWidth:610}}>
+    <div style=${_SP}>
       <div style=${{display:"flex",justifyContent:"space-between",alignItems:"flex-start",
         marginBottom:8,flexWrap:"wrap",gap:6}}>
         <div>
-          <div style=${{fontSize:11,fontWeight:700,color:"#f0ebe0",fontFamily:"monospace"}}>
+          <div style=${{fontSize:11,fontWeight:700,color:"#f0ebe0",fontFamily:FM}}>
             2026 Anti-Intervention Candidates
           </div>
-          <div style=${{fontSize:8,color:"#4b5563",fontFamily:"monospace",marginTop:1}}>
+          <div style=${{fontSize:8,color:"#4b5563",fontFamily:FM,marginTop:1}}>
             ${allCands.length} candidates · ${wonCount} in/past primary · ${allCands.length-wonCount} upcoming
             ${liveCount>0 ? html` · <span style=${{color:"#4ade80"}}>◉ ${liveCount} live odds</span>` : null}
           </div>
@@ -1666,7 +1587,7 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
           ${filters.map(f => html`
             <button key=${f.k} onClick=${e=>{e.stopPropagation();setFilter(f.k)}}
               style=${{padding:"2px 7px",borderRadius:4,cursor:"pointer",
-                border:"1px solid #1e2230",fontFamily:"monospace",fontSize:7,
+                border:"1px solid #1e2230",fontFamily:FM,fontSize:7,
                 background:filter===f.k?"#1e2230":"transparent",
                 color:filter===f.k?"#a5b4fc":"#4b5563"}}>
               ${f.label}
@@ -1676,12 +1597,12 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
 
       <div style=${{background:"#0f1117",border:"1px solid #1a1d27",borderRadius:11,overflow:"hidden"}}>
         ${groups.length===0
-          ? html`<div style=${{padding:"18px",textAlign:"center",color:"#374151",fontFamily:"monospace",fontSize:8}}>
+          ? html`<div style=${{padding:"18px",textAlign:"center",color:"#374151",fontFamily:FM,fontSize:8}}>
               No candidates match this filter.</div>`
           : groups.map(g => html`
             <div key=${g.key}>
               <div style=${{padding:"4px 10px",background:"#090b0e",fontSize:7,
-                color:"#374151",fontFamily:"monospace",letterSpacing:"0.12em",
+                color:"#374151",fontFamily:FM,letterSpacing:"0.12em",
                 textTransform:"uppercase",borderBottom:"1px solid #0d1018"}}>
                 ${g.key}
                 <span style=${{color:"#1e2230",marginLeft:5}}>${g.cands.length} candidate${g.cands.length!==1?"s":""}</span>
@@ -1690,13 +1611,11 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData}) {
             </div>`)}
       </div>
 
-      <div style=${{marginTop:6,fontSize:7,color:"#374151",fontFamily:"monospace",lineHeight:1.7}}>
+      <div style=${{marginTop:6,fontSize:7,color:"#374151",fontFamily:FM,lineHeight:1.7}}>
         ◉ Poly = Polymarket · ◈ PI = PredictIt · ◇ PI~ = PredictIt proxy · △ Meta = Metaculus · ✦ Grok = Grok web estimate · no % data = no forecast found · TrackAIPAC/RLC = endorsing orgs
       </div>
     </div>`;
 }
-
-
 
 function App() {
   const [chamber,  setChamber]  = useState("house");
@@ -1707,7 +1626,6 @@ function App() {
 
   const {allMembers, bills, challengers, history, races, fecData, polyData, polyLive, polyUpdated, polyLoading, fetchedAt, status, loaded, descriptions} = useData();
 
-  // URL deep-link (mount only)
   useEffect(() => {
     const p = new URLSearchParams(window.location.search);
     if (p.get("chamber")==="senate") setChamber("senate");
@@ -1729,7 +1647,6 @@ function App() {
 
   const dotR      = chamber==="house" ? 4 : 6;
   const ch        = chamber==="house" ? "house" : "senate";
-  // members = all chamber members for legend counts
   const chMem     = allMembers.filter(m => m.chamber === ch);
   const selMember = selected ? allMembers.find(m => m.name === selected) : null;
   const sideR     = allMembers.filter(m=>m.antiArms&&m.party==="R"&&m.chamber===ch);
@@ -1739,7 +1656,7 @@ function App() {
 
   if (!loaded) return html`
     <div style=${{minHeight:"100vh",background:"#0a0c10",display:"flex",alignItems:"center",justifyContent:"center"}}>
-      <div style=${{textAlign:"center",fontFamily:"monospace",color:"#374151",fontSize:10}}>
+      <div style=${{textAlign:"center",fontFamily:FM,color:"#374151",fontSize:10}}>
         <div style=${{fontSize:22,marginBottom:10,opacity:.2}}>◈</div>
         ${status}
       </div>
@@ -1747,7 +1664,7 @@ function App() {
 
   if (loaded && allMembers.length===0) return html`
     <div style=${{minHeight:"100vh",background:"#0a0c10",display:"flex",alignItems:"center",justifyContent:"center",padding:24}}>
-      <div style=${{textAlign:"center",fontFamily:"monospace",maxWidth:420}}>
+      <div style=${{textAlign:"center",fontFamily:FM,maxWidth:420}}>
         <div style=${{fontSize:22,marginBottom:10,opacity:.2}}>◈</div>
         <div style=${{color:"#fbbf24",marginBottom:8,fontSize:11}}>data.json loaded but contains no members yet.</div>
         <div style=${{color:"#374151",fontSize:9,lineHeight:1.8}}>
@@ -1756,7 +1673,7 @@ function App() {
         </div>
         <button onClick=${()=>window.location.reload()}
           style=${{marginTop:14,padding:"6px 16px",borderRadius:7,border:"none",
-            background:"#fbbf24",color:"#0a0c10",fontFamily:"monospace",fontSize:10,
+            background:"#fbbf24",color:"#0a0c10",fontFamily:FM,fontSize:10,
             fontWeight:700,cursor:"pointer"}}>
           Reload page
         </button>
@@ -1767,21 +1684,21 @@ function App() {
     <div style=${{minHeight:"100vh",background:"#0a0c10",display:"flex",flexDirection:"column",alignItems:"center",padding:"18px 10px"}}>
 
       <div style=${{textAlign:"center",marginBottom:10}}>
-        <div style=${{fontSize:8,letterSpacing:"0.22em",textTransform:"uppercase",color:"#374151",fontFamily:"monospace",marginBottom:3}}>
+        <div style=${{fontSize:8,letterSpacing:"0.22em",textTransform:"uppercase",color:"#374151",fontFamily:FM,marginBottom:3}}>
           ANTI-ESTABLISHMENT CONGRESSIONAL TRACKER
         </div>
         <h1 style=${{fontSize:19,fontWeight:700,margin:"0 0 2px",letterSpacing:"-0.02em",color:"#f0ebe0"}}>
           Anti-Establishment Congressional Tracker
         </h1>
         <div style=${{fontSize:9,color:"#6b7280",display:"flex",gap:8,justifyContent:"center",flexWrap:"wrap",alignItems:"center"}}>
-          <span style=${{fontFamily:"monospace",color:"#6b7280",fontSize:8}}>${status}</span>
-          ${polyLoading ? html`<span style=${{fontFamily:"monospace",color:"#4ade80",fontSize:8}}>◉ fetching live odds…</span>` : null}
+          <span style=${{fontFamily:FM,color:"#6b7280",fontSize:8}}>${status}</span>
+          ${polyLoading ? html`<span style=${{fontFamily:FM,color:"#4ade80",fontSize:8}}>◉ fetching live odds…</span>` : null}
           ${!polyLoading && polyUpdated ? html`
-            <span style=${{fontFamily:"monospace",color:"#4ade80",fontSize:8,opacity:0.7}}
+            <span style=${{fontFamily:FM,color:"#4ade80",fontSize:8,opacity:0.7}}
               title=${"Polymarket live — " + Object.keys(polyLive||{}).length + " markets refreshed " + new Date(polyUpdated).toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"})}>
               · ◉ ${Object.keys(polyLive||{}).length} live odds · ${new Date(polyUpdated).toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"})}
-            </span>` : html`<span style=${{fontFamily:"monospace",color:"#374151",fontSize:8}}>◎ odds from cache</span>`}
-          ${fetchedAt?html`<span style=${{fontFamily:"monospace",color:"#374151",fontSize:8}}>
+            </span>` : html`<span style=${{fontFamily:FM,color:"#374151",fontSize:8}}>◎ odds from cache</span>`}
+          ${fetchedAt?html`<span style=${{fontFamily:FM,color:"#374151",fontSize:8}}>
             · ${new Date(fetchedAt).toLocaleString("en-US",{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})}
           </span>`:null}
         </div>
@@ -1791,13 +1708,13 @@ function App() {
       <div style=${{display:"flex",gap:2,background:"#161920",borderRadius:10,padding:3,marginBottom:9,border:"1px solid #1e2230"}}>
         ${["house","senate"].map(c=>html`
           <button key=${c} onClick=${()=>{setChamber(c);setSelected(null);setShowTimeline(false);}}
-            style=${{padding:"5px 15px",borderRadius:8,border:"none",cursor:"pointer",fontFamily:"monospace",fontSize:10,
+            style=${{padding:"5px 15px",borderRadius:8,border:"none",cursor:"pointer",fontFamily:FM,fontSize:10,
               letterSpacing:"0.08em",textTransform:"uppercase",fontWeight:600,
               background:chamber===c?"#f0ebe0":"transparent",color:chamber===c?"#0a0c10":"#6b7280"}}>
             ${c==="senate"?"Senate · 100":"House · 435"}
           </button>`)}
         <button onClick=${()=>setShowTimeline(v=>!v)}
-          style=${{padding:"5px 15px",borderRadius:8,border:"none",cursor:"pointer",fontFamily:"monospace",fontSize:10,
+          style=${{padding:"5px 15px",borderRadius:8,border:"none",cursor:"pointer",fontFamily:FM,fontSize:10,
             letterSpacing:"0.08em",textTransform:"uppercase",fontWeight:600,
             background:showTimeline?"#1a0a2e":"transparent",
             color:showTimeline?"#a5b4fc":"#6b7280",
@@ -1814,12 +1731,12 @@ function App() {
           {c:"#818cf8", bg:"rgba(129,140,248,.1)", l:"Anti-Intv. D",  n:chMem.filter(m=>m.antiArms&&m.party!=="R").length},
           {c:"#1e40af", bg:"rgba(30,64,175,.1)",   l:"Dem",           n:chMem.filter(m=>m.party==="D"&&!m.antiArms).length},
         ].map(b=>html`
-          <span key=${b.l} style=${{display:"inline-flex",alignItems:"center",gap:4,background:b.bg,border:"1px solid "+b.c+"30",borderRadius:5,padding:"2px 7px",fontSize:9,fontFamily:"monospace",color:b.c}}>
+          <span key=${b.l} style=${{display:"inline-flex",alignItems:"center",gap:4,background:b.bg,border:"1px solid "+b.c+"30",borderRadius:5,padding:"2px 7px",fontSize:9,fontFamily:FM,color:b.c}}>
             <span style=${{width:5,height:5,borderRadius:"50%",background:b.c,display:"inline-block"}}/>
             ${b.l+" "+b.n}
           </span>`)}
         <button onClick=${()=>setShowAnti(v=>!v)}
-          style=${{padding:"2px 7px",borderRadius:5,border:"1px solid #7c3aed33",background:showAnti?"#7c3aed1a":"transparent",color:showAnti?"#c084fc":"#4b5563",fontFamily:"monospace",fontSize:9,cursor:"pointer"}}>
+          style=${{padding:"2px 7px",borderRadius:5,border:"1px solid #7c3aed33",background:showAnti?"#7c3aed1a":"transparent",color:showAnti?"#c084fc":"#4b5563",fontFamily:FM,fontSize:9,cursor:"pointer"}}>
           ${showAnti?"Show all":"Highlight anti-intervention"}
         </button>
 
@@ -1843,7 +1760,7 @@ function App() {
           <!-- Hemicycle SVG -->
           <div style=${{background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,overflow:"hidden",width:"100%",maxWidth:610}}>
             <svg class="hemi" width=${svgW} height=${svgH} viewBox=${"0 0 "+svgW+" "+svgH} style=${{display:"block",width:"100%",height:"auto"}}>
-              ${(chamber==="senate"?[80,108,136,164]:[52,74,96,118,140,162,184,206,228]).map((r,i)=>
+              ${Array.from({length:chamber==="senate"?4:9},(_,i)=>(chamber==="senate"?80:52)+i*(chamber==="senate"?28:22)).map((r,i)=>
                 html`<path key=${i} d=${"M "+(cx-r)+" "+cy+" A "+r+" "+r+" 0 0 1 "+(cx+r)+" "+cy} fill="none" stroke="#111419" stroke-width="1"/>`
               )}
               ${positions.map((pos,i)=>{
@@ -1863,12 +1780,22 @@ function App() {
                     fill=${dimDot?"#111419":color} opacity=${dimDot?0.12:1}
                     stroke=${isSel?"#fff":"none"} stroke-width="1.5"
                     style=${{cursor:"pointer", transition:"r 0.1s"}}
-                    onClick=${()=>setSelected(selected===pos.name?null:pos.name)}
+                    onClick=${()=>{setSelected(selected===pos.name?null:pos.name);setHovered(pos.name);}}
                     onMouseEnter=${()=>setHovered(pos.name)}
-                    onMouseLeave=${()=>setHovered(null)}/>
+                    onMouseLeave=${()=>setHovered(null)}
+                    onTouchStart=${(e)=>{e.preventDefault();setHovered(pos.name);setSelected(selected===pos.name?null:pos.name);}}
+                    onTouchEnd=${()=>setTimeout(()=>setHovered(null),1200)}/>
+                  ${isHov?html`<g pointer-events='none'>
+                    <rect x=${pos._x+7} y=${pos._y-10} width=${Math.min(pos.name.length*4.6+10,130)} height='13' rx='3'
+                      fill='#0a0c10' opacity='0.94' stroke='#1e2230' stroke-width='0.5'/>
+                    <text x=${pos._x+11} y=${pos._y-3.5} font-size='7' font-family='monospace'
+                      fill='#e5e7eb' dominant-baseline='middle'>${pos.name}</text>
+                  </g>`:null}
                 </g>`;
               })}
-              <line x1=${cx} y1=${cy} x2=${cx} y2=${cy-(chamber==="senate"?164:228)-16} stroke="#1e2230" stroke-width="1" stroke-dasharray="3,3"/>
+              <line x1=${cx} y1=${cy} x2=${cx} y2=${cy-(chamber==="senate"?164:228)-20} stroke="#1e2230" stroke-width="1" stroke-dasharray="3,3"/>
+              <rect x=${cx-10} y=${cy-(chamber==="senate"?164:228)-29} width="20" height="11" rx="3" fill="#0e1016" stroke="#1e2230" stroke-width="0.5"/>
+              <text x=${cx} y=${cy-(chamber==="senate"?164:228)-23} font-size="6" font-family="monospace" fill="#4b5563" text-anchor="middle" dominant-baseline="middle">${chamber==="senate"?"51":"218"}</text>
               <text x=${cx-100} y="11" fill="#991b1b" font-size="7" font-family="monospace" text-anchor="middle" opacity=".5">R</text>
               <text x=${cx-40}  y="11" fill="#e879f9" font-size="6" font-family="monospace" text-anchor="middle" opacity=".8">Anti-R</text>
               <text x=${cx+40}  y="11" fill="#818cf8" font-size="6" font-family="monospace" text-anchor="middle" opacity=".8">Anti-D</text>
@@ -1884,22 +1811,22 @@ function App() {
           </div>
 
           <!-- Progress bars -->
-          <div style=${{width:"100%",maxWidth:610}}>
+          <div style=${_SP}>
             <${ProgressBars} chamber=${chamber} members=${chMem} allMembers=${allMembers} challengers=${challengers} racesData=${races} polyData=${polyData}/>
           </div>
 
           <!-- Legislation -->
-          <div style=${{width:"100%",maxWidth:610}}>
+          <div style=${_SP}>
             <${BillsPanel} bills=${bills}/>
           </div>
 
           <!-- History -->
-          <div style=${{width:"100%",maxWidth:610}}>
+          <div style=${_SP}>
             <${HistoryTimeline} history=${history}/>
           </div>
 
           <!-- Find My Rep -->
-          <div style=${{width:"100%",maxWidth:610}}>
+          <div style=${_SP}>
             <${FindMyRep} members=${chMem} onHighlight=${setSelected}/>
           </div>
         </div>
@@ -1913,7 +1840,7 @@ function App() {
 
       `}
 
-      <div style=${{fontSize:8,color:"#1a1d27",marginTop:14,fontFamily:"monospace",textAlign:"center",maxWidth:800,lineHeight:1.8}}>
+      <div style=${{fontSize:8,color:"#1a1d27",marginTop:14,fontFamily:FM,textAlign:"center",maxWidth:800,lineHeight:1.8}}>
         MEMBERS: TRACKAIPAC.COM (D/I) + RLC LIBERTY INDEX (R) · VOTES: CONGRESS.GOV HOUSE-VOTE API + CLERK XML
         <br/>FINANCE: OPENFEC · ODDS: POLYMARKET · REPS: GOOGLE CIVIC · P2P: GUN.JS · REFRESH: 4H GITHUB ACTIONS
         <br/><a href="https://github.com/LukeRDavis/Anti-Establishment-Congressional-Tracker" target="_blank" style=${{color:"#374151"}}>github.com/LukeRDavis/Anti-Establishment-Congressional-Tracker</a>
@@ -1922,7 +1849,6 @@ function App() {
 }
 
 render(html`<${App}/>`, document.getElementById("app"));
-
 
 </script>
 </body>
