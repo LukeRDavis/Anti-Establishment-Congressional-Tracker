@@ -1,7 +1,7 @@
 {
   "meta": {
-    "fetched_at": "2026-03-10T05:16:56.022372+00:00",
-    "trackaipac_scraped": "2026-03-10T05:16:56.022392+00:00",
+    "fetched_at": "2026-03-10T08:58:21.040114+00:00",
+    "trackaipac_scraped": "2026-03-10T08:58:21.040130+00:00",
     "member_count": 532,
     "anti_intervention_count": 38,
     "bill_count": 0,
@@ -11648,7 +11648,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-10T05:14:30.855679+00:00"
+      "fetched_at": "2026-03-10T08:55:47.752534+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11661,7 +11661,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-10T05:14:38.561819+00:00"
+      "fetched_at": "2026-03-10T08:55:57.595347+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11674,7 +11674,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-10T05:14:42.732786+00:00"
+      "fetched_at": "2026-03-10T08:56:03.132892+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11687,7 +11687,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-10T05:14:43.241792+00:00"
+      "fetched_at": "2026-03-10T08:56:03.750206+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11700,7 +11700,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-10T05:14:45.449267+00:00"
+      "fetched_at": "2026-03-10T08:56:06.211581+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11713,7 +11713,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-10T05:14:49.154518+00:00"
+      "fetched_at": "2026-03-10T08:56:11.907853+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.999,
@@ -11726,98 +11726,98 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-10T05:14:50.954675+00:00"
+      "fetched_at": "2026-03-10T08:56:14.507592+00:00"
     },
     "Abdul el-Sayed": {
       "prob": 0.21,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Michigan Democratic Senate nomination? \u2192 Abdul El-Sayed",
       "url": "https://www.predictit.org/markets/detail/8167/Who-will-win-the-2026-Michigan-Democratic-Senate-nomination",
-      "fetched_at": "2026-03-10T05:14:57.682457+00:00"
+      "fetched_at": "2026-03-10T08:56:22.709566+00:00"
     },
     "Ed Markey": {
       "prob": 0.75,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ed Markey",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-03-10T05:14:57.751259+00:00"
+      "fetched_at": "2026-03-10T08:56:22.779708+00:00"
     },
     "Ayanna Pressley": {
       "prob": 0.01,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ayanna Pressley",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-03-10T05:14:57.751323+00:00"
+      "fetched_at": "2026-03-10T08:56:22.779765+00:00"
     },
     "Jack Schlossberg": {
       "prob": 0.24,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-12 House primary? \u2192 Jack Schlossberg",
       "url": "https://www.predictit.org/markets/detail/8364/Who-will-win-the-Democratic-nomination-in-the-NY-12-House-primary",
-      "fetched_at": "2026-03-10T05:14:57.756610+00:00"
+      "fetched_at": "2026-03-10T08:56:22.785178+00:00"
     },
     "Brandon Herrera": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Republican nomination in the TX-23 House primary? \u2192 Brandon Herrera",
       "url": "https://www.predictit.org/markets/detail/8432/Who-will-win-the-Republican-nomination-in-the-TX-23-House-primary",
-      "fetched_at": "2026-03-10T05:14:57.808967+00:00"
+      "fetched_at": "2026-03-10T08:56:22.839466+00:00"
     },
     "Robert Peters": {
       "prob": 0.58,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the IL-02 House primary? \u2192 Robert Peters",
       "url": "https://www.predictit.org/markets/detail/8434/Who-will-win-the-Democratic-nomination-in-the-IL-02-House-primary",
-      "fetched_at": "2026-03-10T05:14:57.812969+00:00"
+      "fetched_at": "2026-03-10T08:56:22.843514+00:00"
     },
     "Joey Ruzevich": {
       "prob": 0.3,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the IL-06 House primary? \u2192 Joey Ruzevich",
       "url": "https://www.predictit.org/markets/detail/8435/Who-will-win-the-Democratic-nomination-in-the-IL-06-House-primary",
-      "fetched_at": "2026-03-10T05:14:57.814660+00:00"
+      "fetched_at": "2026-03-10T08:56:22.845220+00:00"
     },
     "Junaid Ahmed": {
       "prob": 0.4,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the IL-08 House primary? \u2192 Junaid Ahmed",
       "url": "https://www.predictit.org/markets/detail/8437/Who-will-win-the-Democratic-nomination-in-the-IL-08-House-primary",
-      "fetched_at": "2026-03-10T05:14:57.819293+00:00"
+      "fetched_at": "2026-03-10T08:56:22.849971+00:00"
     },
     "Daniel Biss": {
       "prob": 0.83,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the IL-09 House primary? \u2192 Daniel Biss",
       "url": "https://www.predictit.org/markets/detail/8438/Who-will-win-the-Democratic-nomination-in-the-IL-09-House-primary",
-      "fetched_at": "2026-03-10T05:14:57.821685+00:00"
+      "fetched_at": "2026-03-10T08:56:22.852513+00:00"
     },
     "Kat Abughazaleh": {
       "prob": 0.33,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the IL-09 House primary? \u2192 Kat Abughazaleh",
       "url": "https://www.predictit.org/markets/detail/8438/Who-will-win-the-Democratic-nomination-in-the-IL-09-House-primary",
-      "fetched_at": "2026-03-10T05:14:57.821725+00:00"
+      "fetched_at": "2026-03-10T08:56:22.852557+00:00"
     },
     "Thomas Massie": {
       "prob": 0.65,
       "src": "predictit_contract",
       "question": "Who will win the Republican nomination in the KY-04 House primary? \u2192 Thomas Massie",
       "url": "https://www.predictit.org/markets/detail/8487/Who-will-win-the-Republican-nomination-in-the-KY-04-House-primary",
-      "fetched_at": "2026-03-10T05:14:57.862691+00:00"
+      "fetched_at": "2026-03-10T08:56:22.894395+00:00"
     },
     "Congressman Thomas Massie": {
       "prob": 0.65,
       "src": "predictit_contract",
       "question": "Who will win the Republican nomination in the KY-04 House primary? \u2192 Thomas Massie",
       "url": "https://www.predictit.org/markets/detail/8487/Who-will-win-the-Republican-nomination-in-the-KY-04-House-primary",
-      "fetched_at": "2026-03-10T05:14:57.863233+00:00"
+      "fetched_at": "2026-03-10T08:56:22.894945+00:00"
     },
     "Claire Valdez": {
       "prob": 0.82,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-07 House primary? \u2192 Claire Valdez",
       "url": "https://www.predictit.org/markets/detail/8534/Who-will-win-the-Democratic-nomination-in-the-NY-07-House-primary",
-      "fetched_at": "2026-03-10T05:14:57.899011+00:00"
+      "fetched_at": "2026-03-10T08:56:22.931675+00:00"
     }
   },
   "trackaipac_congress": {
@@ -22516,7 +22516,7 @@
     "James Talarico|TX|senate": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early life and education Family background and childhood Academic and early professional influences Pre-political career Teaching in public schools Seminarian training and religious studies Political career 2018 election to Texas House Re-elections and legislative tenure (2019\u20132025) Committee roles and bill sponsorships Political positions Education and school funding Religion, faith, and opposition to Christian nationalism Immigration, guns, and other p.",
       "cook_rating": "Likely Republican",
-      "fetched_at": "2026-03-09T05:23:04.234382+00:00",
+      "fetched_at": "2026-03-10T08:55:16.117941+00:00",
       "_source": "grokipedia",
       "person_slug": "James_Talarico",
       "race_slug": "2026_United_States_Senate_election_in_Texas"
@@ -22526,7 +22526,7 @@
       "primary_result": "WON",
       "general_opponent": "a challenge from Ed Gallrein",
       "primary_opponent": "Ed Gallrein",
-      "fetched_at": "2026-03-09T05:23:04.299079+00:00",
+      "fetched_at": "2026-03-10T08:55:16.396990+00:00",
       "_source": "grokipedia",
       "person_slug": "Thomas_Massie",
       "race_slug": "2026_Kentuckys_4th_congressional_district_election"
