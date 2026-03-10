@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-03-10T17:02:22.937331+00:00",
+  "_last_scraped": "2026-03-10T20:42:32.223752+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -136,6 +136,22 @@
       "website": "https://www.saikat.us/",
       "source": "manual+trackaipac",
       "note": "Endorsed by TrackAIPAC / Citizens Against AIPAC Corruption. Rejects AIPAC contributions.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Sean Dougherty",
+      "state": "CA",
+      "district": 19,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "2026-06-02",
+      "website": "https://seanforcongress.org/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
       "incumbentParty": ""
     },
