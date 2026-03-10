@@ -1,12 +1,12 @@
 {
   "meta": {
-    "fetched_at": "2026-03-09T20:47:36.925402+00:00",
-    "trackaipac_scraped": "2026-03-09T20:47:36.925418+00:00",
+    "fetched_at": "2026-03-10T02:43:15.457789+00:00",
+    "trackaipac_scraped": "2026-03-10T02:43:15.457805+00:00",
     "member_count": 532,
     "anti_intervention_count": 38,
     "bill_count": 0,
     "challenger_count": 79,
-    "history_events": 200,
+    "history_events": 238,
     "grok_enriched": 0,
     "odds_covered": 20,
     "version": 8,
@@ -3036,32 +3036,10 @@
     },
     {
       "bioguide_id": "",
-      "name": "Rich McCormick",
-      "party": "R",
-      "state": "GA",
-      "district": 6,
-      "chamber": "house",
-      "antiArms": false,
-      "antiArmsLevel": null,
-      "rlc_score": null,
-      "lobby_total": 364606,
-      "pacs": [
-        "AIPAC",
-        "AMP",
-        "RJC",
-        "USI"
-      ],
-      "ps": "INCUMBENT",
-      "bills": [],
-      "votes": [],
-      "note": ""
-    },
-    {
-      "bioguide_id": "",
       "name": "Lucy McBath",
       "party": "D",
       "state": "GA",
-      "district": 7,
+      "district": 6,
       "chamber": "house",
       "antiArms": false,
       "antiArmsLevel": null,
@@ -3073,6 +3051,28 @@
         "JAC",
         "MDACC",
         "SUNPAC"
+      ],
+      "ps": "INCUMBENT",
+      "bills": [],
+      "votes": [],
+      "note": ""
+    },
+    {
+      "bioguide_id": "",
+      "name": "Rich McCormick",
+      "party": "R",
+      "state": "GA",
+      "district": 7,
+      "chamber": "house",
+      "antiArms": false,
+      "antiArmsLevel": null,
+      "rlc_score": null,
+      "lobby_total": 364606,
+      "pacs": [
+        "AIPAC",
+        "AMP",
+        "RJC",
+        "USI"
       ],
       "ps": "INCUMBENT",
       "bills": [],
@@ -11648,7 +11648,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-09T20:45:01.025767+00:00"
+      "fetched_at": "2026-03-10T02:40:49.721995+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11661,7 +11661,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-09T20:45:11.414944+00:00"
+      "fetched_at": "2026-03-10T02:40:57.815076+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11674,7 +11674,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-09T20:45:17.141588+00:00"
+      "fetched_at": "2026-03-10T02:41:02.146350+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11687,7 +11687,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-09T20:45:17.802051+00:00"
+      "fetched_at": "2026-03-10T02:41:02.738411+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11700,7 +11700,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-09T20:45:21.215794+00:00"
+      "fetched_at": "2026-03-10T02:41:04.802404+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11713,7 +11713,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-09T20:45:27.066615+00:00"
+      "fetched_at": "2026-03-10T02:41:08.800935+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.999,
@@ -11726,98 +11726,98 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-09T20:45:30.098686+00:00"
+      "fetched_at": "2026-03-10T02:41:10.823312+00:00"
     },
     "Abdul el-Sayed": {
       "prob": 0.21,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Michigan Democratic Senate nomination? \u2192 Abdul El-Sayed",
       "url": "https://www.predictit.org/markets/detail/8167/Who-will-win-the-2026-Michigan-Democratic-Senate-nomination",
-      "fetched_at": "2026-03-09T20:45:38.564998+00:00"
+      "fetched_at": "2026-03-10T02:41:17.055537+00:00"
     },
     "Ed Markey": {
       "prob": 0.75,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ed Markey",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-03-09T20:45:38.633774+00:00"
+      "fetched_at": "2026-03-10T02:41:17.124004+00:00"
     },
     "Ayanna Pressley": {
       "prob": 0.01,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ayanna Pressley",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-03-09T20:45:38.633819+00:00"
+      "fetched_at": "2026-03-10T02:41:17.124050+00:00"
     },
     "Jack Schlossberg": {
       "prob": 0.24,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-12 House primary? \u2192 Jack Schlossberg",
       "url": "https://www.predictit.org/markets/detail/8364/Who-will-win-the-Democratic-nomination-in-the-NY-12-House-primary",
-      "fetched_at": "2026-03-09T20:45:38.639122+00:00"
+      "fetched_at": "2026-03-10T02:41:17.129288+00:00"
     },
     "Brandon Herrera": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Republican nomination in the TX-23 House primary? \u2192 Brandon Herrera",
       "url": "https://www.predictit.org/markets/detail/8432/Who-will-win-the-Republican-nomination-in-the-TX-23-House-primary",
-      "fetched_at": "2026-03-09T20:45:38.691712+00:00"
+      "fetched_at": "2026-03-10T02:41:17.181237+00:00"
     },
     "Robert Peters": {
       "prob": 0.58,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the IL-02 House primary? \u2192 Robert Peters",
       "url": "https://www.predictit.org/markets/detail/8434/Who-will-win-the-Democratic-nomination-in-the-IL-02-House-primary",
-      "fetched_at": "2026-03-09T20:45:38.695691+00:00"
+      "fetched_at": "2026-03-10T02:41:17.185150+00:00"
     },
     "Joey Ruzevich": {
-      "prob": 0.31,
+      "prob": 0.3,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the IL-06 House primary? \u2192 Joey Ruzevich",
       "url": "https://www.predictit.org/markets/detail/8435/Who-will-win-the-Democratic-nomination-in-the-IL-06-House-primary",
-      "fetched_at": "2026-03-09T20:45:38.697363+00:00"
+      "fetched_at": "2026-03-10T02:41:17.186806+00:00"
     },
     "Junaid Ahmed": {
       "prob": 0.4,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the IL-08 House primary? \u2192 Junaid Ahmed",
       "url": "https://www.predictit.org/markets/detail/8437/Who-will-win-the-Democratic-nomination-in-the-IL-08-House-primary",
-      "fetched_at": "2026-03-09T20:45:38.701993+00:00"
+      "fetched_at": "2026-03-10T02:41:17.191390+00:00"
     },
     "Daniel Biss": {
-      "prob": 0.71,
+      "prob": 0.83,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the IL-09 House primary? \u2192 Daniel Biss",
       "url": "https://www.predictit.org/markets/detail/8438/Who-will-win-the-Democratic-nomination-in-the-IL-09-House-primary",
-      "fetched_at": "2026-03-09T20:45:38.704395+00:00"
+      "fetched_at": "2026-03-10T02:41:17.193767+00:00"
     },
     "Kat Abughazaleh": {
       "prob": 0.33,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the IL-09 House primary? \u2192 Kat Abughazaleh",
       "url": "https://www.predictit.org/markets/detail/8438/Who-will-win-the-Democratic-nomination-in-the-IL-09-House-primary",
-      "fetched_at": "2026-03-09T20:45:38.704434+00:00"
+      "fetched_at": "2026-03-10T02:41:17.193807+00:00"
     },
     "Thomas Massie": {
       "prob": 0.65,
       "src": "predictit_contract",
       "question": "Who will win the Republican nomination in the KY-04 House primary? \u2192 Thomas Massie",
       "url": "https://www.predictit.org/markets/detail/8487/Who-will-win-the-Republican-nomination-in-the-KY-04-House-primary",
-      "fetched_at": "2026-03-09T20:45:38.745589+00:00"
+      "fetched_at": "2026-03-10T02:41:17.234328+00:00"
     },
     "Congressman Thomas Massie": {
       "prob": 0.65,
       "src": "predictit_contract",
       "question": "Who will win the Republican nomination in the KY-04 House primary? \u2192 Thomas Massie",
       "url": "https://www.predictit.org/markets/detail/8487/Who-will-win-the-Republican-nomination-in-the-KY-04-House-primary",
-      "fetched_at": "2026-03-09T20:45:38.746115+00:00"
+      "fetched_at": "2026-03-10T02:41:17.234853+00:00"
     },
     "Claire Valdez": {
       "prob": 0.82,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-07 House primary? \u2192 Claire Valdez",
       "url": "https://www.predictit.org/markets/detail/8534/Who-will-win-the-Democratic-nomination-in-the-NY-07-House-primary",
-      "fetched_at": "2026-03-09T20:45:38.781862+00:00"
+      "fetched_at": "2026-03-10T02:41:17.270353+00:00"
     }
   },
   "trackaipac_congress": {
@@ -13998,26 +13998,10 @@
       ],
       "note": ""
     },
-    "rich mccormick": {
-      "name": "Rich McCormick",
-      "state": "GA",
-      "district": 6,
-      "party": "R",
-      "chamber": "house",
-      "approved": false,
-      "lobby_total": 364606,
-      "pacs": [
-        "AIPAC",
-        "AMP",
-        "RJC",
-        "USI"
-      ],
-      "note": ""
-    },
     "lucy mcbath": {
       "name": "Lucy McBath",
       "state": "GA",
-      "district": 7,
+      "district": 6,
       "party": "D",
       "chamber": "house",
       "approved": false,
@@ -14028,6 +14012,22 @@
         "JAC",
         "MDACC",
         "SUNPAC"
+      ],
+      "note": ""
+    },
+    "rich mccormick": {
+      "name": "Rich McCormick",
+      "state": "GA",
+      "district": 7,
+      "party": "R",
+      "chamber": "house",
+      "approved": false,
+      "lobby_total": 364606,
+      "pacs": [
+        "AIPAC",
+        "AMP",
+        "RJC",
+        "USI"
       ],
       "note": ""
     },
