@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-03-10T13:18:59.160614+00:00",
+  "_last_scraped": "2026-03-10T17:02:22.937331+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -305,6 +305,22 @@
       "website": "",
       "source": "rlc_endorsed",
       "note": "Endorsed by Republican Liberty Caucus for Florida&#8217;s 10th Congressional District\" >",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Case Norton",
+      "state": "GA",
+      "district": 7,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "2026-05-19",
+      "website": "https://www.case4congress.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
       "incumbentParty": ""
     },
