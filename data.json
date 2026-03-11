@@ -1,12 +1,12 @@
 {
   "meta": {
-    "fetched_at": "2026-03-10T20:45:53.251698+00:00",
-    "trackaipac_scraped": "2026-03-10T20:45:53.251717+00:00",
+    "fetched_at": "2026-03-11T02:42:26.256069+00:00",
+    "trackaipac_scraped": "2026-03-11T02:42:26.256083+00:00",
     "member_count": 532,
     "anti_intervention_count": 38,
     "bill_count": 0,
     "challenger_count": 81,
-    "history_events": 238,
+    "history_events": 276,
     "grok_enriched": 0,
     "odds_covered": 19,
     "version": 8,
@@ -11650,7 +11650,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-10T20:43:19.296005+00:00"
+      "fetched_at": "2026-03-11T02:39:53.614554+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11663,7 +11663,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-10T20:43:28.006816+00:00"
+      "fetched_at": "2026-03-11T02:40:02.243686+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11676,7 +11676,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-10T20:43:33.054933+00:00"
+      "fetched_at": "2026-03-11T02:40:07.446997+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11689,7 +11689,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-10T20:43:33.663009+00:00"
+      "fetched_at": "2026-03-11T02:40:08.066067+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11702,7 +11702,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-10T20:43:36.415523+00:00"
+      "fetched_at": "2026-03-11T02:40:10.844075+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11715,7 +11715,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-10T20:43:41.269394+00:00"
+      "fetched_at": "2026-03-11T02:40:14.801005+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.999,
@@ -11728,91 +11728,91 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-03-10T20:43:43.523074+00:00"
+      "fetched_at": "2026-03-11T02:40:17.013004+00:00"
     },
     "Abdul el-Sayed": {
       "prob": 0.21,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Michigan Democratic Senate nomination? \u2192 Abdul El-Sayed",
       "url": "https://www.predictit.org/markets/detail/8167/Who-will-win-the-2026-Michigan-Democratic-Senate-nomination",
-      "fetched_at": "2026-03-10T20:43:51.320934+00:00"
+      "fetched_at": "2026-03-11T02:40:24.310653+00:00"
     },
     "Ed Markey": {
       "prob": 0.75,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ed Markey",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-03-10T20:43:51.391266+00:00"
+      "fetched_at": "2026-03-11T02:40:24.381102+00:00"
     },
     "Ayanna Pressley": {
       "prob": 0.01,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ayanna Pressley",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-03-10T20:43:51.391311+00:00"
+      "fetched_at": "2026-03-11T02:40:24.381161+00:00"
     },
     "Jack Schlossberg": {
       "prob": 0.26,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-12 House primary? \u2192 Jack Schlossberg",
       "url": "https://www.predictit.org/markets/detail/8364/Who-will-win-the-Democratic-nomination-in-the-NY-12-House-primary",
-      "fetched_at": "2026-03-10T20:43:51.396775+00:00"
+      "fetched_at": "2026-03-11T02:40:24.386614+00:00"
     },
     "Robert Peters": {
       "prob": 0.57,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the IL-02 House primary? \u2192 Robert Peters",
       "url": "https://www.predictit.org/markets/detail/8434/Who-will-win-the-Democratic-nomination-in-the-IL-02-House-primary",
-      "fetched_at": "2026-03-10T20:43:51.452876+00:00"
+      "fetched_at": "2026-03-11T02:40:24.442808+00:00"
     },
     "Joey Ruzevich": {
       "prob": 0.3,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the IL-06 House primary? \u2192 Joey Ruzevich",
       "url": "https://www.predictit.org/markets/detail/8435/Who-will-win-the-Democratic-nomination-in-the-IL-06-House-primary",
-      "fetched_at": "2026-03-10T20:43:51.454574+00:00"
+      "fetched_at": "2026-03-11T02:40:24.444520+00:00"
     },
     "Junaid Ahmed": {
-      "prob": 0.4,
+      "prob": 0.39,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the IL-08 House primary? \u2192 Junaid Ahmed",
       "url": "https://www.predictit.org/markets/detail/8437/Who-will-win-the-Democratic-nomination-in-the-IL-08-House-primary",
-      "fetched_at": "2026-03-10T20:43:51.459350+00:00"
+      "fetched_at": "2026-03-11T02:40:24.449316+00:00"
     },
     "Daniel Biss": {
       "prob": 0.83,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the IL-09 House primary? \u2192 Daniel Biss",
       "url": "https://www.predictit.org/markets/detail/8438/Who-will-win-the-Democratic-nomination-in-the-IL-09-House-primary",
-      "fetched_at": "2026-03-10T20:43:51.461811+00:00"
+      "fetched_at": "2026-03-11T02:40:24.451782+00:00"
     },
     "Kat Abughazaleh": {
-      "prob": 0.33,
+      "prob": 0.32,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the IL-09 House primary? \u2192 Kat Abughazaleh",
       "url": "https://www.predictit.org/markets/detail/8438/Who-will-win-the-Democratic-nomination-in-the-IL-09-House-primary",
-      "fetched_at": "2026-03-10T20:43:51.461851+00:00"
+      "fetched_at": "2026-03-11T02:40:24.451822+00:00"
     },
     "Thomas Massie": {
-      "prob": 0.65,
+      "prob": 0.63,
       "src": "predictit_contract",
       "question": "Who will win the Republican nomination in the KY-04 House primary? \u2192 Thomas Massie",
       "url": "https://www.predictit.org/markets/detail/8487/Who-will-win-the-Republican-nomination-in-the-KY-04-House-primary",
-      "fetched_at": "2026-03-10T20:43:51.504211+00:00"
+      "fetched_at": "2026-03-11T02:40:24.494141+00:00"
     },
     "Congressman Thomas Massie": {
-      "prob": 0.65,
+      "prob": 0.63,
       "src": "predictit_contract",
       "question": "Who will win the Republican nomination in the KY-04 House primary? \u2192 Thomas Massie",
       "url": "https://www.predictit.org/markets/detail/8487/Who-will-win-the-Republican-nomination-in-the-KY-04-House-primary",
-      "fetched_at": "2026-03-10T20:43:51.504779+00:00"
+      "fetched_at": "2026-03-11T02:40:24.494717+00:00"
     },
     "Claire Valdez": {
       "prob": 0.82,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-07 House primary? \u2192 Claire Valdez",
       "url": "https://www.predictit.org/markets/detail/8534/Who-will-win-the-Democratic-nomination-in-the-NY-07-House-primary",
-      "fetched_at": "2026-03-10T20:43:51.541749+00:00"
+      "fetched_at": "2026-03-11T02:40:24.531758+00:00"
     }
   },
   "trackaipac_congress": {
@@ -21475,7 +21475,7 @@
       "general_date": "2026-11-03",
       "general_opponent": "TBD (D)",
       "cook_rating": "Solid Republican (general)",
-      "win_prob": 0.65,
+      "win_prob": 0.63,
       "impact_if_wins": "Retains 1 hard-R anti-intervention vote (most consistent in Congress)",
       "impact_if_loses": "-1 hard-R (Gallrein would vote pro-arms with Trump)",
       "note": "Trump endorsed Gallrein Oct 2025. Massie claims +17 lead in own internal polling. Rand Paul campaigning with him. Cook: Solid R general. Primary May 19.",
@@ -22560,196 +22560,196 @@
     },
     "Greg Casar|TX|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Background Early life and family origins Education and formative influences Pre-political career Role at Workers Defense Project Advocacy and organizing efforts Austin City Council tenure Elections and political rise Legislative record and initiatives Criticisms and local controversies U.S.",
-      "fetched_at": "2026-03-09T20:44:31.728445+00:00",
+      "fetched_at": "2026-03-11T02:39:28.275122+00:00",
       "_source": "grokipedia",
       "person_slug": "Greg_Casar",
       "race_slug": "2026_Texas_37th_congressional_district_election"
     },
     "Valerie Foushee|NC|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Personal Background Early life and family Education Pre-political career State Legislative Career North Carolina House of Representatives North Carolina Senate Key committees and leadership roles U.S.",
-      "fetched_at": "2026-03-09T20:44:31.523059+00:00",
+      "fetched_at": "2026-03-11T02:39:28.261567+00:00",
       "_source": "grokipedia",
       "person_slug": "Valerie_Foushee",
       "race_slug": "2026_North_Carolinas_4th_congressional_district_election"
     },
     "Brandon Herrera|TX|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early Life Childhood and Education Initial Firearms Interest YouTube Career Launch of The AK Guy Channel Growth and Milestones Content Creation Firearms Education and Analysis Custom Builds and Innovations Public Persona Humor and Commentary Style Controversies in Media Political Activities 2024 Congressional Campaign 2026 Election Bid Advocacy and Influence Second Amendment Positions Broader Cultural Impact Reception Media Coverage Public and Political .",
-      "fetched_at": "2026-03-09T20:44:31.662017+00:00",
+      "fetched_at": "2026-03-11T02:39:28.251677+00:00",
       "_source": "grokipedia",
       "person_slug": "Brandon_Herrera",
       "race_slug": "2026_Texas_23th_congressional_district_election"
     },
     "Ilhan Omar|MN|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early Life and Background Childhood in Somalia Immigration to the United States Personal Life Family and Relationships Religious and Cultural Identity Education and Pre-Political Career Formal Education Early Professional Roles State Legislative Career 2016 Election to Minnesota House Legislative Record in Minnesota U.S. Congressional Career 2018 Election to U.S.",
-      "fetched_at": "2026-03-09T20:44:31.855156+00:00",
+      "fetched_at": "2026-03-11T02:39:28.121692+00:00",
       "_source": "grokipedia",
       "person_slug": "Ilhan_Omar",
       "race_slug": "2026_Minnesotas_5th_congressional_district_election"
     },
     "Andy Biggs|AZ|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early life and education Family background and upbringing Academic and early professional achievements Pre-political career Legal practice and business activities Community involvement Arizona state legislative service House of Representatives tenure (2011\u20132013) State Senate leadership (2013\u20132017) U.S.",
-      "fetched_at": "2026-03-09T20:44:31.754049+00:00",
+      "fetched_at": "2026-03-11T02:39:28.343370+00:00",
       "_source": "grokipedia",
       "person_slug": "Andy_Biggs",
       "race_slug": "2026_Arizonas_5th_congressional_district_election"
     },
     "Eli Crane|AZ|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early life and education Family background and upbringing Formal education and early influences Military service Enlistment and Navy SEAL training Combat deployments and commendations Business career Entrepreneurship and Bottle Breacher Business expansion and innovations Entry into politics Motivations for running 2022 campaign and primary victory Political positions Domestic policy priorities Foreign policy and national security Fiscal and economic view.",
-      "fetched_at": "2026-03-09T20:44:31.852036+00:00",
+      "fetched_at": "2026-03-11T02:39:28.111903+00:00",
       "_source": "grokipedia",
       "person_slug": "Eli_Crane",
       "race_slug": "2026_Arizonas_2nd_congressional_district_election"
     },
     "Rashida Tlaib|MI|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early Life and Education Family Background and Upbringing Academic Pursuits and Early Influences State Political Career Entry into Michigan Legislature Legislative Record and Policy Focus Early Controversies and Public Engagements Congressional Elections 2018 Primary Victory and General Election Re-elections from 2020 to 2024 Congressional Tenure Committee Assignments and Caucus Roles Key Legislative Initiatives and Votes Interactions with Leadership and.",
-      "fetched_at": "2026-03-09T20:44:31.788121+00:00",
+      "fetched_at": "2026-03-11T02:39:28.311873+00:00",
       "_source": "grokipedia",
       "person_slug": "Rashida_Tlaib",
       "race_slug": "2026_Michigans_12th_congressional_district_election"
     },
     "Paul Gosar|AZ|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early life and education Family background and upbringing Academic training and early professional development Dental career Establishment and operation of practice Professional contributions and community involvement Entry into elective office 2010 congressional campaign and victory Factors influencing initial political success Congressional service Elections and reelections Committee assignments and caucus affiliations Legislative record Key bills spon.",
-      "fetched_at": "2026-03-09T20:44:32.874017+00:00",
+      "fetched_at": "2026-03-11T02:39:29.234483+00:00",
       "_source": "grokipedia",
       "person_slug": "Paul_Gosar",
       "race_slug": "2026_Arizonas_9th_congressional_district_election"
     },
     "Lateefah Simon|CA|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early Life and Education Childhood and Upbringing Formal Education Activism and Professional Background Youth Advocacy Work Collaboration with Criminal Justice Initiatives Local and Regional Political Roles BART Board Service Key Decisions and Outcomes State Legislative Career California Assembly Tenure Legislative Priorities and Record Federal Congressional Career 2024 Election and Transition Committee Assignments and Caucuses Early Legislative Actions .",
-      "fetched_at": "2026-03-09T20:44:33.135248+00:00",
+      "fetched_at": "2026-03-11T02:39:29.494094+00:00",
       "_source": "grokipedia",
       "person_slug": "Lateefah_Simon",
       "race_slug": "2026_Californias_12th_congressional_district_election"
     },
     "Ro Khanna|CA|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early life and education Family background and upbringing Academic career and influences Pre-congressional career Legal and professional roles Academic and advisory positions Early political campaigns and involvement Electoral history Initial 2004 campaign Challenges against incumbent Mike Honda (2012\u20132014) 2016 victory and reelections through 2024 Congressional service Committee assignments and caucus roles Economic policy and technology initiatives For.",
-      "fetched_at": "2026-03-09T20:44:32.838369+00:00",
+      "fetched_at": "2026-03-11T02:39:29.550901+00:00",
       "_source": "grokipedia",
       "person_slug": "Ro_Khanna",
       "race_slug": "2026_Californias_17th_congressional_district_election"
     },
     "Lauren Boebert|CO|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early life and background Childhood and family origins Education and early influences Early career Business endeavors prior to politics Ownership and operation of Shooters Grill Rise to political prominence 2020 congressional campaign and election Transition to national office Congressional service Elections and district representation 2020 election 2022 election 2024 election and district switch 2020 election 2022 election 2024 election and district swi.",
-      "fetched_at": "2026-03-09T20:44:33.167103+00:00",
+      "fetched_at": "2026-03-11T02:39:29.658795+00:00",
       "_source": "grokipedia",
       "person_slug": "Lauren_Boebert",
       "race_slug": "2026_Colorados_4th_congressional_district_election"
     },
     "Maxwell Frost|FL|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early Life and Background Family Origins and Childhood Education Activism and Pre-Political Career Gun Violence Prevention Efforts Organizational and Campaign Roles Entry into Elective Office 2022 Congressional Campaign Election Victory and District Demographics Congressional Career Committee Assignments and Caucus Participation Sponsored Legislation and Amendments Policy Positions Environmental and Climate Policies Firearms Regulation and Second Amendme.",
-      "fetched_at": "2026-03-09T20:44:33.162162+00:00",
+      "fetched_at": "2026-03-11T02:39:29.598141+00:00",
       "_source": "grokipedia",
       "person_slug": "Maxwell_Frost",
       "race_slug": "2026_Floridas_10th_congressional_district_election"
     },
     "Anna Paulina Luna|FL|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early Life and Background Family Origins and Childhood Upbringing and Influences Education and Military Service Academic Background Service in the U.S.",
-      "fetched_at": "2026-03-09T20:44:33.195261+00:00",
+      "fetched_at": "2026-03-11T02:39:29.611273+00:00",
       "_source": "grokipedia",
       "person_slug": "Anna_Paulina_Luna",
       "race_slug": "2026_Floridas_13th_congressional_district_election"
     },
     "Maxine Waters|CA|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Background Early Life Education and Early Career State Legislative Service Tenure in California Assembly Key State-Level Initiatives Congressional Career Elections to U.S.",
-      "fetched_at": "2026-03-09T20:44:33.121414+00:00",
+      "fetched_at": "2026-03-11T02:39:29.624007+00:00",
       "_source": "grokipedia",
       "person_slug": "Maxine_Waters",
       "race_slug": "2026_Californias_43th_congressional_district_election"
     },
     "Delia Ramirez|IL|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Background Early life and education Personal background and heritage State-level political career Illinois House of Representatives tenure Key state-level positions and votes U.S.",
-      "fetched_at": "2026-03-09T20:44:33.946537+00:00",
+      "fetched_at": "2026-03-11T02:39:30.535424+00:00",
       "_source": "grokipedia",
       "person_slug": "Delia_Ramirez",
       "race_slug": "2026_Illinois_3rd_congressional_district_election"
     },
     "Jan Schakowsky|IL|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early life and education Family background and upbringing Formal education and early influences Pre-political career Consumer advocacy and organizational involvement Local activism and campaign experience State legislative career Election to Illinois House (1990) Key positions and legislation (1991\u20131998) Congressional career 1998 election and initial terms Committee assignments and leadership roles Domestic policy initiatives Foreign policy stances Envir.",
-      "fetched_at": "2026-03-09T20:44:34.221551+00:00",
+      "fetched_at": "2026-03-11T02:39:30.516467+00:00",
       "_source": "grokipedia",
       "person_slug": "Jan_Schakowsky",
       "race_slug": "2026_Illinois_9th_congressional_district_election"
     },
     "Andr\u00e9 Carson|IN|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early life and education Childhood and family background Formal education and early career Religious conversion and worldview Conversion to Islam Public expressions of faith and their implications Pre-congressional political career Local and state legislative service Key positions and achievements in Indiana politics Path to Congress 2008 special election General elections from 2008 to 2024 Congressional tenure Committee assignments and leadership roles .",
-      "fetched_at": "2026-03-09T20:44:34.422259+00:00",
+      "fetched_at": "2026-03-11T02:39:30.753739+00:00",
       "_source": "grokipedia",
       "person_slug": "Andr\u00e9_Carson",
       "race_slug": "2026_Indianas_7th_congressional_district_election"
     },
     "Chris Van Hollen|MD|senate": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early Life and Pre-Political Career Family Background and Upbringing Education Early Professional Roles Maryland State Legislature (1991\u20132003) Elections and Terms Served Key Legislative Contributions U.S. House of Representatives (2003\u20132017) Elections and District Representation Tenure Highlights and Committee Work Party Leadership Roles U.S. Senate Elections 2016 Campaign and Victory 2022 Reelection U.S.",
-      "fetched_at": "2026-03-09T20:44:34.326185+00:00",
+      "fetched_at": "2026-03-11T02:39:30.485571+00:00",
       "_source": "grokipedia",
       "person_slug": "Chris_Van_Hollen",
       "race_slug": "2026_United_States_Senate_election_in_Maryland"
     },
     "Rand Paul|KY|senate": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early life and education Family background and upbringing Academic and early professional training Medical career Ophthalmology practice and achievements Dispute with the American Board of Ophthalmology Entry into politics Influence of libertarian activism 2010 U.S. Senate campaign Republican primary against establishment General election victory U.S.",
-      "fetched_at": "2026-03-09T20:44:34.362476+00:00",
+      "fetched_at": "2026-03-11T02:39:30.737365+00:00",
       "_source": "grokipedia",
       "person_slug": "Rand_Paul",
       "race_slug": "2026_United_States_Senate_election_in_Kentucky"
     },
     "Ayanna Pressley|MA|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early Life and Education Family Background and Upbringing Academic and Early Influences Pre-Congressional Career Professional Positions Entry into Politics Boston City Council Service Elections and Tenure Policy Focus and Initiatives Criticisms During Tenure U.S.",
-      "fetched_at": "2026-03-09T20:44:35.075337+00:00",
+      "fetched_at": "2026-03-11T02:39:31.754269+00:00",
       "_source": "grokipedia",
       "person_slug": "Ayanna_Pressley",
       "race_slug": "2026_Massachusetts_7th_congressional_district_election"
     },
     "Bonnie Watson Coleman|NJ|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early life and education Family background and upbringing Academic background Pre-political career Professional roles Community involvement New Jersey General Assembly Elections and entry Leadership positions Key legislative actions U.S.",
-      "fetched_at": "2026-03-09T20:44:35.259107+00:00",
+      "fetched_at": "2026-03-11T02:39:31.780904+00:00",
       "_source": "grokipedia",
       "person_slug": "Bonnie_Watson_Coleman",
       "race_slug": "2026_New_Jerseys_12th_congressional_district_election"
     },
     "Warren Davidson|OH|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early Life and Education Family Background and Upbringing Academic Achievements Military Service Enlistment and Training Operational Assignments Awards and Recognition Business Career Transition to Civilian Life Key Entrepreneurial Efforts and Investments Entry into Elective Office Motivations for Running 2016 Special Election Victory Congressional Service General Elections and Re-elections Committee Roles and Caucus Involvement Major Legislative Initiat.",
-      "fetched_at": "2026-03-09T20:44:35.652942+00:00",
+      "fetched_at": "2026-03-11T02:39:31.986760+00:00",
       "_source": "grokipedia",
       "person_slug": "Warren_Davidson",
       "race_slug": "2026_Ohios_8th_congressional_district_election"
     },
     "Jeff Merkley|OR|senate": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early life and education Family background and upbringing Academic and early professional experiences Pre-Senate career Entry into Oregon politics Leadership in the Oregon House of Representatives U.S.",
-      "fetched_at": "2026-03-09T20:44:35.593402+00:00",
+      "fetched_at": "2026-03-11T02:39:31.989021+00:00",
       "_source": "grokipedia",
       "person_slug": "Jeff_Merkley",
       "race_slug": "2026_United_States_Senate_election_in_Oregon"
     },
     "Summer Lee|PA|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Personal Background Early Life and Family Education and Pre-Political Career Pennsylvania State Legislature 2018 Election and Entry Tenure and Legislative Record Committee Assignments and State Initiatives U.S.",
-      "fetched_at": "2026-03-09T20:44:35.917226+00:00",
+      "fetched_at": "2026-03-11T02:39:32.156603+00:00",
       "_source": "grokipedia",
       "person_slug": "Summer_Lee",
       "race_slug": "2026_Pennsylvanias_12th_congressional_district_election"
     },
     "Pramila Jayapal|WA|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early life and education Immigration from India and family background Academic and early professional experiences Advocacy and nonprofit career Founding of OneAmerica and immigrant rights work Other activism and organizational roles State legislative career Election to Washington State Senate Key bills sponsored and legislative record U.S.",
-      "fetched_at": "2026-03-09T20:44:36.553493+00:00",
+      "fetched_at": "2026-03-11T02:39:33.267324+00:00",
       "_source": "grokipedia",
       "person_slug": "Pramila_Jayapal",
       "race_slug": "2026_Washingtons_7th_congressional_district_election"
     },
     "Becca Balint||house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Personal Background Early Life and Family Education and Pre-Political Career Vermont State Senate Career Elections Legislative Record Leadership Positions U.S.",
-      "fetched_at": "2026-03-09T20:44:36.906039+00:00",
+      "fetched_at": "2026-03-11T02:39:33.189314+00:00",
       "_source": "grokipedia",
       "person_slug": "Becca_Balint",
       "race_slug": "2026_s_?th_congressional_district_election"
     },
     "Mark Pocan|WI|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Background Early life and education Early career and business ventures Wisconsin State Assembly Service Elections and campaigns Legislative tenure Key committee roles and assignments U.S.",
-      "fetched_at": "2026-03-09T20:44:36.653774+00:00",
+      "fetched_at": "2026-03-11T02:39:33.283421+00:00",
       "_source": "grokipedia",
       "person_slug": "Mark_Pocan",
       "race_slug": "2026_Wisconsins_2nd_congressional_district_election"
     },
     "Scott Perry|PA|house": {
       "description": "Search \u2318K Suggest Article Sign in Sign in Early life Birth and background Early career entry Career Business career Military career Political career Personal life Family and personal details Death References Fact-checked by Grok 1 month ago Scott Perry Ara Eve Leo Sal 1x Scott Perry is an American politician, businessman, and retired brigadier general in the Pennsylvania Army National Guard, serving as the Republican U.S.",
-      "fetched_at": "2026-03-09T20:44:35.219241+00:00",
+      "fetched_at": "2026-03-11T02:39:31.726223+00:00",
       "_source": "grokipedia",
       "person_slug": "Scott_Perry",
       "race_slug": "2026_Pennsylvanias_10th_congressional_district_election"
