@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-03-13T16:52:09.785955+00:00",
+  "_last_scraped": "2026-03-13T20:45:50.600906+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -1020,6 +1020,22 @@
       "website": "https://www.jsalfororegon.com/",
       "source": "manual+trackaipac",
       "note": "Endorsed by TrackAIPAC / Citizens Against AIPAC Corruption. Rejects AIPAC contributions.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Melissa Bird",
+      "state": "OR",
+      "district": 4,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "2026-05-19",
+      "website": "https://www.melissabirdforcongress.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
       "incumbentParty": ""
     },
