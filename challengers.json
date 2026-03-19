@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-03-19T05:25:32.902735+00:00",
+  "_last_scraped": "2026-03-19T08:54:27.998779+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -995,6 +995,22 @@
       "fec_id": "H6NY13279"
     },
     {
+      "name": "Effie Phillips-Staley",
+      "state": "NY",
+      "district": 17,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "2026-06-23",
+      "website": "https://effieforcongress.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
       "name": "Karen Ortiz",
       "state": "NY",
       "district": 12,
@@ -1038,6 +1054,22 @@
       "website": "https://sal4congress.com/",
       "source": "manual+trackaipac",
       "note": "Endorsed by TrackAIPAC / Citizens Against AIPAC Corruption. Rejects AIPAC contributions.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Damon Lynch",
+      "state": "OH",
+      "district": 1,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "2026-05-05",
+      "website": "https://friendsofdamonlynch.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
       "incumbentParty": ""
     },
