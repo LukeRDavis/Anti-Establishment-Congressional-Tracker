@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-03-23T17:02:29.734784+00:00",
+  "_last_scraped": "2026-03-23T20:46:56.204638+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -46,6 +46,22 @@
       "website": "https://www.robbforcongress.com/",
       "source": "manual+trackaipac",
       "note": "Endorsed by TrackAIPAC / Citizens Against AIPAC Corruption. Rejects AIPAC contributions.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Kai Newkirk",
+      "state": "AZ",
+      "district": 4,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "2026-08-04",
+      "website": "https://www.kaiforaz.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
       "incumbentParty": ""
     },
