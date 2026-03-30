@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-03-30T17:05:28.977174+00:00",
+  "_last_scraped": "2026-03-30T20:56:12.070709+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -399,6 +399,22 @@
       "ps": "UPCOMING",
       "opponent": "Lucy McBath (incumbent)",
       "incumbentParty": "D"
+    },
+    {
+      "name": "Travis Terrell",
+      "state": "IA",
+      "district": 1,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "2026-06-02",
+      "website": "https://terrellforcongress.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
     },
     {
       "name": "Anabel Mendoza",
