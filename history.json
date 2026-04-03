@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-03T16:51:34.327112+00:00",
+  "last_updated": "2026-04-03T20:45:47.688710+00:00",
   "events": [
     {
       "id": "88ef1aea3a",
@@ -455,6 +455,18 @@
       "party": "D",
       "change": "soft_to_hard",
       "trigger": "Upgraded to Hard via co-sponsorship or vote record",
+      "source": "trackaipac+rlc"
+    },
+    {
+      "id": "fa9b4393f8",
+      "date": "2026-04-03",
+      "detected_at": "2026-04-03T20:45:47.688710+00:00",
+      "member": "Andr\u00e9 Carson",
+      "chamber": "house",
+      "state": "IN",
+      "party": "D",
+      "change": "anti_to_pro",
+      "trigger": "No longer flagged as anti-intervention",
       "source": "trackaipac+rlc"
     },
     {
