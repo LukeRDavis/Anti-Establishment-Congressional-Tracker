@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-04-08T13:51:04.180130+00:00",
+  "_last_scraped": "2026-04-08T17:15:48.618949+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -399,6 +399,22 @@
       "ps": "UPCOMING",
       "primaryDate": "2026-05-19",
       "website": "https://www.case4congress.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Everton Blair",
+      "state": "GA",
+      "district": 13,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "2026-05-19",
+      "website": "https://www.evertonblair.com/",
       "source": "trackaipac",
       "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
