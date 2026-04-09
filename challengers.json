@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-04-08T20:54:59.538256+00:00",
+  "_last_scraped": "2026-04-09T02:56:10.659633+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -1226,6 +1226,22 @@
       "ps": "UPCOMING",
       "primaryDate": "2026-05-19",
       "website": "https://www.chrisrabb.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Lucia Simonelli",
+      "state": "PA",
+      "district": 1,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "2026-05-19",
+      "website": "https://www.luciaforcongress.com/",
       "source": "trackaipac",
       "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
