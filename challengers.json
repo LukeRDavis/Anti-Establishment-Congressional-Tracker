@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-04-09T14:05:04.859506+00:00",
+  "_last_scraped": "2026-04-09T17:16:18.901822+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -1135,6 +1135,22 @@
       "website": "",
       "source": "rlc_endorsed",
       "note": "Endorsed by Republican Liberty Caucus for Governor of New York\u201d\" loading=\"lazy\">",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Michael Blake",
+      "state": "NY",
+      "district": 15,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "2026-06-23",
+      "website": "https://www.michaelblakeforcongress.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
       "incumbentParty": ""
     },
