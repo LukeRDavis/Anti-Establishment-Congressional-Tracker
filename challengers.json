@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-04-13T17:14:00.883495+00:00",
+  "_last_scraped": "2026-04-13T21:03:28.399343+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -1274,6 +1274,22 @@
       "ps": "UPCOMING",
       "primaryDate": "2026-05-19",
       "website": "https://www.luciaforcongress.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Justin J. Pearson",
+      "state": "TN",
+      "district": 9,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "2026-08-06",
+      "website": "https://www.votejustinj.com/",
       "source": "trackaipac",
       "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
