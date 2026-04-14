@@ -1,12 +1,12 @@
 {
   "meta": {
-    "fetched_at": "2026-04-13T21:08:19.318441+00:00",
-    "trackaipac_scraped": "2026-04-13T21:08:19.318457+00:00",
+    "fetched_at": "2026-04-14T03:32:02.153319+00:00",
+    "trackaipac_scraped": "2026-04-14T03:32:02.153334+00:00",
     "member_count": 533,
     "anti_intervention_count": 37,
     "bill_count": 0,
     "challenger_count": 100,
-    "history_events": 1521,
+    "history_events": 1558,
     "grok_enriched": 0,
     "odds_covered": 16,
     "version": 8,
@@ -1405,7 +1405,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 2236782,
+      "lobby_total": 2416584,
       "pacs": [
         "AIPAC",
         "CAJD",
@@ -11660,7 +11660,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-13T21:04:42.931649+00:00"
+      "fetched_at": "2026-04-14T03:29:12.019321+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11673,7 +11673,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-13T21:05:03.233471+00:00"
+      "fetched_at": "2026-04-14T03:29:18.012897+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11686,7 +11686,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-13T21:05:14.856018+00:00"
+      "fetched_at": "2026-04-14T03:29:21.964299+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11699,7 +11699,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-13T21:05:15.386306+00:00"
+      "fetched_at": "2026-04-14T03:29:22.478666+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11712,7 +11712,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-13T21:05:20.766133+00:00"
+      "fetched_at": "2026-04-14T03:29:24.350242+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11725,7 +11725,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-13T21:05:30.245937+00:00"
+      "fetched_at": "2026-04-14T03:29:27.613226+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.999,
@@ -11738,70 +11738,70 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-13T21:05:35.110608+00:00"
+      "fetched_at": "2026-04-14T03:29:29.602364+00:00"
     },
     "Abdul el-Sayed": {
-      "prob": 0.32,
+      "prob": 0.28,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Michigan Democratic Senate nomination? \u2192 Abdul El-Sayed",
       "url": "https://www.predictit.org/markets/detail/8167/Who-will-win-the-2026-Michigan-Democratic-Senate-nomination",
-      "fetched_at": "2026-04-13T21:05:52.015948+00:00"
+      "fetched_at": "2026-04-14T03:29:34.865254+00:00"
     },
     "Ed Markey": {
       "prob": 0.83,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ed Markey",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-04-13T21:05:52.088034+00:00"
+      "fetched_at": "2026-04-14T03:29:34.940527+00:00"
     },
     "Ayanna Pressley": {
       "prob": 0.01,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ayanna Pressley",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-04-13T21:05:52.088098+00:00"
+      "fetched_at": "2026-04-14T03:29:34.940590+00:00"
     },
     "Jack Schlossberg": {
       "prob": 0.24,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-12 House primary? \u2192 Jack Schlossberg",
       "url": "https://www.predictit.org/markets/detail/8364/Who-will-win-the-Democratic-nomination-in-the-NY-12-House-primary",
-      "fetched_at": "2026-04-13T21:05:52.094116+00:00"
+      "fetched_at": "2026-04-14T03:29:34.946671+00:00"
     },
     "Thomas Massie": {
-      "prob": 0.72,
+      "prob": 0.7,
       "src": "predictit_contract",
       "question": "Who will win the Republican nomination in the KY-04 House primary? \u2192 Thomas Massie",
       "url": "https://www.predictit.org/markets/detail/8487/Who-will-win-the-Republican-nomination-in-the-KY-04-House-primary",
-      "fetched_at": "2026-04-13T21:05:52.191344+00:00"
+      "fetched_at": "2026-04-14T03:29:35.044406+00:00"
     },
     "Congressman Thomas Massie": {
-      "prob": 0.72,
+      "prob": 0.7,
       "src": "predictit_contract",
       "question": "Who will win the Republican nomination in the KY-04 House primary? \u2192 Thomas Massie",
       "url": "https://www.predictit.org/markets/detail/8487/Who-will-win-the-Republican-nomination-in-the-KY-04-House-primary",
-      "fetched_at": "2026-04-13T21:05:52.192025+00:00"
+      "fetched_at": "2026-04-14T03:29:35.045108+00:00"
     },
     "Claire Valdez": {
       "prob": 0.81,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-07 House primary? \u2192 Claire Valdez",
       "url": "https://www.predictit.org/markets/detail/8534/Who-will-win-the-Democratic-nomination-in-the-NY-07-House-primary",
-      "fetched_at": "2026-04-13T21:05:52.224775+00:00"
+      "fetched_at": "2026-04-14T03:29:35.077867+00:00"
     },
     "Effie Phillips-Staley": {
       "prob": 0.19,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-17 House primary? \u2192 E. Phillips-Staley",
       "url": "https://www.predictit.org/markets/detail/8598/Who-will-win-the-Democratic-nomination-in-the-NY-17-House-primary",
-      "fetched_at": "2026-04-13T21:05:52.242659+00:00"
+      "fetched_at": "2026-04-14T03:29:35.095715+00:00"
     },
     "Darializa Avila Chevalier": {
       "prob": 0.89,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-13 House primary? \u2192 D. Avila Chevalier",
       "url": "https://www.predictit.org/markets/detail/8658/Who-will-win-the-Democratic-nomination-in-the-NY-13-House-primary",
-      "fetched_at": "2026-04-13T21:05:52.307175+00:00"
+      "fetched_at": "2026-04-14T03:29:35.157958+00:00"
     }
   },
   "trackaipac_congress": {
@@ -12798,7 +12798,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 2236782,
+      "lobby_total": 2416584,
       "pacs": [
         "AIPAC",
         "CAJD",
@@ -21548,7 +21548,7 @@
       "general_date": "2026-11-03",
       "general_opponent": "TBD (D)",
       "cook_rating": "Solid Republican (general)",
-      "win_prob": 0.72,
+      "win_prob": 0.7,
       "impact_if_wins": "Retains 1 hard-R anti-intervention vote (most consistent in Congress)",
       "impact_if_loses": "-1 hard-R (Gallrein would vote pro-arms with Trump)",
       "note": "Trump endorsed Gallrein Oct 2025. Massie claims +17 lead in own internal polling. Rand Paul campaigning with him. Cook: Solid R general. Primary May 19.",
