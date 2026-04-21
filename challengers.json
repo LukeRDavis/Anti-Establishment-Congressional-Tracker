@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-04-21T09:46:28.190216+00:00",
+  "_last_scraped": "2026-04-21T14:01:13.855264+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -1043,7 +1043,8 @@
       "source": "manual+trackaipac",
       "note": "Endorsed by TrackAIPAC / Citizens Against AIPAC Corruption. Rejects AIPAC contributions.",
       "opponent": "",
-      "incumbentParty": ""
+      "incumbentParty": "",
+      "fec_id": "H6NJ08209"
     },
     {
       "name": "James Lally",
