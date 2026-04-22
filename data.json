@@ -1,12 +1,12 @@
 {
   "meta": {
-    "fetched_at": "2026-04-21T21:06:07.340265+00:00",
-    "trackaipac_scraped": "2026-04-21T21:06:07.340277+00:00",
-    "member_count": 533,
-    "anti_intervention_count": 37,
+    "fetched_at": "2026-04-22T03:33:15.093190+00:00",
+    "trackaipac_scraped": "2026-04-22T03:33:15.093203+00:00",
+    "member_count": 531,
+    "anti_intervention_count": 38,
     "bill_count": 0,
     "challenger_count": 103,
-    "history_events": 1817,
+    "history_events": 1855,
     "grok_enriched": 0,
     "odds_covered": 26,
     "version": 8,
@@ -919,32 +919,6 @@
       "rlc_score": null,
       "lobby_total": 470328,
       "pacs": [],
-      "ps": "INCUMBENT",
-      "bills": [],
-      "votes": [],
-      "note": ""
-    },
-    {
-      "bioguide_id": "",
-      "name": "Eric Swalwell",
-      "party": "D",
-      "state": "CA",
-      "district": 14,
-      "chamber": "house",
-      "antiArms": false,
-      "antiArmsLevel": null,
-      "rlc_score": null,
-      "lobby_total": 1051237,
-      "pacs": [
-        "AIPAC",
-        "AUSD",
-        "BIC",
-        "CITYPAC",
-        "JAC",
-        "JSTREET",
-        "MDACC",
-        "NACPAC"
-      ],
       "ps": "INCUMBENT",
       "bills": [],
       "votes": [],
@@ -2652,27 +2626,6 @@
       "bills": [],
       "votes": [],
       "note": "Running for Governor 2026"
-    },
-    {
-      "bioguide_id": "",
-      "name": "Sheila Cherfilus-McCormick",
-      "party": "D",
-      "state": "FL",
-      "district": 20,
-      "chamber": "house",
-      "antiArms": false,
-      "antiArmsLevel": null,
-      "rlc_score": null,
-      "lobby_total": 555603,
-      "pacs": [
-        "AIPAC",
-        "DMFI",
-        "JAC"
-      ],
-      "ps": "INCUMBENT",
-      "bills": [],
-      "votes": [],
-      "note": ""
     },
     {
       "bioguide_id": "",
@@ -6854,6 +6807,24 @@
     },
     {
       "bioguide_id": "",
+      "name": "Analilia Mejia",
+      "party": "D",
+      "state": "NJ",
+      "district": 11,
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "rlc_score": null,
+      "lobby_total": 0,
+      "pacs": [],
+      "ps": "INCUMBENT",
+      "bills": [],
+      "votes": [],
+      "note": "",
+      "description": "Search \u2318K Suggest Edit Sign in Sign in Early life and education Early life Education Career Labor and union organizing New Jersey Working Families Alliance Bernie Sanders campaign and federal service Center for Popular Democracy Role and responsibilities Key advocacy initiatives 2026 congressional campaign Announcement and platform Democratic primary General election Endorsements Political positions Economic and labor policies Healthcare, immigration, and social justice Personal life Family and ."
+    },
+    {
+      "bioguide_id": "",
       "name": "Bonnie Watson Coleman",
       "party": "D",
       "state": "NJ",
@@ -10189,29 +10160,6 @@
     },
     {
       "bioguide_id": "",
-      "name": "Tony Gonzales",
-      "party": "?",
-      "state": "",
-      "district": "?",
-      "chamber": "house",
-      "antiArms": false,
-      "antiArmsLevel": null,
-      "rlc_score": null,
-      "lobby_total": 3030108,
-      "pacs": [
-        "AIPAC",
-        "AMP",
-        "LAFAS",
-        "RJC",
-        "USI"
-      ],
-      "ps": "INCUMBENT",
-      "bills": [],
-      "votes": [],
-      "note": ""
-    },
-    {
-      "bioguide_id": "",
       "name": "Beth Van Duyne",
       "party": "R",
       "state": "TX",
@@ -11651,7 +11599,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-21T21:03:14.511285+00:00"
+      "fetched_at": "2026-04-22T03:30:31.968381+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11664,7 +11612,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-21T21:03:23.916608+00:00"
+      "fetched_at": "2026-04-22T03:30:38.047254+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11677,7 +11625,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-21T21:03:29.718443+00:00"
+      "fetched_at": "2026-04-22T03:30:42.148273+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11690,7 +11638,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-21T21:03:30.372877+00:00"
+      "fetched_at": "2026-04-22T03:30:42.661115+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11703,7 +11651,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-21T21:03:33.077678+00:00"
+      "fetched_at": "2026-04-22T03:30:45.574924+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11716,7 +11664,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-21T21:03:37.990234+00:00"
+      "fetched_at": "2026-04-22T03:30:49.130281+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.999,
@@ -11729,140 +11677,140 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-21T21:03:40.695833+00:00"
+      "fetched_at": "2026-04-22T03:30:50.921900+00:00"
     },
     "Abdul el-Sayed": {
       "prob": 0.5,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Michigan Democratic Senate nomination? \u2192 Abdul El-Sayed",
       "url": "https://www.predictit.org/markets/detail/8167/Who-will-win-the-2026-Michigan-Democratic-Senate-nomination",
-      "fetched_at": "2026-04-21T21:03:48.532092+00:00"
+      "fetched_at": "2026-04-22T03:30:56.263156+00:00"
     },
     "Ed Markey": {
       "prob": 0.83,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ed Markey",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-04-21T21:03:48.597303+00:00"
+      "fetched_at": "2026-04-22T03:30:56.337098+00:00"
     },
     "Ayanna Pressley": {
       "prob": 0.01,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ayanna Pressley",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-04-21T21:03:48.597347+00:00"
+      "fetched_at": "2026-04-22T03:30:56.337159+00:00"
     },
     "Jack Schlossberg": {
       "prob": 0.25,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-12 House primary? \u2192 Jack Schlossberg",
       "url": "https://www.predictit.org/markets/detail/8364/Who-will-win-the-Democratic-nomination-in-the-NY-12-House-primary",
-      "fetched_at": "2026-04-21T21:03:48.602740+00:00"
+      "fetched_at": "2026-04-22T03:30:56.343396+00:00"
     },
     "Thomas Massie": {
-      "prob": 0.68,
+      "prob": 0.75,
       "src": "predictit_contract",
       "question": "Who will win the Republican nomination in the KY-04 House primary? \u2192 Thomas Massie",
       "url": "https://www.predictit.org/markets/detail/8487/Who-will-win-the-Republican-nomination-in-the-KY-04-House-primary",
-      "fetched_at": "2026-04-21T21:03:48.689716+00:00"
+      "fetched_at": "2026-04-22T03:30:56.443301+00:00"
     },
     "Congressman Thomas Massie": {
-      "prob": 0.68,
+      "prob": 0.75,
       "src": "predictit_contract",
       "question": "Who will win the Republican nomination in the KY-04 House primary? \u2192 Thomas Massie",
       "url": "https://www.predictit.org/markets/detail/8487/Who-will-win-the-Republican-nomination-in-the-KY-04-House-primary",
-      "fetched_at": "2026-04-21T21:03:48.690319+00:00"
+      "fetched_at": "2026-04-22T03:30:56.444031+00:00"
     },
     "Claire Valdez": {
       "prob": 0.81,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-07 House primary? \u2192 Claire Valdez",
       "url": "https://www.predictit.org/markets/detail/8534/Who-will-win-the-Democratic-nomination-in-the-NY-07-House-primary",
-      "fetched_at": "2026-04-21T21:03:48.719634+00:00"
+      "fetched_at": "2026-04-22T03:30:56.477620+00:00"
     },
     "Effie Phillips-Staley": {
       "prob": 0.19,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-17 House primary? \u2192 E. Phillips-Staley",
       "url": "https://www.predictit.org/markets/detail/8598/Who-will-win-the-Democratic-nomination-in-the-NY-17-House-primary",
-      "fetched_at": "2026-04-21T21:03:48.735479+00:00"
+      "fetched_at": "2026-04-22T03:30:56.495896+00:00"
     },
     "Darializa Avila Chevalier": {
       "prob": 0.86,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-13 House primary? \u2192 D. Avila Chevalier",
       "url": "https://www.predictit.org/markets/detail/8658/Who-will-win-the-Democratic-nomination-in-the-NY-13-House-primary",
-      "fetched_at": "2026-04-21T21:03:48.783477+00:00"
+      "fetched_at": "2026-04-22T03:30:56.551891+00:00"
     },
     "Ro Khanna": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-17 House primary? \u2192 Ro Khanna",
       "url": "https://www.predictit.org/markets/detail/8711/Who-will-win-the-most-votes-in-the-CA-17-House-primary",
-      "fetched_at": "2026-04-21T21:03:48.812513+00:00"
+      "fetched_at": "2026-04-22T03:30:56.585441+00:00"
     },
     "Adam Hamawy": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-12 House primary? \u2192 Adam Hamawy",
       "url": "https://www.predictit.org/markets/detail/8713/Who-will-win-the-Democratic-nomination-in-the-NJ-12-House-primary",
-      "fetched_at": "2026-04-21T21:03:48.816877+00:00"
+      "fetched_at": "2026-04-22T03:30:56.590513+00:00"
     },
     "Chris Bennett": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-07 House primary? \u2192 Rebecca Bennett",
       "url": "https://www.predictit.org/markets/detail/8714/Who-will-win-the-Democratic-nomination-in-the-NJ-07-House-primary",
-      "fetched_at": "2026-04-21T21:03:48.818375+00:00"
+      "fetched_at": "2026-04-22T03:30:56.592259+00:00"
     },
     "Mussab Ali": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-08 House primary? \u2192 Mussab Ali",
       "url": "https://www.predictit.org/markets/detail/8715/Who-will-win-the-Democratic-nomination-in-the-NJ-08-House-primary",
-      "fetched_at": "2026-04-21T21:03:48.820547+00:00"
+      "fetched_at": "2026-04-22T03:30:56.594766+00:00"
     },
     "Analilia Mejia": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-11 House primary? \u2192 Analilia Mejia",
       "url": "https://www.predictit.org/markets/detail/8717/Who-will-win-the-Democratic-nomination-in-the-NJ-11-House-primary",
-      "fetched_at": "2026-04-21T21:03:48.822793+00:00"
+      "fetched_at": "2026-04-22T03:30:56.596587+00:00"
     },
     "Audrey Denney": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-01 House primary? \u2192 Audrey Denney",
       "url": "https://www.predictit.org/markets/detail/8721/Who-will-win-the-most-votes-in-the-CA-01-House-primary",
-      "fetched_at": "2026-04-21T21:03:48.828624+00:00"
+      "fetched_at": "2026-04-22T03:30:56.604149+00:00"
     },
     "Mai Vang": {
       "prob": 0.98,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-07 House primary? \u2192 Mai Vang",
       "url": "https://www.predictit.org/markets/detail/8725/Who-will-win-the-most-votes-in-the-CA-07-House-primary",
-      "fetched_at": "2026-04-21T21:03:48.834318+00:00"
+      "fetched_at": "2026-04-22T03:30:56.610987+00:00"
     },
     "Saikat Chakrabarti": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-11 House primary? \u2192 Saikat Chakrabarti",
       "url": "https://www.predictit.org/markets/detail/8726/Who-will-win-the-most-votes-in-the-CA-11-House-primary",
-      "fetched_at": "2026-04-21T21:03:48.835538+00:00"
+      "fetched_at": "2026-04-22T03:30:56.612439+00:00"
     },
     "Randy Villegas": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-22 House primary? \u2192 Randy Villegas",
       "url": "https://www.predictit.org/markets/detail/8730/Who-will-win-the-most-votes-in-the-CA-22-House-primary",
-      "fetched_at": "2026-04-21T21:03:48.843307+00:00"
+      "fetched_at": "2026-04-22T03:30:56.621572+00:00"
     },
     "Ang\u00e9lica Due\u00f1as": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-29 House primary? \u2192 Ang\u00e9lica M. Due\u00f1as",
       "url": "https://www.predictit.org/markets/detail/8731/Who-will-win-the-most-votes-in-the-CA-29-House-primary",
-      "fetched_at": "2026-04-21T21:03:48.844703+00:00"
+      "fetched_at": "2026-04-22T03:30:56.623217+00:00"
     }
   },
   "trackaipac_congress": {
@@ -12353,7 +12301,7 @@
       "approved": false,
       "lobby_total": 0,
       "pacs": [],
-      "note": ""
+      "note": "resigned from Congress on April 14, 2026 Special"
     },
     "jared huffman": {
       "name": "Jared Huffman",
@@ -12512,26 +12460,6 @@
       "approved": false,
       "lobby_total": 470328,
       "pacs": [],
-      "note": ""
-    },
-    "eric swalwell": {
-      "name": "Eric Swalwell",
-      "state": "CA",
-      "district": 14,
-      "party": "D",
-      "chamber": "house",
-      "approved": false,
-      "lobby_total": 1051237,
-      "pacs": [
-        "AIPAC",
-        "AUSD",
-        "BIC",
-        "CITYPAC",
-        "JAC",
-        "JSTREET",
-        "MDACC",
-        "NACPAC"
-      ],
       "note": ""
     },
     "kevin mullin": {
@@ -13757,21 +13685,6 @@
         "RJC"
       ],
       "note": "Running for Governor 2026"
-    },
-    "sheila cherfilus-mccormick": {
-      "name": "Sheila Cherfilus-McCormick",
-      "state": "FL",
-      "district": 20,
-      "party": "D",
-      "chamber": "house",
-      "approved": false,
-      "lobby_total": 555603,
-      "pacs": [
-        "AIPAC",
-        "DMFI",
-        "JAC"
-      ],
-      "note": ""
     },
     "brian mast": {
       "name": "Brian Mast",
@@ -16821,6 +16734,17 @@
       "pacs": [],
       "note": ""
     },
+    "analilia mejia": {
+      "name": "Analilia Mejia",
+      "state": "NJ",
+      "district": 11,
+      "party": "D",
+      "chamber": "house",
+      "approved": true,
+      "lobby_total": 0,
+      "pacs": [],
+      "note": ""
+    },
     "bonnie watson coleman": {
       "name": "Bonnie Watson Coleman",
       "state": "NJ",
@@ -19216,23 +19140,6 @@
       "pacs": [
         "AIPAC",
         "AMP",
-        "RJC",
-        "USI"
-      ],
-      "note": ""
-    },
-    "tony gonzales": {
-      "name": "Tony Gonzales",
-      "state": "",
-      "district": "?",
-      "party": "?",
-      "chamber": "house",
-      "approved": false,
-      "lobby_total": 3030108,
-      "pacs": [
-        "AIPAC",
-        "AMP",
-        "LAFAS",
         "RJC",
         "USI"
       ],
@@ -21648,7 +21555,7 @@
       "general_date": "2026-11-03",
       "general_opponent": "TBD (D)",
       "cook_rating": "Solid Republican (general)",
-      "win_prob": 0.68,
+      "win_prob": 0.75,
       "impact_if_wins": "Retains 1 hard-R anti-intervention vote (most consistent in Congress)",
       "impact_if_loses": "-1 hard-R (Gallrein would vote pro-arms with Trump)",
       "note": "Trump endorsed Gallrein Oct 2025. Massie claims +17 lead in own internal polling. Rand Paul campaigning with him. Cook: Solid R general. Primary May 19.",
@@ -22934,6 +22841,13 @@
       "_source": "grokipedia",
       "person_slug": "Bernie_Sanders",
       "race_slug": "2026_United_States_Senate_election_in_Vermont"
+    },
+    "Analilia Mejia|NJ|house": {
+      "description": "Search \u2318K Suggest Edit Sign in Sign in Early life and education Early life Education Career Labor and union organizing New Jersey Working Families Alliance Bernie Sanders campaign and federal service Center for Popular Democracy Role and responsibilities Key advocacy initiatives 2026 congressional campaign Announcement and platform Democratic primary General election Endorsements Political positions Economic and labor policies Healthcare, immigration, and social justice Personal life Family and .",
+      "fetched_at": "2026-04-22T03:30:03.684871+00:00",
+      "_source": "grokipedia",
+      "person_slug": "Analilia_Mejia",
+      "race_slug": "2026_New_Jerseys_11th_congressional_district_election"
     }
   },
   "descriptions": {
@@ -22967,6 +22881,7 @@
     "Mark Pocan": "Search \u2318K Suggest Article Sign in Sign in Background Early life and education Early career and business ventures Wisconsin State Assembly Service Elections and campaigns Legislative tenure Key committee roles and assignments U.S.",
     "James Talarico": "Search \u2318K Suggest Article Sign in Sign in Early life and education Family background and childhood Academic and early professional influences Pre-political career Teaching in public schools Seminarian training and religious studies Political career 2018 election to Texas House Re-elections and legislative tenure (2019\u20132025) Committee roles and bill sponsorships Political positions Education and school funding Religion, faith, and opposition to Christian nationalism Immigration, guns, and other p.",
     "Thomas Massie": "Search \u2318K Suggest Article Sign in Sign in Early Life and Education Upbringing in Kentucky Academic Achievements at MIT Pre-Congressional Career Entrepreneurial Ventures and Inventions Service as Lewis County Judge Executive U.S.",
-    "Bernie Sanders": "Search \u2318K Suggest Article Sign in Sign in Early Life and Education Childhood and Family Background Youth Activism and Influences College Years and Early Ideological Formation Early Political Involvement Liberty Union Party Campaigns Professional Roles and Vermont Relocation Initial Electoral Challenges Mayoral Tenure in Burlington (1981-1989) Election Victories and Style Policy Initiatives and Local Impacts Criticisms and Administrative Disputes U.S."
+    "Bernie Sanders": "Search \u2318K Suggest Article Sign in Sign in Early Life and Education Childhood and Family Background Youth Activism and Influences College Years and Early Ideological Formation Early Political Involvement Liberty Union Party Campaigns Professional Roles and Vermont Relocation Initial Electoral Challenges Mayoral Tenure in Burlington (1981-1989) Election Victories and Style Policy Initiatives and Local Impacts Criticisms and Administrative Disputes U.S.",
+    "Analilia Mejia": "Search \u2318K Suggest Edit Sign in Sign in Early life and education Early life Education Career Labor and union organizing New Jersey Working Families Alliance Bernie Sanders campaign and federal service Center for Popular Democracy Role and responsibilities Key advocacy initiatives 2026 congressional campaign Announcement and platform Democratic primary General election Endorsements Political positions Economic and labor policies Healthcare, immigration, and social justice Personal life Family and ."
   }
 }
