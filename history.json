@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-22T03:29:11.120740+00:00",
+  "last_updated": "2026-04-22T06:05:08.795357+00:00",
   "events": [
     {
       "id": "5309f2f1c7",
@@ -452,6 +452,18 @@
       "member": "Mark Pocan",
       "chamber": "house",
       "state": "WI",
+      "party": "D",
+      "change": "soft_to_hard",
+      "trigger": "Upgraded to Hard via co-sponsorship or vote record",
+      "source": "trackaipac+rlc"
+    },
+    {
+      "id": "6772d025a2",
+      "date": "2026-04-22",
+      "detected_at": "2026-04-22T06:05:08.795357+00:00",
+      "member": "Analilia Mejia",
+      "chamber": "house",
+      "state": "NJ",
       "party": "D",
       "change": "soft_to_hard",
       "trigger": "Upgraded to Hard via co-sponsorship or vote record",
