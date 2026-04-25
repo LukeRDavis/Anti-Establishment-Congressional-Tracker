@@ -1,12 +1,12 @@
 {
   "meta": {
-    "fetched_at": "2026-04-24T21:02:32.530920+00:00",
-    "trackaipac_scraped": "2026-04-24T21:02:32.530937+00:00",
+    "fetched_at": "2026-04-25T03:23:52.177964+00:00",
+    "trackaipac_scraped": "2026-04-25T03:23:52.177978+00:00",
     "member_count": 530,
     "anti_intervention_count": 38,
     "bill_count": 0,
     "challenger_count": 103,
-    "history_events": 1932,
+    "history_events": 1970,
     "grok_enriched": 0,
     "odds_covered": 30,
     "version": 8,
@@ -35,7 +35,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 237976,
+      "lobby_total": 29184,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -56,7 +56,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 408384,
+      "lobby_total": 106961,
       "pacs": [
         "AIPAC",
         "RJC",
@@ -77,7 +77,7 @@
       "antiArms": true,
       "antiArmsLevel": "yes",
       "rlc_score": null,
-      "lobby_total": 75849,
+      "lobby_total": 30173,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -94,7 +94,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 181458,
+      "lobby_total": 63235,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -117,7 +117,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1933918,
+      "lobby_total": 957427,
       "pacs": [
         "AIPAC",
         "AGG",
@@ -143,7 +143,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 251955,
+      "lobby_total": 116958,
       "pacs": [
         "AIPAC",
         "AFGG",
@@ -165,7 +165,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 75745,
+      "lobby_total": 37324,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -182,7 +182,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 257757,
+      "lobby_total": 88021,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -206,7 +206,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 251301,
+      "lobby_total": 75552,
       "pacs": [
         "AIPAC"
       ],
@@ -225,7 +225,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1047757,
+      "lobby_total": 265262,
       "pacs": [
         "AIPAC",
         "AGG",
@@ -251,7 +251,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1399667,
+      "lobby_total": 582162,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -273,7 +273,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 144598,
+      "lobby_total": 7599,
       "pacs": [
         "AIPAC"
       ],
@@ -292,7 +292,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 4461823,
+      "lobby_total": 499452,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -315,7 +315,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1769097,
+      "lobby_total": 83219,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -338,7 +338,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 752634,
+      "lobby_total": 206443,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -380,7 +380,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 806788,
+      "lobby_total": 1161274,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -397,7 +397,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 748256,
+      "lobby_total": 314435,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -422,7 +422,7 @@
       "antiArms": true,
       "antiArmsLevel": "yes",
       "rlc_score": null,
-      "lobby_total": 162057,
+      "lobby_total": 39184,
       "pacs": [
         "AIPAC",
         "GCSC"
@@ -443,7 +443,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 2198703,
+      "lobby_total": 1139752,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -485,7 +485,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 55970,
+      "lobby_total": 42128,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -524,7 +524,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 712913,
+      "lobby_total": 191516,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -550,7 +550,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 2963774,
+      "lobby_total": 1084968,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -574,7 +574,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 97153,
+      "lobby_total": 25388,
       "pacs": [
         "AIPAC",
         "AMP"
@@ -594,7 +594,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 451148,
+      "lobby_total": 69558,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -616,7 +616,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 327686,
+      "lobby_total": 134574,
       "pacs": [
         "AIPAC",
         "NACPAC"
@@ -636,7 +636,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 179638,
+      "lobby_total": 55630,
       "pacs": [
         "AIPAC",
         "AMP"
@@ -656,7 +656,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 856179,
+      "lobby_total": 104055,
       "pacs": [
         "AIPAC",
         "DMFI"
@@ -676,7 +676,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 9550120,
+      "lobby_total": 5608830,
       "pacs": [
         "AIPAC",
         "BICOUNTY",
@@ -702,7 +702,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 122968,
+      "lobby_total": 58412,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -719,7 +719,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 279667,
+      "lobby_total": 86986,
       "pacs": [
         "AIPAC",
         "NORPAC"
@@ -739,7 +739,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 129865,
+      "lobby_total": 42735,
       "pacs": [
         "NORPAC",
         "NWPAC"
@@ -759,7 +759,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 278611,
+      "lobby_total": 45538,
       "pacs": [
         "AIPAC",
         "AMP"
@@ -779,7 +779,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1096013,
+      "lobby_total": 269170,
       "pacs": [
         "AIPAC",
         "CAJD",
@@ -801,7 +801,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 241127,
+      "lobby_total": 21305,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -818,7 +818,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 321027,
+      "lobby_total": 65867,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -835,7 +835,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1777395,
+      "lobby_total": 385400,
       "pacs": [
         "AIPAC",
         "JAC",
@@ -873,7 +873,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 2374025,
+      "lobby_total": 188554,
       "pacs": [
         "AIPAC",
         "AGG",
@@ -917,8 +917,12 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 470328,
-      "pacs": [],
+      "lobby_total": 30652,
+      "pacs": [
+        "AIPAC",
+        "DMFI",
+        "JAC"
+      ],
       "ps": "INCUMBENT",
       "bills": [],
       "votes": [],
@@ -934,7 +938,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 862323,
+      "lobby_total": 732366,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -955,7 +959,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 333790,
+      "lobby_total": 52780,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -972,7 +976,7 @@
       "antiArms": true,
       "antiArmsLevel": "yes",
       "rlc_score": null,
-      "lobby_total": 1523736,
+      "lobby_total": 161303,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -990,7 +994,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 344466,
+      "lobby_total": 49388,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -1007,7 +1011,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1024567,
+      "lobby_total": 499644,
       "pacs": [
         "AIPAC",
         "DMFI"
@@ -1027,7 +1031,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 78514,
+      "lobby_total": 17668,
       "pacs": [
         "AIPAC",
         "RJC"
@@ -1047,7 +1051,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 919414,
+      "lobby_total": 346385,
       "pacs": [
         "AIPAC",
         "GCSC",
@@ -1073,7 +1077,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 724428,
+      "lobby_total": 185158,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -1096,7 +1100,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 64376,
+      "lobby_total": 31404,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -1113,7 +1117,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 337476,
+      "lobby_total": 50945,
       "pacs": [
         "AIPAC",
         "JSTREET"
@@ -1133,7 +1137,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 889935,
+      "lobby_total": 210646,
       "pacs": [
         "AIPAC",
         "CAJD",
@@ -1156,7 +1160,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 842456,
+      "lobby_total": 192080,
       "pacs": [
         "AIPAC",
         "CAJD",
@@ -1179,7 +1183,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 611825,
+      "lobby_total": 42369,
       "pacs": [
         "DMFI",
         "JAC"
@@ -1199,7 +1203,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 165193,
+      "lobby_total": 29735,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -1216,7 +1220,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 205187,
+      "lobby_total": 64626,
       "pacs": [
         "AIPAC",
         "DMFI"
@@ -1236,7 +1240,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 118670,
+      "lobby_total": 24363,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -1258,7 +1262,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 121553,
+      "lobby_total": 142018,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -1279,7 +1283,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 4139278,
+      "lobby_total": 825520,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -1305,7 +1309,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 3095438,
+      "lobby_total": 1420637,
       "pacs": [
         "AIPAC",
         "CAJD",
@@ -1330,7 +1334,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 3399391,
+      "lobby_total": 2611650,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -1351,7 +1355,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 835569,
+      "lobby_total": 427988,
       "pacs": [
         "AIPAC",
         "NACPAC",
@@ -1373,7 +1377,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 2416584,
+      "lobby_total": 887737,
       "pacs": [
         "AIPAC",
         "CAJD",
@@ -1399,7 +1403,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 316155,
+      "lobby_total": 154218,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -1420,7 +1424,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 418609,
+      "lobby_total": 135571,
       "pacs": [
         "AIPAC",
         "JSTREET",
@@ -1445,7 +1449,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 392030,
+      "lobby_total": 85802,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -1462,7 +1466,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1582322,
+      "lobby_total": 537702,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -1487,7 +1491,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 2496416,
+      "lobby_total": 1115681,
       "pacs": [
         "AIPAC",
         "GCSC",
@@ -1513,7 +1517,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 227339,
+      "lobby_total": 107107,
       "pacs": [
         "AIPAC"
       ],
@@ -1532,7 +1536,7 @@
       "antiArms": true,
       "antiArmsLevel": "yes",
       "rlc_score": null,
-      "lobby_total": 110534,
+      "lobby_total": 4000,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -1550,7 +1554,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 509303,
+      "lobby_total": 94404,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -1567,7 +1571,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 619779,
+      "lobby_total": 164207,
       "pacs": [
         "DMFI",
         "JSTREET"
@@ -1587,7 +1591,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 237311,
+      "lobby_total": 79958,
       "pacs": [
         "AIPAC",
         "PIA"
@@ -1607,7 +1611,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 414326,
+      "lobby_total": 67986,
       "pacs": [
         "DMFI",
         "JAC",
@@ -1628,7 +1632,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 238853,
+      "lobby_total": 91466,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -1650,7 +1654,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1962671,
+      "lobby_total": 495637,
       "pacs": [
         "AIPAC",
         "CAJD",
@@ -1675,7 +1679,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 825171,
+      "lobby_total": 163493,
       "pacs": [
         "AIPAC",
         "CAJD",
@@ -1698,7 +1702,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 289190,
+      "lobby_total": 73381,
       "pacs": [
         "JAC"
       ],
@@ -1717,7 +1721,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 949493,
+      "lobby_total": 316199,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -1741,7 +1745,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 3176314,
+      "lobby_total": 357616,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -1767,7 +1771,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 2491132,
+      "lobby_total": 565185,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -1788,12 +1792,9 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 457637,
+      "lobby_total": 99430,
       "pacs": [
-        "AIPAC",
-        "JAC",
-        "JSTREET",
-        "NATPAC"
+        "AIPAC"
       ],
       "ps": "INCUMBENT",
       "bills": [],
@@ -1810,7 +1811,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1105324,
+      "lobby_total": 399581,
       "pacs": [
         "AIPAC",
         "JSTREET"
@@ -1830,7 +1831,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 267170,
+      "lobby_total": 52668,
       "pacs": [
         "AIPAC",
         "RJC"
@@ -1850,7 +1851,7 @@
       "antiArms": true,
       "antiArmsLevel": "yes",
       "rlc_score": null,
-      "lobby_total": 149802,
+      "lobby_total": 5810,
       "pacs": [
         "AMP",
         "USI"
@@ -1871,7 +1872,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 57238,
+      "lobby_total": 7027,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -1888,7 +1889,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1254627,
+      "lobby_total": 253827,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -1910,7 +1911,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 508376,
+      "lobby_total": 140372,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -1933,7 +1934,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 910177,
+      "lobby_total": 703240,
       "pacs": [
         "AIPAC"
       ],
@@ -1952,7 +1953,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1673548,
+      "lobby_total": 326707,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -1978,7 +1979,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1247085,
+      "lobby_total": 133605,
       "pacs": [
         "FIPAC",
         "JAC",
@@ -2001,7 +2002,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 152378,
+      "lobby_total": 49512,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -2023,7 +2024,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 418598,
+      "lobby_total": 107877,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -2046,7 +2047,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 573343,
+      "lobby_total": 164228,
       "pacs": [
         "AIPAC",
         "AGG",
@@ -2072,7 +2073,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 508763,
+      "lobby_total": 76408,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -2093,7 +2094,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 670414,
+      "lobby_total": 129447,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -2115,7 +2116,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1722613,
+      "lobby_total": 376561,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -2141,7 +2142,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 424800,
+      "lobby_total": 62626,
       "pacs": [
         "JAC",
         "JSTREET"
@@ -2161,7 +2162,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 332491,
+      "lobby_total": 72316,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -2182,7 +2183,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 2047002,
+      "lobby_total": 574767,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -2206,7 +2207,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 172593,
+      "lobby_total": 85654,
       "pacs": [
         "AIPAC"
       ],
@@ -2225,7 +2226,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 61163,
+      "lobby_total": 46379,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -2246,7 +2247,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 89420,
+      "lobby_total": 63547,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -2263,7 +2264,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 170049,
+      "lobby_total": 74215,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -2286,7 +2287,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 132953,
+      "lobby_total": 72587,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -2307,7 +2308,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 115173,
+      "lobby_total": 64273,
       "pacs": [
         "AIPAC",
         "IPAC"
@@ -2327,7 +2328,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1041401,
+      "lobby_total": 465193,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -2351,7 +2352,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 106732,
+      "lobby_total": 36573,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -2373,7 +2374,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 101846,
+      "lobby_total": 41949,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -2394,7 +2395,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 874118,
+      "lobby_total": 445933,
       "pacs": [
         "AIPAC",
         "BICOUNTY",
@@ -2438,7 +2439,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 193215,
+      "lobby_total": 95610,
       "pacs": [
         "AIPAC",
         "BICPAC",
@@ -2460,7 +2461,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 280369,
+      "lobby_total": 106892,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -2486,7 +2487,7 @@
       "antiArms": true,
       "antiArmsLevel": "yes",
       "rlc_score": null,
-      "lobby_total": 244182,
+      "lobby_total": 27289,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -2508,7 +2509,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 279346,
+      "lobby_total": 93368,
       "pacs": [
         "AIPAC",
         "BAYPAC",
@@ -2531,7 +2532,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 161530,
+      "lobby_total": 46090,
       "pacs": [
         "AIPAC",
         "RJC",
@@ -2552,7 +2553,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 368633,
+      "lobby_total": 81481,
       "pacs": [
         "AIPAC",
         "NACPAC",
@@ -2573,7 +2574,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 239470,
+      "lobby_total": 100713,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -2596,7 +2597,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 106305,
+      "lobby_total": 49226,
       "pacs": [
         "AIPAC",
         "AMP"
@@ -2616,7 +2617,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 368726,
+      "lobby_total": 77628,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -2637,7 +2638,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 2246400,
+      "lobby_total": 881227,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -2663,7 +2664,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 2093531,
+      "lobby_total": 820719,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -2689,7 +2690,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1546752,
+      "lobby_total": 778818,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -2713,7 +2714,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 97967,
+      "lobby_total": 44326,
       "pacs": [
         "AIPAC",
         "NACPAC",
@@ -2735,7 +2736,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 3459067,
+      "lobby_total": 1456782,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -2761,7 +2762,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 2053572,
+      "lobby_total": 1025451,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -2787,7 +2788,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 783549,
+      "lobby_total": 152426,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -2810,7 +2811,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 467245,
+      "lobby_total": 124360,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -2833,7 +2834,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 5280917,
+      "lobby_total": 804433,
       "pacs": [
         "DMFI",
         "JAC"
@@ -2853,7 +2854,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 6121706,
+      "lobby_total": 847927,
       "pacs": [
         "DMFI",
         "JAC",
@@ -2874,7 +2875,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 216590,
+      "lobby_total": 72447,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -2895,7 +2896,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 290306,
+      "lobby_total": 86537,
       "pacs": [
         "AIPAC",
         "AGG",
@@ -2942,7 +2943,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 147730,
+      "lobby_total": 68435,
       "pacs": [
         "AGG",
         "BAYPAC",
@@ -2968,7 +2969,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 343447,
+      "lobby_total": 130118,
       "pacs": [
         "AIPAC",
         "MDACC"
@@ -2988,7 +2989,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1974629,
+      "lobby_total": 621583,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -3011,7 +3012,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 364606,
+      "lobby_total": 99128,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -3033,7 +3034,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 149839,
+      "lobby_total": 64220,
       "pacs": [
         "AIPAC",
         "DESERT",
@@ -3054,7 +3055,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 10900,
+      "lobby_total": 1000,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -3071,7 +3072,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 63706,
+      "lobby_total": 20946,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -3092,7 +3093,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 238832,
+      "lobby_total": 78182,
       "pacs": [
         "AIPAC",
         "AMP"
@@ -3112,7 +3113,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 161621,
+      "lobby_total": 53621,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -3134,7 +3135,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 283242,
+      "lobby_total": 0,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -3151,7 +3152,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 716215,
+      "lobby_total": 211632,
       "pacs": [
         "FIPAC",
         "JAC",
@@ -3176,7 +3177,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 231363,
+      "lobby_total": 32848,
       "pacs": [
         "FIPAC",
         "JAC",
@@ -3197,7 +3198,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 138401,
+      "lobby_total": 51910,
       "pacs": [
         "AIPAC",
         "COPAC"
@@ -3217,10 +3218,9 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 62883,
+      "lobby_total": 27000,
       "pacs": [
-        "AIPAC",
-        "COPAC"
+        "AIPAC"
       ],
       "ps": "INCUMBENT",
       "bills": [],
@@ -3237,7 +3237,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 807474,
+      "lobby_total": 223977,
       "pacs": [
         "AIPAC",
         "AGG",
@@ -3263,7 +3263,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1549867,
+      "lobby_total": 673271,
       "pacs": [
         "AIPAC",
         "AGG",
@@ -3289,7 +3289,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 42059,
+      "lobby_total": 21870,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -3310,7 +3310,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 124660,
+      "lobby_total": 66762,
       "pacs": [
         "AIPAC",
         "NACPAC"
@@ -3330,7 +3330,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 2737130,
+      "lobby_total": 641079,
       "pacs": [
         "AGG",
         "AUSD",
@@ -3356,7 +3356,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 2639142,
+      "lobby_total": 565821,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -3377,7 +3377,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 27983,
+      "lobby_total": 20500,
       "pacs": [
         "AIPAC"
       ],
@@ -3396,7 +3396,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 368860,
+      "lobby_total": 62992,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -3455,7 +3455,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 634873,
+      "lobby_total": 89585,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -3481,7 +3481,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1493042,
+      "lobby_total": 305785,
       "pacs": [
         "DMFI",
         "JAC",
@@ -3503,7 +3503,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 110160,
+      "lobby_total": 60360,
       "pacs": [],
       "ps": "INCUMBENT",
       "bills": [],
@@ -3520,7 +3520,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1739283,
+      "lobby_total": 266094,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -3546,7 +3546,7 @@
       "antiArms": true,
       "antiArmsLevel": "yes",
       "rlc_score": null,
-      "lobby_total": 2516441,
+      "lobby_total": 376102,
       "pacs": [
         "FIPAC",
         "JAC",
@@ -3572,7 +3572,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 6670540,
+      "lobby_total": 1151586,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -3598,7 +3598,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 2054410,
+      "lobby_total": 454731,
       "pacs": [
         "JAC",
         "JSTREET",
@@ -3621,7 +3621,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 425247,
+      "lobby_total": 127143,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -3647,7 +3647,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 879942,
+      "lobby_total": 279154,
       "pacs": [
         "AIPAC",
         "CITYPAC",
@@ -3671,7 +3671,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1370152,
+      "lobby_total": 10950,
       "pacs": [
         "DMFI",
         "JAC"
@@ -3691,7 +3691,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 32030,
+      "lobby_total": 10052,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -3712,7 +3712,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 420511,
+      "lobby_total": 146857,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -3736,7 +3736,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1030989,
+      "lobby_total": 295893,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -11573,7 +11573,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-24T20:59:52.837693+00:00"
+      "fetched_at": "2026-04-25T03:21:07.791468+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11586,7 +11586,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-24T20:59:58.963580+00:00"
+      "fetched_at": "2026-04-25T03:21:16.004045+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11599,7 +11599,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-24T21:00:03.396920+00:00"
+      "fetched_at": "2026-04-25T03:21:21.038502+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11612,7 +11612,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-24T21:00:03.949718+00:00"
+      "fetched_at": "2026-04-25T03:21:21.623050+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11625,7 +11625,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-24T21:00:06.795926+00:00"
+      "fetched_at": "2026-04-25T03:21:24.815197+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11638,7 +11638,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-24T21:00:10.453373+00:00"
+      "fetched_at": "2026-04-25T03:21:29.110511+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.999,
@@ -11651,168 +11651,168 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-04-24T21:00:12.506281+00:00"
+      "fetched_at": "2026-04-25T03:21:31.286822+00:00"
     },
     "Abdul el-Sayed": {
       "prob": 0.45,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Michigan Democratic Senate nomination? \u2192 Abdul El-Sayed",
       "url": "https://www.predictit.org/markets/detail/8167/Who-will-win-the-2026-Michigan-Democratic-Senate-nomination",
-      "fetched_at": "2026-04-24T21:00:18.494846+00:00"
+      "fetched_at": "2026-04-25T03:21:38.052943+00:00"
     },
     "Ed Markey": {
       "prob": 0.83,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ed Markey",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-04-24T21:00:18.571540+00:00"
+      "fetched_at": "2026-04-25T03:21:38.127937+00:00"
     },
     "Ayanna Pressley": {
       "prob": 0.01,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ayanna Pressley",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-04-24T21:00:18.571605+00:00"
+      "fetched_at": "2026-04-25T03:21:38.127985+00:00"
     },
     "Jack Schlossberg": {
-      "prob": 0.25,
+      "prob": 0.28,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-12 House primary? \u2192 Jack Schlossberg",
       "url": "https://www.predictit.org/markets/detail/8364/Who-will-win-the-Democratic-nomination-in-the-NY-12-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.577539+00:00"
+      "fetched_at": "2026-04-25T03:21:38.134306+00:00"
     },
     "Thomas Massie": {
       "prob": 0.76,
       "src": "predictit_contract",
       "question": "Who will win the Republican nomination in the KY-04 House primary? \u2192 Thomas Massie",
       "url": "https://www.predictit.org/markets/detail/8487/Who-will-win-the-Republican-nomination-in-the-KY-04-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.668262+00:00"
+      "fetched_at": "2026-04-25T03:21:38.231167+00:00"
     },
     "Congressman Thomas Massie": {
       "prob": 0.76,
       "src": "predictit_contract",
       "question": "Who will win the Republican nomination in the KY-04 House primary? \u2192 Thomas Massie",
       "url": "https://www.predictit.org/markets/detail/8487/Who-will-win-the-Republican-nomination-in-the-KY-04-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.668961+00:00"
+      "fetched_at": "2026-04-25T03:21:38.231879+00:00"
     },
     "Claire Valdez": {
       "prob": 0.81,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-07 House primary? \u2192 Claire Valdez",
       "url": "https://www.predictit.org/markets/detail/8534/Who-will-win-the-Democratic-nomination-in-the-NY-07-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.700873+00:00"
+      "fetched_at": "2026-04-25T03:21:38.265736+00:00"
     },
     "Effie Phillips-Staley": {
       "prob": 0.19,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-17 House primary? \u2192 E. Phillips-Staley",
       "url": "https://www.predictit.org/markets/detail/8598/Who-will-win-the-Democratic-nomination-in-the-NY-17-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.718564+00:00"
+      "fetched_at": "2026-04-25T03:21:38.284278+00:00"
     },
     "Darializa Avila Chevalier": {
       "prob": 0.86,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-13 House primary? \u2192 D. Avila Chevalier",
       "url": "https://www.predictit.org/markets/detail/8658/Who-will-win-the-Democratic-nomination-in-the-NY-13-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.772419+00:00"
+      "fetched_at": "2026-04-25T03:21:38.341375+00:00"
     },
     "Ro Khanna": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-17 House primary? \u2192 Ro Khanna",
       "url": "https://www.predictit.org/markets/detail/8711/Who-will-win-the-most-votes-in-the-CA-17-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.804332+00:00"
+      "fetched_at": "2026-04-25T03:21:38.375712+00:00"
     },
     "Adam Hamawy": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-12 House primary? \u2192 Adam Hamawy",
       "url": "https://www.predictit.org/markets/detail/8713/Who-will-win-the-Democratic-nomination-in-the-NJ-12-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.808325+00:00"
+      "fetched_at": "2026-04-25T03:21:38.380031+00:00"
     },
     "Chris Bennett": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-07 House primary? \u2192 Rebecca Bennett",
       "url": "https://www.predictit.org/markets/detail/8714/Who-will-win-the-Democratic-nomination-in-the-NJ-07-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.809971+00:00"
+      "fetched_at": "2026-04-25T03:21:38.381809+00:00"
     },
     "Mussab Ali": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-08 House primary? \u2192 Mussab Ali",
       "url": "https://www.predictit.org/markets/detail/8715/Who-will-win-the-Democratic-nomination-in-the-NJ-08-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.812362+00:00"
+      "fetched_at": "2026-04-25T03:21:38.384375+00:00"
     },
     "Analilia Mejia": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-11 House primary? \u2192 Analilia Mejia",
       "url": "https://www.predictit.org/markets/detail/8717/Who-will-win-the-Democratic-nomination-in-the-NJ-11-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.814111+00:00"
+      "fetched_at": "2026-04-25T03:21:38.386234+00:00"
     },
     "Audrey Denney": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-01 House primary? \u2192 Audrey Denney",
       "url": "https://www.predictit.org/markets/detail/8721/Who-will-win-the-most-votes-in-the-CA-01-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.817181+00:00"
+      "fetched_at": "2026-04-25T03:21:38.389508+00:00"
     },
     "Mai Vang": {
       "prob": 0.91,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-07 House primary? \u2192 Mai Vang",
       "url": "https://www.predictit.org/markets/detail/8725/Who-will-win-the-most-votes-in-the-CA-07-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.823637+00:00"
+      "fetched_at": "2026-04-25T03:21:38.396399+00:00"
     },
     "Saikat Chakrabarti": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-11 House primary? \u2192 Saikat Chakrabarti",
       "url": "https://www.predictit.org/markets/detail/8726/Who-will-win-the-most-votes-in-the-CA-11-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.825010+00:00"
+      "fetched_at": "2026-04-25T03:21:38.397871+00:00"
     },
     "Randy Villegas": {
       "prob": 0.91,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-22 House primary? \u2192 Randy Villegas",
       "url": "https://www.predictit.org/markets/detail/8730/Who-will-win-the-most-votes-in-the-CA-22-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.829746+00:00"
+      "fetched_at": "2026-04-25T03:21:38.402953+00:00"
     },
     "Ang\u00e9lica Due\u00f1as": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-29 House primary? \u2192 Ang\u00e9lica M. Due\u00f1as",
       "url": "https://www.predictit.org/markets/detail/8731/Who-will-win-the-most-votes-in-the-CA-29-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.831331+00:00"
+      "fetched_at": "2026-04-25T03:21:38.404619+00:00"
     },
     "Angela Gonzales-Torres": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-34 House primary? \u2192 A. Gonzales-Torres",
       "url": "https://www.predictit.org/markets/detail/8733/Who-will-win-the-most-votes-in-the-CA-34-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.834425+00:00"
+      "fetched_at": "2026-04-25T03:21:38.407872+00:00"
     },
     "Melissa Bird": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the OR-04 House primary? \u2192 Melissa Bird",
       "url": "https://www.predictit.org/markets/detail/8748/Who-will-win-the-Democratic-nomination-in-the-OR-04-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.868297+00:00"
+      "fetched_at": "2026-04-25T03:21:38.444469+00:00"
     },
     "Lucia Simonelli": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the PA-01 House primary? \u2192 Lucia Simonelli",
       "url": "https://www.predictit.org/markets/detail/8749/Who-will-win-the-Democratic-nomination-in-the-PA-01-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.869516+00:00"
+      "fetched_at": "2026-04-25T03:21:38.445758+00:00"
     },
     "Chris Rabb": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the PA-03 House primary? \u2192 Chris Rabb",
       "url": "https://www.predictit.org/markets/detail/8750/Who-will-win-the-Democratic-nomination-in-the-PA-03-House-primary",
-      "fetched_at": "2026-04-24T21:00:18.871027+00:00"
+      "fetched_at": "2026-04-25T03:21:38.447340+00:00"
     }
   },
   "trackaipac_congress": {
@@ -11823,7 +11823,7 @@
       "party": "R",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 237976,
+      "lobby_total": 29184,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -11838,7 +11838,7 @@
       "party": "R",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 408384,
+      "lobby_total": 106961,
       "pacs": [
         "AIPAC",
         "RJC",
@@ -11853,7 +11853,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 75849,
+      "lobby_total": 30173,
       "pacs": [],
       "note": ""
     },
@@ -11864,7 +11864,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 181458,
+      "lobby_total": 63235,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -11881,7 +11881,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 1933918,
+      "lobby_total": 957427,
       "pacs": [
         "AIPAC",
         "AGG",
@@ -11901,7 +11901,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 251955,
+      "lobby_total": 116958,
       "pacs": [
         "AIPAC",
         "AFGG",
@@ -11917,7 +11917,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 75745,
+      "lobby_total": 37324,
       "pacs": [],
       "note": ""
     },
@@ -11928,7 +11928,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 257757,
+      "lobby_total": 88021,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -11946,7 +11946,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 251301,
+      "lobby_total": 75552,
       "pacs": [
         "AIPAC"
       ],
@@ -11959,7 +11959,7 @@
       "party": "R",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 1047757,
+      "lobby_total": 265262,
       "pacs": [
         "AIPAC",
         "AGG",
@@ -11979,7 +11979,7 @@
       "party": "R",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 1399667,
+      "lobby_total": 582162,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -11995,7 +11995,7 @@
       "party": "?",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 144598,
+      "lobby_total": 7599,
       "pacs": [
         "AIPAC"
       ],
@@ -12008,7 +12008,7 @@
       "party": "D",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 4461823,
+      "lobby_total": 499452,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -12025,7 +12025,7 @@
       "party": "D",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 1769097,
+      "lobby_total": 83219,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -12042,7 +12042,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 752634,
+      "lobby_total": 206443,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -12071,7 +12071,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 806788,
+      "lobby_total": 1161274,
       "pacs": [],
       "note": ""
     },
@@ -12082,7 +12082,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 748256,
+      "lobby_total": 314435,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -12101,7 +12101,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 162057,
+      "lobby_total": 39184,
       "pacs": [
         "AIPAC",
         "GCSC"
@@ -12115,7 +12115,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 2198703,
+      "lobby_total": 1139752,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -12145,7 +12145,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 55970,
+      "lobby_total": 42128,
       "pacs": [],
       "note": ""
     },
@@ -12171,7 +12171,7 @@
       "party": "R",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 712913,
+      "lobby_total": 191516,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -12191,7 +12191,7 @@
       "party": "R",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 2963774,
+      "lobby_total": 1084968,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -12209,7 +12209,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 97153,
+      "lobby_total": 25388,
       "pacs": [
         "AIPAC",
         "AMP"
@@ -12223,7 +12223,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 451148,
+      "lobby_total": 69558,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -12239,7 +12239,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 327686,
+      "lobby_total": 134574,
       "pacs": [
         "AIPAC",
         "NACPAC"
@@ -12253,7 +12253,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 179638,
+      "lobby_total": 55630,
       "pacs": [
         "AIPAC",
         "AMP"
@@ -12267,7 +12267,7 @@
       "party": "D",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 856179,
+      "lobby_total": 104055,
       "pacs": [
         "AIPAC",
         "DMFI"
@@ -12281,7 +12281,7 @@
       "party": "D",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 9550120,
+      "lobby_total": 5608830,
       "pacs": [
         "AIPAC",
         "BICOUNTY",
@@ -12312,7 +12312,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 122968,
+      "lobby_total": 58412,
       "pacs": [],
       "note": ""
     },
@@ -12323,7 +12323,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 279667,
+      "lobby_total": 86986,
       "pacs": [
         "AIPAC",
         "NORPAC"
@@ -12337,7 +12337,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 129865,
+      "lobby_total": 42735,
       "pacs": [
         "NORPAC",
         "NWPAC"
@@ -12351,7 +12351,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 278611,
+      "lobby_total": 45538,
       "pacs": [
         "AIPAC",
         "AMP"
@@ -12365,7 +12365,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 1096013,
+      "lobby_total": 269170,
       "pacs": [
         "AIPAC",
         "CAJD",
@@ -12381,7 +12381,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 241127,
+      "lobby_total": 21305,
       "pacs": [],
       "note": ""
     },
@@ -12392,7 +12392,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 321027,
+      "lobby_total": 65867,
       "pacs": [],
       "note": ""
     },
@@ -12403,7 +12403,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 1777395,
+      "lobby_total": 385400,
       "pacs": [
         "AIPAC",
         "JAC",
@@ -12429,7 +12429,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 2374025,
+      "lobby_total": 188554,
       "pacs": [
         "AIPAC",
         "AGG",
@@ -12460,8 +12460,12 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 470328,
-      "pacs": [],
+      "lobby_total": 30652,
+      "pacs": [
+        "AIPAC",
+        "DMFI",
+        "JAC"
+      ],
       "note": ""
     },
     "kevin mullin": {
@@ -12471,7 +12475,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 862323,
+      "lobby_total": 732366,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -12486,7 +12490,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 333790,
+      "lobby_total": 52780,
       "pacs": [],
       "note": ""
     },
@@ -12497,7 +12501,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 1523736,
+      "lobby_total": 161303,
       "pacs": [],
       "note": ""
     },
@@ -12508,7 +12512,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 344466,
+      "lobby_total": 49388,
       "pacs": [],
       "note": ""
     },
@@ -12519,7 +12523,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 1024567,
+      "lobby_total": 499644,
       "pacs": [
         "AIPAC",
         "DMFI"
@@ -12533,7 +12537,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 78514,
+      "lobby_total": 17668,
       "pacs": [
         "AIPAC",
         "RJC"
@@ -12547,7 +12551,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 919414,
+      "lobby_total": 346385,
       "pacs": [
         "AIPAC",
         "GCSC",
@@ -12567,7 +12571,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 724428,
+      "lobby_total": 185158,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -12584,7 +12588,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 64376,
+      "lobby_total": 31404,
       "pacs": [],
       "note": ""
     },
@@ -12595,7 +12599,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 337476,
+      "lobby_total": 50945,
       "pacs": [
         "AIPAC",
         "JSTREET"
@@ -12609,7 +12613,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 889935,
+      "lobby_total": 210646,
       "pacs": [
         "AIPAC",
         "CAJD",
@@ -12626,7 +12630,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 842456,
+      "lobby_total": 192080,
       "pacs": [
         "AIPAC",
         "CAJD",
@@ -12643,7 +12647,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 611825,
+      "lobby_total": 42369,
       "pacs": [
         "DMFI",
         "JAC"
@@ -12657,7 +12661,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 165193,
+      "lobby_total": 29735,
       "pacs": [],
       "note": ""
     },
@@ -12668,7 +12672,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 205187,
+      "lobby_total": 64626,
       "pacs": [
         "AIPAC",
         "DMFI"
@@ -12682,7 +12686,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 118670,
+      "lobby_total": 24363,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -12698,7 +12702,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 121553,
+      "lobby_total": 142018,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -12713,7 +12717,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 4139278,
+      "lobby_total": 825520,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -12733,7 +12737,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 3095438,
+      "lobby_total": 1420637,
       "pacs": [
         "AIPAC",
         "CAJD",
@@ -12752,7 +12756,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 3399391,
+      "lobby_total": 2611650,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -12767,7 +12771,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 835569,
+      "lobby_total": 427988,
       "pacs": [
         "AIPAC",
         "NACPAC",
@@ -12783,7 +12787,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 2416584,
+      "lobby_total": 887737,
       "pacs": [
         "AIPAC",
         "CAJD",
@@ -12803,7 +12807,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 316155,
+      "lobby_total": 154218,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -12818,7 +12822,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 418609,
+      "lobby_total": 135571,
       "pacs": [
         "AIPAC",
         "JSTREET",
@@ -12837,7 +12841,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 392030,
+      "lobby_total": 85802,
       "pacs": [],
       "note": ""
     },
@@ -12848,7 +12852,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 1582322,
+      "lobby_total": 537702,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -12867,7 +12871,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 2496416,
+      "lobby_total": 1115681,
       "pacs": [
         "AIPAC",
         "GCSC",
@@ -12887,7 +12891,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 227339,
+      "lobby_total": 107107,
       "pacs": [
         "AIPAC"
       ],
@@ -12900,7 +12904,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 110534,
+      "lobby_total": 4000,
       "pacs": [],
       "note": ""
     },
@@ -12911,7 +12915,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 509303,
+      "lobby_total": 94404,
       "pacs": [],
       "note": ""
     },
@@ -12922,7 +12926,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 619779,
+      "lobby_total": 164207,
       "pacs": [
         "DMFI",
         "JSTREET"
@@ -12936,7 +12940,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 237311,
+      "lobby_total": 79958,
       "pacs": [
         "AIPAC",
         "PIA"
@@ -12950,7 +12954,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 414326,
+      "lobby_total": 67986,
       "pacs": [
         "DMFI",
         "JAC",
@@ -12965,7 +12969,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 238853,
+      "lobby_total": 91466,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -12981,7 +12985,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 1962671,
+      "lobby_total": 495637,
       "pacs": [
         "AIPAC",
         "CAJD",
@@ -13000,7 +13004,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 825171,
+      "lobby_total": 163493,
       "pacs": [
         "AIPAC",
         "CAJD",
@@ -13017,7 +13021,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 289190,
+      "lobby_total": 73381,
       "pacs": [
         "JAC"
       ],
@@ -13030,7 +13034,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 949493,
+      "lobby_total": 316199,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -13048,7 +13052,7 @@
       "party": "D",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 3176314,
+      "lobby_total": 357616,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -13068,7 +13072,7 @@
       "party": "D",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 2491132,
+      "lobby_total": 565185,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -13083,12 +13087,9 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 457637,
+      "lobby_total": 99430,
       "pacs": [
-        "AIPAC",
-        "JAC",
-        "JSTREET",
-        "NATPAC"
+        "AIPAC"
       ],
       "note": ""
     },
@@ -13099,7 +13100,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 1105324,
+      "lobby_total": 399581,
       "pacs": [
         "AIPAC",
         "JSTREET"
@@ -13113,7 +13114,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 267170,
+      "lobby_total": 52668,
       "pacs": [
         "AIPAC",
         "RJC"
@@ -13127,7 +13128,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 149802,
+      "lobby_total": 5810,
       "pacs": [
         "AMP",
         "USI"
@@ -13141,7 +13142,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 57238,
+      "lobby_total": 7027,
       "pacs": [],
       "note": ""
     },
@@ -13152,7 +13153,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 1254627,
+      "lobby_total": 253827,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -13168,7 +13169,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 508376,
+      "lobby_total": 140372,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -13185,7 +13186,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 910177,
+      "lobby_total": 703240,
       "pacs": [
         "AIPAC"
       ],
@@ -13198,7 +13199,7 @@
       "party": "D",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 1673548,
+      "lobby_total": 326707,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -13218,7 +13219,7 @@
       "party": "D",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 1247085,
+      "lobby_total": 133605,
       "pacs": [
         "FIPAC",
         "JAC",
@@ -13235,7 +13236,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 152378,
+      "lobby_total": 49512,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -13251,7 +13252,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 418598,
+      "lobby_total": 107877,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -13268,7 +13269,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 573343,
+      "lobby_total": 164228,
       "pacs": [
         "AIPAC",
         "AGG",
@@ -13288,7 +13289,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 508763,
+      "lobby_total": 76408,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -13303,7 +13304,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 670414,
+      "lobby_total": 129447,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -13319,7 +13320,7 @@
       "party": "D",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 1722613,
+      "lobby_total": 376561,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -13339,7 +13340,7 @@
       "party": "D",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 424800,
+      "lobby_total": 62626,
       "pacs": [
         "JAC",
         "JSTREET"
@@ -13353,7 +13354,7 @@
       "party": "?",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 332491,
+      "lobby_total": 72316,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -13368,7 +13369,7 @@
       "party": "R",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 2047002,
+      "lobby_total": 574767,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -13386,7 +13387,7 @@
       "party": "R",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 172593,
+      "lobby_total": 85654,
       "pacs": [
         "AIPAC"
       ],
@@ -13399,7 +13400,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 61163,
+      "lobby_total": 46379,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -13414,7 +13415,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 89420,
+      "lobby_total": 63547,
       "pacs": [],
       "note": ""
     },
@@ -13425,7 +13426,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 170049,
+      "lobby_total": 74215,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -13442,7 +13443,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 132953,
+      "lobby_total": 72587,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -13457,7 +13458,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 115173,
+      "lobby_total": 64273,
       "pacs": [
         "AIPAC",
         "IPAC"
@@ -13471,7 +13472,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 1041401,
+      "lobby_total": 465193,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -13489,7 +13490,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 106732,
+      "lobby_total": 36573,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -13505,7 +13506,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 101846,
+      "lobby_total": 41949,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -13520,7 +13521,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 874118,
+      "lobby_total": 445933,
       "pacs": [
         "AIPAC",
         "BICOUNTY",
@@ -13551,7 +13552,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 193215,
+      "lobby_total": 95610,
       "pacs": [
         "AIPAC",
         "BICPAC",
@@ -13567,7 +13568,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 280369,
+      "lobby_total": 106892,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -13587,7 +13588,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 244182,
+      "lobby_total": 27289,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -13602,7 +13603,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 279346,
+      "lobby_total": 93368,
       "pacs": [
         "AIPAC",
         "BAYPAC",
@@ -13619,7 +13620,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 161530,
+      "lobby_total": 46090,
       "pacs": [
         "AIPAC",
         "RJC",
@@ -13634,7 +13635,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 368633,
+      "lobby_total": 81481,
       "pacs": [
         "AIPAC",
         "NACPAC",
@@ -13649,7 +13650,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 239470,
+      "lobby_total": 100713,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -13666,7 +13667,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 106305,
+      "lobby_total": 49226,
       "pacs": [
         "AIPAC",
         "AMP"
@@ -13680,7 +13681,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 368726,
+      "lobby_total": 77628,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -13695,7 +13696,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 2246400,
+      "lobby_total": 881227,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -13715,7 +13716,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 2093531,
+      "lobby_total": 820719,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -13735,7 +13736,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 1546752,
+      "lobby_total": 778818,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -13753,7 +13754,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 97967,
+      "lobby_total": 44326,
       "pacs": [
         "AIPAC",
         "NACPAC",
@@ -13769,7 +13770,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 3459067,
+      "lobby_total": 1456782,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -13789,7 +13790,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 2053572,
+      "lobby_total": 1025451,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -13809,7 +13810,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 783549,
+      "lobby_total": 152426,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -13826,7 +13827,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 467245,
+      "lobby_total": 124360,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -13843,7 +13844,7 @@
       "party": "D",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 5280917,
+      "lobby_total": 804433,
       "pacs": [
         "DMFI",
         "JAC"
@@ -13857,7 +13858,7 @@
       "party": "D",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 6121706,
+      "lobby_total": 847927,
       "pacs": [
         "DMFI",
         "JAC",
@@ -13872,7 +13873,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 216590,
+      "lobby_total": 72447,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -13887,7 +13888,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 290306,
+      "lobby_total": 86537,
       "pacs": [
         "AIPAC",
         "AGG",
@@ -13922,7 +13923,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 147730,
+      "lobby_total": 68435,
       "pacs": [
         "AGG",
         "BAYPAC",
@@ -13942,7 +13943,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 343447,
+      "lobby_total": 130118,
       "pacs": [
         "AIPAC",
         "MDACC"
@@ -13956,7 +13957,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 1974629,
+      "lobby_total": 621583,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -13973,7 +13974,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 364606,
+      "lobby_total": 99128,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -13989,7 +13990,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 149839,
+      "lobby_total": 64220,
       "pacs": [
         "AIPAC",
         "DESERT",
@@ -14004,7 +14005,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 10900,
+      "lobby_total": 1000,
       "pacs": [],
       "note": ""
     },
@@ -14015,7 +14016,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 63706,
+      "lobby_total": 20946,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -14030,7 +14031,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 238832,
+      "lobby_total": 78182,
       "pacs": [
         "AIPAC",
         "AMP"
@@ -14044,7 +14045,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 161621,
+      "lobby_total": 53621,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -14060,7 +14061,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 283242,
+      "lobby_total": 0,
       "pacs": [],
       "note": ""
     },
@@ -14071,7 +14072,7 @@
       "party": "D",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 716215,
+      "lobby_total": 211632,
       "pacs": [
         "FIPAC",
         "JAC",
@@ -14090,7 +14091,7 @@
       "party": "D",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 231363,
+      "lobby_total": 32848,
       "pacs": [
         "FIPAC",
         "JAC",
@@ -14105,7 +14106,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 138401,
+      "lobby_total": 51910,
       "pacs": [
         "AIPAC",
         "COPAC"
@@ -14119,10 +14120,9 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 62883,
+      "lobby_total": 27000,
       "pacs": [
-        "AIPAC",
-        "COPAC"
+        "AIPAC"
       ],
       "note": ""
     },
@@ -14133,7 +14133,7 @@
       "party": "R",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 807474,
+      "lobby_total": 223977,
       "pacs": [
         "AIPAC",
         "AGG",
@@ -14153,7 +14153,7 @@
       "party": "R",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 1549867,
+      "lobby_total": 673271,
       "pacs": [
         "AIPAC",
         "AGG",
@@ -14173,7 +14173,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 42059,
+      "lobby_total": 21870,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -14188,7 +14188,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 124660,
+      "lobby_total": 66762,
       "pacs": [
         "AIPAC",
         "NACPAC"
@@ -14202,7 +14202,7 @@
       "party": "D",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 2737130,
+      "lobby_total": 641079,
       "pacs": [
         "AGG",
         "AUSD",
@@ -14222,7 +14222,7 @@
       "party": "D",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 2639142,
+      "lobby_total": 565821,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -14237,7 +14237,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 27983,
+      "lobby_total": 20500,
       "pacs": [
         "AIPAC"
       ],
@@ -14250,7 +14250,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 368860,
+      "lobby_total": 62992,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -14290,7 +14290,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 634873,
+      "lobby_total": 89585,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -14310,7 +14310,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 1493042,
+      "lobby_total": 305785,
       "pacs": [
         "DMFI",
         "JAC",
@@ -14326,7 +14326,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 110160,
+      "lobby_total": 60360,
       "pacs": [],
       "note": ""
     },
@@ -14337,7 +14337,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 1739283,
+      "lobby_total": 266094,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -14357,7 +14357,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 2516441,
+      "lobby_total": 376102,
       "pacs": [
         "FIPAC",
         "JAC",
@@ -14376,7 +14376,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 6670540,
+      "lobby_total": 1151586,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -14396,7 +14396,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 2054410,
+      "lobby_total": 454731,
       "pacs": [
         "JAC",
         "JSTREET",
@@ -14413,7 +14413,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 425247,
+      "lobby_total": 127143,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -14433,7 +14433,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 879942,
+      "lobby_total": 279154,
       "pacs": [
         "AIPAC",
         "CITYPAC",
@@ -14451,7 +14451,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 1370152,
+      "lobby_total": 10950,
       "pacs": [
         "DMFI",
         "JAC"
@@ -14465,7 +14465,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 32030,
+      "lobby_total": 10052,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -14480,7 +14480,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 420511,
+      "lobby_total": 146857,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -14498,7 +14498,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 1030989,
+      "lobby_total": 295893,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -22791,7 +22791,7 @@
     },
     "Pramila Jayapal|WA|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early life and education Immigration from India and family background Academic and early professional experiences Advocacy and nonprofit career Founding of OneAmerica and immigrant rights work Other activism and organizational roles State legislative career Election to Washington State Senate Key bills sponsored and legislative record U.S.",
-      "fetched_at": "2026-04-23T17:28:35.675257+00:00",
+      "fetched_at": "2026-04-25T03:20:47.972133+00:00",
       "_source": "grokipedia",
       "person_slug": "Pramila_Jayapal",
       "race_slug": "2026_Washingtons_7th_congressional_district_election"
@@ -22805,7 +22805,7 @@
     },
     "Mark Pocan|WI|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Background Early life and education Early career and business ventures Wisconsin State Assembly Service Elections and campaigns Legislative tenure Key committee roles and assignments U.S.",
-      "fetched_at": "2026-04-23T17:28:35.914675+00:00",
+      "fetched_at": "2026-04-25T03:20:47.422712+00:00",
       "_source": "grokipedia",
       "person_slug": "Mark_Pocan",
       "race_slug": "2026_Wisconsins_2nd_congressional_district_election"
