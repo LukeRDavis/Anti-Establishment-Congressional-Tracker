@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-05-05T03:35:14.496073+00:00",
+  "last_updated": "2026-05-05T06:24:02.495328+00:00",
   "events": [
     {
       "id": "9a6c9939f4",
@@ -464,6 +464,18 @@
       "member": "Mark Pocan",
       "chamber": "house",
       "state": "WI",
+      "party": "D",
+      "change": "soft_to_hard",
+      "trigger": "Upgraded to Hard via co-sponsorship or vote record",
+      "source": "trackaipac+rlc"
+    },
+    {
+      "id": "ebcd97ed41",
+      "date": "2026-05-05",
+      "detected_at": "2026-05-05T06:24:02.495328+00:00",
+      "member": "Andr\u00e9 Carson",
+      "chamber": "house",
+      "state": "IN",
       "party": "D",
       "change": "soft_to_hard",
       "trigger": "Upgraded to Hard via co-sponsorship or vote record",
