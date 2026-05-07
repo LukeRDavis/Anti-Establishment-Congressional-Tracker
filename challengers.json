@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-05-07T17:54:47.195269+00:00",
+  "_last_scraped": "2026-05-07T21:11:04.507766+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -1512,6 +1512,22 @@
       "ps": "UPCOMING",
       "primaryDate": "2026-08-04",
       "website": "https://www.electhunter.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "John Duresky",
+      "state": "WA",
+      "district": 4,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "2026-08-04",
+      "website": "https://secure.actblue.com/donate/john-duresky-rejects-aipac?refcode=website-endorsement",
       "source": "trackaipac",
       "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
