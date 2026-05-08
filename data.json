@@ -1,7 +1,7 @@
 {
   "meta": {
-    "fetched_at": "2026-05-08T09:50:12.485116+00:00",
-    "trackaipac_scraped": "2026-05-08T09:50:12.485167+00:00",
+    "fetched_at": "2026-05-08T14:09:43.549488+00:00",
+    "trackaipac_scraped": "2026-05-08T14:09:43.549503+00:00",
     "member_count": 530,
     "anti_intervention_count": 39,
     "bill_count": 0,
@@ -11587,7 +11587,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-08T09:47:34.798069+00:00"
+      "fetched_at": "2026-05-08T14:07:01.864863+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11600,7 +11600,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-08T09:47:41.293878+00:00"
+      "fetched_at": "2026-05-08T14:07:09.902689+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11613,7 +11613,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-08T09:47:45.214155+00:00"
+      "fetched_at": "2026-05-08T14:07:14.303415+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11626,7 +11626,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-08T09:47:45.697215+00:00"
+      "fetched_at": "2026-05-08T14:07:14.981758+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11639,7 +11639,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-08T09:47:48.101886+00:00"
+      "fetched_at": "2026-05-08T14:07:17.886179+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11652,7 +11652,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-08T09:47:51.361392+00:00"
+      "fetched_at": "2026-05-08T14:07:21.556517+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.999,
@@ -11665,189 +11665,189 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-08T09:47:53.174859+00:00"
+      "fetched_at": "2026-05-08T14:07:23.616630+00:00"
     },
     "Abdul el-Sayed": {
       "prob": 0.53,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Michigan Democratic Senate nomination? \u2192 Abdul El-Sayed",
       "url": "https://www.predictit.org/markets/detail/8167/Who-will-win-the-2026-Michigan-Democratic-Senate-nomination",
-      "fetched_at": "2026-05-08T09:47:58.372161+00:00"
+      "fetched_at": "2026-05-08T14:07:29.487714+00:00"
     },
     "Ed Markey": {
       "prob": 0.85,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ed Markey",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-05-08T09:47:58.445506+00:00"
+      "fetched_at": "2026-05-08T14:07:29.563182+00:00"
     },
     "Ayanna Pressley": {
       "prob": 0.02,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ayanna Pressley",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-05-08T09:47:58.445567+00:00"
+      "fetched_at": "2026-05-08T14:07:29.563232+00:00"
     },
     "Jack Schlossberg": {
       "prob": 0.24,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-12 House primary? \u2192 Jack Schlossberg",
       "url": "https://www.predictit.org/markets/detail/8364/Who-will-win-the-Democratic-nomination-in-the-NY-12-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.451779+00:00"
+      "fetched_at": "2026-05-08T14:07:29.569552+00:00"
     },
     "Thomas Massie": {
       "prob": 0.77,
       "src": "predictit_contract",
       "question": "Who will win the Republican nomination in the KY-04 House primary? \u2192 Thomas Massie",
       "url": "https://www.predictit.org/markets/detail/8487/Who-will-win-the-Republican-nomination-in-the-KY-04-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.546385+00:00"
+      "fetched_at": "2026-05-08T14:07:29.667374+00:00"
     },
     "Congressman Thomas Massie": {
       "prob": 0.77,
       "src": "predictit_contract",
       "question": "Who will win the Republican nomination in the KY-04 House primary? \u2192 Thomas Massie",
       "url": "https://www.predictit.org/markets/detail/8487/Who-will-win-the-Republican-nomination-in-the-KY-04-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.547080+00:00"
+      "fetched_at": "2026-05-08T14:07:29.668093+00:00"
     },
     "Claire Valdez": {
       "prob": 0.81,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-07 House primary? \u2192 Claire Valdez",
       "url": "https://www.predictit.org/markets/detail/8534/Who-will-win-the-Democratic-nomination-in-the-NY-07-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.579308+00:00"
+      "fetched_at": "2026-05-08T14:07:29.701497+00:00"
     },
     "Effie Phillips-Staley": {
       "prob": 0.19,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-17 House primary? \u2192 E. Phillips-Staley",
       "url": "https://www.predictit.org/markets/detail/8598/Who-will-win-the-Democratic-nomination-in-the-NY-17-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.596312+00:00"
+      "fetched_at": "2026-05-08T14:07:29.719213+00:00"
     },
     "Darializa Avila Chevalier": {
       "prob": 0.92,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-13 House primary? \u2192 D. Avila Chevalier",
       "url": "https://www.predictit.org/markets/detail/8658/Who-will-win-the-Democratic-nomination-in-the-NY-13-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.646767+00:00"
+      "fetched_at": "2026-05-08T14:07:29.778557+00:00"
     },
     "Ro Khanna": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-17 House primary? \u2192 Ro Khanna",
       "url": "https://www.predictit.org/markets/detail/8711/Who-will-win-the-most-votes-in-the-CA-17-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.675071+00:00"
+      "fetched_at": "2026-05-08T14:07:29.808246+00:00"
     },
     "Adam Hamawy": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-12 House primary? \u2192 Adam Hamawy",
       "url": "https://www.predictit.org/markets/detail/8713/Who-will-win-the-Democratic-nomination-in-the-NJ-12-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.679323+00:00"
+      "fetched_at": "2026-05-08T14:07:29.812561+00:00"
     },
     "Chris Bennett": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-07 House primary? \u2192 Rebecca Bennett",
       "url": "https://www.predictit.org/markets/detail/8714/Who-will-win-the-Democratic-nomination-in-the-NJ-07-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.681094+00:00"
+      "fetched_at": "2026-05-08T14:07:29.814358+00:00"
     },
     "Mussab Ali": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-08 House primary? \u2192 Mussab Ali",
       "url": "https://www.predictit.org/markets/detail/8715/Who-will-win-the-Democratic-nomination-in-the-NJ-08-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.683615+00:00"
+      "fetched_at": "2026-05-08T14:07:29.816915+00:00"
     },
     "Analilia Mejia": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-11 House primary? \u2192 Analilia Mejia",
       "url": "https://www.predictit.org/markets/detail/8717/Who-will-win-the-Democratic-nomination-in-the-NJ-11-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.685454+00:00"
+      "fetched_at": "2026-05-08T14:07:29.818790+00:00"
     },
     "Audrey Denney": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-01 House primary? \u2192 Audrey Denney",
       "url": "https://www.predictit.org/markets/detail/8721/Who-will-win-the-most-votes-in-the-CA-01-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.688618+00:00"
+      "fetched_at": "2026-05-08T14:07:29.822114+00:00"
     },
     "Mai Vang": {
       "prob": 0.91,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-07 House primary? \u2192 Mai Vang",
       "url": "https://www.predictit.org/markets/detail/8725/Who-will-win-the-most-votes-in-the-CA-07-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.695275+00:00"
+      "fetched_at": "2026-05-08T14:07:29.829000+00:00"
     },
     "Saikat Chakrabarti": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-11 House primary? \u2192 Saikat Chakrabarti",
       "url": "https://www.predictit.org/markets/detail/8726/Who-will-win-the-most-votes-in-the-CA-11-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.696747+00:00"
+      "fetched_at": "2026-05-08T14:07:29.830473+00:00"
     },
     "Randy Villegas": {
       "prob": 0.94,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-22 House primary? \u2192 Randy Villegas",
       "url": "https://www.predictit.org/markets/detail/8730/Who-will-win-the-most-votes-in-the-CA-22-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.704440+00:00"
+      "fetched_at": "2026-05-08T14:07:29.835558+00:00"
     },
     "Ang\u00e9lica Due\u00f1as": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-29 House primary? \u2192 Ang\u00e9lica M. Due\u00f1as",
       "url": "https://www.predictit.org/markets/detail/8731/Who-will-win-the-most-votes-in-the-CA-29-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.706985+00:00"
+      "fetched_at": "2026-05-08T14:07:29.837242+00:00"
     },
     "Chris Ahuja": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-32 House primary? \u2192 Chris Ahuja",
       "url": "https://www.predictit.org/markets/detail/8732/Who-will-win-the-most-votes-in-the-CA-32-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.709670+00:00"
+      "fetched_at": "2026-05-08T14:07:29.838986+00:00"
     },
     "Angela Gonzales-Torres": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-34 House primary? \u2192 A. Gonzales-Torres",
       "url": "https://www.predictit.org/markets/detail/8733/Who-will-win-the-most-votes-in-the-CA-34-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.712067+00:00"
+      "fetched_at": "2026-05-08T14:07:29.840527+00:00"
     },
     "Delia Ramirez": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-40 House primary? \u2192 Lisa Ramirez",
       "url": "https://www.predictit.org/markets/detail/8735/Who-will-win-the-most-votes-in-the-CA-40-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.716306+00:00"
+      "fetched_at": "2026-05-08T14:07:29.843458+00:00"
     },
     "Melissa Bird": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the OR-04 House primary? \u2192 Melissa Bird",
       "url": "https://www.predictit.org/markets/detail/8748/Who-will-win-the-Democratic-nomination-in-the-OR-04-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.736889+00:00"
+      "fetched_at": "2026-05-08T14:07:29.865095+00:00"
     },
     "Lucia Simonelli": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the PA-01 House primary? \u2192 Lucia Simonelli",
       "url": "https://www.predictit.org/markets/detail/8749/Who-will-win-the-Democratic-nomination-in-the-PA-01-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.738239+00:00"
+      "fetched_at": "2026-05-08T14:07:29.866366+00:00"
     },
     "Chris Rabb": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the PA-03 House primary? \u2192 Chris Rabb",
       "url": "https://www.predictit.org/markets/detail/8750/Who-will-win-the-Democratic-nomination-in-the-PA-03-House-primary",
-      "fetched_at": "2026-05-08T09:47:58.739755+00:00"
+      "fetched_at": "2026-05-08T14:07:29.867939+00:00"
     },
     "Barry Moore": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Alabama Republican Senate nomination? \u2192 Barry Moore",
       "url": "https://www.predictit.org/markets/detail/8781/Who-will-win-the-2026-Alabama-Republican-Senate-nomination",
-      "fetched_at": "2026-05-08T09:47:58.772098+00:00"
+      "fetched_at": "2026-05-08T14:07:29.901811+00:00"
     }
   },
   "trackaipac_congress": {
@@ -22655,7 +22655,7 @@
     },
     "Greg Casar|TX|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Background Early life and family origins Education and formative influences Pre-political career Role at Workers Defense Project Advocacy and organizing efforts Austin City Council tenure Elections and political rise Legislative record and initiatives Criticisms and local controversies U.S.",
-      "fetched_at": "2026-05-07T10:32:14.771690+00:00",
+      "fetched_at": "2026-05-08T14:06:41.872980+00:00",
       "_source": "grokipedia",
       "person_slug": "Greg_Casar",
       "race_slug": "2026_Texas_37th_congressional_district_election"
@@ -22669,14 +22669,14 @@
     },
     "Brandon Herrera|TX|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early Life Childhood and Education Initial Firearms Interest YouTube Career Launch of The AK Guy Channel Growth and Milestones Content Creation Firearms Education and Analysis Custom Builds and Innovations Public Persona Humor and Commentary Style Controversies in Media Political Activities 2024 Congressional Campaign 2026 Election Bid Advocacy and Influence Second Amendment Positions Broader Cultural Impact Reception Media Coverage Public and Political Res.",
-      "fetched_at": "2026-05-07T10:32:14.792241+00:00",
+      "fetched_at": "2026-05-08T14:06:41.852915+00:00",
       "_source": "grokipedia",
       "person_slug": "Brandon_Herrera",
       "race_slug": "2026_Texas_23th_congressional_district_election"
     },
     "Ilhan Omar|MN|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early Life and Background Childhood in Somalia Immigration to the United States Personal Life Family and Relationships Religious and Cultural Identity Education and Pre-Political Career Formal Education Early Professional Roles State Legislative Career 2016 Election to Minnesota House Legislative Record in Minnesota U.S. Congressional Career 2018 Election to U.S.",
-      "fetched_at": "2026-05-07T10:32:14.833441+00:00",
+      "fetched_at": "2026-05-08T14:06:41.956341+00:00",
       "_source": "grokipedia",
       "person_slug": "Ilhan_Omar",
       "race_slug": "2026_Minnesotas_5th_congressional_district_election"
@@ -22697,49 +22697,49 @@
     },
     "Rashida Tlaib|MI|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early Life and Education Family Background and Upbringing Academic Pursuits and Early Influences State Political Career Entry into Michigan Legislature Legislative Record and Policy Focus Early Controversies and Public Engagements Congressional Elections 2018 Primary Victory and General Election Re-elections from 2020 to 2024 Congressional Tenure Committee Assignments and Caucus Roles Key Legislative Initiatives and Votes Interactions with Leadership and Pe.",
-      "fetched_at": "2026-05-07T10:32:15.401278+00:00",
+      "fetched_at": "2026-05-08T14:06:42.056204+00:00",
       "_source": "grokipedia",
       "person_slug": "Rashida_Tlaib",
       "race_slug": "2026_Michigans_12th_congressional_district_election"
     },
     "Paul Gosar|AZ|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early life and education Family background and upbringing Academic training and early professional development Dental career Establishment and operation of practice Professional contributions and community involvement Entry into elective office 2010 congressional campaign and victory Factors influencing initial political success Congressional service Elections and reelections Committee assignments and caucus affiliations Legislative record Key bills sponsor.",
-      "fetched_at": "2026-05-07T10:32:14.855538+00:00",
+      "fetched_at": "2026-05-08T14:06:41.651650+00:00",
       "_source": "grokipedia",
       "person_slug": "Paul_Gosar",
       "race_slug": "2026_Arizonas_9th_congressional_district_election"
     },
     "Lateefah Simon|CA|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early Life and Education Childhood and Upbringing Formal Education Activism and Professional Background Youth Advocacy Work Collaboration with Criminal Justice Initiatives Local and Regional Political Roles BART Board Service Key Decisions and Outcomes State Legislative Career California Assembly Tenure Legislative Priorities and Record Federal Congressional Career 2024 Election and Transition Committee Assignments and Caucuses Early Legislative Actions Pol.",
-      "fetched_at": "2026-05-07T10:32:14.834953+00:00",
+      "fetched_at": "2026-05-08T14:06:41.715055+00:00",
       "_source": "grokipedia",
       "person_slug": "Lateefah_Simon",
       "race_slug": "2026_Californias_12th_congressional_district_election"
     },
     "Ro Khanna|CA|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early life and education Family background and upbringing Academic career and influences Pre-congressional career Legal and professional roles Academic and advisory positions Early political campaigns and involvement Electoral history Initial 2004 campaign Challenges against incumbent Mike Honda (2012\u20132014) 2016 victory and reelections through 2024 Congressional service Committee assignments and caucus roles Economic policy and technology initiatives Foreig.",
-      "fetched_at": "2026-05-07T10:32:15.362165+00:00",
+      "fetched_at": "2026-05-08T14:06:42.959463+00:00",
       "_source": "grokipedia",
       "person_slug": "Ro_Khanna",
       "race_slug": "2026_Californias_17th_congressional_district_election"
     },
     "Lauren Boebert|CO|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early life and background Childhood and family origins Education and early influences Early career Business endeavors prior to politics Ownership and operation of Shooters Grill Rise to political prominence 2020 congressional campaign and election Transition to national office Congressional service Elections and district representation 2020 election 2022 election 2024 election and district switch 2020 election 2022 election 2024 election and district switch.",
-      "fetched_at": "2026-05-07T10:32:15.619592+00:00",
+      "fetched_at": "2026-05-08T14:06:42.767120+00:00",
       "_source": "grokipedia",
       "person_slug": "Lauren_Boebert",
       "race_slug": "2026_Colorados_4th_congressional_district_election"
     },
     "Maxwell Frost|FL|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early Life and Background Family Origins and Childhood Education Activism and Pre-Political Career Gun Violence Prevention Efforts Organizational and Campaign Roles Entry into Elective Office 2022 Congressional Campaign Election Victory and District Demographics Congressional Career Committee Assignments and Caucus Participation Sponsored Legislation and Amendments Policy Positions Environmental and Climate Policies Firearms Regulation and Second Amendment .",
-      "fetched_at": "2026-05-07T10:32:15.612312+00:00",
+      "fetched_at": "2026-05-08T14:06:42.633495+00:00",
       "_source": "grokipedia",
       "person_slug": "Maxwell_Frost",
       "race_slug": "2026_Floridas_10th_congressional_district_election"
     },
     "Anna Paulina Luna|FL|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early Life and Background Family Origins and Childhood Upbringing and Influences Education and Military Service Academic Background Service in the U.S.",
-      "fetched_at": "2026-05-07T10:32:15.600541+00:00",
+      "fetched_at": "2026-05-08T14:06:42.883580+00:00",
       "_source": "grokipedia",
       "person_slug": "Anna_Paulina_Luna",
       "race_slug": "2026_Floridas_13th_congressional_district_election"
@@ -22858,7 +22858,7 @@
     },
     "Analilia Mejia|NJ|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early life and education Early life Education Career Labor and union organizing New Jersey Working Families Alliance Bernie Sanders campaign and federal service Center for Popular Democracy Role and responsibilities Key advocacy initiatives 2026 congressional campaign Announcement and platform Democratic primary General election Endorsements Political positions Economic and labor policies Healthcare, immigration, and social justice Personal life Family and .",
-      "fetched_at": "2026-05-07T10:32:15.987596+00:00",
+      "fetched_at": "2026-05-08T14:06:43.492903+00:00",
       "_source": "grokipedia",
       "person_slug": "Analilia_Mejia",
       "race_slug": "2026_New_Jerseys_11th_congressional_district_election"
