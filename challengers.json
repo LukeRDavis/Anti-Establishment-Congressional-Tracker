@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-05-11T18:01:33.326835+00:00",
+  "_last_scraped": "2026-05-11T21:24:34.079739+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -705,6 +705,22 @@
       "incumbentParty": ""
     },
     {
+      "name": "Sarah Preu",
+      "state": "KS",
+      "district": 3,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "2026-08-04",
+      "website": "https://www.sarahpreu2026.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
       "name": "Congressman Thomas Massie",
       "state": "KY",
       "district": 4,
@@ -717,6 +733,22 @@
       "website": "",
       "source": "rlc_endorsed",
       "note": "Endorsed by Republican Liberty Caucus for Kentucky\u2019s 4th Congressional District",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Erin Petrey",
+      "state": "KY",
+      "district": 6,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "2026-05-19",
+      "website": "https://erinpetrey.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
       "incumbentParty": ""
     },
