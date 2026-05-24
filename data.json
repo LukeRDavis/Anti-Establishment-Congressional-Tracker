@@ -1,12 +1,12 @@
 {
   "meta": {
-    "fetched_at": "2026-05-23T21:05:50.545505+00:00",
-    "trackaipac_scraped": "2026-05-23T21:05:50.545521+00:00",
+    "fetched_at": "2026-05-24T04:20:59.187887+00:00",
+    "trackaipac_scraped": "2026-05-24T04:20:59.187902+00:00",
     "member_count": 530,
     "anti_intervention_count": 39,
     "bill_count": 0,
     "challenger_count": 111,
-    "history_events": 3054,
+    "history_events": 3093,
     "grok_enriched": 0,
     "odds_covered": 31,
     "version": 8,
@@ -11585,7 +11585,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-23T21:02:57.950804+00:00"
+      "fetched_at": "2026-05-24T04:18:11.648477+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11598,7 +11598,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-23T21:03:06.103151+00:00"
+      "fetched_at": "2026-05-24T04:18:18.464067+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11611,7 +11611,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-23T21:03:10.593560+00:00"
+      "fetched_at": "2026-05-24T04:18:22.534651+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11624,7 +11624,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-23T21:03:11.187528+00:00"
+      "fetched_at": "2026-05-24T04:18:23.023651+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11637,7 +11637,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-23T21:03:14.273832+00:00"
+      "fetched_at": "2026-05-24T04:18:25.586508+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11650,7 +11650,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-23T21:03:18.358402+00:00"
+      "fetched_at": "2026-05-24T04:18:28.763921+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.999,
@@ -11663,175 +11663,175 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-23T21:03:20.576980+00:00"
+      "fetched_at": "2026-05-24T04:18:30.618265+00:00"
     },
     "Abdul el-Sayed": {
-      "prob": 0.59,
+      "prob": 0.58,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Michigan Democratic Senate nomination? \u2192 Abdul El-Sayed",
       "url": "https://www.predictit.org/markets/detail/8167/Who-will-win-the-2026-Michigan-Democratic-Senate-nomination",
-      "fetched_at": "2026-05-23T21:03:26.879098+00:00"
+      "fetched_at": "2026-05-24T04:18:35.512229+00:00"
     },
     "Ed Markey": {
       "prob": 0.85,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ed Markey",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-05-23T21:03:26.957212+00:00"
+      "fetched_at": "2026-05-24T04:18:35.588966+00:00"
     },
     "Ayanna Pressley": {
       "prob": 0.02,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ayanna Pressley",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-05-23T21:03:26.957262+00:00"
+      "fetched_at": "2026-05-24T04:18:35.589027+00:00"
     },
     "Jack Schlossberg": {
-      "prob": 0.11,
+      "prob": 0.09,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-12 House primary? \u2192 Jack Schlossberg",
       "url": "https://www.predictit.org/markets/detail/8364/Who-will-win-the-Democratic-nomination-in-the-NY-12-House-primary",
-      "fetched_at": "2026-05-23T21:03:26.964023+00:00"
+      "fetched_at": "2026-05-24T04:18:35.595813+00:00"
     },
     "Claire Valdez": {
       "prob": 0.81,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-07 House primary? \u2192 Claire Valdez",
       "url": "https://www.predictit.org/markets/detail/8534/Who-will-win-the-Democratic-nomination-in-the-NY-07-House-primary",
-      "fetched_at": "2026-05-23T21:03:27.105609+00:00"
+      "fetched_at": "2026-05-24T04:18:35.729919+00:00"
     },
     "Effie Phillips-Staley": {
       "prob": 0.19,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-17 House primary? \u2192 E. Phillips-Staley",
       "url": "https://www.predictit.org/markets/detail/8598/Who-will-win-the-Democratic-nomination-in-the-NY-17-House-primary",
-      "fetched_at": "2026-05-23T21:03:27.123328+00:00"
+      "fetched_at": "2026-05-24T04:18:35.747984+00:00"
     },
     "Darializa Avila Chevalier": {
       "prob": 0.92,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-13 House primary? \u2192 D. Avila Chevalier",
       "url": "https://www.predictit.org/markets/detail/8658/Who-will-win-the-Democratic-nomination-in-the-NY-13-House-primary",
-      "fetched_at": "2026-05-23T21:03:27.169048+00:00"
+      "fetched_at": "2026-05-24T04:18:35.794374+00:00"
     },
     "Ro Khanna": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-17 House primary? \u2192 Ro Khanna",
       "url": "https://www.predictit.org/markets/detail/8711/Who-will-win-the-most-votes-in-the-CA-17-House-primary",
-      "fetched_at": "2026-05-23T21:03:27.191474+00:00"
+      "fetched_at": "2026-05-24T04:18:35.816830+00:00"
     },
     "Adam Hamawy": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-12 House primary? \u2192 Adam Hamawy",
       "url": "https://www.predictit.org/markets/detail/8713/Who-will-win-the-Democratic-nomination-in-the-NJ-12-House-primary",
-      "fetched_at": "2026-05-23T21:03:27.196048+00:00"
+      "fetched_at": "2026-05-24T04:18:35.821443+00:00"
     },
     "Chris Bennett": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-07 House primary? \u2192 Rebecca Bennett",
       "url": "https://www.predictit.org/markets/detail/8714/Who-will-win-the-Democratic-nomination-in-the-NJ-07-House-primary",
-      "fetched_at": "2026-05-23T21:03:27.197884+00:00"
+      "fetched_at": "2026-05-24T04:18:35.823294+00:00"
     },
     "Mussab Ali": {
       "prob": 0.98,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-08 House primary? \u2192 Mussab Ali",
       "url": "https://www.predictit.org/markets/detail/8715/Who-will-win-the-Democratic-nomination-in-the-NJ-08-House-primary",
-      "fetched_at": "2026-05-23T21:03:27.200621+00:00"
+      "fetched_at": "2026-05-24T04:18:35.826079+00:00"
     },
     "Analilia Mejia": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-11 House primary? \u2192 Analilia Mejia",
       "url": "https://www.predictit.org/markets/detail/8717/Who-will-win-the-Democratic-nomination-in-the-NJ-11-House-primary",
-      "fetched_at": "2026-05-23T21:03:27.202571+00:00"
+      "fetched_at": "2026-05-24T04:18:35.828060+00:00"
     },
     "Audrey Denney": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-01 House primary? \u2192 Audrey Denney",
       "url": "https://www.predictit.org/markets/detail/8721/Who-will-win-the-most-votes-in-the-CA-01-House-primary",
-      "fetched_at": "2026-05-23T21:03:27.206010+00:00"
+      "fetched_at": "2026-05-24T04:18:35.831516+00:00"
     },
     "Mai Vang": {
       "prob": 0.91,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-07 House primary? \u2192 Mai Vang",
       "url": "https://www.predictit.org/markets/detail/8725/Who-will-win-the-most-votes-in-the-CA-07-House-primary",
-      "fetched_at": "2026-05-23T21:03:27.213264+00:00"
+      "fetched_at": "2026-05-24T04:18:35.838860+00:00"
     },
     "Saikat Chakrabarti": {
       "prob": 0.9,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-11 House primary? \u2192 Saikat Chakrabarti",
       "url": "https://www.predictit.org/markets/detail/8726/Who-will-win-the-most-votes-in-the-CA-11-House-primary",
-      "fetched_at": "2026-05-23T21:03:27.214824+00:00"
+      "fetched_at": "2026-05-24T04:18:35.840438+00:00"
     },
     "Randy Villegas": {
       "prob": 0.94,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-22 House primary? \u2192 Randy Villegas",
       "url": "https://www.predictit.org/markets/detail/8730/Who-will-win-the-most-votes-in-the-CA-22-House-primary",
-      "fetched_at": "2026-05-23T21:03:27.220148+00:00"
+      "fetched_at": "2026-05-24T04:18:35.845846+00:00"
     },
     "Ang\u00e9lica Due\u00f1as": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-29 House primary? \u2192 Ang\u00e9lica M. Due\u00f1as",
       "url": "https://www.predictit.org/markets/detail/8731/Who-will-win-the-most-votes-in-the-CA-29-House-primary",
-      "fetched_at": "2026-05-23T21:03:27.221898+00:00"
+      "fetched_at": "2026-05-24T04:18:35.847624+00:00"
     },
     "Chris Ahuja": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-32 House primary? \u2192 Chris Ahuja",
       "url": "https://www.predictit.org/markets/detail/8732/Who-will-win-the-most-votes-in-the-CA-32-House-primary",
-      "fetched_at": "2026-05-23T21:03:27.223712+00:00"
+      "fetched_at": "2026-05-24T04:18:35.849474+00:00"
     },
     "Angela Gonzales-Torres": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-34 House primary? \u2192 A. Gonzales-Torres",
       "url": "https://www.predictit.org/markets/detail/8733/Who-will-win-the-most-votes-in-the-CA-34-House-primary",
-      "fetched_at": "2026-05-23T21:03:27.225329+00:00"
+      "fetched_at": "2026-05-24T04:18:35.851131+00:00"
     },
     "Delia Ramirez": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-40 House primary? \u2192 Lisa Ramirez",
       "url": "https://www.predictit.org/markets/detail/8735/Who-will-win-the-most-votes-in-the-CA-40-House-primary",
-      "fetched_at": "2026-05-23T21:03:27.228301+00:00"
+      "fetched_at": "2026-05-24T04:18:35.854151+00:00"
     },
     "Melissa Bird": {
       "prob": 0.91,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the OR-04 House primary? \u2192 Melissa Bird",
       "url": "https://www.predictit.org/markets/detail/8748/Who-will-win-the-Democratic-nomination-in-the-OR-04-House-primary",
-      "fetched_at": "2026-05-23T21:03:27.246274+00:00"
+      "fetched_at": "2026-05-24T04:18:35.872347+00:00"
     },
     "Lucia Simonelli": {
       "prob": 0.56,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the PA-01 House primary? \u2192 Lucia Simonelli",
       "url": "https://www.predictit.org/markets/detail/8749/Who-will-win-the-Democratic-nomination-in-the-PA-01-House-primary",
-      "fetched_at": "2026-05-23T21:03:27.247635+00:00"
+      "fetched_at": "2026-05-24T04:18:35.873716+00:00"
     },
     "Chris Rabb": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the PA-03 House primary? \u2192 Chris Rabb",
       "url": "https://www.predictit.org/markets/detail/8750/Who-will-win-the-Democratic-nomination-in-the-PA-03-House-primary",
-      "fetched_at": "2026-05-23T21:03:27.249278+00:00"
+      "fetched_at": "2026-05-24T04:18:35.875391+00:00"
     },
     "Barry Moore": {
       "prob": 0.97,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Alabama Republican Senate nomination? \u2192 Barry Moore",
       "url": "https://www.predictit.org/markets/detail/8781/Who-will-win-the-2026-Alabama-Republican-Senate-nomination",
-      "fetched_at": "2026-05-23T21:03:27.279020+00:00"
+      "fetched_at": "2026-05-24T04:18:35.905328+00:00"
     }
   },
   "trackaipac_congress": {
@@ -22012,539 +22012,6 @@
         }
       ],
       "url": "https://clerk.house.gov/Votes/2024152"
-    },
-    "118-hr8035": {
-      "id": "118-hr8035",
-      "desc": "Fire Weather Development Act",
-      "legis": "H R 4866",
-      "date": "29-Apr-2024",
-      "yeas": 341,
-      "nays": 87,
-      "nay_members": [
-        {
-          "name_id": "A000055",
-          "name": "Aderholt",
-          "party": "R",
-          "state": "AL"
-        },
-        {
-          "name_id": "A000379",
-          "name": "Alford",
-          "party": "R",
-          "state": "MO"
-        },
-        {
-          "name_id": "A000375",
-          "name": "Arrington",
-          "party": "R",
-          "state": "TX"
-        },
-        {
-          "name_id": "B001299",
-          "name": "Banks",
-          "party": "R",
-          "state": "IN"
-        },
-        {
-          "name_id": "B001314",
-          "name": "Bean (FL)",
-          "party": "R",
-          "state": "FL"
-        },
-        {
-          "name_id": "B001302",
-          "name": "Biggs",
-          "party": "R",
-          "state": "AZ"
-        },
-        {
-          "name_id": "B001311",
-          "name": "Bishop (NC)",
-          "party": "R",
-          "state": "NC"
-        },
-        {
-          "name_id": "B000574",
-          "name": "Blumenauer",
-          "party": "D",
-          "state": "OR"
-        },
-        {
-          "name_id": "B000825",
-          "name": "Boebert",
-          "party": "R",
-          "state": "CO"
-        },
-        {
-          "name_id": "B001317",
-          "name": "Brecheen",
-          "party": "R",
-          "state": "OK"
-        },
-        {
-          "name_id": "B001315",
-          "name": "Budzinski",
-          "party": "D",
-          "state": "IL"
-        },
-        {
-          "name_id": "B001309",
-          "name": "Burchett",
-          "party": "R",
-          "state": "TN"
-        },
-        {
-          "name_id": "B001316",
-          "name": "Burlison",
-          "party": "R",
-          "state": "MO"
-        },
-        {
-          "name_id": "C001125",
-          "name": "Carter (LA)",
-          "party": "D",
-          "state": "LA"
-        },
-        {
-          "name_id": "C001131",
-          "name": "Casar",
-          "party": "D",
-          "state": "TX"
-        },
-        {
-          "name_id": "C001118",
-          "name": "Cline",
-          "party": "R",
-          "state": "VA"
-        },
-        {
-          "name_id": "C001115",
-          "name": "Cloud",
-          "party": "R",
-          "state": "TX"
-        },
-        {
-          "name_id": "C001116",
-          "name": "Clyde",
-          "party": "R",
-          "state": "GA"
-        },
-        {
-          "name_id": "C001053",
-          "name": "Cole",
-          "party": "R",
-          "state": "OK"
-        },
-        {
-          "name_id": "C001129",
-          "name": "Collins",
-          "party": "R",
-          "state": "GA"
-        },
-        {
-          "name_id": "C001108",
-          "name": "Comer",
-          "party": "R",
-          "state": "KY"
-        },
-        {
-          "name_id": "C001132",
-          "name": "Crane",
-          "party": "R",
-          "state": "AZ"
-        },
-        {
-          "name_id": "C001087",
-          "name": "Crawford",
-          "party": "R",
-          "state": "AR"
-        },
-        {
-          "name_id": "C001114",
-          "name": "Curtis",
-          "party": "R",
-          "state": "UT"
-        },
-        {
-          "name_id": "D000626",
-          "name": "Davidson",
-          "party": "R",
-          "state": "OH"
-        },
-        {
-          "name_id": "D000600",
-          "name": "Diaz-Balart",
-          "party": "R",
-          "state": "FL"
-        },
-        {
-          "name_id": "D000032",
-          "name": "Donalds",
-          "party": "R",
-          "state": "FL"
-        },
-        {
-          "name_id": "D000615",
-          "name": "Duncan",
-          "party": "R",
-          "state": "SC"
-        },
-        {
-          "name_id": "E000296",
-          "name": "Evans",
-          "party": "D",
-          "state": "PA"
-        },
-        {
-          "name_id": "F000246",
-          "name": "Fallon",
-          "party": "R",
-          "state": "TX"
-        },
-        {
-          "name_id": "F000471",
-          "name": "Fitzgerald",
-          "party": "R",
-          "state": "WI"
-        },
-        {
-          "name_id": "F000450",
-          "name": "Foxx",
-          "party": "R",
-          "state": "NC"
-        },
-        {
-          "name_id": "F000478",
-          "name": "Fry",
-          "party": "R",
-          "state": "SC"
-        },
-        {
-          "name_id": "G000578",
-          "name": "Gaetz",
-          "party": "R",
-          "state": "FL"
-        },
-        {
-          "name_id": "G000585",
-          "name": "Gomez",
-          "party": "D",
-          "state": "CA"
-        },
-        {
-          "name_id": "G000595",
-          "name": "Good (VA)",
-          "party": "R",
-          "state": "VA"
-        },
-        {
-          "name_id": "G000565",
-          "name": "Gosar",
-          "party": "R",
-          "state": "AZ"
-        },
-        {
-          "name_id": "G000377",
-          "name": "Granger",
-          "party": "R",
-          "state": "TX"
-        },
-        {
-          "name_id": "G000596",
-          "name": "Greene (GA)",
-          "party": "R",
-          "state": "GA"
-        },
-        {
-          "name_id": "G000551",
-          "name": "Grijalva",
-          "party": "D",
-          "state": "AZ"
-        },
-        {
-          "name_id": "H001096",
-          "name": "Hageman",
-          "party": "R",
-          "state": "WY"
-        },
-        {
-          "name_id": "H001052",
-          "name": "Harris",
-          "party": "R",
-          "state": "MD"
-        },
-        {
-          "name_id": "H001086",
-          "name": "Harshbarger",
-          "party": "R",
-          "state": "TN"
-        },
-        {
-          "name_id": "H001077",
-          "name": "Higgins (LA)",
-          "party": "R",
-          "state": "LA"
-        },
-        {
-          "name_id": "H001095",
-          "name": "Hunt",
-          "party": "R",
-          "state": "TX"
-        },
-        {
-          "name_id": "J000304",
-          "name": "Jackson (TX)",
-          "party": "R",
-          "state": "TX"
-        },
-        {
-          "name_id": "J000032",
-          "name": "Jackson Lee",
-          "party": "D",
-          "state": "TX"
-        },
-        {
-          "name_id": "J000302",
-          "name": "Joyce (PA)",
-          "party": "R",
-          "state": "PA"
-        },
-        {
-          "name_id": "K000400",
-          "name": "Kamlager-Dove",
-          "party": "D",
-          "state": "CA"
-        },
-        {
-          "name_id": "K000394",
-          "name": "Kim (NJ)",
-          "party": "D",
-          "state": "NJ"
-        },
-        {
-          "name_id": "K000392",
-          "name": "Kustoff",
-          "party": "R",
-          "state": "TN"
-        },
-        {
-          "name_id": "L000578",
-          "name": "LaMalfa",
-          "party": "R",
-          "state": "CA"
-        },
-        {
-          "name_id": "L000600",
-          "name": "Langworthy",
-          "party": "R",
-          "state": "NY"
-        },
-        {
-          "name_id": "L000589",
-          "name": "Lesko",
-          "party": "R",
-          "state": "AZ"
-        },
-        {
-          "name_id": "L000596",
-          "name": "Luna",
-          "party": "R",
-          "state": "FL"
-        },
-        {
-          "name_id": "M001223",
-          "name": "Magaziner",
-          "party": "D",
-          "state": "RI"
-        },
-        {
-          "name_id": "M001184",
-          "name": "Massie",
-          "party": "R",
-          "state": "KY"
-        },
-        {
-          "name_id": "M001156",
-          "name": "McHenry",
-          "party": "R",
-          "state": "NC"
-        },
-        {
-          "name_id": "M000687",
-          "name": "Mfume",
-          "party": "D",
-          "state": "MD"
-        },
-        {
-          "name_id": "M001211",
-          "name": "Miller (IL)",
-          "party": "R",
-          "state": "IL"
-        },
-        {
-          "name_id": "M001216",
-          "name": "Mills",
-          "party": "R",
-          "state": "FL"
-        },
-        {
-          "name_id": "M001195",
-          "name": "Mooney",
-          "party": "R",
-          "state": "WV"
-        },
-        {
-          "name_id": "M001212",
-          "name": "Moore (AL)",
-          "party": "R",
-          "state": "AL"
-        },
-        {
-          "name_id": "N000026",
-          "name": "Nehls",
-          "party": "R",
-          "state": "TX"
-        },
-        {
-          "name_id": "N000190",
-          "name": "Norman",
-          "party": "R",
-          "state": "SC"
-        },
-        {
-          "name_id": "O000175",
-          "name": "Ogles",
-          "party": "R",
-          "state": "TN"
-        },
-        {
-          "name_id": "P000197",
-          "name": "Pelosi",
-          "party": "D",
-          "state": "CA"
-        },
-        {
-          "name_id": "P000605",
-          "name": "Perry",
-          "party": "R",
-          "state": "PA"
-        },
-        {
-          "name_id": "P000608",
-          "name": "Peters",
-          "party": "D",
-          "state": "CA"
-        },
-        {
-          "name_id": "P000599",
-          "name": "Posey",
-          "party": "R",
-          "state": "FL"
-        },
-        {
-          "name_id": "R000612",
-          "name": "Rose",
-          "party": "R",
-          "state": "TN"
-        },
-        {
-          "name_id": "R000103",
-          "name": "Rosendale",
-          "party": "R",
-          "state": "MT"
-        },
-        {
-          "name_id": "R000614",
-          "name": "Roy",
-          "party": "R",
-          "state": "TX"
-        },
-        {
-          "name_id": "R000609",
-          "name": "Rutherford",
-          "party": "R",
-          "state": "FL"
-        },
-        {
-          "name_id": "S001224",
-          "name": "Self",
-          "party": "R",
-          "state": "TX"
-        },
-        {
-          "name_id": "S001185",
-          "name": "Sewell",
-          "party": "D",
-          "state": "AL"
-        },
-        {
-          "name_id": "S001207",
-          "name": "Sherrill",
-          "party": "D",
-          "state": "NJ"
-        },
-        {
-          "name_id": "S001172",
-          "name": "Smith (NE)",
-          "party": "R",
-          "state": "NE"
-        },
-        {
-          "name_id": "S000929",
-          "name": "Spartz",
-          "party": "R",
-          "state": "IN"
-        },
-        {
-          "name_id": "S001214",
-          "name": "Steube",
-          "party": "R",
-          "state": "FL"
-        },
-        {
-          "name_id": "S001220",
-          "name": "Strong",
-          "party": "R",
-          "state": "AL"
-        },
-        {
-          "name_id": "S001193",
-          "name": "Swalwell",
-          "party": "D",
-          "state": "CA"
-        },
-        {
-          "name_id": "S001223",
-          "name": "Sykes",
-          "party": "D",
-          "state": "OH"
-        },
-        {
-          "name_id": "T000486",
-          "name": "Torres (NY)",
-          "party": "D",
-          "state": "NY"
-        },
-        {
-          "name_id": "W000823",
-          "name": "Waltz",
-          "party": "R",
-          "state": "FL"
-        },
-        {
-          "name_id": "W000825",
-          "name": "Wexton",
-          "party": "D",
-          "state": "VA"
-        },
-        {
-          "name_id": "W000826",
-          "name": "Wild",
-          "party": "D",
-          "state": "PA"
-        }
-      ],
-      "url": "https://clerk.house.gov/Votes/2024153"
     }
   },
   "ai_cache": {},
@@ -22571,7 +22038,7 @@
     },
     "Greg Casar|TX|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Background Early life and family origins Education and formative influences Pre-political career Role at Workers Defense Project Advocacy and organizing efforts Austin City Council tenure Elections and political rise Legislative record and initiatives Criticisms and local controversies U.S.",
-      "fetched_at": "2026-05-23T03:56:36.306508+00:00",
+      "fetched_at": "2026-05-24T04:17:52.611839+00:00",
       "_source": "grokipedia",
       "person_slug": "Greg_Casar",
       "race_slug": "2026_Texas_37th_congressional_district_election"
@@ -22585,14 +22052,14 @@
     },
     "Brandon Herrera|TX|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early Life Childhood and Education Initial Firearms Interest YouTube Career Launch of The AK Guy Channel Growth and Milestones Content Creation Firearms Education and Analysis Custom Builds and Innovations Public Persona Humor and Commentary Style Controversies in Media Political Activities 2024 Congressional Campaign 2026 Election Bid Advocacy and Influence Second Amendment Positions Broader Cultural Impact Reception Media Coverage Public and Political Res.",
-      "fetched_at": "2026-05-23T03:56:36.355619+00:00",
+      "fetched_at": "2026-05-24T04:17:52.598761+00:00",
       "_source": "grokipedia",
       "person_slug": "Brandon_Herrera",
       "race_slug": "2026_Texas_23th_congressional_district_election"
     },
     "Ilhan Omar|MN|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early Life and Background Childhood in Somalia Immigration to the United States Personal Life Family and Relationships Religious and Cultural Identity Education and Pre-Political Career Formal Education Early Professional Roles State Legislative Career 2016 Election to Minnesota House Legislative Record in Minnesota U.S. Congressional Career 2018 Election to U.S.",
-      "fetched_at": "2026-05-23T03:56:36.177242+00:00",
+      "fetched_at": "2026-05-24T04:17:52.628970+00:00",
       "_source": "grokipedia",
       "person_slug": "Ilhan_Omar",
       "race_slug": "2026_Minnesotas_5th_congressional_district_election"
@@ -22613,28 +22080,28 @@
     },
     "Rashida Tlaib|MI|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early Life and Education Family Background and Upbringing Academic Pursuits and Early Influences State Political Career Entry into Michigan Legislature Legislative Record and Policy Focus Early Controversies and Public Engagements Congressional Elections 2018 Primary Victory and General Election Re-elections from 2020 to 2024 Congressional Tenure Committee Assignments and Caucus Roles Key Legislative Initiatives and Votes Interactions with Leadership and Pe.",
-      "fetched_at": "2026-05-23T03:56:36.104423+00:00",
+      "fetched_at": "2026-05-24T04:17:54.427986+00:00",
       "_source": "grokipedia",
       "person_slug": "Rashida_Tlaib",
       "race_slug": "2026_Michigans_12th_congressional_district_election"
     },
     "Paul Gosar|AZ|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early life and education Family background and upbringing Academic training and early professional development Dental career Establishment and operation of practice Professional contributions and community involvement Entry into elective office 2010 congressional campaign and victory Factors influencing initial political success Congressional service Elections and reelections Committee assignments and caucus affiliations Legislative record Key bills sponsor.",
-      "fetched_at": "2026-05-23T03:56:36.098583+00:00",
+      "fetched_at": "2026-05-24T04:17:52.712214+00:00",
       "_source": "grokipedia",
       "person_slug": "Paul_Gosar",
       "race_slug": "2026_Arizonas_9th_congressional_district_election"
     },
     "Lateefah Simon|CA|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early Life and Education Childhood and Upbringing Formal Education Activism and Professional Background Youth Advocacy Work Collaboration with Criminal Justice Initiatives Local and Regional Political Roles BART Board Service Key Decisions and Outcomes State Legislative Career California Assembly Tenure Legislative Priorities and Record Federal Congressional Career 2024 Election and Transition Committee Assignments and Caucuses Early Legislative Actions Pol.",
-      "fetched_at": "2026-05-23T03:56:35.975177+00:00",
+      "fetched_at": "2026-05-24T04:17:52.709063+00:00",
       "_source": "grokipedia",
       "person_slug": "Lateefah_Simon",
       "race_slug": "2026_Californias_12th_congressional_district_election"
     },
     "Ro Khanna|CA|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early life and education Family background and upbringing Academic career and influences Pre-congressional career Legal and professional roles Academic and advisory positions Early political campaigns and involvement Electoral history Initial 2004 campaign Challenges against incumbent Mike Honda (2012\u20132014) 2016 victory and reelections through 2024 Congressional service Committee assignments and caucus roles Economic policy and technology initiatives Foreig.",
-      "fetched_at": "2026-05-23T03:56:37.310205+00:00",
+      "fetched_at": "2026-05-24T04:17:53.150845+00:00",
       "_source": "grokipedia",
       "person_slug": "Ro_Khanna",
       "race_slug": "2026_Californias_17th_congressional_district_election"
@@ -22648,7 +22115,7 @@
     },
     "Maxwell Frost|FL|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early Life and Background Family Origins and Childhood Education Activism and Pre-Political Career Gun Violence Prevention Efforts Organizational and Campaign Roles Entry into Elective Office 2022 Congressional Campaign Election Victory and District Demographics Congressional Career Committee Assignments and Caucus Participation Sponsored Legislation and Amendments Policy Positions Environmental and Climate Policies Firearms Regulation and Second Amendment .",
-      "fetched_at": "2026-05-23T03:56:37.001088+00:00",
+      "fetched_at": "2026-05-24T04:17:53.193950+00:00",
       "_source": "grokipedia",
       "person_slug": "Maxwell_Frost",
       "race_slug": "2026_Floridas_10th_congressional_district_election"
@@ -22683,7 +22150,7 @@
     },
     "Andr\u00e9 Carson|IN|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early life and education Childhood and family background Formal education and early career Religious conversion and worldview Conversion to Islam Public expressions of faith and their implications Pre-congressional political career Local and state legislative service Key positions and achievements in Indiana politics Path to Congress 2008 special election General elections from 2008 to 2024 Congressional tenure Committee assignments and leadership roles Leg.",
-      "fetched_at": "2026-05-23T03:56:37.375202+00:00",
+      "fetched_at": "2026-05-24T04:17:53.263102+00:00",
       "_source": "grokipedia",
       "person_slug": "Andr\u00e9_Carson",
       "race_slug": "2026_Indianas_7th_congressional_district_election"
@@ -22774,7 +22241,7 @@
     },
     "Analilia Mejia|NJ|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early life and education Early life Education Career Labor and union organizing New Jersey Working Families Alliance Bernie Sanders campaign and federal service Center for Popular Democracy Role and responsibilities Key advocacy initiatives 2026 congressional campaign Announcement and platform Democratic primary General election Endorsements Political positions Economic and labor policies Healthcare, immigration, and social justice Personal life Family and .",
-      "fetched_at": "2026-05-23T03:56:37.567540+00:00",
+      "fetched_at": "2026-05-24T04:17:54.864310+00:00",
       "_source": "grokipedia",
       "person_slug": "Analilia_Mejia",
       "race_slug": "2026_New_Jerseys_11th_congressional_district_election"
