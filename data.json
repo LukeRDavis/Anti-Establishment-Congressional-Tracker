@@ -1,12 +1,12 @@
 {
   "meta": {
-    "fetched_at": "2026-05-27T22:10:25.791148+00:00",
-    "trackaipac_scraped": "2026-05-27T22:10:25.791162+00:00",
+    "fetched_at": "2026-05-28T04:21:24.039329+00:00",
+    "trackaipac_scraped": "2026-05-28T04:21:24.039343+00:00",
     "member_count": 530,
     "anti_intervention_count": 39,
     "bill_count": 0,
     "challenger_count": 111,
-    "history_events": 3210,
+    "history_events": 3249,
     "grok_enriched": 0,
     "odds_covered": 31,
     "version": 8,
@@ -11585,7 +11585,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-27T22:07:31.687801+00:00"
+      "fetched_at": "2026-05-28T04:18:29.908192+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11598,7 +11598,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-27T22:07:41.999532+00:00"
+      "fetched_at": "2026-05-28T04:18:38.549947+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11611,7 +11611,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-27T22:07:46.025005+00:00"
+      "fetched_at": "2026-05-28T04:18:43.480328+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11624,7 +11624,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-27T22:07:46.603290+00:00"
+      "fetched_at": "2026-05-28T04:18:44.099601+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11637,7 +11637,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-27T22:07:49.175206+00:00"
+      "fetched_at": "2026-05-28T04:18:47.246699+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11650,7 +11650,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-27T22:07:53.348942+00:00"
+      "fetched_at": "2026-05-28T04:18:51.609181+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.999,
@@ -11663,175 +11663,175 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-05-27T22:07:55.247338+00:00"
+      "fetched_at": "2026-05-28T04:18:53.759964+00:00"
     },
     "Abdul el-Sayed": {
-      "prob": 0.57,
+      "prob": 0.59,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Michigan Democratic Senate nomination? \u2192 Abdul El-Sayed",
       "url": "https://www.predictit.org/markets/detail/8167/Who-will-win-the-2026-Michigan-Democratic-Senate-nomination",
-      "fetched_at": "2026-05-27T22:08:02.025778+00:00"
+      "fetched_at": "2026-05-28T04:19:00.380216+00:00"
     },
     "Ed Markey": {
       "prob": 0.79,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ed Markey",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-05-27T22:08:02.102138+00:00"
+      "fetched_at": "2026-05-28T04:19:00.456277+00:00"
     },
     "Ayanna Pressley": {
       "prob": 0.02,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ayanna Pressley",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-05-27T22:08:02.102187+00:00"
+      "fetched_at": "2026-05-28T04:19:00.456335+00:00"
     },
     "Jack Schlossberg": {
       "prob": 0.07,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-12 House primary? \u2192 Jack Schlossberg",
       "url": "https://www.predictit.org/markets/detail/8364/Who-will-win-the-Democratic-nomination-in-the-NY-12-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.108853+00:00"
+      "fetched_at": "2026-05-28T04:19:00.462945+00:00"
     },
     "Claire Valdez": {
       "prob": 0.95,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-07 House primary? \u2192 Claire Valdez",
       "url": "https://www.predictit.org/markets/detail/8534/Who-will-win-the-Democratic-nomination-in-the-NY-07-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.223355+00:00"
+      "fetched_at": "2026-05-28T04:19:00.577236+00:00"
     },
     "Effie Phillips-Staley": {
       "prob": 0.19,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-17 House primary? \u2192 E. Phillips-Staley",
       "url": "https://www.predictit.org/markets/detail/8598/Who-will-win-the-Democratic-nomination-in-the-NY-17-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.241423+00:00"
+      "fetched_at": "2026-05-28T04:19:00.595186+00:00"
     },
     "Darializa Avila Chevalier": {
       "prob": 0.91,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-13 House primary? \u2192 D. Avila Chevalier",
       "url": "https://www.predictit.org/markets/detail/8658/Who-will-win-the-Democratic-nomination-in-the-NY-13-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.286931+00:00"
+      "fetched_at": "2026-05-28T04:19:00.640729+00:00"
     },
     "Ro Khanna": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-17 House primary? \u2192 Ro Khanna",
       "url": "https://www.predictit.org/markets/detail/8711/Who-will-win-the-most-votes-in-the-CA-17-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.309149+00:00"
+      "fetched_at": "2026-05-28T04:19:00.662986+00:00"
     },
     "Adam Hamawy": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-12 House primary? \u2192 Adam Hamawy",
       "url": "https://www.predictit.org/markets/detail/8713/Who-will-win-the-Democratic-nomination-in-the-NJ-12-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.313750+00:00"
+      "fetched_at": "2026-05-28T04:19:00.667594+00:00"
     },
     "Chris Bennett": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-07 House primary? \u2192 Rebecca Bennett",
       "url": "https://www.predictit.org/markets/detail/8714/Who-will-win-the-Democratic-nomination-in-the-NJ-07-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.315593+00:00"
+      "fetched_at": "2026-05-28T04:19:00.669567+00:00"
     },
     "Mussab Ali": {
       "prob": 0.98,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-08 House primary? \u2192 Mussab Ali",
       "url": "https://www.predictit.org/markets/detail/8715/Who-will-win-the-Democratic-nomination-in-the-NJ-08-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.318588+00:00"
+      "fetched_at": "2026-05-28T04:19:00.672341+00:00"
     },
     "Analilia Mejia": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-11 House primary? \u2192 Analilia Mejia",
       "url": "https://www.predictit.org/markets/detail/8717/Who-will-win-the-Democratic-nomination-in-the-NJ-11-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.320604+00:00"
+      "fetched_at": "2026-05-28T04:19:00.674327+00:00"
     },
     "Audrey Denney": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-01 House primary? \u2192 Audrey Denney",
       "url": "https://www.predictit.org/markets/detail/8721/Who-will-win-the-most-votes-in-the-CA-01-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.324037+00:00"
+      "fetched_at": "2026-05-28T04:19:00.677814+00:00"
     },
     "Mai Vang": {
       "prob": 0.91,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-07 House primary? \u2192 Mai Vang",
       "url": "https://www.predictit.org/markets/detail/8725/Who-will-win-the-most-votes-in-the-CA-07-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.331349+00:00"
+      "fetched_at": "2026-05-28T04:19:00.685200+00:00"
     },
     "Saikat Chakrabarti": {
       "prob": 0.07,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-11 House primary? \u2192 Saikat Chakrabarti",
       "url": "https://www.predictit.org/markets/detail/8726/Who-will-win-the-most-votes-in-the-CA-11-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.332946+00:00"
+      "fetched_at": "2026-05-28T04:19:00.686794+00:00"
     },
     "Randy Villegas": {
       "prob": 0.8,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-22 House primary? \u2192 Randy Villegas",
       "url": "https://www.predictit.org/markets/detail/8730/Who-will-win-the-most-votes-in-the-CA-22-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.338369+00:00"
+      "fetched_at": "2026-05-28T04:19:00.692213+00:00"
     },
     "Ang\u00e9lica Due\u00f1as": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-29 House primary? \u2192 Ang\u00e9lica M. Due\u00f1as",
       "url": "https://www.predictit.org/markets/detail/8731/Who-will-win-the-most-votes-in-the-CA-29-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.340173+00:00"
+      "fetched_at": "2026-05-28T04:19:00.693995+00:00"
     },
     "Chris Ahuja": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-32 House primary? \u2192 Chris Ahuja",
       "url": "https://www.predictit.org/markets/detail/8732/Who-will-win-the-most-votes-in-the-CA-32-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.342023+00:00"
+      "fetched_at": "2026-05-28T04:19:00.695841+00:00"
     },
     "Angela Gonzales-Torres": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-34 House primary? \u2192 A. Gonzales-Torres",
       "url": "https://www.predictit.org/markets/detail/8733/Who-will-win-the-most-votes-in-the-CA-34-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.343682+00:00"
+      "fetched_at": "2026-05-28T04:19:00.697495+00:00"
     },
     "Delia Ramirez": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the most votes in the CA-40 House primary? \u2192 Lisa Ramirez",
       "url": "https://www.predictit.org/markets/detail/8735/Who-will-win-the-most-votes-in-the-CA-40-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.346698+00:00"
+      "fetched_at": "2026-05-28T04:19:00.700509+00:00"
     },
     "Melissa Bird": {
       "prob": 0.91,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the OR-04 House primary? \u2192 Melissa Bird",
       "url": "https://www.predictit.org/markets/detail/8748/Who-will-win-the-Democratic-nomination-in-the-OR-04-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.364889+00:00"
+      "fetched_at": "2026-05-28T04:19:00.718700+00:00"
     },
     "Lucia Simonelli": {
       "prob": 0.56,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the PA-01 House primary? \u2192 Lucia Simonelli",
       "url": "https://www.predictit.org/markets/detail/8749/Who-will-win-the-Democratic-nomination-in-the-PA-01-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.366267+00:00"
+      "fetched_at": "2026-05-28T04:19:00.720064+00:00"
     },
     "Chris Rabb": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the PA-03 House primary? \u2192 Chris Rabb",
       "url": "https://www.predictit.org/markets/detail/8750/Who-will-win-the-Democratic-nomination-in-the-PA-03-House-primary",
-      "fetched_at": "2026-05-27T22:08:02.367958+00:00"
+      "fetched_at": "2026-05-28T04:19:00.721738+00:00"
     },
     "Barry Moore": {
       "prob": 0.96,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Alabama Republican Senate nomination? \u2192 Barry Moore",
       "url": "https://www.predictit.org/markets/detail/8781/Who-will-win-the-2026-Alabama-Republican-Senate-nomination",
-      "fetched_at": "2026-05-27T22:08:02.394320+00:00"
+      "fetched_at": "2026-05-28T04:19:00.748033+00:00"
     }
   },
   "trackaipac_congress": {
@@ -21595,7 +21595,942 @@
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early Life Childhood and Education Initial Firearms Interest YouTube Career Launch of The AK Guy Channel Growth and Milestones Content Creation Firearms Education and Analysis Custom Builds and Innovations Public Persona Humor and Commentary Style Controversies in Media Political Activities 2024 Congressional Campaign 2026 Election Bid Advocacy and Influence Second Amendment Positions Broader Cultural Impact Reception Media Coverage Public and Political Res."
     }
   ],
-  "clerk_votes": {},
+  "clerk_votes": {
+    "118-hr8034": {
+      "id": "118-hr8034",
+      "desc": "Israel Security Supplemental Appropriations Act, 2024",
+      "legis": "H R 8034",
+      "date": "20-Apr-2024",
+      "yeas": 366,
+      "nays": 65,
+      "nay_members": [
+        {
+          "name_id": "B001318",
+          "name": "Balint",
+          "party": "D",
+          "state": "VT"
+        },
+        {
+          "name_id": "B001292",
+          "name": "Beyer",
+          "party": "D",
+          "state": "VA"
+        },
+        {
+          "name_id": "B001302",
+          "name": "Biggs",
+          "party": "R",
+          "state": "AZ"
+        },
+        {
+          "name_id": "B000574",
+          "name": "Blumenauer",
+          "party": "D",
+          "state": "OR"
+        },
+        {
+          "name_id": "B000825",
+          "name": "Boebert",
+          "party": "R",
+          "state": "CO"
+        },
+        {
+          "name_id": "B001223",
+          "name": "Bowman",
+          "party": "D",
+          "state": "NY"
+        },
+        {
+          "name_id": "B001309",
+          "name": "Burchett",
+          "party": "R",
+          "state": "TN"
+        },
+        {
+          "name_id": "B001224",
+          "name": "Bush",
+          "party": "D",
+          "state": "MO"
+        },
+        {
+          "name_id": "C001072",
+          "name": "Carson",
+          "party": "D",
+          "state": "IN"
+        },
+        {
+          "name_id": "C001131",
+          "name": "Casar",
+          "party": "D",
+          "state": "TX"
+        },
+        {
+          "name_id": "C001091",
+          "name": "Castro (TX)",
+          "party": "D",
+          "state": "TX"
+        },
+        {
+          "name_id": "C001080",
+          "name": "Chu",
+          "party": "D",
+          "state": "CA"
+        },
+        {
+          "name_id": "C001116",
+          "name": "Clyde",
+          "party": "R",
+          "state": "GA"
+        },
+        {
+          "name_id": "C001132",
+          "name": "Crane",
+          "party": "R",
+          "state": "AZ"
+        },
+        {
+          "name_id": "D000626",
+          "name": "Davidson",
+          "party": "R",
+          "state": "OH"
+        },
+        {
+          "name_id": "D000623",
+          "name": "DeSaulnier",
+          "party": "D",
+          "state": "CA"
+        },
+        {
+          "name_id": "D000616",
+          "name": "DesJarlais",
+          "party": "R",
+          "state": "TN"
+        },
+        {
+          "name_id": "D000624",
+          "name": "Dingell",
+          "party": "D",
+          "state": "MI"
+        },
+        {
+          "name_id": "D000399",
+          "name": "Doggett",
+          "party": "D",
+          "state": "TX"
+        },
+        {
+          "name_id": "F000476",
+          "name": "Frost",
+          "party": "D",
+          "state": "FL"
+        },
+        {
+          "name_id": "G000578",
+          "name": "Gaetz",
+          "party": "R",
+          "state": "FL"
+        },
+        {
+          "name_id": "G000559",
+          "name": "Garamendi",
+          "party": "D",
+          "state": "CA"
+        },
+        {
+          "name_id": "G000586",
+          "name": "Garc\u00eda (IL)",
+          "party": "D",
+          "state": "IL"
+        },
+        {
+          "name_id": "G000595",
+          "name": "Good (VA)",
+          "party": "R",
+          "state": "VA"
+        },
+        {
+          "name_id": "G000565",
+          "name": "Gosar",
+          "party": "R",
+          "state": "AZ"
+        },
+        {
+          "name_id": "G000553",
+          "name": "Green, Al (TX)",
+          "party": "D",
+          "state": "TX"
+        },
+        {
+          "name_id": "G000596",
+          "name": "Greene (GA)",
+          "party": "R",
+          "state": "GA"
+        },
+        {
+          "name_id": "G000551",
+          "name": "Grijalva",
+          "party": "D",
+          "state": "AZ"
+        },
+        {
+          "name_id": "H001052",
+          "name": "Harris",
+          "party": "R",
+          "state": "MD"
+        },
+        {
+          "name_id": "H001095",
+          "name": "Hunt",
+          "party": "R",
+          "state": "TX"
+        },
+        {
+          "name_id": "J000309",
+          "name": "Jackson (IL)",
+          "party": "D",
+          "state": "IL"
+        },
+        {
+          "name_id": "J000298",
+          "name": "Jayapal",
+          "party": "D",
+          "state": "WA"
+        },
+        {
+          "name_id": "J000288",
+          "name": "Johnson (GA)",
+          "party": "D",
+          "state": "GA"
+        },
+        {
+          "name_id": "K000389",
+          "name": "Khanna",
+          "party": "D",
+          "state": "CA"
+        },
+        {
+          "name_id": "K000380",
+          "name": "Kildee",
+          "party": "D",
+          "state": "MI"
+        },
+        {
+          "name_id": "L000551",
+          "name": "Lee (CA)",
+          "party": "D",
+          "state": "CA"
+        },
+        {
+          "name_id": "L000602",
+          "name": "Lee (PA)",
+          "party": "D",
+          "state": "PA"
+        },
+        {
+          "name_id": "L000569",
+          "name": "Luetkemeyer",
+          "party": "R",
+          "state": "MO"
+        },
+        {
+          "name_id": "M001184",
+          "name": "Massie",
+          "party": "R",
+          "state": "KY"
+        },
+        {
+          "name_id": "M000312",
+          "name": "McGovern",
+          "party": "D",
+          "state": "MA"
+        },
+        {
+          "name_id": "M001216",
+          "name": "Mills",
+          "party": "R",
+          "state": "FL"
+        },
+        {
+          "name_id": "M001195",
+          "name": "Mooney",
+          "party": "R",
+          "state": "WV"
+        },
+        {
+          "name_id": "N000026",
+          "name": "Nehls",
+          "party": "R",
+          "state": "TX"
+        },
+        {
+          "name_id": "N000190",
+          "name": "Norman",
+          "party": "R",
+          "state": "SC"
+        },
+        {
+          "name_id": "O000172",
+          "name": "Ocasio-Cortez",
+          "party": "D",
+          "state": "NY"
+        },
+        {
+          "name_id": "O000173",
+          "name": "Omar",
+          "party": "D",
+          "state": "MN"
+        },
+        {
+          "name_id": "P000604",
+          "name": "Payne",
+          "party": "D",
+          "state": "NJ"
+        },
+        {
+          "name_id": "P000605",
+          "name": "Perry",
+          "party": "R",
+          "state": "PA"
+        },
+        {
+          "name_id": "P000597",
+          "name": "Pingree",
+          "party": "D",
+          "state": "ME"
+        },
+        {
+          "name_id": "P000607",
+          "name": "Pocan",
+          "party": "D",
+          "state": "WI"
+        },
+        {
+          "name_id": "P000617",
+          "name": "Pressley",
+          "party": "D",
+          "state": "MA"
+        },
+        {
+          "name_id": "R000617",
+          "name": "Ramirez",
+          "party": "D",
+          "state": "IL"
+        },
+        {
+          "name_id": "R000606",
+          "name": "Raskin",
+          "party": "D",
+          "state": "MD"
+        },
+        {
+          "name_id": "R000103",
+          "name": "Rosendale",
+          "party": "R",
+          "state": "MT"
+        },
+        {
+          "name_id": "R000614",
+          "name": "Roy",
+          "party": "R",
+          "state": "TX"
+        },
+        {
+          "name_id": "T000472",
+          "name": "Takano",
+          "party": "D",
+          "state": "CA"
+        },
+        {
+          "name_id": "T000193",
+          "name": "Thompson (MS)",
+          "party": "D",
+          "state": "MS"
+        },
+        {
+          "name_id": "T000165",
+          "name": "Tiffany",
+          "party": "R",
+          "state": "WI"
+        },
+        {
+          "name_id": "T000481",
+          "name": "Tlaib",
+          "party": "D",
+          "state": "MI"
+        },
+        {
+          "name_id": "T000487",
+          "name": "Tokuda",
+          "party": "D",
+          "state": "HI"
+        },
+        {
+          "name_id": "V000081",
+          "name": "Vel\u00e1zquez",
+          "party": "D",
+          "state": "NY"
+        },
+        {
+          "name_id": "W000187",
+          "name": "Waters",
+          "party": "D",
+          "state": "CA"
+        },
+        {
+          "name_id": "W000822",
+          "name": "Watson Coleman",
+          "party": "D",
+          "state": "NJ"
+        },
+        {
+          "name_id": "W000828",
+          "name": "Williams (NY)",
+          "party": "R",
+          "state": "NY"
+        },
+        {
+          "name_id": "Z000018",
+          "name": "Zinke",
+          "party": "R",
+          "state": "MT"
+        }
+      ],
+      "url": "https://clerk.house.gov/Votes/2024152"
+    },
+    "118-hr8035": {
+      "id": "118-hr8035",
+      "desc": "Fire Weather Development Act",
+      "legis": "H R 4866",
+      "date": "29-Apr-2024",
+      "yeas": 341,
+      "nays": 87,
+      "nay_members": [
+        {
+          "name_id": "A000055",
+          "name": "Aderholt",
+          "party": "R",
+          "state": "AL"
+        },
+        {
+          "name_id": "A000379",
+          "name": "Alford",
+          "party": "R",
+          "state": "MO"
+        },
+        {
+          "name_id": "A000375",
+          "name": "Arrington",
+          "party": "R",
+          "state": "TX"
+        },
+        {
+          "name_id": "B001299",
+          "name": "Banks",
+          "party": "R",
+          "state": "IN"
+        },
+        {
+          "name_id": "B001314",
+          "name": "Bean (FL)",
+          "party": "R",
+          "state": "FL"
+        },
+        {
+          "name_id": "B001302",
+          "name": "Biggs",
+          "party": "R",
+          "state": "AZ"
+        },
+        {
+          "name_id": "B001311",
+          "name": "Bishop (NC)",
+          "party": "R",
+          "state": "NC"
+        },
+        {
+          "name_id": "B000574",
+          "name": "Blumenauer",
+          "party": "D",
+          "state": "OR"
+        },
+        {
+          "name_id": "B000825",
+          "name": "Boebert",
+          "party": "R",
+          "state": "CO"
+        },
+        {
+          "name_id": "B001317",
+          "name": "Brecheen",
+          "party": "R",
+          "state": "OK"
+        },
+        {
+          "name_id": "B001315",
+          "name": "Budzinski",
+          "party": "D",
+          "state": "IL"
+        },
+        {
+          "name_id": "B001309",
+          "name": "Burchett",
+          "party": "R",
+          "state": "TN"
+        },
+        {
+          "name_id": "B001316",
+          "name": "Burlison",
+          "party": "R",
+          "state": "MO"
+        },
+        {
+          "name_id": "C001125",
+          "name": "Carter (LA)",
+          "party": "D",
+          "state": "LA"
+        },
+        {
+          "name_id": "C001131",
+          "name": "Casar",
+          "party": "D",
+          "state": "TX"
+        },
+        {
+          "name_id": "C001118",
+          "name": "Cline",
+          "party": "R",
+          "state": "VA"
+        },
+        {
+          "name_id": "C001115",
+          "name": "Cloud",
+          "party": "R",
+          "state": "TX"
+        },
+        {
+          "name_id": "C001116",
+          "name": "Clyde",
+          "party": "R",
+          "state": "GA"
+        },
+        {
+          "name_id": "C001053",
+          "name": "Cole",
+          "party": "R",
+          "state": "OK"
+        },
+        {
+          "name_id": "C001129",
+          "name": "Collins",
+          "party": "R",
+          "state": "GA"
+        },
+        {
+          "name_id": "C001108",
+          "name": "Comer",
+          "party": "R",
+          "state": "KY"
+        },
+        {
+          "name_id": "C001132",
+          "name": "Crane",
+          "party": "R",
+          "state": "AZ"
+        },
+        {
+          "name_id": "C001087",
+          "name": "Crawford",
+          "party": "R",
+          "state": "AR"
+        },
+        {
+          "name_id": "C001114",
+          "name": "Curtis",
+          "party": "R",
+          "state": "UT"
+        },
+        {
+          "name_id": "D000626",
+          "name": "Davidson",
+          "party": "R",
+          "state": "OH"
+        },
+        {
+          "name_id": "D000600",
+          "name": "Diaz-Balart",
+          "party": "R",
+          "state": "FL"
+        },
+        {
+          "name_id": "D000032",
+          "name": "Donalds",
+          "party": "R",
+          "state": "FL"
+        },
+        {
+          "name_id": "D000615",
+          "name": "Duncan",
+          "party": "R",
+          "state": "SC"
+        },
+        {
+          "name_id": "E000296",
+          "name": "Evans",
+          "party": "D",
+          "state": "PA"
+        },
+        {
+          "name_id": "F000246",
+          "name": "Fallon",
+          "party": "R",
+          "state": "TX"
+        },
+        {
+          "name_id": "F000471",
+          "name": "Fitzgerald",
+          "party": "R",
+          "state": "WI"
+        },
+        {
+          "name_id": "F000450",
+          "name": "Foxx",
+          "party": "R",
+          "state": "NC"
+        },
+        {
+          "name_id": "F000478",
+          "name": "Fry",
+          "party": "R",
+          "state": "SC"
+        },
+        {
+          "name_id": "G000578",
+          "name": "Gaetz",
+          "party": "R",
+          "state": "FL"
+        },
+        {
+          "name_id": "G000585",
+          "name": "Gomez",
+          "party": "D",
+          "state": "CA"
+        },
+        {
+          "name_id": "G000595",
+          "name": "Good (VA)",
+          "party": "R",
+          "state": "VA"
+        },
+        {
+          "name_id": "G000565",
+          "name": "Gosar",
+          "party": "R",
+          "state": "AZ"
+        },
+        {
+          "name_id": "G000377",
+          "name": "Granger",
+          "party": "R",
+          "state": "TX"
+        },
+        {
+          "name_id": "G000596",
+          "name": "Greene (GA)",
+          "party": "R",
+          "state": "GA"
+        },
+        {
+          "name_id": "G000551",
+          "name": "Grijalva",
+          "party": "D",
+          "state": "AZ"
+        },
+        {
+          "name_id": "H001096",
+          "name": "Hageman",
+          "party": "R",
+          "state": "WY"
+        },
+        {
+          "name_id": "H001052",
+          "name": "Harris",
+          "party": "R",
+          "state": "MD"
+        },
+        {
+          "name_id": "H001086",
+          "name": "Harshbarger",
+          "party": "R",
+          "state": "TN"
+        },
+        {
+          "name_id": "H001077",
+          "name": "Higgins (LA)",
+          "party": "R",
+          "state": "LA"
+        },
+        {
+          "name_id": "H001095",
+          "name": "Hunt",
+          "party": "R",
+          "state": "TX"
+        },
+        {
+          "name_id": "J000304",
+          "name": "Jackson (TX)",
+          "party": "R",
+          "state": "TX"
+        },
+        {
+          "name_id": "J000032",
+          "name": "Jackson Lee",
+          "party": "D",
+          "state": "TX"
+        },
+        {
+          "name_id": "J000302",
+          "name": "Joyce (PA)",
+          "party": "R",
+          "state": "PA"
+        },
+        {
+          "name_id": "K000400",
+          "name": "Kamlager-Dove",
+          "party": "D",
+          "state": "CA"
+        },
+        {
+          "name_id": "K000394",
+          "name": "Kim (NJ)",
+          "party": "D",
+          "state": "NJ"
+        },
+        {
+          "name_id": "K000392",
+          "name": "Kustoff",
+          "party": "R",
+          "state": "TN"
+        },
+        {
+          "name_id": "L000578",
+          "name": "LaMalfa",
+          "party": "R",
+          "state": "CA"
+        },
+        {
+          "name_id": "L000600",
+          "name": "Langworthy",
+          "party": "R",
+          "state": "NY"
+        },
+        {
+          "name_id": "L000589",
+          "name": "Lesko",
+          "party": "R",
+          "state": "AZ"
+        },
+        {
+          "name_id": "L000596",
+          "name": "Luna",
+          "party": "R",
+          "state": "FL"
+        },
+        {
+          "name_id": "M001223",
+          "name": "Magaziner",
+          "party": "D",
+          "state": "RI"
+        },
+        {
+          "name_id": "M001184",
+          "name": "Massie",
+          "party": "R",
+          "state": "KY"
+        },
+        {
+          "name_id": "M001156",
+          "name": "McHenry",
+          "party": "R",
+          "state": "NC"
+        },
+        {
+          "name_id": "M000687",
+          "name": "Mfume",
+          "party": "D",
+          "state": "MD"
+        },
+        {
+          "name_id": "M001211",
+          "name": "Miller (IL)",
+          "party": "R",
+          "state": "IL"
+        },
+        {
+          "name_id": "M001216",
+          "name": "Mills",
+          "party": "R",
+          "state": "FL"
+        },
+        {
+          "name_id": "M001195",
+          "name": "Mooney",
+          "party": "R",
+          "state": "WV"
+        },
+        {
+          "name_id": "M001212",
+          "name": "Moore (AL)",
+          "party": "R",
+          "state": "AL"
+        },
+        {
+          "name_id": "N000026",
+          "name": "Nehls",
+          "party": "R",
+          "state": "TX"
+        },
+        {
+          "name_id": "N000190",
+          "name": "Norman",
+          "party": "R",
+          "state": "SC"
+        },
+        {
+          "name_id": "O000175",
+          "name": "Ogles",
+          "party": "R",
+          "state": "TN"
+        },
+        {
+          "name_id": "P000197",
+          "name": "Pelosi",
+          "party": "D",
+          "state": "CA"
+        },
+        {
+          "name_id": "P000605",
+          "name": "Perry",
+          "party": "R",
+          "state": "PA"
+        },
+        {
+          "name_id": "P000608",
+          "name": "Peters",
+          "party": "D",
+          "state": "CA"
+        },
+        {
+          "name_id": "P000599",
+          "name": "Posey",
+          "party": "R",
+          "state": "FL"
+        },
+        {
+          "name_id": "R000612",
+          "name": "Rose",
+          "party": "R",
+          "state": "TN"
+        },
+        {
+          "name_id": "R000103",
+          "name": "Rosendale",
+          "party": "R",
+          "state": "MT"
+        },
+        {
+          "name_id": "R000614",
+          "name": "Roy",
+          "party": "R",
+          "state": "TX"
+        },
+        {
+          "name_id": "R000609",
+          "name": "Rutherford",
+          "party": "R",
+          "state": "FL"
+        },
+        {
+          "name_id": "S001224",
+          "name": "Self",
+          "party": "R",
+          "state": "TX"
+        },
+        {
+          "name_id": "S001185",
+          "name": "Sewell",
+          "party": "D",
+          "state": "AL"
+        },
+        {
+          "name_id": "S001207",
+          "name": "Sherrill",
+          "party": "D",
+          "state": "NJ"
+        },
+        {
+          "name_id": "S001172",
+          "name": "Smith (NE)",
+          "party": "R",
+          "state": "NE"
+        },
+        {
+          "name_id": "S000929",
+          "name": "Spartz",
+          "party": "R",
+          "state": "IN"
+        },
+        {
+          "name_id": "S001214",
+          "name": "Steube",
+          "party": "R",
+          "state": "FL"
+        },
+        {
+          "name_id": "S001220",
+          "name": "Strong",
+          "party": "R",
+          "state": "AL"
+        },
+        {
+          "name_id": "S001193",
+          "name": "Swalwell",
+          "party": "D",
+          "state": "CA"
+        },
+        {
+          "name_id": "S001223",
+          "name": "Sykes",
+          "party": "D",
+          "state": "OH"
+        },
+        {
+          "name_id": "T000486",
+          "name": "Torres (NY)",
+          "party": "D",
+          "state": "NY"
+        },
+        {
+          "name_id": "W000823",
+          "name": "Waltz",
+          "party": "R",
+          "state": "FL"
+        },
+        {
+          "name_id": "W000825",
+          "name": "Wexton",
+          "party": "D",
+          "state": "VA"
+        },
+        {
+          "name_id": "W000826",
+          "name": "Wild",
+          "party": "D",
+          "state": "PA"
+        }
+      ],
+      "url": "https://clerk.house.gov/Votes/2024153"
+    }
+  },
   "ai_cache": {},
   "grok_cache": {},
   "grokipedia_cache": {
