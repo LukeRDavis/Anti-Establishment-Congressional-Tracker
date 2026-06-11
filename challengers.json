@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-06-11T12:15:29.226657+00:00",
+  "_last_scraped": "2026-06-11T18:51:19.516753+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -1300,6 +1300,22 @@
       "incumbentParty": ""
     },
     {
+      "name": "Lukas Ventouras",
+      "state": "NY",
+      "district": 1,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "2026-06-23",
+      "website": "https://lukasforcongress.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
       "name": "Michael Blake",
       "state": "NY",
       "district": 15,
@@ -1310,6 +1326,22 @@
       "ps": "UPCOMING",
       "primaryDate": "2026-06-23",
       "website": "https://www.michaelblakeforcongress.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Robin Wilt",
+      "state": "NY",
+      "district": 25,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "2026-06-23",
+      "website": "https://www.robinforus.com/",
       "source": "trackaipac",
       "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
