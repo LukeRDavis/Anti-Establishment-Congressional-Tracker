@@ -1,12 +1,12 @@
 {
   "meta": {
-    "fetched_at": "2026-06-17T22:11:04.601120+00:00",
-    "trackaipac_scraped": "2026-06-17T22:11:04.601137+00:00",
+    "fetched_at": "2026-06-18T04:52:03.713944+00:00",
+    "trackaipac_scraped": "2026-06-18T04:52:03.713960+00:00",
     "member_count": 531,
     "anti_intervention_count": 39,
     "bill_count": 0,
     "challenger_count": 115,
-    "history_events": 4029,
+    "history_events": 4068,
     "grok_enriched": 0,
     "odds_covered": 19,
     "version": 8,
@@ -11605,7 +11605,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-06-17T22:07:54.822545+00:00"
+      "fetched_at": "2026-06-18T04:48:23.551437+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11618,7 +11618,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-06-17T22:08:01.534904+00:00"
+      "fetched_at": "2026-06-18T04:48:47.496259+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11631,7 +11631,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-06-17T22:08:05.961419+00:00"
+      "fetched_at": "2026-06-18T04:48:55.583732+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11644,7 +11644,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-06-17T22:08:06.500777+00:00"
+      "fetched_at": "2026-06-18T04:48:56.248812+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11657,7 +11657,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-06-17T22:08:09.125028+00:00"
+      "fetched_at": "2026-06-18T04:49:00.387473+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11670,7 +11670,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-06-17T22:08:12.383113+00:00"
+      "fetched_at": "2026-06-18T04:49:06.517707+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.999,
@@ -11683,91 +11683,91 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-06-17T22:08:14.228634+00:00"
+      "fetched_at": "2026-06-18T04:49:09.440544+00:00"
     },
     "Abdul el-Sayed": {
-      "prob": 0.7,
+      "prob": 0.71,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Michigan Democratic Senate nomination? \u2192 Abdul El-Sayed",
       "url": "https://www.predictit.org/markets/detail/8167/Who-will-win-the-2026-Michigan-Democratic-Senate-nomination",
-      "fetched_at": "2026-06-17T22:08:21.724193+00:00"
+      "fetched_at": "2026-06-18T04:49:20.729861+00:00"
     },
     "Ed Markey": {
       "prob": 0.87,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ed Markey",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-06-17T22:08:21.794900+00:00"
+      "fetched_at": "2026-06-18T04:49:20.803087+00:00"
     },
     "Ayanna Pressley": {
       "prob": 0.01,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ayanna Pressley",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-06-17T22:08:21.794959+00:00"
+      "fetched_at": "2026-06-18T04:49:20.803150+00:00"
     },
     "Jack Schlossberg": {
       "prob": 0.04,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-12 House primary? \u2192 Jack Schlossberg",
       "url": "https://www.predictit.org/markets/detail/8364/Who-will-win-the-Democratic-nomination-in-the-NY-12-House-primary",
-      "fetched_at": "2026-06-17T22:08:21.801591+00:00"
+      "fetched_at": "2026-06-18T04:49:20.810043+00:00"
     },
     "Claire Valdez": {
       "prob": 0.85,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-07 House primary? \u2192 Claire Valdez",
       "url": "https://www.predictit.org/markets/detail/8534/Who-will-win-the-Democratic-nomination-in-the-NY-07-House-primary",
-      "fetched_at": "2026-06-17T22:08:21.909736+00:00"
+      "fetched_at": "2026-06-18T04:49:20.921481+00:00"
     },
     "Effie Phillips-Staley": {
       "prob": 0.09,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-17 House primary? \u2192 E. Phillips-Staley",
       "url": "https://www.predictit.org/markets/detail/8598/Who-will-win-the-Democratic-nomination-in-the-NY-17-House-primary",
-      "fetched_at": "2026-06-17T22:08:21.925950+00:00"
+      "fetched_at": "2026-06-18T04:49:20.938388+00:00"
     },
     "Darializa Avila Chevalier": {
-      "prob": 0.56,
+      "prob": 0.55,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NY-13 House primary? \u2192 D. Avila Chevalier",
       "url": "https://www.predictit.org/markets/detail/8658/Who-will-win-the-Democratic-nomination-in-the-NY-13-House-primary",
-      "fetched_at": "2026-06-17T22:08:21.963421+00:00"
+      "fetched_at": "2026-06-18T04:49:20.977471+00:00"
     },
     "Adam Hamawy": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the NJ-12 House primary? \u2192 Adam Hamawy",
       "url": "https://www.predictit.org/markets/detail/8713/Who-will-win-the-Democratic-nomination-in-the-NJ-12-House-primary",
-      "fetched_at": "2026-06-17T22:08:21.985072+00:00"
+      "fetched_at": "2026-06-18T04:49:20.995714+00:00"
     },
     "Melissa Bird": {
       "prob": 0.9,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the OR-04 House primary? \u2192 Melissa Bird",
       "url": "https://www.predictit.org/markets/detail/8748/Who-will-win-the-Democratic-nomination-in-the-OR-04-House-primary",
-      "fetched_at": "2026-06-17T22:08:22.005350+00:00"
+      "fetched_at": "2026-06-18T04:49:21.016866+00:00"
     },
     "Lucia Simonelli": {
       "prob": 0.56,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the PA-01 House primary? \u2192 Lucia Simonelli",
       "url": "https://www.predictit.org/markets/detail/8749/Who-will-win-the-Democratic-nomination-in-the-PA-01-House-primary",
-      "fetched_at": "2026-06-17T22:08:22.006875+00:00"
+      "fetched_at": "2026-06-18T04:49:21.018414+00:00"
     },
     "Chris Rabb": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the Democratic nomination in the PA-03 House primary? \u2192 Chris Rabb",
       "url": "https://www.predictit.org/markets/detail/8750/Who-will-win-the-Democratic-nomination-in-the-PA-03-House-primary",
-      "fetched_at": "2026-06-17T22:08:22.008775+00:00"
+      "fetched_at": "2026-06-18T04:49:21.020315+00:00"
     },
     "Barry Moore": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Alabama Republican Senate nomination? \u2192 Barry Moore",
       "url": "https://www.predictit.org/markets/detail/8781/Who-will-win-the-2026-Alabama-Republican-Senate-nomination",
-      "fetched_at": "2026-06-17T22:08:22.025430+00:00"
+      "fetched_at": "2026-06-18T04:49:21.037639+00:00"
     }
   },
   "trackaipac_congress": {
