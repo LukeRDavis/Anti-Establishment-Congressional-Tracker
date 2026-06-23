@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-06-23T15:17:25.444428+00:00",
+  "_last_scraped": "2026-06-23T18:06:03.970519+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -1080,6 +1080,22 @@
       "ps": "RECOUNT",
       "opponent": "Valerie Foushee (incumbent)",
       "incumbentParty": "D"
+    },
+    {
+      "name": "Austin Ahlman",
+      "state": "NE",
+      "district": 1,
+      "party": "I",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "GENERAL",
+      "primaryDate": "2026-11-03",
+      "website": "https://www.ahlmanfornebraska.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
     },
     {
       "name": "Heath Howard",
