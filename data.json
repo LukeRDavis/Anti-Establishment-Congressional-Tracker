@@ -1,7 +1,7 @@
 {
   "meta": {
-    "fetched_at": "2026-06-24T18:06:50.737408+00:00",
-    "trackaipac_scraped": "2026-06-24T18:06:50.737425+00:00",
+    "fetched_at": "2026-06-24T21:42:13.181354+00:00",
+    "trackaipac_scraped": "2026-06-24T21:42:13.181369+00:00",
     "member_count": 531,
     "anti_intervention_count": 39,
     "bill_count": 0,
@@ -6565,10 +6565,7 @@
       "rlc_score": null,
       "lobby_total": 514769,
       "pacs": [
-        "AIPAC",
-        "DMFI",
-        "JAC",
-        "JSTREET"
+        "JAC"
       ],
       "ps": "INCUMBENT",
       "bills": [],
@@ -11606,7 +11603,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-06-24T18:03:15.650655+00:00"
+      "fetched_at": "2026-06-24T21:38:54.181191+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11619,7 +11616,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-06-24T18:03:31.819176+00:00"
+      "fetched_at": "2026-06-24T21:39:00.831366+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11632,7 +11629,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-06-24T18:03:37.219414+00:00"
+      "fetched_at": "2026-06-24T21:39:04.797424+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11645,7 +11642,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-06-24T18:03:37.885749+00:00"
+      "fetched_at": "2026-06-24T21:39:05.302476+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11658,7 +11655,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-06-24T18:03:41.553414+00:00"
+      "fetched_at": "2026-06-24T21:39:08.032269+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11671,7 +11668,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-06-24T18:03:46.015995+00:00"
+      "fetched_at": "2026-06-24T21:39:11.319664+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.999,
@@ -11684,35 +11681,35 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-06-24T18:03:48.520759+00:00"
+      "fetched_at": "2026-06-24T21:39:13.109095+00:00"
     },
     "Abdul el-Sayed": {
       "prob": 0.75,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Michigan Democratic Senate nomination? \u2192 Abdul El-Sayed",
       "url": "https://www.predictit.org/markets/detail/8167/Who-will-win-the-2026-Michigan-Democratic-Senate-nomination",
-      "fetched_at": "2026-06-24T18:03:55.747825+00:00"
+      "fetched_at": "2026-06-24T21:39:18.401758+00:00"
     },
     "Ed Markey": {
       "prob": 0.82,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ed Markey",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-06-24T18:03:55.782694+00:00"
+      "fetched_at": "2026-06-24T21:39:18.470412+00:00"
     },
     "Ayanna Pressley": {
       "prob": 0.01,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ayanna Pressley",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-06-24T18:03:55.782718+00:00"
+      "fetched_at": "2026-06-24T21:39:18.470458+00:00"
     },
     "Jack Schlossberg": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Will Jack Schlossberg get over 10% of the vote in the NY-12 Dem primary? \u2192 Will Jack Schlossberg get over 10% of the vote in the NY-12 Dem primary?",
       "url": "https://www.predictit.org/markets/detail/8542/Will-Jack-Schlossberg-get-over-10-of-the-vote-in-the-NY-12-Dem-primary",
-      "fetched_at": "2026-06-24T18:03:55.840546+00:00"
+      "fetched_at": "2026-06-24T21:39:18.587491+00:00"
     }
   },
   "trackaipac_congress": {
@@ -16458,10 +16455,7 @@
       "approved": false,
       "lobby_total": 514769,
       "pacs": [
-        "AIPAC",
-        "DMFI",
-        "JAC",
-        "JSTREET"
+        "JAC"
       ],
       "note": ""
     },
@@ -20593,8 +20587,8 @@
       "chamber": "house",
       "antiArms": true,
       "antiArmsLevel": "yes",
-      "ps": "UPCOMING",
-      "primaryDate": "2026-06-23",
+      "ps": "GENERAL",
+      "primaryDate": "2026-11-03",
       "website": "https://www.darializaforcongress.com/",
       "source": "trackaipac",
       "note": "Endorsed by Citizens Against AIPAC Corruption.",
@@ -20811,136 +20805,7 @@
     }
   ],
   "rlc_index": {},
-  "rlc_endorsed": [
-    {
-      "name": "Paul Rojas",
-      "state": "",
-      "district": null,
-      "party": "R",
-      "chamber": "house",
-      "antiArms": true,
-      "antiArmsLevel": "yes",
-      "ps": "UPCOMING",
-      "primaryDate": "",
-      "website": "",
-      "source": "rlc_endorsed",
-      "note": "Endorsed by Republican Liberty Caucus for TX CD-21\u201d\" loading=\"lazy\">",
-      "opponent": "",
-      "incumbentParty": ""
-    },
-    {
-      "name": "Congressman Thomas Massie",
-      "state": "KY",
-      "district": 4,
-      "party": "R",
-      "chamber": "house",
-      "antiArms": true,
-      "antiArmsLevel": "yes",
-      "ps": "UPCOMING",
-      "primaryDate": "",
-      "website": "",
-      "source": "rlc_endorsed",
-      "note": "Endorsed by Republican Liberty Caucus for Kentucky\u2019s 4th Congressional District&hellip;",
-      "opponent": "",
-      "incumbentParty": ""
-    },
-    {
-      "name": "Larry Sharpe",
-      "state": "NY",
-      "district": null,
-      "party": "R",
-      "chamber": "house",
-      "antiArms": true,
-      "antiArmsLevel": "yes",
-      "ps": "UPCOMING",
-      "primaryDate": "",
-      "website": "",
-      "source": "rlc_endorsed",
-      "note": "Endorsed by Republican Liberty Caucus for Governor of New York\u201d\" loading=\"lazy\">",
-      "opponent": "",
-      "incumbentParty": ""
-    },
-    {
-      "name": "Alex Mooney",
-      "state": "VA",
-      "district": null,
-      "party": "R",
-      "chamber": "senate",
-      "antiArms": true,
-      "antiArmsLevel": "yes",
-      "ps": "UPCOMING",
-      "primaryDate": "",
-      "website": "",
-      "source": "rlc_endorsed",
-      "note": "Endorsed by Republican Liberty Caucus for U.S. Senate in West Virginia\u201d\" loading=\"lazy\">",
-      "opponent": "",
-      "incumbentParty": ""
-    },
-    {
-      "name": "Andy Biggs",
-      "state": "",
-      "district": null,
-      "party": "R",
-      "chamber": "house",
-      "antiArms": true,
-      "antiArmsLevel": "yes",
-      "ps": "UPCOMING",
-      "primaryDate": "",
-      "website": "",
-      "source": "rlc_endorsed",
-      "note": "Endorsed by Republican Liberty Caucus for House Speaker\">",
-      "opponent": "",
-      "incumbentParty": ""
-    },
-    {
-      "name": "John Mills",
-      "state": "FL",
-      "district": 1,
-      "party": "R",
-      "chamber": "house",
-      "antiArms": true,
-      "antiArmsLevel": "yes",
-      "ps": "UPCOMING",
-      "primaryDate": "",
-      "website": "",
-      "source": "rlc_endorsed",
-      "note": "Endorsed by Republican Liberty Caucus for Florida&#8217;s 1st Congressional District\u201d\" loading=\"lazy\">",
-      "opponent": "",
-      "incumbentParty": ""
-    },
-    {
-      "name": "Willie J Montague",
-      "state": "FL",
-      "district": 10,
-      "party": "R",
-      "chamber": "house",
-      "antiArms": true,
-      "antiArmsLevel": "yes",
-      "ps": "UPCOMING",
-      "primaryDate": "",
-      "website": "",
-      "source": "rlc_endorsed",
-      "note": "Endorsed by Republican Liberty Caucus for Florida&#8217;s 10th Congressional District\u201d\" loading=\"lazy\"",
-      "opponent": "",
-      "incumbentParty": ""
-    },
-    {
-      "name": "Kat Cammack",
-      "state": "FL",
-      "district": 3,
-      "party": "R",
-      "chamber": "house",
-      "antiArms": true,
-      "antiArmsLevel": "yes",
-      "ps": "UPCOMING",
-      "primaryDate": "",
-      "website": "",
-      "source": "rlc_endorsed",
-      "note": "Endorsed by Republican Liberty Caucus for Florida&#8217;s 3rd Congressional District\u201d\" loading=\"lazy\">",
-      "opponent": "",
-      "incumbentParty": ""
-    }
-  ],
+  "rlc_endorsed": [],
   "congress_history": {
     "117": {
       "congress": 117,
