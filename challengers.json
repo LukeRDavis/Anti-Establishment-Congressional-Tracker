@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-06-25T14:47:00.095622+00:00",
+  "_last_scraped": "2026-06-25T18:22:15.735462+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -1603,6 +1603,22 @@
       "website": "https://www.maureenforuscongress.com/",
       "source": "manual+trackaipac",
       "note": "Endorsed by TrackAIPAC / Citizens Against AIPAC Corruption. Rejects AIPAC contributions.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Steven Shook",
+      "state": "TX",
+      "district": 26,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "GENERAL",
+      "primaryDate": "2026-11-03",
+      "website": "https://shookforcongress2026.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
       "incumbentParty": ""
     },
