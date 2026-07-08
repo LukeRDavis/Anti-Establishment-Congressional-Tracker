@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-07-08T17:46:07.929805+00:00",
+  "_last_scraped": "2026-07-08T21:17:08.137779+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -46,6 +46,22 @@
       "website": "https://www.robbforcongress.com/",
       "source": "manual+trackaipac",
       "note": "Endorsed by TrackAIPAC / Citizens Against AIPAC Corruption. Rejects AIPAC contributions.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Elizabeth Lee",
+      "state": "AZ",
+      "district": 5,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "2026-07-21",
+      "website": "https://www.nurselee4az.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
       "incumbentParty": ""
     },
