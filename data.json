@@ -1,7 +1,7 @@
 {
   "meta": {
-    "fetched_at": "2026-07-10T17:59:04.526818+00:00",
-    "trackaipac_scraped": "2026-07-10T17:59:04.526831+00:00",
+    "fetched_at": "2026-07-10T21:19:02.906562+00:00",
+    "trackaipac_scraped": "2026-07-10T21:19:02.906578+00:00",
     "member_count": 531,
     "anti_intervention_count": 39,
     "bill_count": 0,
@@ -6983,7 +6983,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 628057,
+      "lobby_total": 629057,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -7009,7 +7009,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 163328,
+      "lobby_total": 176737,
       "pacs": [
         "AIPAC",
         "NORPAC",
@@ -7031,7 +7031,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 195497,
+      "lobby_total": 216807,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -7055,7 +7055,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 533278,
+      "lobby_total": 605438,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -7081,7 +7081,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 291961,
+      "lobby_total": 359704,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -7102,7 +7102,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 937307,
+      "lobby_total": 986946,
       "pacs": [
         "AIPAC",
         "CITY",
@@ -7169,7 +7169,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1495512,
+      "lobby_total": 1495709,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -7195,7 +7195,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 129903,
+      "lobby_total": 131354,
       "pacs": [
         "AIPAC",
         "JSTREET",
@@ -7216,7 +7216,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 612551,
+      "lobby_total": 998868,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -7241,7 +7241,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 278722,
+      "lobby_total": 278736,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -7291,7 +7291,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 3255652,
+      "lobby_total": 3667411,
       "pacs": [
         "AIPAC",
         "BOLD",
@@ -7331,7 +7331,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1899654,
+      "lobby_total": 2108567,
       "pacs": [
         "AIPAC",
         "CITYPAC",
@@ -7357,7 +7357,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 19155439,
+      "lobby_total": 19182192,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -7381,7 +7381,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 1069875,
+      "lobby_total": 1181950,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -7405,7 +7405,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 441592,
+      "lobby_total": 441763,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -7427,7 +7427,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 171802,
+      "lobby_total": 188016,
       "pacs": [
         "AIPAC",
         "DMFI"
@@ -7490,7 +7490,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 92492,
+      "lobby_total": 109302,
       "pacs": [
         "JAC",
         "JSTREET"
@@ -7510,7 +7510,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 101073,
+      "lobby_total": 101082,
       "pacs": [
         "AIPAC",
         "RJC"
@@ -7530,7 +7530,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 145521,
+      "lobby_total": 146157,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -7552,7 +7552,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 224266,
+      "lobby_total": 246269,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -7574,7 +7574,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 124899,
+      "lobby_total": 130903,
       "pacs": [
         "AIPAC"
       ],
@@ -11607,7 +11607,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-10T17:55:37.690315+00:00"
+      "fetched_at": "2026-07-10T21:15:38.881963+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11620,7 +11620,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-10T17:55:45.555932+00:00"
+      "fetched_at": "2026-07-10T21:15:45.949396+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11633,7 +11633,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-10T17:55:50.074950+00:00"
+      "fetched_at": "2026-07-10T21:15:50.009897+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11646,7 +11646,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-10T17:55:50.667489+00:00"
+      "fetched_at": "2026-07-10T21:15:50.519944+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11659,7 +11659,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-10T17:55:53.739157+00:00"
+      "fetched_at": "2026-07-10T21:15:53.265224+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11672,7 +11672,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-10T17:55:57.639857+00:00"
+      "fetched_at": "2026-07-10T21:15:56.680021+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.999,
@@ -11685,35 +11685,35 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-10T17:55:59.761780+00:00"
+      "fetched_at": "2026-07-10T21:15:58.511787+00:00"
     },
     "Abdul el-Sayed": {
-      "prob": 0.74,
+      "prob": 0.77,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Michigan Democratic Senate nomination? \u2192 Abdul El-Sayed",
       "url": "https://www.predictit.org/markets/detail/8167/Who-will-win-the-2026-Michigan-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-10T17:56:06.183401+00:00"
+      "fetched_at": "2026-07-10T21:16:04.538775+00:00"
     },
     "Ed Markey": {
       "prob": 0.85,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ed Markey",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-10T17:56:06.222347+00:00"
+      "fetched_at": "2026-07-10T21:16:04.604281+00:00"
     },
     "Ayanna Pressley": {
       "prob": 0.01,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ayanna Pressley",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-10T17:56:06.222375+00:00"
+      "fetched_at": "2026-07-10T21:16:04.604342+00:00"
     },
     "Jack Schlossberg": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Will Jack Schlossberg get over 10% of the vote in the NY-12 Dem primary? \u2192 Will Jack Schlossberg get over 10% of the vote in the NY-12 Dem primary?",
       "url": "https://www.predictit.org/markets/detail/8542/Will-Jack-Schlossberg-get-over-10-of-the-vote-in-the-NY-12-Dem-primary",
-      "fetched_at": "2026-07-10T17:56:06.280011+00:00"
+      "fetched_at": "2026-07-10T21:16:04.701907+00:00"
     }
   },
   "trackaipac_congress": {
@@ -16761,7 +16761,7 @@
       "party": "D",
       "chamber": "senate",
       "approved": false,
-      "lobby_total": 628057,
+      "lobby_total": 629057,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -16781,7 +16781,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 163328,
+      "lobby_total": 176737,
       "pacs": [
         "AIPAC",
         "NORPAC",
@@ -16797,7 +16797,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 195497,
+      "lobby_total": 216807,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -16815,7 +16815,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 533278,
+      "lobby_total": 605438,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -16835,7 +16835,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 291961,
+      "lobby_total": 359704,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -16850,7 +16850,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 937307,
+      "lobby_total": 986946,
       "pacs": [
         "AIPAC",
         "CITY",
@@ -16899,7 +16899,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 1495512,
+      "lobby_total": 1495709,
       "pacs": [
         "AIPAC",
         "AUSD",
@@ -16919,7 +16919,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 129903,
+      "lobby_total": 131354,
       "pacs": [
         "AIPAC",
         "JSTREET",
@@ -16934,7 +16934,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 612551,
+      "lobby_total": 998868,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -16953,7 +16953,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 278722,
+      "lobby_total": 278736,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -16991,7 +16991,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 3255652,
+      "lobby_total": 3667411,
       "pacs": [
         "AIPAC",
         "BOLD",
@@ -17019,7 +17019,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 1899654,
+      "lobby_total": 2108567,
       "pacs": [
         "AIPAC",
         "CITYPAC",
@@ -17039,7 +17039,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 19155439,
+      "lobby_total": 19182192,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -17057,7 +17057,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 1069875,
+      "lobby_total": 1181950,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -17075,7 +17075,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 441592,
+      "lobby_total": 441763,
       "pacs": [
         "AIPAC",
         "DMFI",
@@ -17091,7 +17091,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 171802,
+      "lobby_total": 188016,
       "pacs": [
         "AIPAC",
         "DMFI"
@@ -17136,7 +17136,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 92492,
+      "lobby_total": 109302,
       "pacs": [
         "JAC",
         "JSTREET"
@@ -17150,7 +17150,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 101073,
+      "lobby_total": 101082,
       "pacs": [
         "AIPAC",
         "RJC"
@@ -17164,7 +17164,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 145521,
+      "lobby_total": 146157,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -17180,7 +17180,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 224266,
+      "lobby_total": 246269,
       "pacs": [
         "AIPAC",
         "COPAC",
@@ -17196,7 +17196,7 @@
       "party": "D",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 124899,
+      "lobby_total": 130903,
       "pacs": [
         "AIPAC"
       ],
