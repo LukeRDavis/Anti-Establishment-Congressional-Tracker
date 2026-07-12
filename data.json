@@ -1,7 +1,7 @@
 {
   "meta": {
-    "fetched_at": "2026-07-12T10:02:05.730109+00:00",
-    "trackaipac_scraped": "2026-07-12T10:02:05.730127+00:00",
+    "fetched_at": "2026-07-12T13:48:10.908372+00:00",
+    "trackaipac_scraped": "2026-07-12T13:48:10.908388+00:00",
     "member_count": 531,
     "anti_intervention_count": 39,
     "bill_count": 0,
@@ -11606,7 +11606,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-12T09:58:40.855203+00:00"
+      "fetched_at": "2026-07-12T13:44:47.906147+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11619,7 +11619,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-12T09:58:48.200381+00:00"
+      "fetched_at": "2026-07-12T13:44:54.768554+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11632,7 +11632,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-12T09:58:52.404554+00:00"
+      "fetched_at": "2026-07-12T13:44:58.684011+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11645,7 +11645,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-12T09:58:52.961797+00:00"
+      "fetched_at": "2026-07-12T13:44:59.185848+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11658,7 +11658,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-12T09:58:55.720617+00:00"
+      "fetched_at": "2026-07-12T13:45:01.767603+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11671,7 +11671,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-12T09:58:59.288354+00:00"
+      "fetched_at": "2026-07-12T13:45:05.124879+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.999,
@@ -11684,35 +11684,35 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-12T09:59:01.297239+00:00"
+      "fetched_at": "2026-07-12T13:45:07.004250+00:00"
     },
     "Abdul el-Sayed": {
-      "prob": 0.73,
+      "prob": 0.75,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Michigan Democratic Senate nomination? \u2192 Abdul El-Sayed",
       "url": "https://www.predictit.org/markets/detail/8167/Who-will-win-the-2026-Michigan-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-12T09:59:07.303747+00:00"
+      "fetched_at": "2026-07-12T13:45:12.538458+00:00"
     },
     "Ed Markey": {
       "prob": 0.85,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ed Markey",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-12T09:59:07.369569+00:00"
+      "fetched_at": "2026-07-12T13:45:12.587269+00:00"
     },
     "Ayanna Pressley": {
       "prob": 0.01,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ayanna Pressley",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-12T09:59:07.369625+00:00"
+      "fetched_at": "2026-07-12T13:45:12.587317+00:00"
     },
     "Jack Schlossberg": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Will Jack Schlossberg get over 10% of the vote in the NY-12 Dem primary? \u2192 Will Jack Schlossberg get over 10% of the vote in the NY-12 Dem primary?",
       "url": "https://www.predictit.org/markets/detail/8542/Will-Jack-Schlossberg-get-over-10-of-the-vote-in-the-NY-12-Dem-primary",
-      "fetched_at": "2026-07-12T09:59:07.468057+00:00"
+      "fetched_at": "2026-07-12T13:45:12.659855+00:00"
     }
   },
   "trackaipac_congress": {
