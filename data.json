@@ -1,7 +1,7 @@
 {
   "meta": {
-    "fetched_at": "2026-07-12T03:42:39.686824+00:00",
-    "trackaipac_scraped": "2026-07-12T03:42:39.686839+00:00",
+    "fetched_at": "2026-07-12T06:48:30.835357+00:00",
+    "trackaipac_scraped": "2026-07-12T06:48:30.835374+00:00",
     "member_count": 531,
     "anti_intervention_count": 39,
     "bill_count": 0,
@@ -3694,7 +3694,6 @@
       "rlc_score": null,
       "lobby_total": 10950,
       "pacs": [
-        "DMFI",
         "JAC"
       ],
       "ps": "INCUMBENT",
@@ -11607,7 +11606,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-12T03:39:14.808084+00:00"
+      "fetched_at": "2026-07-12T06:45:07.625839+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11620,7 +11619,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-12T03:39:22.104206+00:00"
+      "fetched_at": "2026-07-12T06:45:14.466651+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11633,7 +11632,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-12T03:39:26.159354+00:00"
+      "fetched_at": "2026-07-12T06:45:18.538405+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11646,7 +11645,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-12T03:39:26.673095+00:00"
+      "fetched_at": "2026-07-12T06:45:19.030127+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11659,7 +11658,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-12T03:39:29.313842+00:00"
+      "fetched_at": "2026-07-12T06:45:21.512506+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11672,7 +11671,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-12T03:39:33.564836+00:00"
+      "fetched_at": "2026-07-12T06:45:24.750265+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.999,
@@ -11685,35 +11684,35 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-12T03:39:35.515388+00:00"
+      "fetched_at": "2026-07-12T06:45:26.538371+00:00"
     },
     "Abdul el-Sayed": {
       "prob": 0.73,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Michigan Democratic Senate nomination? \u2192 Abdul El-Sayed",
       "url": "https://www.predictit.org/markets/detail/8167/Who-will-win-the-2026-Michigan-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-12T03:39:41.235132+00:00"
+      "fetched_at": "2026-07-12T06:45:32.429316+00:00"
     },
     "Ed Markey": {
       "prob": 0.85,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ed Markey",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-12T03:39:41.300112+00:00"
+      "fetched_at": "2026-07-12T06:45:32.493303+00:00"
     },
     "Ayanna Pressley": {
       "prob": 0.01,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ayanna Pressley",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-12T03:39:41.300180+00:00"
+      "fetched_at": "2026-07-12T06:45:32.493347+00:00"
     },
     "Jack Schlossberg": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Will Jack Schlossberg get over 10% of the vote in the NY-12 Dem primary? \u2192 Will Jack Schlossberg get over 10% of the vote in the NY-12 Dem primary?",
       "url": "https://www.predictit.org/markets/detail/8542/Will-Jack-Schlossberg-get-over-10-of-the-vote-in-the-NY-12-Dem-primary",
-      "fetched_at": "2026-07-12T03:39:41.395285+00:00"
+      "fetched_at": "2026-07-12T06:45:32.588548+00:00"
     }
   },
   "trackaipac_congress": {
@@ -14369,7 +14368,6 @@
       "approved": false,
       "lobby_total": 10950,
       "pacs": [
-        "DMFI",
         "JAC"
       ],
       "note": ""
