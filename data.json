@@ -1,12 +1,12 @@
 {
   "meta": {
-    "fetched_at": "2026-07-13T21:09:21.539511+00:00",
-    "trackaipac_scraped": "2026-07-13T21:09:21.539528+00:00",
+    "fetched_at": "2026-07-14T03:19:06.930003+00:00",
+    "trackaipac_scraped": "2026-07-14T03:19:06.930020+00:00",
     "member_count": 531,
     "anti_intervention_count": 39,
     "bill_count": 0,
     "challenger_count": 120,
-    "history_events": 5043,
+    "history_events": 5082,
     "grok_enriched": 0,
     "odds_covered": 11,
     "version": 8,
@@ -26,7 +26,7 @@
   },
   "members": [
     {
-      "bioguide_id": "T000278",
+      "bioguide_id": "",
       "name": "Tommy Tuberville",
       "party": "R",
       "state": "AL",
@@ -216,7 +216,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "M001153",
+      "bioguide_id": "",
       "name": "Lisa Murkowski",
       "party": "R",
       "state": "AK",
@@ -242,7 +242,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "S001198",
+      "bioguide_id": "",
       "name": "Dan Sullivan",
       "party": "R",
       "state": "AK",
@@ -283,7 +283,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "K000377",
+      "bioguide_id": "",
       "name": "Mark Kelly",
       "party": "D",
       "state": "AZ",
@@ -370,7 +370,7 @@
       "description": "Search \u2318K Suggest Article Sign in Sign in Early life and education Family background and upbringing Formal education and early influences Military service Enlistment and Navy SEAL training Combat deployments and commendations Business career Entrepreneurship and Bottle Breacher Business expansion and innovations Entry into politics Motivations for running 2022 campaign and primary victory Political positions Domestic policy priorities Foreign policy and national security Fiscal and economic view."
     },
     {
-      "bioguide_id": "A000381",
+      "bioguide_id": "",
       "name": "Yassamin Ansari",
       "party": "D",
       "state": "AZ",
@@ -413,7 +413,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "B001302",
+      "bioguide_id": "",
       "name": "Andy Biggs",
       "party": "R",
       "state": "AZ",
@@ -609,7 +609,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "W000809",
+      "bioguide_id": "",
       "name": "Steve Womack",
       "party": "R",
       "state": "AR",
@@ -629,7 +629,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "W000821",
+      "bioguide_id": "",
       "name": "Bruce Westerman",
       "party": "R",
       "state": "AR",
@@ -649,7 +649,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "P000145",
+      "bioguide_id": "",
       "name": "Alex Padilla",
       "party": "D",
       "state": "CA",
@@ -712,7 +712,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "H001068",
+      "bioguide_id": "",
       "name": "Jared Huffman",
       "party": "D",
       "state": "CA",
@@ -909,7 +909,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "S001231",
+      "bioguide_id": "",
       "name": "Lateefah Simon",
       "party": "D",
       "state": "CA",
@@ -927,7 +927,7 @@
       "description": "Search \u2318K Suggest Article Sign in Sign in Early Life and Education Childhood and Upbringing Formal Education Activism and Professional Background Youth Advocacy Work Collaboration with Criminal Justice Initiatives Local and Regional Political Roles BART Board Service Key Decisions and Outcomes State Legislative Career California Assembly Tenure Legislative Priorities and Record Federal Congressional Career 2024 Election and Transition Committee Assignments and Caucuses Early Legislative Actions ."
     },
     {
-      "bioguide_id": "G000605",
+      "bioguide_id": "",
       "name": "Adam Gray",
       "party": "D",
       "state": "CA",
@@ -986,7 +986,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "K000389",
+      "bioguide_id": "",
       "name": "Ro Khanna",
       "party": "D",
       "state": "CA",
@@ -1170,7 +1170,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "B001285",
+      "bioguide_id": "",
       "name": "Julia Brownley",
       "party": "D",
       "state": "CA",
@@ -1193,7 +1193,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "W000830",
+      "bioguide_id": "",
       "name": "George Whitesides",
       "party": "D",
       "state": "CA",
@@ -1344,7 +1344,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "G000585",
+      "bioguide_id": "",
       "name": "Jimmy Gomez",
       "party": "D",
       "state": "CA",
@@ -1546,7 +1546,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "W000187",
+      "bioguide_id": "",
       "name": "Maxine Waters",
       "party": "D",
       "state": "CA",
@@ -1581,7 +1581,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "T000491",
+      "bioguide_id": "",
       "name": "Derek Tran",
       "party": "D",
       "state": "CA",
@@ -1621,7 +1621,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "M001241",
+      "bioguide_id": "",
       "name": "Dave Min",
       "party": "D",
       "state": "CA",
@@ -1664,7 +1664,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "L000593",
+      "bioguide_id": "",
       "name": "Mike Levin",
       "party": "D",
       "state": "CA",
@@ -1802,7 +1802,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "D000197",
+      "bioguide_id": "",
       "name": "Diana DeGette",
       "party": "D",
       "state": "CO",
@@ -1823,7 +1823,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "N000191",
+      "bioguide_id": "",
       "name": "Joe Neguse",
       "party": "D",
       "state": "CO",
@@ -1843,7 +1843,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "H001100",
+      "bioguide_id": "",
       "name": "Jeff Hurd",
       "party": "R",
       "state": "CO",
@@ -1863,7 +1863,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "B000825",
+      "bioguide_id": "",
       "name": "Lauren Boebert",
       "party": "R",
       "state": "CO",
@@ -1901,7 +1901,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "C001121",
+      "bioguide_id": "",
       "name": "Jason Crow",
       "party": "D",
       "state": "CO",
@@ -2036,7 +2036,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "C001069",
+      "bioguide_id": "",
       "name": "Joe Courtney",
       "party": "D",
       "state": "CT",
@@ -2106,7 +2106,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "H001081",
+      "bioguide_id": "",
       "name": "Jahana Hayes",
       "party": "D",
       "state": "CT",
@@ -2195,7 +2195,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "S001217",
+      "bioguide_id": "",
       "name": "Rick Scott",
       "party": "R",
       "state": "FL",
@@ -2219,7 +2219,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "M001244",
+      "bioguide_id": "",
       "name": "Ashley Moody",
       "party": "R",
       "state": "FL",
@@ -2407,7 +2407,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "S001200",
+      "bioguide_id": "",
       "name": "Darren Soto",
       "party": "D",
       "state": "FL",
@@ -2451,7 +2451,7 @@
       "description": "Search \u2318K Suggest Article Sign in Sign in Early Life and Background Family Origins and Childhood Education Activism and Pre-Political Career Gun Violence Prevention Efforts Organizational and Campaign Roles Entry into Elective Office 2022 Congressional Campaign Election Victory and District Demographics Congressional Career Committee Assignments and Caucus Participation Sponsored Legislation and Amendments Policy Positions Environmental and Climate Policies Firearms Regulation and Second Amendme."
     },
     {
-      "bioguide_id": "W000806",
+      "bioguide_id": "",
       "name": "Daniel Webster",
       "party": "R",
       "state": "FL",
@@ -2521,7 +2521,7 @@
       "description": "Search \u2318K Suggest Article Sign in Sign in Early Life and Background Family Origins and Childhood Upbringing and Influences Education and Military Service Academic Background Service in the U.S."
     },
     {
-      "bioguide_id": "C001066",
+      "bioguide_id": "",
       "name": "Kathy Castor",
       "party": "D",
       "state": "FL",
@@ -2565,7 +2565,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "B001260",
+      "bioguide_id": "",
       "name": "Vern Buchanan",
       "party": "R",
       "state": "FL",
@@ -2846,7 +2846,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "O000174",
+      "bioguide_id": "",
       "name": "Jon Ossoff",
       "party": "D",
       "state": "GA",
@@ -3001,7 +3001,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "M001208",
+      "bioguide_id": "",
       "name": "Lucy McBath",
       "party": "D",
       "state": "GA",
@@ -3046,7 +3046,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "S001189",
+      "bioguide_id": "",
       "name": "Austin Scott",
       "party": "R",
       "state": "GA",
@@ -3105,7 +3105,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "L000583",
+      "bioguide_id": "",
       "name": "Barry Loudermilk",
       "party": "R",
       "state": "GA",
@@ -3164,7 +3164,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "S001194",
+      "bioguide_id": "",
       "name": "Brian Schatz",
       "party": "D",
       "state": "HI",
@@ -3210,7 +3210,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "C001055",
+      "bioguide_id": "",
       "name": "Ed Case",
       "party": "D",
       "state": "HI",
@@ -3301,7 +3301,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "F000469",
+      "bioguide_id": "",
       "name": "Russ Fulcher",
       "party": "R",
       "state": "ID",
@@ -3467,7 +3467,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "Q000023",
+      "bioguide_id": "",
       "name": "Mike Quigley",
       "party": "D",
       "state": "IL",
@@ -3493,7 +3493,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "C001117",
+      "bioguide_id": "",
       "name": "Sean Casten",
       "party": "D",
       "state": "IL",
@@ -3532,7 +3532,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "K000391",
+      "bioguide_id": "",
       "name": "Raja Krishnamoorthi",
       "party": "D",
       "state": "IL",
@@ -3610,7 +3610,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "F000454",
+      "bioguide_id": "",
       "name": "Bill Foster",
       "party": "D",
       "state": "IL",
@@ -3633,7 +3633,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "B001295",
+      "bioguide_id": "",
       "name": "Mike Bost",
       "party": "R",
       "state": "IL",
@@ -3683,7 +3683,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "U000040",
+      "bioguide_id": "",
       "name": "Lauren Underwood",
       "party": "D",
       "state": "IL",
@@ -3769,7 +3769,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "Y000064",
+      "bioguide_id": "",
       "name": "Todd Young",
       "party": "R",
       "state": "IN",
@@ -3945,7 +3945,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "C001072",
+      "bioguide_id": "",
       "name": "Andr\u00e9 Carson",
       "party": "D",
       "state": "IN",
@@ -4143,7 +4143,7 @@
       "note": "Running for Governor 2026 Download Graphics Kansas"
     },
     {
-      "bioguide_id": "M000934",
+      "bioguide_id": "",
       "name": "Jerry Moran",
       "party": "R",
       "state": "KS",
@@ -4169,7 +4169,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "M001198",
+      "bioguide_id": "",
       "name": "Roger Marshall",
       "party": "R",
       "state": "KS",
@@ -4228,7 +4228,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "D000629",
+      "bioguide_id": "",
       "name": "Sharice Davids",
       "party": "D",
       "state": "KS",
@@ -4251,7 +4251,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "E000298",
+      "bioguide_id": "",
       "name": "Ron Estes",
       "party": "R",
       "state": "KS",
@@ -4272,7 +4272,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "M000355",
+      "bioguide_id": "",
       "name": "Mitch McConnell",
       "party": "R",
       "state": "KY",
@@ -4298,7 +4298,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "P000603",
+      "bioguide_id": "",
       "name": "Rand Paul",
       "party": "R",
       "state": "KY",
@@ -4318,7 +4318,7 @@
       "description": "Search \u2318K Suggest Article Sign in Sign in Early life and education Family background and upbringing Academic and early professional training Medical career Ophthalmology practice and achievements Dispute with the American Board of Ophthalmology Entry into politics Influence of libertarian activism 2010 U.S. Senate campaign Republican primary against establishment General election victory U.S."
     },
     {
-      "bioguide_id": "C001108",
+      "bioguide_id": "",
       "name": "James Comer",
       "party": "R",
       "state": "KY",
@@ -4339,7 +4339,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "G000558",
+      "bioguide_id": "",
       "name": "Brett Guthrie",
       "party": "R",
       "state": "KY",
@@ -4383,7 +4383,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "M001184",
+      "bioguide_id": "",
       "name": "Thomas Massie",
       "party": "R",
       "state": "KY",
@@ -4427,7 +4427,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "B001282",
+      "bioguide_id": "",
       "name": "Andy Barr",
       "party": "R",
       "state": "KY",
@@ -4478,7 +4478,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "K000393",
+      "bioguide_id": "",
       "name": "John Kennedy",
       "party": "R",
       "state": "LA",
@@ -4504,7 +4504,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "S001176",
+      "bioguide_id": "",
       "name": "Steve Scalise",
       "party": "R",
       "state": "LA",
@@ -4551,7 +4551,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "H001077",
+      "bioguide_id": "",
       "name": "Clay Higgins",
       "party": "R",
       "state": "LA",
@@ -4573,7 +4573,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "J000299",
+      "bioguide_id": "",
       "name": "Mike Johnson",
       "party": "R",
       "state": "LA",
@@ -4686,7 +4686,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "P000597",
+      "bioguide_id": "",
       "name": "Chellie Pingree",
       "party": "D",
       "state": "ME",
@@ -4731,7 +4731,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "V000128",
+      "bioguide_id": "",
       "name": "Chris Van Hollen",
       "party": "D",
       "state": "MD",
@@ -4770,7 +4770,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "H001052",
+      "bioguide_id": "",
       "name": "Andy Harris",
       "party": "R",
       "state": "MD",
@@ -4942,7 +4942,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "R000606",
+      "bioguide_id": "",
       "name": "Jamie Raskin",
       "party": "D",
       "state": "MD",
@@ -4962,7 +4962,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "W000817",
+      "bioguide_id": "",
       "name": "Elizabeth Warren",
       "party": "D",
       "state": "MA",
@@ -5042,7 +5042,7 @@
       "note": "Co-sponsored HR 3565 Block the Bombs Act"
     },
     {
-      "bioguide_id": "T000482",
+      "bioguide_id": "",
       "name": "Lori Trahan",
       "party": "D",
       "state": "MA",
@@ -5109,7 +5109,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "M001196",
+      "bioguide_id": "",
       "name": "Seth Moulton",
       "party": "D",
       "state": "MA",
@@ -5131,7 +5131,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "P000617",
+      "bioguide_id": "",
       "name": "Ayanna Pressley",
       "party": "D",
       "state": "MA",
@@ -5212,7 +5212,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "S001208",
+      "bioguide_id": "",
       "name": "Elissa Slotkin",
       "party": "D",
       "state": "MI",
@@ -5236,7 +5236,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "B001301",
+      "bioguide_id": "",
       "name": "Jack Bergman",
       "party": "R",
       "state": "MI",
@@ -5521,7 +5521,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "K000367",
+      "bioguide_id": "",
       "name": "Amy Klobuchar",
       "party": "D",
       "state": "MN",
@@ -5547,7 +5547,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "S001203",
+      "bioguide_id": "",
       "name": "Tina Smith",
       "party": "D",
       "state": "MN",
@@ -5633,7 +5633,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "M001143",
+      "bioguide_id": "",
       "name": "Betty McCollum",
       "party": "D",
       "state": "MN",
@@ -5655,7 +5655,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "O000173",
+      "bioguide_id": "",
       "name": "Ilhan Omar",
       "party": "D",
       "state": "MN",
@@ -5673,7 +5673,7 @@
       "description": "Search \u2318K Suggest Article Sign in Sign in Early Life and Background Childhood in Somalia Immigration to the United States Personal Life Family and Relationships Religious and Cultural Identity Education and Pre-Political Career Formal Education Early Professional Roles State Legislative Career 2016 Election to Minnesota House Legislative Record in Minnesota U.S. Congressional Career 2018 Election to U.S."
     },
     {
-      "bioguide_id": "E000294",
+      "bioguide_id": "",
       "name": "Tom Emmer",
       "party": "R",
       "state": "MN",
@@ -5721,7 +5721,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "S001212",
+      "bioguide_id": "",
       "name": "Pete Stauber",
       "party": "R",
       "state": "MN",
@@ -5767,7 +5767,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "H001079",
+      "bioguide_id": "",
       "name": "Cindy Hyde-Smith",
       "party": "R",
       "state": "MS",
@@ -5790,7 +5790,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "K000388",
+      "bioguide_id": "",
       "name": "Trent Kelly",
       "party": "R",
       "state": "MS",
@@ -5828,7 +5828,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "G000591",
+      "bioguide_id": "",
       "name": "Michael Guest",
       "party": "R",
       "state": "MS",
@@ -5893,7 +5893,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "S001227",
+      "bioguide_id": "",
       "name": "Eric Schmitt",
       "party": "R",
       "state": "MO",
@@ -5916,7 +5916,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "B001324",
+      "bioguide_id": "",
       "name": "Wesley Bell",
       "party": "?",
       "state": "",
@@ -5942,7 +5942,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "W000812",
+      "bioguide_id": "",
       "name": "Ann Wagner",
       "party": "R",
       "state": "MO",
@@ -6003,7 +6003,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "C001061",
+      "bioguide_id": "",
       "name": "Emanuel Cleaver",
       "party": "D",
       "state": "MO",
@@ -6027,7 +6027,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "G000546",
+      "bioguide_id": "",
       "name": "Sam Graves",
       "party": "R",
       "state": "MO",
@@ -6071,7 +6071,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "S001195",
+      "bioguide_id": "",
       "name": "Jason Smith",
       "party": "R",
       "state": "MO",
@@ -6116,7 +6116,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "S001232",
+      "bioguide_id": "",
       "name": "Tim Sheehy",
       "party": "R",
       "state": "MT",
@@ -6203,7 +6203,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "R000618",
+      "bioguide_id": "",
       "name": "Pete Ricketts",
       "party": "R",
       "state": "NE",
@@ -6242,7 +6242,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "B001298",
+      "bioguide_id": "",
       "name": "Don Bacon",
       "party": "R",
       "state": "NE",
@@ -6268,7 +6268,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "S001172",
+      "bioguide_id": "",
       "name": "Adrian Smith",
       "party": "R",
       "state": "NE",
@@ -6311,7 +6311,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "R000608",
+      "bioguide_id": "",
       "name": "Jacky Rosen",
       "party": "D",
       "state": "NV",
@@ -6337,7 +6337,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "T000468",
+      "bioguide_id": "",
       "name": "Dina Titus",
       "party": "D",
       "state": "NV",
@@ -6383,7 +6383,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "L000590",
+      "bioguide_id": "",
       "name": "Susie Lee",
       "party": "D",
       "state": "NV",
@@ -6409,7 +6409,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "H001066",
+      "bioguide_id": "",
       "name": "Steven Horsford",
       "party": "D",
       "state": "NV",
@@ -6434,7 +6434,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "S001181",
+      "bioguide_id": "",
       "name": "Jeanne Shaheen",
       "party": "D",
       "state": "NH",
@@ -6486,7 +6486,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "P000614",
+      "bioguide_id": "",
       "name": "Chris Pappas",
       "party": "D",
       "state": "NH",
@@ -6558,7 +6558,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "K000394",
+      "bioguide_id": "",
       "name": "Andy Kim",
       "party": "D",
       "state": "NJ",
@@ -6577,7 +6577,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "N000188",
+      "bioguide_id": "",
       "name": "Donald Norcross",
       "party": "D",
       "state": "NJ",
@@ -6672,7 +6672,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "G000583",
+      "bioguide_id": "",
       "name": "Josh Gottheimer",
       "party": "D",
       "state": "NJ",
@@ -6698,7 +6698,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "P000034",
+      "bioguide_id": "",
       "name": "Frank Pallone",
       "party": "D",
       "state": "NJ",
@@ -6827,7 +6827,7 @@
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early life and education Early life Education Career Labor and union organizing New Jersey Working Families Alliance Bernie Sanders campaign and federal service Center for Popular Democracy Role and responsibilities Key advocacy initiatives 2026 congressional campaign Announcement and platform Democratic primary General election Endorsements Political positions Economic and labor policies Healthcare, immigration, and social justice Personal life Family and ."
     },
     {
-      "bioguide_id": "W000822",
+      "bioguide_id": "",
       "name": "Bonnie Watson Coleman",
       "party": "D",
       "state": "NJ",
@@ -7117,7 +7117,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "M001188",
+      "bioguide_id": "",
       "name": "Grace Meng",
       "party": "D",
       "state": "NY",
@@ -7282,7 +7282,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "E000297",
+      "bioguide_id": "",
       "name": "Adriano Espaillat",
       "party": "D",
       "state": "NY",
@@ -7305,7 +7305,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "O000172",
+      "bioguide_id": "",
       "name": "Alexandria Ocasio-Cortez",
       "party": "D",
       "state": "NY",
@@ -7438,7 +7438,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "T000469",
+      "bioguide_id": "",
       "name": "Paul Tonko",
       "party": "D",
       "state": "NY",
@@ -7722,7 +7722,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "F000450",
+      "bioguide_id": "",
       "name": "Virginia Foxx",
       "party": "R",
       "state": "NC",
@@ -7756,7 +7756,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "R000603",
+      "bioguide_id": "",
       "name": "David Rouzer",
       "party": "R",
       "state": "NC",
@@ -7934,7 +7934,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "H001061",
+      "bioguide_id": "",
       "name": "John Hoeven",
       "party": "R",
       "state": "ND",
@@ -7975,7 +7975,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "M001242",
+      "bioguide_id": "",
       "name": "Bernie Moreno",
       "party": "R",
       "state": "OH",
@@ -7997,7 +7997,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "H001104",
+      "bioguide_id": "",
       "name": "Jon Husted",
       "party": "R",
       "state": "OH",
@@ -8057,7 +8057,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "B001281",
+      "bioguide_id": "",
       "name": "Joyce Beatty",
       "party": "D",
       "state": "OH",
@@ -8081,7 +8081,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "J000289",
+      "bioguide_id": "",
       "name": "Jim Jordan",
       "party": "R",
       "state": "OH",
@@ -8165,7 +8165,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "D000626",
+      "bioguide_id": "",
       "name": "Warren Davidson",
       "party": "R",
       "state": "OH",
@@ -8186,7 +8186,7 @@
       "description": "Search \u2318K Suggest Article Sign in Sign in Early Life and Education Family Background and Upbringing Academic Achievements Military Service Enlistment and Training Operational Assignments Awards and Recognition Business Career Transition to Civilian Life Key Entrepreneurial Efforts and Investments Entry into Elective Office Motivations for Running 2016 Special Election Victory Congressional Service General Elections and Re-elections Committee Roles and Caucus Involvement Major Legislative Initiat."
     },
     {
-      "bioguide_id": "K000009",
+      "bioguide_id": "",
       "name": "Marcy Kaptur",
       "party": "D",
       "state": "OH",
@@ -8258,7 +8258,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "B001306",
+      "bioguide_id": "",
       "name": "Troy Balderson",
       "party": "R",
       "state": "OH",
@@ -8342,7 +8342,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "L000575",
+      "bioguide_id": "",
       "name": "James Lankford",
       "party": "R",
       "state": "OK",
@@ -8368,7 +8368,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "A000383",
+      "bioguide_id": "",
       "name": "Alan Armstrong",
       "party": "R",
       "state": "OK",
@@ -8385,7 +8385,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "H001082",
+      "bioguide_id": "",
       "name": "Kevin Hern",
       "party": "R",
       "state": "OK",
@@ -8444,7 +8444,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "C001053",
+      "bioguide_id": "",
       "name": "Tom Cole",
       "party": "R",
       "state": "OK",
@@ -8491,7 +8491,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "W000779",
+      "bioguide_id": "",
       "name": "Ron Wyden",
       "party": "D",
       "state": "OR",
@@ -8517,7 +8517,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "M001176",
+      "bioguide_id": "",
       "name": "Jeff Merkley",
       "party": "D",
       "state": "OR",
@@ -8535,7 +8535,7 @@
       "description": "Search \u2318K Suggest Article Sign in Sign in Early life and education Family background and upbringing Academic and early professional experiences Pre-Senate career Entry into Oregon politics Leadership in the Oregon House of Representatives U.S."
     },
     {
-      "bioguide_id": "B001278",
+      "bioguide_id": "",
       "name": "Suzanne Bonamici",
       "party": "D",
       "state": "OR",
@@ -8749,7 +8749,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "E000296",
+      "bioguide_id": "",
       "name": "Dwight Evans",
       "party": "D",
       "state": "PA",
@@ -8766,7 +8766,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "D000631",
+      "bioguide_id": "",
       "name": "Madeleine Dean",
       "party": "D",
       "state": "PA",
@@ -8807,7 +8807,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "H001085",
+      "bioguide_id": "",
       "name": "Chrissy Houlahan",
       "party": "D",
       "state": "PA",
@@ -8890,7 +8890,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "P000605",
+      "bioguide_id": "",
       "name": "Scott Perry",
       "party": "R",
       "state": "PA",
@@ -8916,7 +8916,7 @@
       "description": "Search \u2318K Suggest Article Sign in Sign in Early life Birth and background Early career entry Career Business career Military career Political career Personal life Family and personal details Death Fact-checked by Grok 1 month ago Scott Perry Ara Eve Leo Sal 1x Scott Perry is an American politician, businessman, and retired brigadier general in the Pennsylvania Army National Guard, serving as the Republican U.S."
     },
     {
-      "bioguide_id": "S001199",
+      "bioguide_id": "",
       "name": "Lloyd Smucker",
       "party": "R",
       "state": "PA",
@@ -8951,7 +8951,7 @@
       "description": "Search \u2318K Suggest Article Sign in Sign in Personal Background Early Life and Family Education and Pre-Political Career Pennsylvania State Legislature 2018 Election and Entry Tenure and Legislative Record Committee Assignments and State Initiatives U.S."
     },
     {
-      "bioguide_id": "J000302",
+      "bioguide_id": "",
       "name": "John Joyce",
       "party": "R",
       "state": "PA",
@@ -9014,7 +9014,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "K000376",
+      "bioguide_id": "",
       "name": "Mike Kelly",
       "party": "R",
       "state": "PA",
@@ -9057,7 +9057,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "W000802",
+      "bioguide_id": "",
       "name": "Sheldon Whitehouse",
       "party": "D",
       "state": "RI",
@@ -9083,7 +9083,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "R000122",
+      "bioguide_id": "",
       "name": "Jack Reed",
       "party": "D",
       "state": "RI",
@@ -9178,7 +9178,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "S001184",
+      "bioguide_id": "",
       "name": "Tim Scott",
       "party": "R",
       "state": "SC",
@@ -9226,7 +9226,7 @@
       "note": "Running for Governor 2026"
     },
     {
-      "bioguide_id": "W000795",
+      "bioguide_id": "",
       "name": "Joe Wilson",
       "party": "R",
       "state": "SC",
@@ -9294,7 +9294,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "N000190",
+      "bioguide_id": "",
       "name": "Ralph Norman",
       "party": "R",
       "state": "SC",
@@ -9359,7 +9359,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "T000250",
+      "bioguide_id": "",
       "name": "John Thune",
       "party": "R",
       "state": "SD",
@@ -9385,7 +9385,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "R000605",
+      "bioguide_id": "",
       "name": "Mike Rounds",
       "party": "R",
       "state": "SD",
@@ -9536,7 +9536,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "D000616",
+      "bioguide_id": "",
       "name": "Scott DesJarlais",
       "party": "R",
       "state": "TN",
@@ -9613,7 +9613,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "K000392",
+      "bioguide_id": "",
       "name": "David Kustoff",
       "party": "R",
       "state": "TN",
@@ -9636,7 +9636,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "C001068",
+      "bioguide_id": "",
       "name": "Steve Cohen",
       "party": "D",
       "state": "TN",
@@ -10104,7 +10104,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "C001091",
+      "bioguide_id": "",
       "name": "Joaquin Castro",
       "party": "D",
       "state": "TX",
@@ -10187,7 +10187,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "W000816",
+      "bioguide_id": "",
       "name": "Roger Williams",
       "party": "R",
       "state": "TX",
@@ -10229,7 +10229,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "C001115",
+      "bioguide_id": "",
       "name": "Michael Cloud",
       "party": "R",
       "state": "TX",
@@ -10250,7 +10250,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "C001063",
+      "bioguide_id": "",
       "name": "Henry Cuellar",
       "party": "D",
       "state": "TX",
@@ -10419,7 +10419,7 @@
       "description": "Search \u2318K Suggest Article Sign in Sign in Background Early life and family origins Education and formative influences Pre-political career Role at Workers Defense Project Advocacy and organizing efforts Austin City Council tenure Elections and political rise Legislative record and initiatives Criticisms and local controversies U.S."
     },
     {
-      "bioguide_id": "B001291",
+      "bioguide_id": "",
       "name": "Brian Babin",
       "party": "R",
       "state": "TX",
@@ -10488,7 +10488,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "L000577",
+      "bioguide_id": "",
       "name": "Mike Lee",
       "party": "R",
       "state": "UT",
@@ -10631,7 +10631,7 @@
       "description": "Search \u2318K Suggest Article Sign in Sign in Early Life and Education Childhood and Family Background Youth Activism and Influences College Years and Early Ideological Formation Early Political Involvement Liberty Union Party Campaigns Professional Roles and Vermont Relocation Initial Electoral Challenges Mayoral Tenure in Burlington (1981-1989) Election Victories and Style Policy Initiatives and Local Impacts Criticisms and Administrative Disputes U.S."
     },
     {
-      "bioguide_id": "W000800",
+      "bioguide_id": "",
       "name": "Peter Welch",
       "party": "D",
       "state": "VT",
@@ -10666,7 +10666,7 @@
       "description": "Search \u2318K Suggest Article Sign in Sign in Personal Background Early Life and Family Education and Pre-Political Career Vermont State Senate Career Elections Legislative Record Leadership Positions U.S."
     },
     {
-      "bioguide_id": "K000384",
+      "bioguide_id": "",
       "name": "Tim Kaine",
       "party": "D",
       "state": "VA",
@@ -10927,7 +10927,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "M001111",
+      "bioguide_id": "",
       "name": "Patty Murray",
       "party": "D",
       "state": "WA",
@@ -10999,7 +10999,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "L000560",
+      "bioguide_id": "",
       "name": "Rick Larsen",
       "party": "D",
       "state": "WA",
@@ -11048,7 +11048,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "N000189",
+      "bioguide_id": "",
       "name": "Dan Newhouse",
       "party": "R",
       "state": "WA",
@@ -11088,7 +11088,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "R000621",
+      "bioguide_id": "",
       "name": "Emily Randall",
       "party": "D",
       "state": "WA",
@@ -11108,7 +11108,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "J000298",
+      "bioguide_id": "",
       "name": "Pramila Jayapal",
       "party": "D",
       "state": "WA",
@@ -11149,7 +11149,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "S000510",
+      "bioguide_id": "",
       "name": "Adam Smith",
       "party": "D",
       "state": "WA",
@@ -11285,7 +11285,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "J000293",
+      "bioguide_id": "",
       "name": "Ron Johnson",
       "party": "R",
       "state": "WI",
@@ -11359,7 +11359,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "P000607",
+      "bioguide_id": "",
       "name": "Mark Pocan",
       "party": "D",
       "state": "WI",
@@ -11399,7 +11399,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "M001160",
+      "bioguide_id": "",
       "name": "Gwen Moore",
       "party": "D",
       "state": "WI",
@@ -11437,7 +11437,7 @@
       "note": ""
     },
     {
-      "bioguide_id": "G000576",
+      "bioguide_id": "",
       "name": "Glenn Grothman",
       "party": "R",
       "state": "WI",
@@ -11607,7 +11607,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-13T21:05:52.688766+00:00"
+      "fetched_at": "2026-07-14T03:15:37.255505+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11620,7 +11620,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-13T21:06:01.484017+00:00"
+      "fetched_at": "2026-07-14T03:15:46.769945+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11633,7 +11633,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-13T21:06:06.064547+00:00"
+      "fetched_at": "2026-07-14T03:15:51.740353+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11646,7 +11646,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-13T21:06:06.679612+00:00"
+      "fetched_at": "2026-07-14T03:15:52.407142+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11659,7 +11659,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-13T21:06:10.116622+00:00"
+      "fetched_at": "2026-07-14T03:15:55.500367+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11672,7 +11672,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-13T21:06:14.338925+00:00"
+      "fetched_at": "2026-07-14T03:15:59.497630+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.999,
@@ -11685,35 +11685,35 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-13T21:06:16.610206+00:00"
+      "fetched_at": "2026-07-14T03:16:01.755387+00:00"
     },
     "Abdul el-Sayed": {
       "prob": 0.74,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Michigan Democratic Senate nomination? \u2192 Abdul El-Sayed",
       "url": "https://www.predictit.org/markets/detail/8167/Who-will-win-the-2026-Michigan-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-13T21:06:23.112621+00:00"
+      "fetched_at": "2026-07-14T03:16:08.546334+00:00"
     },
     "Ed Markey": {
       "prob": 0.85,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ed Markey",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-13T21:06:23.177374+00:00"
+      "fetched_at": "2026-07-14T03:16:08.612435+00:00"
     },
     "Ayanna Pressley": {
       "prob": 0.01,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ayanna Pressley",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-13T21:06:23.177436+00:00"
+      "fetched_at": "2026-07-14T03:16:08.612498+00:00"
     },
     "Jack Schlossberg": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Will Jack Schlossberg get over 10% of the vote in the NY-12 Dem primary? \u2192 Will Jack Schlossberg get over 10% of the vote in the NY-12 Dem primary?",
       "url": "https://www.predictit.org/markets/detail/8542/Will-Jack-Schlossberg-get-over-10-of-the-vote-in-the-NY-12-Dem-primary",
-      "fetched_at": "2026-07-13T21:06:23.272461+00:00"
+      "fetched_at": "2026-07-14T03:16:08.709761+00:00"
     }
   },
   "trackaipac_congress": {
@@ -20861,7 +20861,136 @@
     }
   ],
   "rlc_index": {},
-  "rlc_endorsed": [],
+  "rlc_endorsed": [
+    {
+      "name": "Paul Rojas",
+      "state": "",
+      "district": null,
+      "party": "R",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "",
+      "website": "",
+      "source": "rlc_endorsed",
+      "note": "Endorsed by Republican Liberty Caucus for TX CD-21\u201d\" loading=\"lazy\">",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Congressman Thomas Massie",
+      "state": "KY",
+      "district": 4,
+      "party": "R",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "",
+      "website": "",
+      "source": "rlc_endorsed",
+      "note": "Endorsed by Republican Liberty Caucus for Kentucky\u2019s 4th Congressional District&hellip;",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Larry Sharpe",
+      "state": "NY",
+      "district": null,
+      "party": "R",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "",
+      "website": "",
+      "source": "rlc_endorsed",
+      "note": "Endorsed by Republican Liberty Caucus for Governor of New York\u201d\" loading=\"lazy\">",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Alex Mooney",
+      "state": "VA",
+      "district": null,
+      "party": "R",
+      "chamber": "senate",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "",
+      "website": "",
+      "source": "rlc_endorsed",
+      "note": "Endorsed by Republican Liberty Caucus for U.S. Senate in West Virginia\u201d\" loading=\"lazy\">",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Andy Biggs",
+      "state": "",
+      "district": null,
+      "party": "R",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "",
+      "website": "",
+      "source": "rlc_endorsed",
+      "note": "Endorsed by Republican Liberty Caucus for House Speaker\">",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "John Mills",
+      "state": "FL",
+      "district": 1,
+      "party": "R",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "",
+      "website": "",
+      "source": "rlc_endorsed",
+      "note": "Endorsed by Republican Liberty Caucus for Florida&#8217;s 1st Congressional District\u201d\" loading=\"lazy\">",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Willie J Montague",
+      "state": "FL",
+      "district": 10,
+      "party": "R",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "",
+      "website": "",
+      "source": "rlc_endorsed",
+      "note": "Endorsed by Republican Liberty Caucus for Florida&#8217;s 10th Congressional District\u201d\" loading=\"lazy\"",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Kat Cammack",
+      "state": "FL",
+      "district": 3,
+      "party": "R",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "",
+      "website": "",
+      "source": "rlc_endorsed",
+      "note": "Endorsed by Republican Liberty Caucus for Florida&#8217;s 3rd Congressional District\u201d\" loading=\"lazy\">",
+      "opponent": "",
+      "incumbentParty": ""
+    }
+  ],
   "congress_history": {
     "117": {
       "congress": 117,
