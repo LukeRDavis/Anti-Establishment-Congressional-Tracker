@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-07-17T17:19:23.291143+00:00",
+  "_last_scraped": "2026-07-17T21:03:20.771731+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -1579,6 +1579,22 @@
       "ps": "RUNOFF",
       "opponent": "Tony Gonzales",
       "incumbentParty": "R"
+    },
+    {
+      "name": "Danny Minton",
+      "state": "TX",
+      "district": 6,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "GENERAL",
+      "primaryDate": "2026-11-03",
+      "website": "https://www.dannyfortexas.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
     },
     {
       "name": "Frederick Haynes III",
