@@ -1,7 +1,7 @@
 {
   "meta": {
-    "fetched_at": "2026-07-19T03:37:33.625431+00:00",
-    "trackaipac_scraped": "2026-07-19T03:37:33.625448+00:00",
+    "fetched_at": "2026-07-19T06:41:04.739660+00:00",
+    "trackaipac_scraped": "2026-07-19T06:41:04.739676+00:00",
     "member_count": 531,
     "anti_intervention_count": 39,
     "bill_count": 0,
@@ -11596,7 +11596,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-19T03:34:02.090801+00:00"
+      "fetched_at": "2026-07-19T06:37:40.183634+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11609,7 +11609,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-19T03:34:12.997354+00:00"
+      "fetched_at": "2026-07-19T06:37:47.152050+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11622,7 +11622,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-19T03:34:17.584193+00:00"
+      "fetched_at": "2026-07-19T06:37:51.142768+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11635,7 +11635,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-19T03:34:18.196441+00:00"
+      "fetched_at": "2026-07-19T06:37:51.648360+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11648,7 +11648,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-19T03:34:21.265029+00:00"
+      "fetched_at": "2026-07-19T06:37:54.339543+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11661,7 +11661,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-19T03:34:25.149230+00:00"
+      "fetched_at": "2026-07-19T06:37:57.626135+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.999,
@@ -11674,35 +11674,35 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-19T03:34:27.428191+00:00"
+      "fetched_at": "2026-07-19T06:37:59.603171+00:00"
     },
     "Abdul el-Sayed": {
       "prob": 0.63,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Michigan Democratic Senate nomination? \u2192 Abdul El-Sayed",
       "url": "https://www.predictit.org/markets/detail/8167/Who-will-win-the-2026-Michigan-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-19T03:34:34.013476+00:00"
+      "fetched_at": "2026-07-19T06:38:05.126012+00:00"
     },
     "Ed Markey": {
       "prob": 0.73,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ed Markey",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-19T03:34:34.080639+00:00"
+      "fetched_at": "2026-07-19T06:38:05.191983+00:00"
     },
     "Ayanna Pressley": {
       "prob": 0.01,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ayanna Pressley",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-19T03:34:34.080702+00:00"
+      "fetched_at": "2026-07-19T06:38:05.192050+00:00"
     },
     "Jack Schlossberg": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Will Jack Schlossberg get over 10% of the vote in the NY-12 Dem primary? \u2192 Will Jack Schlossberg get over 10% of the vote in the NY-12 Dem primary?",
       "url": "https://www.predictit.org/markets/detail/8542/Will-Jack-Schlossberg-get-over-10-of-the-vote-in-the-NY-12-Dem-primary",
-      "fetched_at": "2026-07-19T03:34:34.179790+00:00"
+      "fetched_at": "2026-07-19T06:38:05.288649+00:00"
     }
   },
   "trackaipac_congress": {
