@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-07-20T18:11:22.212544+00:00",
+  "_last_scraped": "2026-07-20T21:16:59.966295+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -891,6 +891,22 @@
       "ps": "UPCOMING",
       "opponent": "Open seat",
       "incumbentParty": "D"
+    },
+    {
+      "name": "Jason Poulos",
+      "state": "MA",
+      "district": 4,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "UPCOMING",
+      "primaryDate": "2026-09-01",
+      "website": "https://poulos.house/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
     },
     {
       "name": "Jeromie Whalen",
