@@ -1,12 +1,12 @@
 {
   "meta": {
-    "fetched_at": "2026-07-20T21:21:17.294187+00:00",
-    "trackaipac_scraped": "2026-07-20T21:21:17.294205+00:00",
+    "fetched_at": "2026-07-21T03:31:03.560868+00:00",
+    "trackaipac_scraped": "2026-07-21T03:31:03.560881+00:00",
     "member_count": 531,
     "anti_intervention_count": 39,
     "bill_count": 0,
     "challenger_count": 122,
-    "history_events": 5316,
+    "history_events": 5355,
     "grok_enriched": 0,
     "odds_covered": 11,
     "version": 8,
@@ -11596,7 +11596,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-20T21:17:43.175961+00:00"
+      "fetched_at": "2026-07-21T03:27:27.420050+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11609,7 +11609,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-20T21:17:52.382984+00:00"
+      "fetched_at": "2026-07-21T03:27:37.066286+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11622,7 +11622,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-20T21:17:57.597241+00:00"
+      "fetched_at": "2026-07-21T03:27:42.267971+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11635,7 +11635,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-20T21:17:58.231622+00:00"
+      "fetched_at": "2026-07-21T03:27:42.957471+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11648,7 +11648,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-20T21:18:01.528808+00:00"
+      "fetched_at": "2026-07-21T03:27:46.422468+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11661,7 +11661,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-20T21:18:06.301402+00:00"
+      "fetched_at": "2026-07-21T03:27:52.241544+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.999,
@@ -11674,35 +11674,35 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-20T21:18:08.711910+00:00"
+      "fetched_at": "2026-07-21T03:27:54.764355+00:00"
     },
     "Abdul el-Sayed": {
-      "prob": 0.67,
+      "prob": 0.73,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Michigan Democratic Senate nomination? \u2192 Abdul El-Sayed",
       "url": "https://www.predictit.org/markets/detail/8167/Who-will-win-the-2026-Michigan-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-20T21:18:16.524362+00:00"
+      "fetched_at": "2026-07-21T03:28:02.773353+00:00"
     },
     "Ed Markey": {
       "prob": 0.81,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ed Markey",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-20T21:18:16.574575+00:00"
+      "fetched_at": "2026-07-21T03:28:02.830963+00:00"
     },
     "Ayanna Pressley": {
       "prob": 0.01,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ayanna Pressley",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-20T21:18:16.574621+00:00"
+      "fetched_at": "2026-07-21T03:28:02.831007+00:00"
     },
     "Jack Schlossberg": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Will Jack Schlossberg get over 10% of the vote in the NY-12 Dem primary? \u2192 Will Jack Schlossberg get over 10% of the vote in the NY-12 Dem primary?",
       "url": "https://www.predictit.org/markets/detail/8542/Will-Jack-Schlossberg-get-over-10-of-the-vote-in-the-NY-12-Dem-primary",
-      "fetched_at": "2026-07-20T21:18:16.648266+00:00"
+      "fetched_at": "2026-07-21T03:28:02.914344+00:00"
     }
   },
   "trackaipac_congress": {
