@@ -1,7 +1,7 @@
 {
   "meta": {
-    "fetched_at": "2026-07-22T03:29:30.243970+00:00",
-    "trackaipac_scraped": "2026-07-22T03:29:30.243985+00:00",
+    "fetched_at": "2026-07-22T06:40:55.411493+00:00",
+    "trackaipac_scraped": "2026-07-22T06:40:55.411508+00:00",
     "member_count": 531,
     "anti_intervention_count": 39,
     "bill_count": 0,
@@ -11596,7 +11596,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-22T03:25:56.089892+00:00"
+      "fetched_at": "2026-07-22T06:37:28.116989+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11609,7 +11609,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-22T03:26:05.568782+00:00"
+      "fetched_at": "2026-07-22T06:37:35.040269+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11622,7 +11622,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-22T03:26:10.592600+00:00"
+      "fetched_at": "2026-07-22T06:37:39.098963+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11635,7 +11635,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-22T03:26:11.232582+00:00"
+      "fetched_at": "2026-07-22T06:37:39.633738+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11648,7 +11648,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-22T03:26:14.512827+00:00"
+      "fetched_at": "2026-07-22T06:37:42.249941+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11661,7 +11661,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-22T03:26:18.852581+00:00"
+      "fetched_at": "2026-07-22T06:37:45.644313+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.999,
@@ -11674,35 +11674,35 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-07-22T03:26:21.265370+00:00"
+      "fetched_at": "2026-07-22T06:37:47.523649+00:00"
     },
     "Abdul el-Sayed": {
-      "prob": 0.76,
+      "prob": 0.86,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Michigan Democratic Senate nomination? \u2192 Abdul El-Sayed",
       "url": "https://www.predictit.org/markets/detail/8167/Who-will-win-the-2026-Michigan-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-22T03:26:28.263269+00:00"
+      "fetched_at": "2026-07-22T06:37:53.340832+00:00"
     },
     "Ed Markey": {
       "prob": 0.81,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ed Markey",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-22T03:26:28.329438+00:00"
+      "fetched_at": "2026-07-22T06:37:53.407825+00:00"
     },
     "Ayanna Pressley": {
       "prob": 0.01,
       "src": "predictit_contract",
       "question": "Who will win the 2026 Massachusetts Democratic Senate nomination? \u2192 Ayanna Pressley",
       "url": "https://www.predictit.org/markets/detail/8359/Who-will-win-the-2026-Massachusetts-Democratic-Senate-nomination",
-      "fetched_at": "2026-07-22T03:26:28.329492+00:00"
+      "fetched_at": "2026-07-22T06:37:53.407872+00:00"
     },
     "Jack Schlossberg": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Will Jack Schlossberg get over 10% of the vote in the NY-12 Dem primary? \u2192 Will Jack Schlossberg get over 10% of the vote in the NY-12 Dem primary?",
       "url": "https://www.predictit.org/markets/detail/8542/Will-Jack-Schlossberg-get-over-10-of-the-vote-in-the-NY-12-Dem-primary",
-      "fetched_at": "2026-07-22T03:26:28.427201+00:00"
+      "fetched_at": "2026-07-22T06:37:53.506298+00:00"
     }
   },
   "trackaipac_congress": {
@@ -20054,22 +20054,6 @@
       "incumbentParty": ""
     },
     {
-      "name": "Kai Newkirk",
-      "state": "AZ",
-      "district": 4,
-      "party": "D",
-      "chamber": "house",
-      "antiArms": true,
-      "antiArmsLevel": "yes",
-      "ps": "UPCOMING",
-      "primaryDate": "2026-07-21",
-      "website": "https://www.kaiforaz.com/",
-      "source": "trackaipac",
-      "note": "Endorsed by Citizens Against AIPAC Corruption.",
-      "opponent": "",
-      "incumbentParty": ""
-    },
-    {
       "name": "Elizabeth Lee",
       "state": "AZ",
       "district": 5,
@@ -20077,8 +20061,8 @@
       "chamber": "house",
       "antiArms": true,
       "antiArmsLevel": "yes",
-      "ps": "UPCOMING",
-      "primaryDate": "2026-07-21",
+      "ps": "GENERAL",
+      "primaryDate": "2026-11-03",
       "website": "https://www.nurselee4az.com/",
       "source": "trackaipac",
       "note": "Endorsed by Citizens Against AIPAC Corruption.",
