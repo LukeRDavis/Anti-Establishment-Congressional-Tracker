@@ -1,11 +1,11 @@
 {
   "meta": {
-    "fetched_at": "2026-09-16T19:34:18.581921+00:00",
-    "trackaipac_scraped": "2026-09-16T19:34:18.581941+00:00",
+    "fetched_at": "2026-09-16T22:54:06.095764+00:00",
+    "trackaipac_scraped": "2026-09-16T22:54:06.095784+00:00",
     "member_count": 533,
     "anti_intervention_count": 40,
     "bill_count": 0,
-    "challenger_count": 126,
+    "challenger_count": 127,
     "history_events": 7593,
     "grok_enriched": 0,
     "odds_covered": 7,
@@ -11601,7 +11601,9 @@
       "raised": 15299235.57,
       "spent": 16716492.89,
       "cash": 3734646.88,
-      "cid": "H8NY15148"
+      "cid": "H8NY15148",
+      "ie_against": 104404.0,
+      "ie_support": 0
     },
     "Elizabeth Warren": {
       "raised": 9039537.78,
@@ -11628,7 +11630,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-16T19:30:31.554585+00:00"
+      "fetched_at": "2026-09-16T22:50:23.978125+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11641,7 +11643,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-16T19:30:41.608226+00:00"
+      "fetched_at": "2026-09-16T22:50:36.001151+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11654,7 +11656,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-16T19:30:49.869685+00:00"
+      "fetched_at": "2026-09-16T22:50:40.156139+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11667,7 +11669,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-16T19:30:50.474743+00:00"
+      "fetched_at": "2026-09-16T22:50:40.642290+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11680,7 +11682,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-16T19:30:54.094026+00:00"
+      "fetched_at": "2026-09-16T22:50:43.271294+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11693,7 +11695,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-16T19:30:58.607348+00:00"
+      "fetched_at": "2026-09-16T22:50:46.892188+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.006,
@@ -11706,7 +11708,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-16T19:31:01.052990+00:00"
+      "fetched_at": "2026-09-16T22:50:48.820126+00:00"
     }
   },
   "trackaipac_congress": {
@@ -20224,6 +20226,22 @@
       "incumbentParty": ""
     },
     {
+      "name": "Robert People",
+      "state": "FL",
+      "district": 15,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "GENERAL",
+      "primaryDate": "2026-11-03",
+      "website": "https://www.peopleforcongress.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
       "name": "Nicole Locklin",
       "state": "FL",
       "district": 26,
@@ -21888,14 +21906,14 @@
     },
     "Valerie Foushee|NC|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Personal Background Early life and family Education Pre-political career State Legislative Career North Carolina House of Representatives North Carolina Senate Key committees and leadership roles U.S.",
-      "fetched_at": "2026-09-15T19:38:57.654407+00:00",
+      "fetched_at": "2026-09-16T22:50:05.189170+00:00",
       "_source": "grokipedia",
       "person_slug": "Valerie_Foushee",
       "race_slug": "2026_North_Carolinas_4th_congressional_district_election"
     },
     "Brandon Herrera|TX|house": {
       "description": "Search \u2318K Suggest Edit Sign in Sign in Early Life Childhood and Education Initial Firearms Interest YouTube Career Launch of The AK Guy Channel Growth and Milestones Content Creation Firearms Education and Analysis Custom Builds and Innovations Public Persona Humor and Commentary Style Controversies in Media Political Activities 2024 Congressional Campaign 2026 Election Bid Advocacy and Influence Second Amendment Positions Broader Cultural Impact Reception Media Coverage Public and Political Res.",
-      "fetched_at": "2026-09-15T19:38:57.572859+00:00",
+      "fetched_at": "2026-09-16T22:50:05.079834+00:00",
       "_source": "grokipedia",
       "person_slug": "Brandon_Herrera",
       "race_slug": "2026_Texas_23th_congressional_district_election"
