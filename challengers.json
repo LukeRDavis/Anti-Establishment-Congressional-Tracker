@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-09-16T13:22:29.180633+00:00",
+  "_last_scraped": "2026-09-16T19:29:23.740176+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -1686,6 +1686,22 @@
       "ps": "WON",
       "opponent": "Jasmine Crockett (primary)",
       "incumbentParty": "R"
+    },
+    {
+      "name": "Justin Early",
+      "state": "TX",
+      "district": 31,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "GENERAL",
+      "primaryDate": "2026-11-03",
+      "website": "https://www.votejustinearly.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
     },
     {
       "name": "Kyle Rable",

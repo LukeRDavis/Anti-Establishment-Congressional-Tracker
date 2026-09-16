@@ -1,11 +1,11 @@
 {
   "meta": {
-    "fetched_at": "2026-09-16T13:27:01.279217+00:00",
-    "trackaipac_scraped": "2026-09-16T13:27:01.279232+00:00",
+    "fetched_at": "2026-09-16T19:34:18.581921+00:00",
+    "trackaipac_scraped": "2026-09-16T19:34:18.581941+00:00",
     "member_count": 533,
     "anti_intervention_count": 40,
     "bill_count": 0,
-    "challenger_count": 125,
+    "challenger_count": 126,
     "history_events": 7593,
     "grok_enriched": 0,
     "odds_covered": 7,
@@ -11601,9 +11601,7 @@
       "raised": 15299235.57,
       "spent": 16716492.89,
       "cash": 3734646.88,
-      "cid": "H8NY15148",
-      "ie_against": 104404.0,
-      "ie_support": 0
+      "cid": "H8NY15148"
     },
     "Elizabeth Warren": {
       "raised": 9039537.78,
@@ -11630,7 +11628,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-16T13:23:25.735739+00:00"
+      "fetched_at": "2026-09-16T19:30:31.554585+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11643,7 +11641,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-16T13:23:33.890206+00:00"
+      "fetched_at": "2026-09-16T19:30:41.608226+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11656,7 +11654,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-16T13:23:38.170002+00:00"
+      "fetched_at": "2026-09-16T19:30:49.869685+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11669,7 +11667,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-16T13:23:38.690325+00:00"
+      "fetched_at": "2026-09-16T19:30:50.474743+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11682,7 +11680,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-16T13:23:41.419286+00:00"
+      "fetched_at": "2026-09-16T19:30:54.094026+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11695,7 +11693,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-16T13:23:44.745882+00:00"
+      "fetched_at": "2026-09-16T19:30:58.607348+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.006,
@@ -11708,7 +11706,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-16T13:23:46.584235+00:00"
+      "fetched_at": "2026-09-16T19:31:01.052990+00:00"
     }
   },
   "trackaipac_congress": {
@@ -20540,6 +20538,22 @@
       "ps": "GENERAL",
       "primaryDate": "2026-11-03",
       "website": "https://www.haynesforcongress.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Justin Early",
+      "state": "TX",
+      "district": 31,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "GENERAL",
+      "primaryDate": "2026-11-03",
+      "website": "https://www.votejustinearly.com/",
       "source": "trackaipac",
       "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
