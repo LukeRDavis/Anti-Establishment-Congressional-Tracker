@@ -1,7 +1,7 @@
 {
   "meta": {
-    "fetched_at": "2026-09-29T10:38:45.442518+00:00",
-    "trackaipac_scraped": "2026-09-29T10:38:45.442533+00:00",
+    "fetched_at": "2026-09-29T18:04:20.321084+00:00",
+    "trackaipac_scraped": "2026-09-29T18:04:20.321101+00:00",
     "member_count": 533,
     "anti_intervention_count": 40,
     "bill_count": 0,
@@ -11633,7 +11633,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-29T10:34:58.086459+00:00"
+      "fetched_at": "2026-09-29T18:00:31.431585+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11646,7 +11646,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-29T10:35:09.188795+00:00"
+      "fetched_at": "2026-09-29T18:00:43.988391+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11659,7 +11659,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-29T10:35:14.239857+00:00"
+      "fetched_at": "2026-09-29T18:00:50.039381+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11672,7 +11672,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-29T10:35:14.866903+00:00"
+      "fetched_at": "2026-09-29T18:00:50.691668+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11685,7 +11685,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-29T10:35:18.898899+00:00"
+      "fetched_at": "2026-09-29T18:00:53.996411+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11698,7 +11698,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-29T10:35:23.076538+00:00"
+      "fetched_at": "2026-09-29T18:00:58.708274+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.006,
@@ -11711,7 +11711,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-09-29T10:35:25.588230+00:00"
+      "fetched_at": "2026-09-29T18:01:01.118239+00:00"
     }
   },
   "trackaipac_congress": {
