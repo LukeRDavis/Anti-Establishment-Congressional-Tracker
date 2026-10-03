@@ -1,12 +1,12 @@
 {
   "meta": {
-    "fetched_at": "2026-10-02T20:40:15.444581+00:00",
-    "trackaipac_scraped": "2026-10-02T20:40:15.444599+00:00",
+    "fetched_at": "2026-10-03T05:02:05.913357+00:00",
+    "trackaipac_scraped": "2026-10-03T05:02:05.913372+00:00",
     "member_count": 533,
     "anti_intervention_count": 40,
     "bill_count": 0,
     "challenger_count": 127,
-    "history_events": 8233,
+    "history_events": 8273,
     "grok_enriched": 0,
     "odds_covered": 7,
     "version": 8,
@@ -1113,7 +1113,7 @@
       "antiArms": false,
       "antiArmsLevel": null,
       "rlc_score": null,
-      "lobby_total": 220267,
+      "lobby_total": 271108,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -11637,7 +11637,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-02T20:36:35.823166+00:00"
+      "fetched_at": "2026-10-03T04:58:28.010088+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11650,7 +11650,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-02T20:36:44.807945+00:00"
+      "fetched_at": "2026-10-03T04:58:36.143042+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11663,7 +11663,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-02T20:36:49.238064+00:00"
+      "fetched_at": "2026-10-03T04:58:40.628413+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11676,7 +11676,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-02T20:36:49.767645+00:00"
+      "fetched_at": "2026-10-03T04:58:41.108167+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11689,7 +11689,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-02T20:36:52.417598+00:00"
+      "fetched_at": "2026-10-03T04:58:43.546414+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11702,7 +11702,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-02T20:36:55.898285+00:00"
+      "fetched_at": "2026-10-03T04:58:46.916327+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.006,
@@ -11715,7 +11715,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-02T20:36:57.822914+00:00"
+      "fetched_at": "2026-10-03T04:58:48.697896+00:00"
     }
   },
   "trackaipac_congress": {
@@ -12487,7 +12487,7 @@
       "party": "R",
       "chamber": "house",
       "approved": false,
-      "lobby_total": 220267,
+      "lobby_total": 271108,
       "pacs": [
         "AIPAC",
         "AMP",
@@ -22151,7 +22151,7 @@
     "Ed Markey|MA|senate": {
       "description": "Passage Reset Edit something else No changes yet \u2014 edit the text above, or select just the words to change. Add another source Change only what's wrong and keep the rest as it was. A source lets Grok verify the fix.",
       "news_headline": "Sign in to submit Your edit is saved on this device. Sign in and it'll be right here when you're back.",
-      "fetched_at": "2026-10-01T20:57:27.172832+00:00",
+      "fetched_at": "2026-10-03T04:58:10.417780+00:00",
       "_source": "grokipedia",
       "person_slug": "Ed_Markey",
       "race_slug": "2026_United_States_Senate_election_in_Massachusetts"
@@ -22159,7 +22159,7 @@
     "Chip Roy|TX|house": {
       "description": "Passage Reset Edit something else No changes yet \u2014 edit the text above, or select just the words to change. Add another source Change only what's wrong and keep the rest as it was. A source lets Grok verify the fix.",
       "news_headline": "Sign in to submit Your edit is saved on this device. Sign in and it'll be right here when you're back.",
-      "fetched_at": "2026-10-01T20:57:27.565055+00:00",
+      "fetched_at": "2026-10-03T04:58:10.972532+00:00",
       "_source": "grokipedia",
       "person_slug": "Chip_Roy",
       "race_slug": "2026_Texas_21th_congressional_district_election"
@@ -22167,7 +22167,7 @@
     "Lloyd Doggett|TX|house": {
       "description": "Passage Reset Edit something else No changes yet \u2014 edit the text above, or select just the words to change. Add another source Change only what's wrong and keep the rest as it was. A source lets Grok verify the fix.",
       "news_headline": "Sign in to submit Your edit is saved on this device. Sign in and it'll be right here when you're back.",
-      "fetched_at": "2026-10-01T20:57:27.550517+00:00",
+      "fetched_at": "2026-10-03T04:58:11.066116+00:00",
       "_source": "grokipedia",
       "person_slug": "Lloyd_Doggett",
       "race_slug": "2026_Texas_37th_congressional_district_election"
@@ -22175,7 +22175,7 @@
     "Peter Welch|VT|senate": {
       "description": "Passage Reset Edit something else No changes yet \u2014 edit the text above, or select just the words to change. Add another source Change only what's wrong and keep the rest as it was. A source lets Grok verify the fix.",
       "news_headline": "Sign in to submit Your edit is saved on this device. Sign in and it'll be right here when you're back.",
-      "fetched_at": "2026-10-01T20:57:27.606434+00:00",
+      "fetched_at": "2026-10-03T04:58:11.193706+00:00",
       "_source": "grokipedia",
       "person_slug": "Peter_Welch",
       "race_slug": "2026_United_States_Senate_election_in_Vermont"
