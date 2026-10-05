@@ -1,11 +1,11 @@
 {
   "meta": {
-    "fetched_at": "2026-10-05T05:17:30.120213+00:00",
-    "trackaipac_scraped": "2026-10-05T05:17:30.120228+00:00",
+    "fetched_at": "2026-10-05T17:07:10.779937+00:00",
+    "trackaipac_scraped": "2026-10-05T17:07:10.779951+00:00",
     "member_count": 533,
     "anti_intervention_count": 40,
     "bill_count": 0,
-    "challenger_count": 127,
+    "challenger_count": 128,
     "history_events": 8353,
     "grok_enriched": 0,
     "odds_covered": 7,
@@ -11637,7 +11637,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-05T05:13:52.443465+00:00"
+      "fetched_at": "2026-10-05T17:03:30.324868+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11650,7 +11650,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-05T05:13:59.934921+00:00"
+      "fetched_at": "2026-10-05T17:03:38.943387+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11663,7 +11663,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-05T05:14:04.327587+00:00"
+      "fetched_at": "2026-10-05T17:03:43.429707+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11676,7 +11676,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-05T05:14:04.851316+00:00"
+      "fetched_at": "2026-10-05T17:03:43.933740+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11689,7 +11689,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-05T05:14:07.595181+00:00"
+      "fetched_at": "2026-10-05T17:03:46.664591+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11702,7 +11702,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-05T05:14:11.120938+00:00"
+      "fetched_at": "2026-10-05T17:03:49.977555+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.006,
@@ -11715,7 +11715,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-05T05:14:12.994013+00:00"
+      "fetched_at": "2026-10-05T17:03:52.007409+00:00"
     }
   },
   "trackaipac_congress": {
@@ -20220,22 +20220,6 @@
       "incumbentParty": ""
     },
     {
-      "name": "Andrew Rice",
-      "state": "CT",
-      "district": 3,
-      "party": "I",
-      "chamber": "house",
-      "antiArms": true,
-      "antiArmsLevel": "yes",
-      "ps": "GENERAL",
-      "primaryDate": "2026-11-03",
-      "website": "https://www.riceforct.com/",
-      "source": "trackaipac",
-      "note": "Endorsed by Citizens Against AIPAC Corruption.",
-      "opponent": "",
-      "incumbentParty": ""
-    },
-    {
       "name": "Robert People",
       "state": "FL",
       "district": 15,
@@ -20262,6 +20246,22 @@
       "ps": "GENERAL",
       "primaryDate": "2026-11-03",
       "website": "https://locklinforcongress.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Patty Garcia",
+      "state": "IL",
+      "district": 4,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "GENERAL",
+      "primaryDate": "2026-11-03",
+      "website": "https://pattyforillinois.com/",
       "source": "trackaipac",
       "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
@@ -22151,7 +22151,7 @@
     "Ed Markey|MA|senate": {
       "description": "Passage Reset Edit something else No changes yet \u2014 edit the text above, or select just the words to change. Add another source Change only what's wrong and keep the rest as it was. A source lets Grok verify the fix.",
       "news_headline": "Sign in to submit Your edit is saved on this device. Sign in and it'll be right here when you're back.",
-      "fetched_at": "2026-10-04T05:30:46.487467+00:00",
+      "fetched_at": "2026-10-05T17:03:12.171618+00:00",
       "_source": "grokipedia",
       "person_slug": "Ed_Markey",
       "race_slug": "2026_United_States_Senate_election_in_Massachusetts"
@@ -22159,7 +22159,7 @@
     "Chip Roy|TX|house": {
       "description": "Passage Reset Edit something else No changes yet \u2014 edit the text above, or select just the words to change. Add another source Change only what's wrong and keep the rest as it was. A source lets Grok verify the fix.",
       "news_headline": "Sign in to submit Your edit is saved on this device. Sign in and it'll be right here when you're back.",
-      "fetched_at": "2026-10-04T05:30:47.037560+00:00",
+      "fetched_at": "2026-10-05T17:03:12.797675+00:00",
       "_source": "grokipedia",
       "person_slug": "Chip_Roy",
       "race_slug": "2026_Texas_21th_congressional_district_election"
@@ -22167,7 +22167,7 @@
     "Lloyd Doggett|TX|house": {
       "description": "Passage Reset Edit something else No changes yet \u2014 edit the text above, or select just the words to change. Add another source Change only what's wrong and keep the rest as it was. A source lets Grok verify the fix.",
       "news_headline": "Sign in to submit Your edit is saved on this device. Sign in and it'll be right here when you're back.",
-      "fetched_at": "2026-10-04T05:30:47.054853+00:00",
+      "fetched_at": "2026-10-05T17:03:12.750722+00:00",
       "_source": "grokipedia",
       "person_slug": "Lloyd_Doggett",
       "race_slug": "2026_Texas_37th_congressional_district_election"
@@ -22175,7 +22175,7 @@
     "Peter Welch|VT|senate": {
       "description": "Passage Reset Edit something else No changes yet \u2014 edit the text above, or select just the words to change. Add another source Change only what's wrong and keep the rest as it was. A source lets Grok verify the fix.",
       "news_headline": "Sign in to submit Your edit is saved on this device. Sign in and it'll be right here when you're back.",
-      "fetched_at": "2026-10-04T05:30:47.060413+00:00",
+      "fetched_at": "2026-10-05T17:03:12.796596+00:00",
       "_source": "grokipedia",
       "person_slug": "Peter_Welch",
       "race_slug": "2026_United_States_Senate_election_in_Vermont"
