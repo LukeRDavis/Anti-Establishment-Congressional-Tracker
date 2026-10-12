@@ -1,12 +1,12 @@
 {
   "meta": {
-    "fetched_at": "2026-10-11T20:12:43.713244+00:00",
-    "trackaipac_scraped": "2026-10-11T20:12:43.713259+00:00",
+    "fetched_at": "2026-10-12T05:39:29.721785+00:00",
+    "trackaipac_scraped": "2026-10-12T05:39:29.721801+00:00",
     "member_count": 533,
     "anti_intervention_count": 40,
     "bill_count": 0,
     "challenger_count": 128,
-    "history_events": 8593,
+    "history_events": 8633,
     "grok_enriched": 0,
     "odds_covered": 7,
     "version": 8,
@@ -11637,7 +11637,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-11T20:08:54.143070+00:00"
+      "fetched_at": "2026-10-12T05:35:38.227947+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11650,7 +11650,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-11T20:09:06.685846+00:00"
+      "fetched_at": "2026-10-12T05:35:49.086534+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11663,7 +11663,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-11T20:09:11.693917+00:00"
+      "fetched_at": "2026-10-12T05:35:54.369356+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11676,7 +11676,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-11T20:09:12.347716+00:00"
+      "fetched_at": "2026-10-12T05:35:54.982601+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11689,7 +11689,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-11T20:09:15.864205+00:00"
+      "fetched_at": "2026-10-12T05:35:58.662778+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11702,7 +11702,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-11T20:09:19.931879+00:00"
+      "fetched_at": "2026-10-12T05:36:03.098773+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.006,
@@ -11715,7 +11715,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-11T20:09:22.583218+00:00"
+      "fetched_at": "2026-10-12T05:36:05.589874+00:00"
     }
   },
   "trackaipac_congress": {
