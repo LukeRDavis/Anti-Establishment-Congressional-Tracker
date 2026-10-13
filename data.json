@@ -1,12 +1,12 @@
 {
   "meta": {
-    "fetched_at": "2026-10-12T17:46:00.380008+00:00",
-    "trackaipac_scraped": "2026-10-12T17:46:00.380024+00:00",
+    "fetched_at": "2026-10-13T02:01:30.498622+00:00",
+    "trackaipac_scraped": "2026-10-13T02:01:30.498638+00:00",
     "member_count": 533,
     "anti_intervention_count": 40,
     "bill_count": 0,
-    "challenger_count": 128,
-    "history_events": 8633,
+    "challenger_count": 129,
+    "history_events": 8673,
     "grok_enriched": 0,
     "odds_covered": 7,
     "version": 8,
@@ -11637,7 +11637,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-12T17:42:17.583124+00:00"
+      "fetched_at": "2026-10-13T01:57:43.611688+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11650,7 +11650,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-12T17:42:26.487686+00:00"
+      "fetched_at": "2026-10-13T01:57:53.346714+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11663,7 +11663,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-12T17:42:31.294753+00:00"
+      "fetched_at": "2026-10-13T01:57:58.215516+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11676,7 +11676,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-12T17:42:31.836739+00:00"
+      "fetched_at": "2026-10-13T01:57:58.838709+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11689,7 +11689,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-12T17:42:34.919590+00:00"
+      "fetched_at": "2026-10-13T01:58:02.110773+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11702,7 +11702,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-12T17:42:38.974543+00:00"
+      "fetched_at": "2026-10-13T01:58:06.304541+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.006,
@@ -11715,7 +11715,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-12T17:42:41.150605+00:00"
+      "fetched_at": "2026-10-13T01:58:08.618219+00:00"
     }
   },
   "trackaipac_congress": {
@@ -20214,6 +20214,22 @@
       "ps": "GENERAL",
       "primaryDate": "2026-11-03",
       "website": "https://www.kirosforco.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Mike Klein",
+      "state": "FL",
+      "district": 3,
+      "party": "I",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "GENERAL",
+      "primaryDate": "2026-11-03",
+      "website": "https://mikeklein4congress.com/",
       "source": "trackaipac",
       "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
