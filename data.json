@@ -1,14 +1,14 @@
 {
   "meta": {
-    "fetched_at": "2026-10-14T20:11:45.018958+00:00",
-    "trackaipac_scraped": "2026-10-14T20:11:45.018975+00:00",
+    "fetched_at": "2026-10-15T04:19:17.237659+00:00",
+    "trackaipac_scraped": "2026-10-15T04:19:17.237676+00:00",
     "member_count": 533,
     "anti_intervention_count": 40,
     "bill_count": 0,
-    "challenger_count": 129,
-    "history_events": 8713,
+    "challenger_count": 130,
+    "history_events": 8753,
     "grok_enriched": 0,
-    "odds_covered": 7,
+    "odds_covered": 8,
     "version": 8,
     "sources": {
       "members": "trackaipac.com + rlc.org Liberty Index",
@@ -11637,7 +11637,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-14T20:07:50.336260+00:00"
+      "fetched_at": "2026-10-15T04:15:26.487852+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11650,7 +11650,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-14T20:08:00.337234+00:00"
+      "fetched_at": "2026-10-15T04:15:37.811289+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11663,7 +11663,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-14T20:08:05.321270+00:00"
+      "fetched_at": "2026-10-15T04:15:43.469179+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11676,7 +11676,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-14T20:08:05.831655+00:00"
+      "fetched_at": "2026-10-15T04:15:44.120102+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11689,7 +11689,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-14T20:08:08.872840+00:00"
+      "fetched_at": "2026-10-15T04:15:47.681911+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11702,7 +11702,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-14T20:08:13.287324+00:00"
+      "fetched_at": "2026-10-15T04:15:52.284785+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.006,
@@ -11715,7 +11715,14 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-14T20:08:15.571616+00:00"
+      "fetched_at": "2026-10-15T04:15:54.855978+00:00"
+    },
+    "James Talarico": {
+      "prob": 0.99,
+      "src": "predictit_contract",
+      "question": "What will be the margin of victory in the 2026 Texas Senate race? \u2192 James Talarico, \u2265 8%",
+      "url": "https://www.predictit.org/markets/detail/9022/What-will-be-the-margin-of-victory-in-the-2026-Texas-Senate-race",
+      "fetched_at": "2026-10-15T04:16:03.318186+00:00"
     }
   },
   "trackaipac_congress": {
@@ -20236,6 +20243,22 @@
       "incumbentParty": ""
     },
     {
+      "name": "Eric Yonce",
+      "state": "FL",
+      "district": 6,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "GENERAL",
+      "primaryDate": "2026-11-03",
+      "website": "https://www.yonceforcongress.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
       "name": "Robert People",
       "state": "FL",
       "district": 15,
@@ -20792,12 +20815,14 @@
       "general_date": "2026-11-03",
       "general_opponent": "John Cornyn or Ken Paxton (R runoff May 26)",
       "cook_rating": "Likely Republican",
-      "win_prob": 0.22,
+      "win_prob": 0.99,
       "impact_if_wins": "+1 soft-D Senate (major historic upset)",
       "impact_if_loses": "No change (seat stays R)",
       "note": "Won D primary 53% vs Crockett 46% (Mar 3). Supports banning offensive weapons to Israel. Will face Cornyn or Paxton after May 26 runoff.",
-      "polymarket_url": null,
-      "description": "\u2318K Suggest edit Sign in Contents Early life and education Family background and childhood Academic and early professional influences Pre-political career Teaching in public schools Seminarian training and religious studies Political career 2018 election to Texas House Re-elections and legislative tenure (2019\u20132025) Committee roles and bill sponsorships Political positions Education and school funding Religion, faith, and opposition to Christian nationalism Immigration, guns, and other policy sta."
+      "polymarket_url": "https://www.predictit.org/markets/detail/9022/What-will-be-the-margin-of-victory-in-the-2026-Texas-Senate-race",
+      "description": "\u2318K Suggest edit Sign in Contents Early life and education Family background and childhood Academic and early professional influences Pre-political career Teaching in public schools Seminarian training and religious studies Political career 2018 election to Texas House Re-elections and legislative tenure (2019\u20132025) Committee roles and bill sponsorships Political positions Education and school funding Religion, faith, and opposition to Christian nationalism Immigration, guns, and other policy sta.",
+      "win_prob_src": "polymarket",
+      "forecast_url": "https://www.predictit.org/markets/detail/9022/What-will-be-the-margin-of-victory-in-the-2026-Texas-Senate-race"
     },
     {
       "id": "foushee-nc04",
