@@ -1,7 +1,7 @@
 {
   "meta": {
-    "fetched_at": "2026-10-17T18:25:13.687816+00:00",
-    "trackaipac_scraped": "2026-10-17T18:25:13.687831+00:00",
+    "fetched_at": "2026-10-17T22:13:14.185629+00:00",
+    "trackaipac_scraped": "2026-10-17T22:13:14.185644+00:00",
     "member_count": 533,
     "anti_intervention_count": 40,
     "bill_count": 0,
@@ -11637,7 +11637,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-17T18:21:31.733041+00:00"
+      "fetched_at": "2026-10-17T22:09:35.865617+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11650,7 +11650,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-17T18:21:40.512953+00:00"
+      "fetched_at": "2026-10-17T22:09:43.687916+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11663,7 +11663,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-17T18:21:44.938333+00:00"
+      "fetched_at": "2026-10-17T22:09:47.739405+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11676,7 +11676,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-17T18:21:45.514920+00:00"
+      "fetched_at": "2026-10-17T22:09:48.240865+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11689,7 +11689,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-17T18:21:48.717100+00:00"
+      "fetched_at": "2026-10-17T22:09:50.947666+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11702,7 +11702,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-17T18:21:52.573043+00:00"
+      "fetched_at": "2026-10-17T22:09:54.259640+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.006,
@@ -11715,21 +11715,21 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-17T18:21:54.713886+00:00"
+      "fetched_at": "2026-10-17T22:09:56.059536+00:00"
     },
     "James Talarico": {
       "prob": 0.2,
       "src": "predictit_contract",
       "question": "What will be the margin of victory in the 2026 Texas Senate race? \u2192 James Talarico, \u2265 8%",
       "url": "https://www.predictit.org/markets/detail/9022/What-will-be-the-margin-of-victory-in-the-2026-Texas-Senate-race",
-      "fetched_at": "2026-10-17T18:22:00.977120+00:00"
+      "fetched_at": "2026-10-17T22:10:01.672949+00:00"
     },
     "Abdul el-Sayed": {
       "prob": 0.98,
       "src": "predictit_contract",
       "question": "What will be the margin of victory in the 2026 Michigan Senate race? \u2192 Abdul El-Sayed, \u2265 8%",
       "url": "https://www.predictit.org/markets/detail/9024/What-will-be-the-margin-of-victory-in-the-2026-Michigan-Senate-race",
-      "fetched_at": "2026-10-17T18:22:00.982155+00:00"
+      "fetched_at": "2026-10-17T22:10:01.680316+00:00"
     }
   },
   "trackaipac_congress": {
