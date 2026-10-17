@@ -1,7 +1,7 @@
 {
   "meta": {
-    "fetched_at": "2026-10-17T08:34:49.748299+00:00",
-    "trackaipac_scraped": "2026-10-17T08:34:49.748315+00:00",
+    "fetched_at": "2026-10-17T15:27:13.485363+00:00",
+    "trackaipac_scraped": "2026-10-17T15:27:13.485377+00:00",
     "member_count": 533,
     "anti_intervention_count": 40,
     "bill_count": 0,
@@ -11637,7 +11637,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-17T08:31:04.657956+00:00"
+      "fetched_at": "2026-10-17T15:23:33.984282+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11650,7 +11650,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-17T08:31:14.246652+00:00"
+      "fetched_at": "2026-10-17T15:23:42.094864+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11663,7 +11663,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-17T08:31:19.267466+00:00"
+      "fetched_at": "2026-10-17T15:23:46.336686+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11676,7 +11676,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-17T08:31:19.899927+00:00"
+      "fetched_at": "2026-10-17T15:23:46.841969+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11689,7 +11689,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-17T08:31:23.185034+00:00"
+      "fetched_at": "2026-10-17T15:23:49.422730+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11702,7 +11702,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-17T08:31:27.556237+00:00"
+      "fetched_at": "2026-10-17T15:23:52.855963+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.006,
@@ -11715,21 +11715,21 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-17T08:31:30.226065+00:00"
+      "fetched_at": "2026-10-17T15:23:54.726205+00:00"
     },
     "James Talarico": {
-      "prob": 0.97,
+      "prob": 0.2,
       "src": "predictit_contract",
       "question": "What will be the margin of victory in the 2026 Texas Senate race? \u2192 James Talarico, \u2265 8%",
       "url": "https://www.predictit.org/markets/detail/9022/What-will-be-the-margin-of-victory-in-the-2026-Texas-Senate-race",
-      "fetched_at": "2026-10-17T08:31:37.200121+00:00"
+      "fetched_at": "2026-10-17T15:24:00.944903+00:00"
     },
     "Abdul el-Sayed": {
       "prob": 0.98,
       "src": "predictit_contract",
       "question": "What will be the margin of victory in the 2026 Michigan Senate race? \u2192 Abdul El-Sayed, \u2265 8%",
       "url": "https://www.predictit.org/markets/detail/9024/What-will-be-the-margin-of-victory-in-the-2026-Michigan-Senate-race",
-      "fetched_at": "2026-10-17T08:31:37.205159+00:00"
+      "fetched_at": "2026-10-17T15:24:00.954848+00:00"
     }
   },
   "trackaipac_congress": {
@@ -20822,7 +20822,7 @@
       "general_date": "2026-11-03",
       "general_opponent": "John Cornyn or Ken Paxton (R runoff May 26)",
       "cook_rating": "Likely Republican",
-      "win_prob": 0.97,
+      "win_prob": 0.2,
       "impact_if_wins": "+1 soft-D Senate (major historic upset)",
       "impact_if_loses": "No change (seat stays R)",
       "note": "Won D primary 53% vs Crockett 46% (Mar 3). Supports banning offensive weapons to Israel. Will face Cornyn or Paxton after May 26 runoff.",
