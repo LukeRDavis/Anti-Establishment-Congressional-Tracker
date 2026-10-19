@@ -1,11 +1,11 @@
 {
   "meta": {
-    "fetched_at": "2026-10-19T15:32:56.589000+00:00",
-    "trackaipac_scraped": "2026-10-19T15:32:56.589018+00:00",
+    "fetched_at": "2026-10-19T21:03:00.734416+00:00",
+    "trackaipac_scraped": "2026-10-19T21:03:00.734431+00:00",
     "member_count": 533,
     "anti_intervention_count": 40,
     "bill_count": 0,
-    "challenger_count": 130,
+    "challenger_count": 131,
     "history_events": 8913,
     "grok_enriched": 0,
     "odds_covered": 9,
@@ -11637,7 +11637,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-19T15:29:08.479291+00:00"
+      "fetched_at": "2026-10-19T20:59:13.489623+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11650,7 +11650,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-19T15:29:19.487151+00:00"
+      "fetched_at": "2026-10-19T20:59:23.130406+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11663,7 +11663,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-19T15:29:24.899804+00:00"
+      "fetched_at": "2026-10-19T20:59:28.347169+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11676,7 +11676,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-19T15:29:25.548899+00:00"
+      "fetched_at": "2026-10-19T20:59:29.020407+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11689,7 +11689,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-19T15:29:29.184483+00:00"
+      "fetched_at": "2026-10-19T20:59:32.402118+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11702,7 +11702,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-19T15:29:33.441713+00:00"
+      "fetched_at": "2026-10-19T20:59:36.776426+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.006,
@@ -11715,21 +11715,21 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-19T15:29:35.988547+00:00"
+      "fetched_at": "2026-10-19T20:59:39.315400+00:00"
     },
     "James Talarico": {
       "prob": 0.18,
       "src": "predictit_contract",
       "question": "What will be the margin of victory in the 2026 Texas Senate race? \u2192 James Talarico, \u2265 8%",
       "url": "https://www.predictit.org/markets/detail/9022/What-will-be-the-margin-of-victory-in-the-2026-Texas-Senate-race",
-      "fetched_at": "2026-10-19T15:29:43.973455+00:00"
+      "fetched_at": "2026-10-19T20:59:46.773731+00:00"
     },
     "Abdul el-Sayed": {
       "prob": 0.98,
       "src": "predictit_contract",
       "question": "What will be the margin of victory in the 2026 Michigan Senate race? \u2192 Abdul El-Sayed, \u2265 8%",
       "url": "https://www.predictit.org/markets/detail/9024/What-will-be-the-margin-of-victory-in-the-2026-Michigan-Senate-race",
-      "fetched_at": "2026-10-19T15:29:43.978277+00:00"
+      "fetched_at": "2026-10-19T20:59:46.781173+00:00"
     }
   },
   "trackaipac_congress": {
@@ -20484,6 +20484,22 @@
       "ps": "GENERAL",
       "primaryDate": "2026-11-03",
       "website": "https://www.christianforohio.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Don Leonard",
+      "state": "OH",
+      "district": 15,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "GENERAL",
+      "primaryDate": "2026-11-03",
+      "website": "https://donforohio.com/",
       "source": "trackaipac",
       "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
