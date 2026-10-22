@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-10-22T04:19:47.486888+00:00",
+  "_last_scraped": "2026-10-22T13:40:57.928614+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -1707,6 +1707,22 @@
       "ps": "UPCOMING",
       "primaryDate": "2026-08-06",
       "website": "https://www.votejustinj.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Kristi Burke",
+      "state": "TN",
+      "district": 1,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "GENERAL",
+      "primaryDate": "2026-11-03",
+      "website": "https://www.votekristiburke.com/",
       "source": "trackaipac",
       "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
