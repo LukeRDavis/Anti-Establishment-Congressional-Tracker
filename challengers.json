@@ -1,6 +1,6 @@
 {
   "_note": "Auto-updated from TrackAIPAC + RLC + FEC. Manual entries preserved.",
-  "_last_scraped": "2026-10-24T18:42:36.145402+00:00",
+  "_last_scraped": "2026-10-24T22:23:07.021780+00:00",
   "challengers": [
     {
       "name": "Andy Biggs",
@@ -1195,6 +1195,22 @@
       "website": "https://www.hartzellforcongress.com/",
       "source": "manual+trackaipac",
       "note": "Endorsed by TrackAIPAC / Citizens Against AIPAC Corruption. Rejects AIPAC contributions.",
+      "opponent": "",
+      "incumbentParty": ""
+    },
+    {
+      "name": "Missi Hesketh",
+      "state": "MO",
+      "district": 7,
+      "party": "D",
+      "chamber": "house",
+      "antiArms": true,
+      "antiArmsLevel": "yes",
+      "ps": "GENERAL",
+      "primaryDate": "2026-11-03",
+      "website": "https://www.missiformo.com/",
+      "source": "trackaipac",
+      "note": "Endorsed by Citizens Against AIPAC Corruption.",
       "opponent": "",
       "incumbentParty": ""
     },
