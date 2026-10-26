@@ -1,7 +1,7 @@
 {
   "meta": {
-    "fetched_at": "2026-10-26T15:09:01.788569+00:00",
-    "trackaipac_scraped": "2026-10-26T15:09:01.788583+00:00",
+    "fetched_at": "2026-10-26T21:02:25.612357+00:00",
+    "trackaipac_scraped": "2026-10-26T21:02:25.612373+00:00",
     "member_count": 533,
     "anti_intervention_count": 40,
     "bill_count": 0,
@@ -9201,7 +9201,9 @@
       "antiArmsLevel": null,
       "rlc_score": null,
       "lobby_total": 0,
-      "pacs": [],
+      "pacs": [
+        "AIPAC"
+      ],
       "ps": "INCUMBENT",
       "bills": [],
       "votes": [],
@@ -11637,7 +11639,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-26T15:05:14.578394+00:00"
+      "fetched_at": "2026-10-26T20:58:39.894253+00:00"
     },
     "Rand Paul": {
       "prob": 0.003,
@@ -11650,7 +11652,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-26T15:05:24.617775+00:00"
+      "fetched_at": "2026-10-26T20:58:49.475592+00:00"
     },
     "Rashida Tlaib": {
       "prob": 0.999,
@@ -11663,7 +11665,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-26T15:05:30.520239+00:00"
+      "fetched_at": "2026-10-26T20:58:54.340961+00:00"
     },
     "Ilhan Omar": {
       "prob": 0.014,
@@ -11676,7 +11678,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-26T15:05:31.106036+00:00"
+      "fetched_at": "2026-10-26T20:58:54.939265+00:00"
     },
     "Alexandria Ocasio-Cortez": {
       "prob": 0.999,
@@ -11689,7 +11691,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-26T15:05:34.659453+00:00"
+      "fetched_at": "2026-10-26T20:58:58.224793+00:00"
     },
     "Chip Roy": {
       "prob": 0.01,
@@ -11702,7 +11704,7 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-26T15:05:38.534210+00:00"
+      "fetched_at": "2026-10-26T20:59:02.731916+00:00"
     },
     "Bernie Sanders": {
       "prob": 0.006,
@@ -11715,35 +11717,35 @@
       "volume": 0.0,
       "volume_24h": 0.0,
       "url": "https://polymarket.com",
-      "fetched_at": "2026-10-26T15:05:40.907888+00:00"
+      "fetched_at": "2026-10-26T20:59:04.886391+00:00"
     },
     "Ed Markey": {
       "prob": 0.99,
       "src": "predictit_contract",
       "question": "Which party will win the 2026 US Senate election in Massachusetts? \u2192 Democratic (Markey)",
       "url": "https://www.predictit.org/markets/detail/8381/Which-party-will-win-the-2026-US-Senate-election-in-Massachusetts",
-      "fetched_at": "2026-10-26T15:05:47.644927+00:00"
+      "fetched_at": "2026-10-26T20:59:11.606154+00:00"
     },
     "Jeff Merkley": {
       "prob": 0.98,
       "src": "predictit_contract",
       "question": "Which party will win the 2026 US Senate election in Oregon? \u2192 Democratic (Merkley)",
       "url": "https://www.predictit.org/markets/detail/8395/Which-party-will-win-the-2026-US-Senate-election-in-Oregon",
-      "fetched_at": "2026-10-26T15:05:47.668000+00:00"
+      "fetched_at": "2026-10-26T20:59:11.623835+00:00"
     },
     "James Talarico": {
       "prob": 0.08,
       "src": "predictit_contract",
       "question": "What will be the margin of victory in the 2026 Texas Senate race? \u2192 James Talarico, \u2265 8%",
       "url": "https://www.predictit.org/markets/detail/9022/What-will-be-the-margin-of-victory-in-the-2026-Texas-Senate-race",
-      "fetched_at": "2026-10-26T15:05:47.886850+00:00"
+      "fetched_at": "2026-10-26T20:59:11.791028+00:00"
     },
     "Abdul el-Sayed": {
       "prob": 0.49,
       "src": "predictit_contract",
       "question": "What will be the margin of victory in the 2026 Michigan Senate race? \u2192 Abdul El-Sayed, \u2265 8%",
       "url": "https://www.predictit.org/markets/detail/9024/What-will-be-the-margin-of-victory-in-the-2026-Michigan-Senate-race",
-      "fetched_at": "2026-10-26T15:05:47.896807+00:00"
+      "fetched_at": "2026-10-26T20:59:11.798670+00:00"
     }
   },
   "trackaipac_congress": {
@@ -18386,7 +18388,9 @@
       "chamber": "senate",
       "approved": false,
       "lobby_total": 0,
-      "pacs": [],
+      "pacs": [
+        "AIPAC"
+      ],
       "note": ""
     },
     "tim scott": {
