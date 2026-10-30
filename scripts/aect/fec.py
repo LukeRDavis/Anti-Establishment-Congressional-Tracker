@@ -169,3 +169,26 @@ def fetch_outside_spending(fec_ids, budget=400):
     stream("fec_outside_spending", ok=bool(ie), count=len(ie),
            note=f"refreshed {len(todo)}, {len(ie)} candidates with outside-spending records")
     return ie
+
+
+def fetch_websites(committee_ids, budget=300):
+    """Campaign websites from each principal committee's FEC registration (Form 1)."""
+    cache = load_cache("fec_websites")
+    if not FEC_KEY:
+        return cache
+    todo = [c for c in committee_ids if c and c not in cache][:budget]
+    for cid in todo:
+        d = get_json(f"{FEC_API}/committee/{cid}/?" + qs({"api_key": FEC_KEY}), stream_name="fec_websites")
+        if d is None:
+            break
+        res = (d.get("results") or [{}])[0]
+        site = (res.get("website") or "").strip()
+        if site and not site.startswith("http"):
+            site = "https://" + site
+        cache[cid] = site
+        time.sleep(0.1)
+    save_cache("fec_websites", cache)
+    have = sum(1 for v in cache.values() if v)
+    stream("fec_websites", ok=bool(cache), count=have,
+           note=f"looked up {len(todo)} committees · {have} campaign websites known")
+    return cache

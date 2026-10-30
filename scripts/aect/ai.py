@@ -46,8 +46,46 @@ def gemini_models():
     stream("ai_gemini", note=f"models available: {', '.join(_GEMINI_MODELS) or 'none found'}")
     return _GEMINI_MODELS
 XAI_MODEL        = os.environ.get("AECT_XAI_MODEL", "grok-4-1-fast")
-OPENROUTER_MODEL = os.environ.get("AECT_OPENROUTER_MODEL", "meta-llama/llama-3.3-70b-instruct:free")
-GROQ_MODEL       = os.environ.get("AECT_GROQ_MODEL", "llama-3.3-70b-versatile")
+_COMPAT_MODELS = {}
+
+
+def _rank_chat_models(ids):
+    """Prefer large general chat models; drop speech, guard, embedding and vision-only ids."""
+    keep = [i for i in ids if not re.search(r"whisper|guard|tts|embed|vision|audio|ocr|moderation|"
+                                              r"compound|playai|distil|rerank|coder|math", i, re.I)]
+
+    def score(i):
+        il = i.lower()
+        size = max([float(x) for x in re.findall(r"(\d+(?:\.\d+)?)b\b", il)] or [0])
+        pref = 2 if re.search(r"gpt-oss|llama-4|llama-3\.3|qwen3|deepseek|kimi|gemini|mistral-large", il) else 0
+        return (pref, min(size, 500))
+    return sorted(keep, key=score, reverse=True)
+
+
+def compat_models(provider):
+    """Ask Groq / OpenRouter which models this key can use right now (names are retired often)."""
+    if provider in _COMPAT_MODELS:
+        return _COMPAT_MODELS[provider]
+    env = os.environ.get(f"AECT_{provider.upper()}_MODELS", "")
+    if env:
+        _COMPAT_MODELS[provider] = [m for m in env.split(",") if m]
+        return _COMPAT_MODELS[provider]
+    ids = []
+    if provider == "groq" and GROQ_KEY:
+        d = get_json("https://api.groq.com/openai/v1/models", stream_name="ai_groq",
+                     headers={"Authorization": f"Bearer {GROQ_KEY}"})
+        ids = [m.get("id", "") for m in (d or {}).get("data", []) if m.get("active", True)]
+    elif provider == "openrouter" and OPENROUTER_KEY:
+        d = get_json("https://openrouter.ai/api/v1/models", stream_name="ai_openrouter")
+        for m in (d or {}).get("data", []):
+            pr = m.get("pricing") or {}
+            free = m.get("id", "").endswith(":free") or (str(pr.get("prompt")) in ("0", "0.0")
+                                                          and str(pr.get("completion")) in ("0", "0.0"))
+            if free and (m.get("context_length") or 0) >= 16000:
+                ids.append(m["id"])
+    _COMPAT_MODELS[provider] = _rank_chat_models(ids)[:4]
+    stream(f"ai_{provider}", note=f"models available: {', '.join(_COMPAT_MODELS[provider]) or 'none'}")
+    return _COMPAT_MODELS[provider]
 
 CALLS = {"gemini": 0, "xai": 0, "openrouter": 0, "groq": 0, "failed": 0}
 _DEAD_MODELS = {}   # {search_flag: {model, ...}} models that hit quota or were retired this run
@@ -144,22 +182,33 @@ def _xai(system, prompt, search):
     return parse_json_loose(resp["choices"][0]["message"]["content"]), []
 
 
-def _openai_compat(url, key, model, stream_name, system, prompt):
+def _openai_compat(url, key, provider, system, prompt):
+    stream_name = f"ai_{provider}"
     if not key or not circuit_ok(stream_name):
         return None, None
     headers = {"Authorization": f"Bearer {key}",
                "HTTP-Referer": "https://lukerdavis.github.io/anti-establishment-congressional-tracker/",
                "X-Title": "AECT"}
-    payload = {"model": model, "temperature": 0.1, "max_tokens": 2048,
-               "messages": [{"role": "system", "content": system + "\nRespond with JSON only."},
-                            {"role": "user", "content": prompt}]}
-    resp = post_json(url, payload, headers, stream_name=stream_name)
-    if not resp:
-        return None, None
-    try:
-        return parse_json_loose(resp["choices"][0]["message"]["content"]), []
-    except Exception:
-        return None, None
+    dead = _DEAD_MODELS.setdefault(provider, set())
+    models = [m for m in compat_models(provider) if m not in dead]
+    for model in models:
+        payload = {"model": model, "temperature": 0.1, "max_tokens": 2048,
+                   "messages": [{"role": "system", "content": system + "\nRespond with JSON only."},
+                                {"role": "user", "content": prompt}]}
+        resp = post_json(url, payload, headers, stream_name=stream_name)
+        if not resp:
+            if LAST_HTTP_STATUS.get(stream_name) in (400, 404, 429):
+                dead.add(model)
+            continue
+        try:
+            out = parse_json_loose(resp["choices"][0]["message"]["content"])
+            if out is not None:
+                return out, []
+        except Exception:
+            continue
+    if compat_models(provider) and all(m in dead for m in compat_models(provider)):
+        circuit_trip(stream_name, "every available model failed or is over quota")
+    return None, None
 
 
 def available_any():
@@ -179,12 +228,11 @@ def ask_json(system, prompt, *, search=False, allow_ungrounded=False):
         order += [("gemini", lambda: _gemini(system, prompt, False)),
                   ("xai",    lambda: _xai(system, prompt, False))]
     if not search or allow_ungrounded:
-        order += [("openrouter", lambda: _openai_compat(
-                      "https://openrouter.ai/api/v1/chat/completions", OPENROUTER_KEY,
-                      OPENROUTER_MODEL, "ai_openrouter", system, prompt)),
-                  ("groq", lambda: _openai_compat(
-                      "https://api.groq.com/openai/v1/chat/completions", GROQ_KEY,
-                      GROQ_MODEL, "ai_groq", system, prompt))]
+        order += [("groq", lambda: _openai_compat(
+                      "https://api.groq.com/openai/v1/chat/completions", GROQ_KEY, "groq", system, prompt)),
+                  ("openrouter", lambda: _openai_compat(
+                      "https://openrouter.ai/api/v1/chat/completions", OPENROUTER_KEY, "openrouter",
+                      system, prompt))]
     for name, fn in order:
         result, sources = fn()
         if result is not None:

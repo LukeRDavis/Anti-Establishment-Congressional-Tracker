@@ -43,13 +43,23 @@ def _prompt(p, website_text):
     return "\n".join(lines)
 
 
+TEXT_ONLY = """You read a U.S. congressional candidate's own campaign-website text and decide whether it states an explicit anti-interventionist position: cutting, conditioning or ending U.S. military aid or arms sales to a foreign government, an arms embargo, opposing a U.S. war or strike, or withdrawing U.S. forces.
+Use ONLY the text provided. Do not use outside knowledge. Quote or closely paraphrase the sentence that states the position.
+Respond with JSON only:
+{"anti_interventionist": true|false, "strength": "strong"|"moderate"|"none", "rejects_aipac_money": true|false|null, "quote": "the sentence from the text, or empty", "summary": "one sentence"}"""
+
+
 def research(people, order, ttl_h=TTL_AI_PERSON_H, budget=None):
-    """people: {key: person}; order: keys in priority order."""
+    """
+    people: {key: person}; order: keys in priority order.
+    With a web-search AI: full research with cited sources.
+    Without one: the candidate's own campaign-site text is read (that page is the citation).
+    """
     cache = load_cache("positions")
     budget = AI_BUDGET_PER_RUN // 2 if budget is None else budget
-    if not ai.available(search=True):
-        stream("ai_positions", ok=False, count=len(cache),
-               note="no search-capable AI key (GEMINI_KEY or XAI_API_KEY) — positions not researched")
+    grounded = ai.available(search=True)
+    if not grounded and not ai.available_any():
+        stream("ai_positions", ok=False, count=len(cache), note="no AI provider available")
         return cache
     done = 0
     for key in order:
@@ -61,7 +71,15 @@ def research(people, order, ttl_h=TTL_AI_PERSON_H, budget=None):
         site_text = ""
         if p.get("website"):
             site_text = strip_html(get_text(p["website"], stream_name="campaign_sites", retries=0) or "")
-        result, sources, provider = ai.ask_json(SYSTEM, _prompt(p, site_text), search=True)
+        if grounded:
+            result, sources, provider = ai.ask_json(SYSTEM, _prompt(p, site_text), search=True)
+        else:
+            if len(site_text) < 200:
+                continue            # nothing of their own to read without web search
+            result, sources, provider = ai.ask_json(
+                TEXT_ONLY, f"Candidate: {p['name']}\nWebsite: {p['website']}\n\n{site_text[:6000]}")
+            if isinstance(result, dict) and result.get("quote"):
+                result["evidence"] = [{"claim": result["quote"][:300], "url": p["website"], "date": ""}]
         done += 1
         if not isinstance(result, dict):
             continue
@@ -74,9 +92,11 @@ def research(people, order, ttl_h=TTL_AI_PERSON_H, budget=None):
             "rejects_aipac_money": result.get("rejects_aipac_money"),
             "evidence": evidence[:5], "summary": (result.get("summary") or "")[:300],
             "grounding": (sources or [])[:5], "provider": provider, "researched_at": now_iso(),
+            "method": "web_search" if grounded else "campaign_site_text",
         }
     save_cache("positions", cache)
     yes = sum(1 for v in cache.values() if v.get("anti_interventionist"))
     stream("ai_positions", ok=True, count=len(cache),
-           note=f"researched {done} this run · {len(cache)} total · {yes} with cited anti-interventionist positions")
+           note=f"researched {done} this run ({'web search' if grounded else 'campaign-site text only'}) · "
+                f"{len(cache)} total · {yes} with cited anti-interventionist positions")
     return cache

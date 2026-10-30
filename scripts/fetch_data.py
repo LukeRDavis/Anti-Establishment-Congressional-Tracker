@@ -115,8 +115,17 @@ def main():
     enrichment = enrich.enrich_people(people, priority)
     build.apply_status(people, enrichment, calendar, fec_cands)
 
-    print("\n[4b] Candidate positions (AI web research)")
+    print("\n[4b] Candidate positions (AI research)")
     live = [k for k in priority if not people[k]["incumbent"] and people[k].get("ps") != "DEFEATED"]
+    sites = fec.fetch_websites([cid for k in live[:600]
+                                for fid in people[k].get("fec_ids", [])
+                                for cid in fec_cands.get(fid, {}).get("committee_ids", [])[:1]])
+    for k in live:
+        if not people[k].get("website"):
+            for fid in people[k].get("fec_ids", []):
+                for cid in fec_cands.get(fid, {}).get("committee_ids", [])[:1]:
+                    if sites.get(cid):
+                        people[k]["website"] = sites[cid]
     no_vote_members = [k for k in tracked if people[k]["incumbent"] and not people[k].get("vote_record")]
     pos = positions.research(people, list(dict.fromkeys(
         [k for k in live if k in tracked] + no_vote_members + live)))
