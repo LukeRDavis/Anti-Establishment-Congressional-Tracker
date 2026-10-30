@@ -1,14 +1,14 @@
 {
- "run_at": "2026-10-30T09:50:16.174923+00:00",
- "runtime_s": 1212,
+ "run_at": "2026-10-30T11:00:28.084233+00:00",
+ "runtime_s": 3998,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
-  "gemini": 1,
+  "gemini": 18,
   "xai": 0,
   "openrouter": 0,
-  "groq": 0,
-  "failed": 200
+  "groq": 188,
+  "failed": 60
  },
  "streams": {
   "key:CONGRESS_KEY": {
@@ -90,18 +90,15 @@
   "votes_house_xml": {
    "ok": true,
    "count": 2915,
-   "requests": 834,
-   "failures": 9,
+   "requests": 24,
+   "failures": 3,
    "errors": [
     "2026 roll 315: no <vote-metadata> (root <xml>)",
     "2026 roll 316: no <vote-metadata> (root <xml>)",
-    "2026 roll 317: no <vote-metadata> (root <xml>)",
-    "2022 roll 550: no <vote-metadata> (root <xml>)",
-    "2022 roll 551: no <vote-metadata> (root <xml>)",
-    "2022 roll 552: no <vote-metadata> (root <xml>)"
+    "2026 roll 317: no <vote-metadata> (root <xml>)"
    ],
    "notes": [
-    "2915 House roll calls cached (+739 this run)"
+    "2915 House roll calls cached (+0 this run)"
    ]
   },
   "votes_senate_xml": {
@@ -176,14 +173,15 @@
   "ai_gemini": {
    "ok": null,
    "count": 0,
-   "requests": 7,
-   "failures": 6,
+   "requests": 29,
+   "failures": 11,
    "errors": [
     "HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   \"error\": {     \"code\": 429,     \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",     \"status\": \"RESOURCE_EXHAUSTED\",     \"details\": [       {         \"@type\": \"type.googleapis.com/google.rpc",
     "HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?k :: {   \"error\": {     \"code\": 429,     \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",     \"status\": \"RESOURCE_EXHAUSTED\",     \"details\": [       {         \"@type\": \"type.googleapis.com/google.rpc",
     "HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?k :: {   \"error\": {     \"code\": 429,     \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",     \"status\": \"RESOURCE_EXHAUSTED\",     \"details\": [       {         \"@type\": \"type.googleapis.com/google.rpc",
     "TimeoutError: The read operation timed out",
-    "circuit opened: every available model is over quota or retired"
+    "HTTP 503 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?k :: {   \"error\": {     \"code\": 503,     \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",     \"status\": \"UNAVAILABLE\"   } } ",
+    "HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   \"error\": {     \"code\": 429,     \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20,"
    ],
    "notes": [
     "models available: gemini-3.8-flash, gemini-3.7-flash, gemini-3.6-flash"
@@ -200,44 +198,34 @@
    ],
    "notes": []
   },
-  "ai_openrouter": {
-   "ok": null,
-   "count": 0,
-   "requests": 200,
-   "failures": 200,
-   "errors": [
-    "HTTP 404 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: meta-llama/llama-3.3-70b-instruct\",\"code\":404},\"user_id\":\"user_3AZab6VtFFqnfl5azaqS3YXoh7f\"}"
-   ],
-   "notes": []
-  },
   "ai_groq": {
    "ok": null,
    "count": 0,
-   "requests": 200,
-   "failures": 200,
-   "errors": [
-    "HTTP 404 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"The model `llama-3.3-70b-versatile` does not exist or you do not have access to it.\",\"type\":\"invalid_request_error\",\"code\":\"model_not_found\"}} "
-   ],
-   "notes": []
+   "requests": 189,
+   "failures": 0,
+   "errors": [],
+   "notes": [
+    "models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b"
+   ]
   },
   "votes_ai_relevance": {
-   "ok": false,
-   "count": 0,
+   "ok": true,
+   "count": 38,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "904 topical roll calls \u00b7 0 judged relevant \u00b7 904 awaiting AI judgment \u2014 web-search AI unavailable; judging only votes with a recorded description"
+    "904 topical roll calls \u00b7 38 judged relevant \u00b7 704 awaiting AI judgment"
    ]
   },
   "primary_calendar": {
    "ok": true,
    "count": 50,
-   "requests": 6,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "50 state primary dates for 2026"
+    "cache fresh"
    ]
   },
   "ballotpedia": {
@@ -251,7 +239,7 @@
   "wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 448,
+   "requests": 508,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -259,39 +247,60 @@
   "grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 99,
+   "requests": 129,
    "failures": 0,
    "errors": [],
    "notes": []
   },
   "enrichment": {
    "ok": true,
-   "count": 624,
+   "count": 778,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 250/250 this run \u00b7 624/4471 people have a bio"
+    "refreshed 250/250 this run \u00b7 778/4471 people have a bio"
    ]
   },
+  "fec_websites": {
+   "ok": true,
+   "count": 247,
+   "requests": 300,
+   "failures": 0,
+   "errors": [],
+   "notes": [
+    "looked up 300 committees \u00b7 247 campaign websites known"
+   ]
+  },
+  "campaign_sites": {
+   "ok": null,
+   "count": 0,
+   "requests": 5,
+   "failures": 2,
+   "errors": [
+    "HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA",
+    "circuit opened: HTTP 403"
+   ],
+   "notes": []
+  },
   "ai_positions": {
-   "ok": false,
+   "ok": true,
    "count": 0,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "no search-capable AI key (GEMINI_KEY or XAI_API_KEY) \u2014 positions not researched"
+    "researched 60 this run (web search) \u00b7 0 total \u00b7 0 with cited anti-interventionist positions"
    ]
   },
   "fec_outside_spending": {
-   "ok": false,
-   "count": 0,
-   "requests": 0,
+   "ok": true,
+   "count": 400,
+   "requests": 400,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 0, 0 candidates with outside-spending records"
+    "refreshed 400, 400 candidates with outside-spending records"
    ]
   },
   "market_polymarket": {
@@ -326,26 +335,26 @@
   },
   "markets": {
    "ok": true,
-   "count": 0,
+   "count": 378,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "29813 market outcomes loaded \u00b7 0 tracked people matched"
+    "29813 market outcomes loaded \u00b7 378 tracked people matched"
    ]
   }
  },
  "summary": {
   "members": 533,
-  "anti_members": 0,
+  "anti_members": 523,
   "anti_by_party": {
-   "R": 0,
-   "D": 0,
-   "I": 0
+   "R": 262,
+   "D": 259,
+   "I": 2
   },
   "anti_candidates": 0,
-  "relevant_votes": 0,
-  "odds": 0,
-  "history_events_added": 0
+  "relevant_votes": 38,
+  "odds": 378,
+  "history_events_added": 523
  }
 }
