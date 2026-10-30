@@ -1,4 +1,155 @@
 {
- "generated_at": "2026-10-30T12:48:41.737751+00:00",
- "challengers": []
+ "generated_at": "2026-10-30T13:45:20.544692+00:00",
+ "challengers": [
+  {
+   "name": "Mai Vang",
+   "party": "D",
+   "state": "CA",
+   "district": 7,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "yes",
+   "antiArmsBasis": "statements",
+   "evidence": [
+    "She'll push to ban the sale of weapons used to carry out genocide. (https://www.maiforus.com/)"
+   ],
+   "ps": "RESULTS_PENDING",
+   "note": "She'll push to ban the sale of weapons used to carry out genocide. (https://www.maiforus.com/)",
+   "website": "https://www.maiforus.com/",
+   "fec_ids": [
+    "H6CA07175"
+   ],
+   "primaryDate": "2026-06-02",
+   "primary_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Melat Kiros",
+   "party": "D",
+   "state": "CO",
+   "district": 1,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "yes",
+   "antiArmsBasis": "statements",
+   "evidence": [
+    "Arms Embargo (https://www.kirosforco.com/)"
+   ],
+   "ps": "RESULTS_PENDING",
+   "note": "Arms Embargo (https://www.kirosforco.com/)",
+   "website": "https://www.kirosforco.com/",
+   "fec_ids": [
+    "H6CO01273"
+   ],
+   "primaryDate": "2026-06-30",
+   "primary_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Robert People",
+   "party": "D",
+   "state": "FL",
+   "district": 15,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "yes",
+   "antiArmsBasis": "statements",
+   "evidence": [
+    "No AIPAC No arms shipments to Israel (https://www.peopleforcongress.com/)"
+   ],
+   "ps": "RESULTS_PENDING",
+   "note": "No AIPAC No arms shipments to Israel (https://www.peopleforcongress.com/)",
+   "website": "https://www.peopleforcongress.com/",
+   "fec_ids": [
+    "H6FL15168"
+   ],
+   "primaryDate": "2026-08-18",
+   "primary_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "William Lawrence",
+   "party": "D",
+   "state": "MI",
+   "district": 7,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "yes",
+   "antiArmsBasis": "statements",
+   "evidence": [
+    "Stop arms sales to Israel & other human rights violators (https://wewill2026.com/)"
+   ],
+   "ps": "RESULTS_PENDING",
+   "note": "Stop arms sales to Israel & other human rights violators (https://wewill2026.com/)",
+   "website": "https://wewill2026.com/",
+   "fec_ids": [
+    "H6MI07298"
+   ],
+   "primaryDate": "2026-08-04",
+   "primary_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Karen Ortiz",
+   "party": "I",
+   "state": "NY",
+   "district": 12,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "yes",
+   "antiArmsBasis": "statements",
+   "evidence": [
+    "We must impose an arms embargo on and stop sending our tax dollars to Israel. (https://ko4congress.com/)"
+   ],
+   "ps": "RESULTS_PENDING",
+   "note": "We must impose an arms embargo on and stop sending our tax dollars to Israel. (https://ko4congress.com/)",
+   "website": "https://ko4congress.com/",
+   "fec_ids": [
+    "H6NY12297"
+   ],
+   "primaryDate": "2026-06-23",
+   "primary_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Angelica Duenas",
+   "party": "D",
+   "state": "CA",
+   "district": 29,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "yes",
+   "antiArmsBasis": "statements",
+   "evidence": [
+    "I will never vote to send U.S. weapons or military aid to Israel. (https://angelica4congress.com/)"
+   ],
+   "ps": "RESULTS_PENDING",
+   "note": "I will never vote to send U.S. weapons or military aid to Israel. (https://angelica4congress.com/)",
+   "website": "https://angelica4congress.com/",
+   "fec_ids": [
+    "H8CA29100"
+   ],
+   "primaryDate": "2026-06-02",
+   "primary_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "source": "fec+trackaipac_endorsed"
+  }
+ ]
 }
