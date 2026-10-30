@@ -76,7 +76,9 @@ def research(people, order, ttl_h=TTL_AI_PERSON_H, budget=None):
         p = people[key]
         site_text = ""
         if p.get("website"):
-            site_text = strip_html(get_text(p["website"], stream_name="campaign_sites", retries=0) or "")
+            # one site blocking bots must not stop every other site being read
+            site_text = strip_html(get_text(p["website"], stream_name="campaign_sites", retries=0,
+                                            trip_on=()) or "")
         result, sources, provider, method = None, None, None, None
         if ai.available(search=True):            # re-checked: quota can run out mid-run
             result, sources, provider = ai.ask_json(SYSTEM, _prompt(p, site_text), search=True)
