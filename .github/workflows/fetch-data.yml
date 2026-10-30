@@ -75,7 +75,9 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.json candidates.json markets.json challengers.json history.json pipeline_report.json pipeline_log.txt data/cache 2>/dev/null || true
+          for f in data.json candidates.json markets.json challengers.json history.json pipeline_report.json pipeline_log.txt data/cache; do
+            [ -e "$f" ] && git add "$f"
+          done
           git diff --cached --quiet && exit 0
           git commit -m "chore: refresh data [skip ci]"
           for i in 1 2 3; do
