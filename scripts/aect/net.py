@@ -122,6 +122,7 @@ def get_json(url, **kw):
         return None
 
 LAST_HTTP_STATUS = {}
+LAST_ERROR_BODY = {}
 
 
 def _daily_limit(body):
@@ -169,6 +170,7 @@ def post_json(url, payload, headers=None, *, stream_name=None, timeout=90, trip_
             print(f"    {msg}")
             _hit(stream_name, failed=True, error=msg)
             LAST_HTTP_STATUS[stream_name] = e.code
+            LAST_ERROR_BODY[stream_name] = body
             if e.code in trip_on:
                 circuit_trip(circuit, f"HTTP {e.code}")
             return None

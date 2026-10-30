@@ -496,7 +496,10 @@ def sync_votes():
 def is_focus(v):
     """A vote on the tracker's focus: arms/aid votes whose recipients are all focus countries."""
     rec = {r.lower() for r in (v.get("recipients") or [])}
-    return (v.get("significance") == "major" and v.get("category") == FOCUS_CATEGORY
+    # A measure that itself cuts/blocks the aid is a focus vote whatever "significance"
+    # the model gave it; broad bills (final passage) count only when judged major.
+    pointed = v.get("measure_restricts") is True or v.get("significance") == "major"
+    return (pointed and v.get("category") == FOCUS_CATEGORY
             and bool(rec) and rec <= FOCUS_RECIPIENTS)
 
 

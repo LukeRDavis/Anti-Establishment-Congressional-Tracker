@@ -9,7 +9,7 @@ themselves still come from the primary sources.
 import json, os, re
 
 from .config import GEMINI_KEY, XAI_KEY, OPENROUTER_KEY, GROQ_KEY, ai_time_left
-from .net import post_json, get_json, stream, circuit_ok, circuit_trip, LAST_HTTP_STATUS
+from .net import post_json, get_json, stream, circuit_ok, circuit_trip, LAST_HTTP_STATUS, LAST_ERROR_BODY
 
 _GEMINI_MODELS = None
 
@@ -184,6 +184,20 @@ def _xai(system, prompt, search):
     return parse_json_loose(resp["choices"][0]["message"]["content"]), []
 
 
+_LAST_CALL = {}
+# Free tiers meter tokens per minute; spacing calls avoids burning retries on 429s.
+_MIN_INTERVAL = {"groq": float(os.environ.get("AECT_GROQ_MIN_INTERVAL", "9")),
+                 "openrouter": float(os.environ.get("AECT_OPENROUTER_MIN_INTERVAL", "4"))}
+
+
+def _pace(provider):
+    import time
+    gap = _MIN_INTERVAL.get(provider, 0) - (time.time() - _LAST_CALL.get(provider, 0))
+    if gap > 0:
+        time.sleep(gap)
+    _LAST_CALL[provider] = time.time()
+
+
 def _openai_compat(url, key, provider, system, prompt):
     stream_name = f"ai_{provider}"
     if not key or not circuit_ok(stream_name):
@@ -195,12 +209,16 @@ def _openai_compat(url, key, provider, system, prompt):
     models = [m for m in compat_models(provider) if m not in dead]
     for model in models:
         payload = {"model": model, "temperature": 0.1, "max_tokens": 2048,
-                   "messages": [{"role": "system", "content": system + "\nRespond with JSON only."},
+                   "messages": [{"role": "system", "content": system +
+                                 "\nYou have no tools and no web access: answer from the text given. Respond with JSON only."},
                                 {"role": "user", "content": prompt}]}
+        _pace(provider)
         resp = post_json(url, payload, headers, stream_name=stream_name)
         if not resp:
-            if LAST_HTTP_STATUS.get(stream_name) in (400, 404, 429):
-                dead.add(model)
+            code, body = LAST_HTTP_STATUS.get(stream_name), LAST_ERROR_BODY.get(stream_name, "")
+            if code == 404 or (code == 400 and "tool_use_failed" not in body) or \
+                    (code == 429 and re.search(r"per[- ]day|daily|credits|billing", body, re.I)):
+                dead.add(model)          # retired, or out of quota for the day
             continue
         try:
             out = parse_json_loose(resp["choices"][0]["message"]["content"])
