@@ -33,102 +33,108 @@ AECT pipeline v10 — 2026-10-30 · 119th Congress · 2026 cycle
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc
     HTTP 403 https://api.x.ai/v1/responses :: {"code":"permission-denied","error":"Your newly created team doesn't have any credits or licenses yet. You can purchase those on https://console.x.ai/team/55ff7aec-2862-4402-9ddd-4f8250d1da04."}
   ⚡ ai_xai: circuit opened (HTTP 403) — skipping its remaining calls
-    HTTP 503 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?k :: {   "error": {     "code": 503,     "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",     "status": "UNAVAILABLE"   } } 
-  [ai_groq] models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
-    ✓ senate-2026-903 HCONRES89: major — anti=Yea — Directed the President to remove United States Armed Forces from hostilities with Iran pur
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20,
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20,
-    HTTP 503 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?k :: {   "error": {     "code": 503,     "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",     "status": "UNAVAILABLE"   } } 
-    ✓ senate-2026-866 SJRES180: major — anti=Yea — The Senate rejected a motion to discharge a joint resolution that would have directed the 
-    ✓ senate-2026-851 SJRES185: major — anti=Yea — The Senate rejected a motion to proceed on a joint resolution that would have directed the
-    ✓ senate-2026-843 HCONRES86: major — anti=Yea — Directs the President to remove United States Armed Forces from hostilities with Iran purs
-    ✓ senate-2026-833 SJRES172: major — anti=Yea — A joint resolution to direct the removal of U.S. armed forces from hostilities in Iran tha
+    ✓ senate-2026-903 HCONRES89: major — anti=Yea — Directed the President, pursuant to the War Powers Resolution, to remove United States Arm
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20,
-    ✓ senate-2026-777 SJRES163: major — anti=Yea — A joint resolution to order the withdrawal of U.S. forces from unauthorized hostilities in
-    ✓ senate-2026-767 SJRES124: major — anti=None — The Senate sustained a point of order, preventing a joint resolution that would have direc
-    ✓ senate-2026-758 SCONRES33: major — anti=Yea — The amendment would have offset $70 billion of new spending by cutting $45 billion in fore
-    ✓ senate-2026-747 SJRES114: major — anti=Yea — The joint resolution would have required the removal of U.S. armed forces from hostilities
-    ✓ senate-2026-740 SJRES138: major — anti=Yea — The Senate rejected a motion to discharge a joint resolution that would have disapproved a
-    ✓ senate-2026-739 SJRES32: major — anti=Yea — The Senate rejected a motion to discharge a resolution that would have disapproved a propo
-    ✓ senate-2026-728 SJRES116: major — anti=Yea — The Senate rejected a motion to discharge a joint resolution that would have directed the 
-    ✓ senate-2026-668 SJRES98: major — anti=Nay — The Senate sustained a point of order, blocking a joint resolution that would have directe
-    ✓ house-2026-307 H CON RES 93: major — anti=Yea — The House passed a concurrent resolution directing the President to withdraw U.S. armed fo
-    ✓ house-2026-282 H CON RES 89: major — anti=Yea — The resolution directed the President, under the War Powers Resolution, to withdraw U.S. a
+  [ai_groq] models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
+    ✓ senate-2026-851 SJRES185: major — anti=Nay — The Senate rejected a motion to proceed on a joint resolution directing the removal of U.S
+    ✓ senate-2026-843 HCONRES86: major — anti=Yea — The Senate adopted a concurrent resolution directing the President, under the War Powers R
+    ✓ senate-2026-833 SJRES172: major — anti=Yea — The joint resolution aimed to direct the removal of United States armed forces from hostil
+    ✓ senate-2026-758 SCONRES33: minor — anti=Yea — The amendment would have reduced $45 billion in foreign aid (along with other cuts) to off
+    ✓ senate-2026-747 SJRES114: major — anti=Yea — The Senate rejected a motion to discharge a joint resolution directing the removal of U.S.
+    ✓ senate-2026-740 SJRES138: major — anti=Nay — A joint resolution to block a proposed foreign military sale of defense articles and servi
+    ✓ senate-2026-739 SJRES32: major — anti=Yea — The Senate rejected a motion to discharge a joint resolution that would have disapproved a
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 6477, Requested 1623. Please try again in 750ms. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+    ✓ senate-2026-728 SJRES116: major — anti=Yea — The Senate rejected a motion to discharge a joint resolution directing the removal of U.S.
+    ✓ senate-2026-668 SJRES98: major — anti=Yea — A procedural vote sustaining a point of order regarding a joint resolution to direct the r
+    ✓ house-2026-307 H CON RES 93: major — anti=Yea — Passed a concurrent resolution directing the President to remove U.S. Armed Forces from ho
+    ✓ house-2026-282 H CON RES 89: major — anti=Yea — Passed a resolution directing the President to remove U.S. Armed Forces from hostilities w
   [congress_gov] house-vote fields: ['amendmentAuthor', 'amendmentNumber', 'amendmentType', 'congress', 'identifier', 'legislationNumber', 'legislationType', 'legislationUrl', 'result', 'rollCallNumber', 'sessionNumber', 'sourceDataURL', 'startDate', 'updateDate', 'votePartyTotal', 'voteQuestion', 'voteType']
-  [congress_gov] amendment fields: ['actions', 'amendedBill', 'chamber', 'congress', 'description', 'latestAction', 'number', 'purpose', 'sponsors', 'submittedDate', 'type', 'updateDate']
-    ✓ house-2026-264 H R 8800: major — anti=Yea — The amendment would prohibit all U.S. security assistance funding for Ukraine, except for 
-    ✓ house-2026-263 H R 8800: major — anti=Yea — The amendment would bar the Department of Defense from using taxpayer money to cover costs
-    ✓ house-2026-247 H R 8595: minor — anti=Nay — The House passed the FY2027 National Security, Department of State, and Related Programs A
-    ✓ house-2026-246 H R 8595: major — anti=Yea — The motion to recommit sought to strip the FY 2027 National Security appropriations bill o
-    ✓ house-2026-244 H R 8595: major — anti=Yea — Amendment would prohibit using appropriated funds for Jordan, cutting $2.1 billion from th
-    ✓ house-2026-243 H R 8595: major — anti=Yea — Amendment would prohibit the use of appropriated funds for Israel, cutting $3.3 billion fr
-    ✓ house-2026-232 H CON RES 108: major — anti=Yea — The resolution directed the President, under the War Powers Resolution, to remove U.S. arm
-    ✓ house-2026-207 H R 2913: major — anti=Nay — The House passed the Ukraine Support Act, authorizing about $30 billion in additional mili
-    ✓ house-2026-201 H CON RES 84: major — anti=Yea — The resolution directed the President, under the War Powers Resolution, to remove United S
-    ✓ house-2026-200 H RES 518: major — anti=Nay — The House voted to discharge H.R. 2913, authorizing roughly $14.5 billion in additional mi
-    ✓ house-2026-199 H CON RES 86: major — anti=Yea — The House passed a concurrent resolution directing the President to withdraw U.S. armed fo
-    ✓ house-2026-174 H R 8469: major — anti=Yea — The amendment would have redirected $481,832,000 from the NATO Security Investment Program
-    ✓ house-2026-170 H CON RES 75: major — anti=Yea — The resolution would have directed the President to withdraw U.S. armed forces from hostil
-    ✓ house-2026-114 H CON RES 40: major — anti=Yea — The resolution directed the President to withdraw U.S. armed forces from hostilities with 
-    ✓ house-2026-85 H CON RES 38: major — anti=Yea — The House voted on a concurrent resolution directing the President to withdraw U.S. forces
-    ✓ house-2026-58 H R 1531: major — anti=Nay — The Protect Taiwan Act authorizes increased U.S. security assistance for Taiwan, directing
-    ✓ house-2026-48 H CON RES 68: major — anti=Yea — The resolution would have directed the removal of United States armed forces from Venezuel
-    ✓ senate-2025-608 SJRES90: minor — anti=None — The Senate rejected a motion to discharge a joint resolution that would have ordered the r
-    ✓ senate-2025-555 SJRES83: major — anti=Nay — The Senate rejected the motion to discharge a joint resolution that would have directed th
-    ✓ senate-2025-455 SJRES34: major — anti=Yea — The Senate rejected a motion to discharge a joint resolution that would have disapproved a
-    ✓ senate-2025-454 SJRES41: major — anti=Yea — The Senate rejected a motion to discharge a joint resolution that would have disapproved t
-    ✓ house-2025-346 H CON RES 64: major — anti=Yea — The House voted on H CON RES 64 to direct the removal of U.S. armed forces from hostilitie
-    ✓ house-2025-345 H CON RES 61: major — anti=Yea — The resolution would have required the President to withdraw U.S. armed forces from hostil
-    ✓ senate-2025-328 SJRES59: major — anti=Yea — The Senate rejected a motion to discharge a joint resolution that would have directed the 
-    ✓ senate-2025-306 SJRES53: major — anti=Yea — The Senate rejected a motion to discharge a resolution that would have disapproved a propo
-  [votes_ai_relevance] 904 topical roll calls · 38 judged relevant · 704 awaiting AI judgment
+  [congress_gov] amendment fields: ['actions', 'amendedBill', 'chamber', 'congress', 'description', 'latestAction', 'number', 'sponsors', 'submittedDate', 'type', 'updateDate']
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Used 214, Requested 880. Please try again in 5.64s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+    ✓ house-2026-264 H R 8800: major — anti=Yea — The amendment would prohibit all U.S. security assistance to Ukraine except for U.S. embas
+    ✓ house-2026-263 H R 8800: major — anti=Yea — The amendment would prohibit the Department of Defense from using U.S. taxpayer funds to c
+    HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Tool choice is none, but model called a tool","type":"invalid_request_error","code":"tool_use_failed","failed_generation":"{\"name\": \"web.run\", \"arguments\": {\"query\": \"H R 8595 National Security, Department of State, and Related Programs Appropriations Act, 2027\", \"topn\": 5, \"source\": \"news\"}}"}} 
+    ✓ house-2026-247 H R 8595: minor — anti=None — On Passage of the National Security, Department of State, and Related Programs Appropriati
+    ✓ house-2026-246 H R 8595: minor — anti=None — On Motion to Recommit - National Security, Department of State, and Related Programs Appro
+    ✓ house-2026-244 H R 8595: major — anti=Nay — On Agreeing to the Amendment - Failed: The Amendment sought to prohibit funds for Jordan, 
+    ✓ house-2026-243 H R 8595: major — anti=Yea — On Agreeing to the Amendment - H.R. 8595 - In the House, the bill passed 243-183. Amendmen
+    ✓ house-2026-232 H CON RES 108: major — anti=Yea — House roll call 232 (119th Congress) - On Agreeing to H CON RES 108: Directing the Preside
+    ✓ house-2026-207 H R 2913: major — anti=Nay — House passes H.R. 2913, the Ukraine Support Act, with 207 yeas and 202 nays, including 18 
+    ✓ house-2026-201 H CON RES 84: major — anti=Yea — House failed to pass H. Con. Res. 84, which directs the President to remove U.S. forces fr
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `allam-2-7b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 4449, Requested 1960. Please try again in 4.09s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+  ⚡ ai_groq: circuit opened (every available model failed or is over quota) — skipping its remaining calls
+  [ai_openrouter] models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/gemma-4-31b-it:free, nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free, xingchen-agi/xing4.0-29b-a4b:free
+    ✓ house-2026-200 H RES 518: major — anti=Nay — The House passed a motion to discharge the rule (H. Res. 518) for consideration of H.R. 29
+    ✓ house-2026-199 H CON RES 86: major — anti=Yea — The House passed a concurrent resolution directing the President to remove U.S. Armed Forc
+    ✓ house-2026-170 H CON RES 75: major — anti=Yea — The House failed to adopt a concurrent resolution directing the President to remove U.S. A
+    ✓ house-2026-114 H CON RES 40: major — anti=Yea — The House failed to adopt a concurrent resolution directing the President to remove U.S. A
+    ✓ house-2026-85 H CON RES 38: major — anti=Yea — House voted on a concurrent resolution directing the President to remove U.S. Armed Forces
+    ✓ house-2026-58 H R 1531: major — anti=Nay — The PROTECT Taiwan Act (H.R. 1531) would require the President to impose sanctions on Chin
+    ✓ house-2026-48 H CON RES 68: major — anti=Yea — The House failed to adopt a concurrent resolution directing the removal of U.S. armed forc
+    ✓ senate-2025-608 SJRES90: major — anti=Yea — The Senate rejected a motion to discharge a joint resolution (S.J.Res. 90) that would dire
+    ✓ senate-2025-555 SJRES83: major — anti=Yea — The Senate rejected a motion to discharge S.J.Res. 83, a joint resolution that would direc
+    ✓ senate-2025-455 SJRES34: major — anti=Yea — The Senate rejected a motion to discharge a joint resolution (S.J.Res. 34) that would have
+    ✓ senate-2025-454 SJRES41: major — anti=Yea — The Senate rejected a motion to discharge S.J.Res. 41, a joint resolution of disapproval t
+    ✓ house-2025-346 H CON RES 64: major — anti=Yea — The resolution would direct the removal of U.S. armed forces from hostilities in or agains
+    ✓ house-2025-345 H CON RES 61: major — anti=Yea — The House failed to adopt a concurrent resolution directing the President to remove U.S. A
+    ✓ senate-2025-328 SJRES59: major — anti=Yea — The Senate rejected a motion to discharge a joint resolution (S.J.Res. 59) that would dire
+    ✓ senate-2025-306 SJRES53: major — anti=Yea — Senate rejected a motion to discharge SJRES53, a joint resolution that would block a propo
+    ✓ house-2025-257 H R 3838: minor — anti=Yea — The Greene amendment sought to strike foreign aid funding for the Taiwan Security Cooperat
+    ✓ house-2025-255 H R 3838: major — anti=Yea — The Greene amendment to H.R. 3838 would have prohibited all U.S. assistance to Ukraine, bu
+    ✓ house-2025-244 H R 3838: major — anti=Yea — The House adopted an amendment to the FY2026 NDAA that repeals the 1991 and 2002 Authoriza
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1793404800000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model 
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1793404800000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model 
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1793404800000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model 
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own pro
+  ⚡ ai_openrouter: circuit opened (every available model failed or is over quota) — skipping its remaining calls
+  ⚡ ai_gemini: circuit opened (every available model is over quota or retired) — skipping its remaining calls
+  [votes_ai_relevance] 904 topical roll calls · 37 judged relevant · 666 awaiting AI judgment — web-search AI unavailable; judging only votes with a recorded description
 
 [3] General information
   [primary_calendar] cache fresh
-  [enrichment] refreshed 250/250 this run · 778/4471 people have a bio
+  [enrichment] refreshed 250/250 this run · 889/4471 people have a bio
 
 [4b] Candidate positions (AI research)
-  [fec_websites] looked up 300 committees · 247 campaign websites known
-  ⚡ ai_gemini: circuit opened (every available model is over quota or retired) — skipping its remaining calls
-    HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
-  ⚡ campaign_sites: circuit opened (HTTP 403) — skipping its remaining calls
-  [ai_positions] researched 60 this run (web search) · 0 total · 0 with cited anti-interventionist positions
+  [fec_websites] looked up 289 committees · 483 campaign websites known
+  [ai_positions] no AI provider available
 
 [4d] Outside spending
-  [fec_outside_spending] refreshed 400, 400 candidates with outside-spending records
+  [fec_outside_spending] refreshed 5, 405 candidates with outside-spending records
 
 [5] Prediction markets
   [market_polymarket] 800 catalog pages scanned · 1028 open congressional markets
   [market_kalshi] 40 pages · 28031 political markets
   [market_predictit] 754 live contracts
-  [markets] 29813 market outcomes loaded · 378 tracked people matched
+  [markets] 29813 market outcomes loaded · 88 tracked people matched
 
 ════════════════════════════════════════════════════════════════════════
 STREAM                       STATUS     COUNT  NOTES / ERRORS
 ────────────────────────────────────────────────────────────────────────
 ai_gemini                    —              0  HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "er
-ai_groq                      —              0  models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
-ai_positions                 OK             0  researched 60 this run (web search) · 0 total · 0 with cited anti-interventionist positions
+ai_groq                      —              0  HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model 
+ai_openrouter                —              0  HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-model
+ai_positions                 FAIL           0  no AI provider available
 ai_xai                       —              0  HTTP 403 https://api.x.ai/v1/responses :: {"code":"permission-denied","error":"Your newly created team doesn't
 ballotpedia                  —              0  
-campaign_sites               —              0  HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</ti
 congress_gov                 OK           539  amendment fields: ['actions', 'amendedBill', 'chamber', 'congress', 'description', 'latestAction', 'number', '
-enrichment                   OK           778  refreshed 250/250 this run · 778/4471 people have a bio
+enrichment                   OK           889  refreshed 250/250 this run · 889/4471 people have a bio
 fec_candidates               OK          4350  cache fresh
 fec_finance                  OK          3938  cache fresh
-fec_outside_spending         OK           400  refreshed 400, 400 candidates with outside-spending records
-fec_websites                 OK           247  looked up 300 committees · 247 campaign websites known
+fec_outside_spending         OK           405  refreshed 5, 405 candidates with outside-spending records
+fec_websites                 OK           483  looked up 289 committees · 483 campaign websites known
 grokipedia                   —              0  
 market_kalshi                OK         28031  40 pages · 28031 political markets
 market_polymarket            OK          1028  800 catalog pages scanned · 1028 open congressional markets
 market_predictit             OK           754  754 live contracts
-markets                      OK           378  29813 market outcomes loaded · 378 tracked people matched
+markets                      OK            88  29813 market outcomes loaded · 88 tracked people matched
 primary_calendar             OK            50  cache fresh
 rlc                          OK           283  
 roster_house                 OK           433  433 Representatives + 6 delegates, 2 vacancies (published October 1, 2026)
 roster_senate                OK           100  100 senators (file last updated 2026-10-08T14:47-05:00)
 trackaipac                   OK             0  
-votes_ai_relevance           OK            38  904 topical roll calls · 38 judged relevant · 704 awaiting AI judgment
+votes_ai_relevance           OK            37  904 topical roll calls · 37 judged relevant · 666 awaiting AI judgment — web-search AI unavailable; judging on
 votes_house_xml              OK          2915  2026 roll 315: no <vote-metadata> (root <xml>)
 votes_senate_voteview        OK          2555  2555 Senate roll calls indexed from Voteview (+0 topical this run)
 votes_senate_xml             —              0  HTTP 403 https://www.senate.gov/legislative/LIS/roll_call_lists/vote_menu_119_2.xml :: <!DOCTYPE HTML PUBLIC "
@@ -136,14 +142,14 @@ wikipedia                    —              0
 ════════════════════════════════════════════════════════════════════════
 {
  "members": 533,
- "anti_members": 523,
+ "anti_members": 136,
  "anti_by_party": {
-  "R": 262,
-  "D": 259,
+  "R": 2,
+  "D": 132,
   "I": 2
  },
  "anti_candidates": 0,
- "relevant_votes": 38,
- "odds": 378,
- "history_events_added": 523
+ "relevant_votes": 37,
+ "odds": 88,
+ "history_events_added": 389
 }
