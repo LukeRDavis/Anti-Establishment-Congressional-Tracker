@@ -1,13 +1,14 @@
 {
- "run_at": "2026-10-30T09:10:27.708001+00:00",
- "crashed": true,
- "traceback": "Traceback (most recent call last):\n  File \"/home/runner/work/Anti-Establishment-Congressional-Tracker/Anti-Establishment-Congressional-Tracker/scripts/fetch_data.py\", line 179, in run\n    return main()\n           ^^^^^^\n  File \"/home/runner/work/Anti-Establishment-Congressional-Tracker/Anti-Establishment-Congressional-Tracker/scripts/fetch_data.py\", line 135, in main\n    data = build.frontend_data(people, mk, fec_totals, ie, history, relevant, {}, {\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/Anti-Establishment-Congressional-Tracker/Anti-Establishment-Congressional-Tracker/scripts/aect/build.py\", line 248, in frontend_data\n    tot[f] = (tot.get(f) or 0) + t[f]\n             ~~~~~~~~~~~~~~~~~~^~~~~~\nTypeError: unsupported operand type(s) for +: 'int' and 'str'\n",
+ "run_at": "2026-10-30T09:26:01.931979+00:00",
+ "runtime_s": 685,
+ "congress": 119,
+ "cycle": 2026,
  "ai_calls": {
   "gemini": 0,
   "xai": 0,
   "openrouter": 0,
   "groq": 0,
-  "failed": 121
+  "failed": 1
  },
  "streams": {
   "key:CONGRESS_KEY": {
@@ -88,12 +89,19 @@
   },
   "votes_house_xml": {
    "ok": true,
-   "count": 676,
-   "requests": 1585,
-   "failures": 0,
-   "errors": [],
+   "count": 2176,
+   "requests": 1700,
+   "failures": 12,
+   "errors": [
+    "2026 roll 315: no <vote-metadata> (root <xml>)",
+    "2026 roll 316: no <vote-metadata> (root <xml>)",
+    "2026 roll 317: no <vote-metadata> (root <xml>)",
+    "2025 roll 363: no <vote-metadata> (root <xml>)",
+    "2025 roll 364: no <vote-metadata> (root <xml>)",
+    "2025 roll 365: no <vote-metadata> (root <xml>)"
+   ],
    "notes": [
-    "676 House roll calls cached (+1500 this run)"
+    "2176 House roll calls cached (+1500 this run)"
    ]
   },
   "votes_senate_xml": {
@@ -102,7 +110,7 @@
    "requests": 1,
    "failures": 2,
    "errors": [
-    "HTTP 403 https://www.senate.gov/legislative/LIS/roll_call_lists/vote_menu_119_2.xml :: \u001f\ufffd\b\u0000\u0000\u0000\u0000\u0000\u0000\u0000\ufffdUms\ufffdF\u0010\ufffd\ufffd_\ufffd\ufffdLf\ufffd\u0019K\u0007\ufffd\u000e.\bZ\u00028fBl\u0017\ufffd\ufffd\ufffd\ufffd$-\ufffdb\ufffdN\ufffd;Bh\ufffd\ufffd\ufffd{\b\ufffd0v\ufffd\ufffdS\ufffd\b\ufffd\ufffd\ufffd\ufffd\ufffd/\ufffd^\ufffd.\ufffd\ufffd\ufffd1\ufffd\ufffd\u001f\ufffdpy\ufffdv:\u0019\ufffd\u001f0vs8dl\u0014\ufffd\ua0e3\ufffd\u0001\ufffd\ufffd\ufffd\b+\ufffd\ufffd\u0005c\ufffds\ufffd\ufffdE\ufffd\ufffd\u0000\u0006w\ufffd\ufffd\ufffd\u000f\u0530\u0012E\u0001\u001a\ufffd\ufffd\ufffd\b\ufffd\ufffd\u000bi,\ufffd)\u001aPs\ufffd9\ufffdUw(\ufffd\u001f\ufffd\u001f|\ufffd\u0019\ufffd\ufffd",
+    "HTTP 403 https://www.senate.gov/legislative/LIS/roll_call_lists/vote_menu_119_2.xml :: <!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\"> <!-- Akamaizer will replace all instances of the token \"AKAMWAFREFID\", --> <!-- in meta/CONTENT o",
     "circuit opened: HTTP 403"
    ],
    "notes": []
@@ -137,18 +145,6 @@
     "cache fresh"
    ]
   },
-  "rlc": {
-   "ok": true,
-   "count": 283,
-   "requests": 8,
-   "failures": 0,
-   "errors": [],
-   "notes": [
-    "house: 221 scores parsed from Liberty-Index-2026-US-House.pdf",
-    "senate: 54 scores parsed from Liberty-Index-2026-US-Senate.pdf",
-    "endorsements: 9 candidates"
-   ]
-  },
   "trackaipac": {
    "ok": true,
    "count": 0,
@@ -157,26 +153,36 @@
    "errors": [],
    "notes": []
   },
+  "rlc": {
+   "ok": true,
+   "count": 283,
+   "requests": 0,
+   "failures": 0,
+   "errors": [],
+   "notes": []
+  },
   "votes_senate_voteview": {
    "ok": true,
    "count": 2555,
-   "requests": 9,
+   "requests": 2,
    "failures": 0,
    "errors": [],
    "notes": [
-    "2555 Senate roll calls indexed from Voteview (+345 topical this run)"
+    "2555 Senate roll calls indexed from Voteview (+0 topical this run)"
    ]
   },
   "ai_gemini": {
    "ok": null,
    "count": 0,
-   "requests": 242,
-   "failures": 242,
+   "requests": 2,
+   "failures": 2,
    "errors": [
-    "HTTP 404 https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?k :: {   \"error\": {     \"code\": 404,     \"message\": \"This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features a",
-    "HTTP 404 https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?k :: {   \"error\": {     \"code\": 404,     \"message\": \"This model models/gemini-2.0-flash is no longer available. Please update your code to use models/gemini-3.8-flash for the latest features and improvemen"
+    "HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   \"error\": {     \"code\": 429,     \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",     \"status\": \"RESOURCE_EXHAUSTED\",     \"details\": [       {         \"@type\": \"type.googleapis.com/google.rpc",
+    "circuit opened: HTTP 429"
    ],
-   "notes": []
+   "notes": [
+    "models available: gemini-3.8-flash, gemini-3.7-flash, gemini-3.6-flash"
+   ]
   },
   "ai_xai": {
    "ok": null,
@@ -184,7 +190,7 @@
    "requests": 1,
    "failures": 2,
    "errors": [
-    "HTTP 403 https://api.x.ai/v1/responses :: \u001f\ufffd\b\u0000\u0000\u0000\u0000\u0000\u0000\ufffd\u001d\ufffd\ufffdn\ufffd0\u0010E\ufffdW\u0019y\ufffdM\f\u0014A\ufffd\ufffdM\ufffd\u001cy.\ufffd\u0012\ufffd \ufffd\udace\udebc{i7g\ufffdI\ufffd'$\u0013\ufffdk\ufffdP\ufffd\ufffdM\ufffd@3$\ufffd\u0002J\ufffdr\ufffd\ufffd\ufffd\u0014\ufffde\ufffdT\ufffd\u0015B\u0015\ufffd\ufffd\u0018\\?*\ufffd\ufffd\u0000\ufffd\ufffd\ufffd\ufffd\ufffdd\ufffd\ufffd\ufffd\ufffd\u000e\ufffd\u001d\ufffd\ufffd\ufffd@\ufffd\ufffd\ufffd{I3;\ufffd\ufffdv\u0514\ufffdZ7\ufffd\ufffdm2u[\u043c\u001a\ufffd\ufffd\u07fd\u001d\ufffdi\ufffdf\ufffd\u061f\ufffd\ufffd8\f]\u001f/\"\u0012\ufffd\ufffd\u070f\ufffd| wC\u0013\u07bfV6\ufffdU\ufffd\u0000\u0000\u0000",
+    "HTTP 403 https://api.x.ai/v1/responses :: {\"code\":\"permission-denied\",\"error\":\"Your newly created team doesn't have any credits or licenses yet. You can purchase those on https://console.x.ai/team/55ff7aec-2862-4402-9ddd-4f8250d1da04.\"}",
     "circuit opened: HTTP 403"
    ],
    "notes": []
@@ -196,7 +202,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "478 topical roll calls \u00b7 0 judged relevant \u00b7 478 awaiting AI judgment"
+    "809 topical roll calls \u00b7 0 judged relevant \u00b7 809 awaiting AI judgment \u2014 NO search-capable AI key (GEMINI_KEY or XAI_API_KEY)"
    ]
   },
   "primary_calendar": {
@@ -213,21 +219,14 @@
    "ok": null,
    "count": 0,
    "requests": 750,
-   "failures": 12,
-   "errors": [
-    "UnicodeEncodeError: 'ascii' codec can't encode character '\\xe1' in position 12: ordinal not in range(128) :: https://ballotpedia.org/Linda_S\u00e1nchez",
-    "UnicodeEncodeError: 'ascii' codec can't encode character '\\xe1' in position 19: ordinal not in range(128) :: https://ballotpedia.org/Nanette_Barrag\u00e1n",
-    "UnicodeEncodeError: 'ascii' codec can't encode character '\\xe1' in position 12: ordinal not in range(128) :: https://ballotpedia.org/Linda_S\u00e1nchez_California",
-    "UnicodeEncodeError: 'ascii' codec can't encode character '\\xe1' in position 19: ordinal not in range(128) :: https://ballotpedia.org/Nanette_Barrag\u00e1n_California",
-    "UnicodeEncodeError: 'ascii' codec can't encode character '\\xe1' in position 12: ordinal not in range(128) :: https://ballotpedia.org/Linda_S\u00e1nchez_California_congressional_candidate",
-    "UnicodeEncodeError: 'ascii' codec can't encode character '\\xe1' in position 19: ordinal not in range(128) :: https://ballotpedia.org/Nanette_Barrag\u00e1n_California_congressional_candidate"
-   ],
+   "failures": 0,
+   "errors": [],
    "notes": []
   },
   "wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 354,
+   "requests": 334,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -235,40 +234,29 @@
   "grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 52,
+   "requests": 42,
    "failures": 0,
    "errors": [],
    "notes": []
   },
   "enrichment": {
    "ok": true,
-   "count": 218,
+   "count": 449,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 250/250 this run \u00b7 218/4471 people have a bio"
+    "refreshed 250/250 this run \u00b7 449/4471 people have a bio"
    ]
   },
-  "campaign_sites": {
-   "ok": null,
-   "count": 0,
-   "requests": 3,
-   "failures": 2,
-   "errors": [
-    "HTTP 403 https://www.tanyafortexas.com/ :: \u001f\ufffd\b\u0000\u0000\u0000\u0000\u0000\u0000\ufffd\ufffdX\t\ufffd\ufffd:\ufffd\ufffd+\ufffd_\u032b\ufffd\ufffd2\u0005\u0006|v\ufffd\u001b\ufffd1\ufffd6\u0018\u001b|nl8\u0004\ufffd\u00dc\ufffd0\ufffd\ufffd\ufffd\ufffd+\\\ufffd\ufffdU\ufffd\ufffd\ufffdl\ufffdFL8\ufffd#\ufffd\ufffde*%\ufffdR|\ufffd\ufffdh1\ufffd\ufffd \ufffd9Y\ufffd\u007f\ufffd\\\ufffd\ufffd\u000fB\ufffd\ufffd\u0001\ufffd\ufffdZm \u0012\u0004\ufffd\u03d9\ufffd\ufffd\ufffd\ufffd4O3\f`A\u0014\ufffd0\ufffdq\ufffd\ufffd\ufffd+\ufffds\u00003\ufffd \ufffd\ufffd\t\u03f9{yn\f\ufffd0C<M\ufffd\ufffda\u00033^{\u03cd\f^\ufffd\ufffdZ\ufffd\u00003\u001c\ufffd\ufffd",
-    "circuit opened: HTTP 403"
-   ],
-   "notes": []
-  },
   "ai_positions": {
-   "ok": true,
+   "ok": false,
    "count": 0,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "researched 60 this run \u00b7 0 total \u00b7 0 with cited anti-interventionist positions"
+    "no search-capable AI key (GEMINI_KEY or XAI_API_KEY) \u2014 positions not researched"
    ]
   },
   "fec_outside_spending": {
@@ -283,12 +271,12 @@
   },
   "market_polymarket": {
    "ok": true,
-   "count": 0,
-   "requests": 60,
+   "count": 1028,
+   "requests": 800,
    "failures": 0,
    "errors": [],
    "notes": [
-    "60 catalog pages scanned \u00b7 0 open congressional markets"
+    "800 catalog pages scanned \u00b7 1028 open congressional markets"
    ]
   },
   "market_kalshi": {
@@ -318,8 +306,21 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "28785 market outcomes loaded \u00b7 0 tracked people matched"
+    "29813 market outcomes loaded \u00b7 0 tracked people matched"
    ]
   }
+ },
+ "summary": {
+  "members": 533,
+  "anti_members": 0,
+  "anti_by_party": {
+   "R": 0,
+   "D": 0,
+   "I": 0
+  },
+  "anti_candidates": 0,
+  "relevant_votes": 0,
+  "odds": 0,
+  "history_events_added": 33
  }
 }
