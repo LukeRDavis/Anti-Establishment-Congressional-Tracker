@@ -83,6 +83,15 @@ AI_BUDGET_PER_RUN      = int(os.environ.get("AECT_AI_BUDGET", "120"))
 ENRICH_BUDGET_PER_RUN  = int(os.environ.get("AECT_ENRICH_BUDGET", "250"))
 ROLL_FETCH_BUDGET      = int(os.environ.get("AECT_ROLL_BUDGET", "1500"))
 
+# Wall-clock budget: AI work stops after this many minutes so a slow or
+# rate-limited provider can never push the run past the workflow timeout.
+import time as _time
+RUN_STARTED = _time.time()
+AI_DEADLINE_MIN = float(os.environ.get("AECT_AI_DEADLINE_MIN", "45"))
+
+def ai_time_left():
+    return (RUN_STARTED + AI_DEADLINE_MIN * 60) - _time.time()
+
 USER_AGENT = ("Mozilla/5.0 (compatible; AECT/10.0; "
               "+https://github.com/LukeRDavis/anti-establishment-congressional-tracker)")
 
@@ -102,3 +111,14 @@ STATE_NAMES = {
 }
 STATE_ABBR = {v.lower(): k for k, v in STATE_NAMES.items()}
 VOTING_STATES = {k for k in STATE_NAMES if k not in ("DC","PR","GU","VI","AS","MP")}
+
+
+# ── What this tracker measures ────────────────────────────────────────────────
+# This is the tracker's definition, not data: a member is classified by how
+# they vote on military aid / arms sales to these recipients (the AIPAC lens).
+# Which roll calls those are is decided each run by the AI judge from the
+# official vote records; war-powers and other foreign-aid votes are still
+# recorded and shown, but they do not decide the dot colour.
+FOCUS_CATEGORY   = os.environ.get("AECT_FOCUS_CATEGORY", "arms_aid")
+FOCUS_RECIPIENTS = {c.strip().lower() for c in
+                    os.environ.get("AECT_FOCUS_RECIPIENTS", "Israel").split(",") if c.strip()}

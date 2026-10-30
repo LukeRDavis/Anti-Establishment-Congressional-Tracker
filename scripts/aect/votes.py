@@ -23,7 +23,7 @@ from . import ai
 from .config import (CONGRESS_API, CONGRESS_KEY,
                      CURRENT_CONGRESS, HISTORY_CONGRESSES, TODAY, CLERK_ROLL_XML,
                      CLERK_ROLL_PAGE, SENATE_VOTE_MENU, SENATE_VOTE_XML, congress_years,
-                     ROLL_FETCH_BUDGET, AI_BUDGET_PER_RUN)
+                     ROLL_FETCH_BUDGET, AI_BUDGET_PER_RUN, FOCUS_CATEGORY, FOCUS_RECIPIENTS)
 from .net import parse_xml, get_bytes, get_json, stream, load_cache, save_cache, now_iso, qs, circuit_ok
 
 TOPIC = re.compile(
@@ -42,10 +42,14 @@ For the roll call given, use web search to find out exactly what the measure or 
 - relevant: true only if the vote is substantively about foreign military aid/financing, arms sales or transfers, war powers / use of force, or deploying U.S. forces abroad. Domestic defense matters (base names, pay, procurement for U.S. forces, cultural issues) are NOT relevant. Procedural votes are not relevant.
 - anti_position: "Yea" or "Nay" — the vote that REDUCES, BLOCKS, CONDITIONS or ENDS the aid/sale/authorization/deployment. A vote to cut aid → Yea is anti. A vote to approve or increase aid → Nay is anti. A war-powers resolution to remove forces → Yea is anti.
 - significance: "major" if restricting or approving foreign military aid/arms/war is the vote's main purpose (supplemental aid packages, amendments cutting or adding aid, arms-sale disapproval resolutions, war-powers resolutions). "minor" if it is a broad bill (e.g. final passage of an NDAA or full appropriations act) where foreign military aid is only one part.
+- category: "arms_aid" if the vote is about military aid, military financing, or arms sales/transfers to a foreign government; "war_powers" if it is about U.S. forces, hostilities, strikes or war authorizations; "other" otherwise.
+- recipients: the foreign countries whose military aid, arms or hostilities the vote is about, as English country names (e.g. ["Israel"], ["Ukraine", "Israel"], ["Iran"]). Empty if none.
 - summary: one plain sentence saying what the vote did, including dollar amounts and countries when known.
 
 Respond with JSON only:
-{"relevant": true|false, "anti_position": "Yea"|"Nay"|null, "significance": "major"|"minor"|null, "topic": "short label e.g. Israel military aid", "summary": "..."}"""
+{"relevant": true|false, "anti_position": "Yea"|"Nay"|null, "significance": "major"|"minor"|null, "category": "arms_aid"|"war_powers"|"other", "recipients": ["..."], "topic": "short label", "summary": "..."}"""
+
+JUDGE_VERSION = 2   # bump when the judgment schema changes; older relevant judgments are re-asked
 
 
 def _iso_date(raw):
@@ -332,18 +336,19 @@ def _amendment_context(rec):
 # ── AI judgment ───────────────────────────────────────────────────────────────
 def _judge(rec, judgments, budget_state):
     key = f"{rec['chamber']}-{rec['year']}-{rec['roll']}"
-    if key in judgments:
-        return judgments[key]
+    old = judgments.get(key)
+    if old and (not old.get("relevant") or old.get("version", 1) >= JUDGE_VERSION):
+        return old
     if budget_state["left"] <= 0 or not ai.available_any():
         budget_state["pending"] += 1
-        return None
+        return old              # keep using the older judgment until it can be refreshed
     _amendment_context(rec)
     # Without web search the model must be given the measure's own text;
     # an amendment with neither a description nor a purpose is left for later.
     has_text = bool(rec.get("desc") or rec.get("amendment_purpose"))
     if not ai.available(search=True) and not has_text:
         budget_state["pending"] += 1
-        return None
+        return old
     pt = rec.get("party_totals") or {}
     lines = [
         f"Chamber: {'House' if rec['chamber']=='house' else 'Senate'} roll call {rec['roll']}, "
@@ -365,10 +370,13 @@ def _judge(rec, judgments, budget_state):
     budget_state["left"] -= 1
     if not isinstance(result, dict) or "relevant" not in result:
         budget_state["pending"] += 1
-        return None
+        return old
     j = {"relevant": bool(result.get("relevant")),
          "anti_position": result.get("anti_position") if result.get("anti_position") in ("Yea", "Nay") else None,
          "significance": result.get("significance") if result.get("significance") in ("major", "minor") else "minor",
+         "category": result.get("category") if result.get("category") in ("arms_aid", "war_powers") else "other",
+         "recipients": [str(c).strip()[:40] for c in (result.get("recipients") or []) if str(c).strip()][:6],
+         "version": JUDGE_VERSION,
          "topic": (result.get("topic") or "")[:80], "summary": (result.get("summary") or "")[:400],
          "sources": (sources or [])[:4], "provider": provider, "grounded": bool(sources),
          "context": rec.get("amendment_purpose", "")[:300], "judged_at": now_iso()}
@@ -412,12 +420,18 @@ def sync_votes():
 
     # newest first so the AI budget is spent on current votes before history
     all_rolls.sort(key=lambda r: (r.get("year", 0), r.get("roll", 0)), reverse=True)
+    def _stale(r):
+        j = judgments.get(f"{r['chamber']}-{r['year']}-{r['roll']}")
+        return bool(j and j.get("relevant") and j.get("version", 1) < JUDGE_VERSION)
+    all_rolls.sort(key=lambda r: not _stale(r))      # stable: stale relevant ones first, still newest first
     state = {"left": int(__import__("os").environ.get("AECT_VOTE_AI_BUDGET", "200")), "pending": 0}
     relevant = []
-    for rec in all_rolls:
+    for i, rec in enumerate(all_rolls):
         j = _judge(rec, judgments, state)
         if j and j["relevant"] and j["anti_position"]:
             relevant.append({**rec, **j})
+        if i % 20 == 19:
+            save_cache("vote_judgments", judgments)   # keep progress if the run is cut short
     save_cache("vote_judgments", judgments)
     stream("votes_ai_relevance", ok=bool(judgments) and state["pending"] == 0 or bool(relevant),
            count=len(relevant),
@@ -425,6 +439,13 @@ def sync_votes():
                 f"{state['pending']} awaiting AI judgment"
                 + ("" if ai.available(search=True) else " — web-search AI unavailable; judging only votes with a recorded description"))
     return relevant
+
+
+def is_focus(v):
+    """A vote on the tracker's focus: arms/aid votes whose recipients are all focus countries."""
+    rec = {r.lower() for r in (v.get("recipients") or [])}
+    return (v.get("significance") == "major" and v.get("category") == FOCUS_CATEGORY
+            and bool(rec) and rec <= FOCUS_RECIPIENTS)
 
 
 def score_members(members, relevant_votes):
@@ -445,6 +466,8 @@ def score_members(members, relevant_votes):
                 "congress": v["congress"], "chamber": v["chamber"], "roll": v["roll"],
                 "date": v["date"], "measure": v.get("legis", ""), "summary": v.get("summary", ""),
                 "significance": v["significance"], "position": pos,
+                "category": v.get("category", "other"), "recipients": v.get("recipients", []),
+                "focus": is_focus(v),
                 "anti": pos == v["anti_position"], "url": v.get("url", ""),
             })
     return members
@@ -473,7 +496,7 @@ def congress_history(relevant_votes):
     hist = {}
     by_c = {}
     for v in relevant_votes:
-        if v["significance"] != "major":
+        if not is_focus(v):
             continue
         by_c.setdefault(v["congress"], []).append(v)
     for c, votes in by_c.items():
@@ -486,7 +509,7 @@ def congress_history(relevant_votes):
                 t["total"] += 1
                 t["anti"] += pos == v["anti_position"]
         rec = {"congress": c, "label": f"{c}th", "years": "–".join(map(str, congress_years(c))),
-               "major_votes": len(votes), "source": "clerk.house.gov + senate.gov roll calls (AI-judged)"}
+               "focus_votes": len(votes), "source": "clerk.house.gov + senate.gov roll calls (AI-judged)"}
         for p in ("R", "D", "I"):
             anti = [t for t in tally.values() if t["party"] == p and t["anti"] > 0]
             rec[f"hard{p}"] = sum(1 for t in anti if t["anti"] / t["total"] >= 0.5)

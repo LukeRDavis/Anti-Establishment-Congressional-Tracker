@@ -10,7 +10,9 @@ evidence, and emit:
 import re
 from datetime import date
 
-from .config import CYCLE, CURRENT_CONGRESS, NEXT_CONGRESS, TODAY, STATE_NAMES
+from .config import (CYCLE, CURRENT_CONGRESS, NEXT_CONGRESS, TODAY, STATE_NAMES,
+                     FOCUS_CATEGORY, FOCUS_RECIPIENTS)
+from .votes import is_focus
 
 
 def _norm(s):
@@ -189,28 +191,45 @@ def apply_status(people, enrichment, calendar, fec_cands):
 
 # ── Classification ────────────────────────────────────────────────────────────
 def classify(people, positions):
+    """
+    The dot colour answers one question: on the tracker's focus votes
+    (military aid / arms sales to the focus recipients, chosen per run by the
+    AI judge from the official roll calls), does this person take the anti
+    position? Current-Congress focus votes decide; earlier Congresses are used
+    only when the person cast none this Congress. Other foreign-policy votes
+    (war powers, other countries' aid) are recorded alongside as context.
+    People with no focus votes (challengers, new members) are classified from
+    their own cited public statements.
+    """
     for k, p in people.items():
-        rec = [v for v in p.get("vote_record", []) if v["significance"] == "major"]
-        cur = [v for v in rec if v["congress"] == CURRENT_CONGRESS]
-        basis = cur or rec
+        rec = p.get("vote_record", [])
+        focus = [v for v in rec if v.get("focus")]
+        cur = [v for v in focus if v["congress"] == CURRENT_CONGRESS]
+        basis = cur or focus
         anti_votes = [v for v in basis if v["anti"]]
+        other = [v for v in rec if not v.get("focus") and v["significance"] == "major"]
+        p["other_foreign_policy"] = {"votes": len(other), "anti": sum(v["anti"] for v in other)}
         pos = positions.get(k, {})
         evidence = []
         level = None
-        if anti_votes:
+        if basis:
             ratio = len(anti_votes) / len(basis)
-            level = "yes" if ratio >= 0.5 else "soft"
-            latest = max(anti_votes, key=lambda v: v["date"])
-            evidence.append(f"{latest['position']} on {latest['measure']} ({latest['date']}): {latest['summary']}")
+            level = "yes" if ratio >= 0.5 else ("soft" if anti_votes else None)
             p["anti_vote_ratio"] = round(ratio, 2)
             p["anti_votes"] = len(anti_votes)
             p["relevant_votes"] = len(basis)
-        elif pos.get("anti_interventionist"):
+            if anti_votes:
+                latest = max(anti_votes, key=lambda v: v["date"])
+                evidence.append(f"{latest['position']} on {latest['measure']} ({latest['date']}): {latest['summary']}")
+        elif pos.get("anti_interventionist") and pos.get("focus", True):
+            # 'focus' missing = researched before the field existed; re-researched on TTL
             level = "yes" if pos.get("strength") == "strong" else "soft"
             evidence += [f"{e['claim']} ({e['url']})" for e in pos.get("evidence", [])[:2]]
-        p["antiArms"] = level is not None
+        # A vote record that is mostly pro-aid is not anti, even with one anti vote;
+        # an explicit cited statement (strong or moderate) is.
+        p["antiArms"] = level == "yes" or (not basis and level is not None)
         p["antiArmsLevel"] = level
-        p["antiArmsBasis"] = ("votes" if anti_votes else "statements" if level else None)
+        p["antiArmsBasis"] = ("votes" if basis and level else "statements" if level else None)
         p["antiArmsEvidence"] = evidence
         if pos:
             p["position_research"] = pos
@@ -227,6 +246,13 @@ def _best_market(p, mk):
     want = "primary" if (p.get("primary_date") and not _past(p["primary_date"])) else "general"
     hits = sorted(hits, key=lambda h: (h["stage"] != want, {"polymarket_live": 0, "kalshi": 1}.get(h["src"], 2)))
     return hits[0]
+
+
+def _shown_votes(rec, n=12):
+    """Focus votes first (they decide the classification), then the newest other votes."""
+    focus = sorted([v for v in rec if v.get("focus")], key=lambda v: v["date"], reverse=True)
+    other = sorted([v for v in rec if not v.get("focus")], key=lambda v: v["date"], reverse=True)
+    return (focus + other)[:n]
 
 
 def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, streams, meta_extra):
@@ -269,7 +295,8 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
         if p.get("incumbent"):
             members.append({**base, "bioguide_id": p.get("bioguide_id", ""), "caucus": p.get("caucus", ""),
                             "lobby_total": p.get("lobby_total", 0), "pacs": p.get("pacs", []),
-                            "rlc_score": p.get("rlc_score"), "votes": p.get("vote_record", [])[-12:],
+                            "rlc_score": p.get("rlc_score"), "votes": _shown_votes(p.get("vote_record", [])),
+                            "other_foreign_policy": p.get("other_foreign_policy", {}),
                             "anti_votes": p.get("anti_votes", 0), "relevant_votes": p.get("relevant_votes", 0),
                             "not_up_this_cycle": p.get("not_up_this_cycle", False)})
         elif p["antiArms"]:
@@ -294,6 +321,13 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
     return {
         "meta": {
             "fetched_at": meta_extra["fetched_at"], "version": 10, "cycle": CYCLE,
+            "general_date": general_election_day(CYCLE),
+            "focus": {"category": FOCUS_CATEGORY, "recipients": sorted(c.title() for c in FOCUS_RECIPIENTS),
+                      "votes": sum(1 for v in relevant_votes if is_focus(v))},
+            # seats = sitting members + vacancies, straight from the official rosters
+            "chamber_seats": {ch: sum(1 for m in members if m["chamber"] == ch)
+                                  + sum(1 for v in meta_extra.get("vacancies", []) if v.get("chamber", "house") == ch)
+                              for ch in ("house", "senate")},
             "congress": CURRENT_CONGRESS, "next_congress": NEXT_CONGRESS,
             "member_count": len(members), "anti_intervention_count": len(anti_members),
             "anti_by_party": {pt: sum(1 for m in anti_members if (m.get("caucus") or m["party"]) == pt)

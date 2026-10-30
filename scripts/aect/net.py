@@ -138,8 +138,12 @@ def post_json(url, payload, headers=None, *, stream_name=None, timeout=90, trip_
             return json.loads(raw)
         except urllib.error.HTTPError as e:
             body = _error_body(e, 600)
-            if e.code in (429, 500, 502, 503) and attempt < 2:
-                time.sleep(6 * (attempt + 1))
+            if e.code in (500, 502, 503) and attempt < 2:
+                time.sleep(4 * (attempt + 1))
+                continue
+            if e.code == 429 and attempt < 1:
+                wait = int(e.headers.get("Retry-After", "0") or 0) if e.headers else 0
+                time.sleep(min(max(wait, 3), 20))
                 continue
             msg = f"HTTP {e.code} {redact(url)[:90]} :: {body[:400]}"
             print(f"    {msg}")

@@ -8,7 +8,7 @@ themselves still come from the primary sources.
 """
 import json, os, re
 
-from .config import GEMINI_KEY, XAI_KEY, OPENROUTER_KEY, GROQ_KEY
+from .config import GEMINI_KEY, XAI_KEY, OPENROUTER_KEY, GROQ_KEY, ai_time_left
 from .net import post_json, get_json, stream, circuit_ok, circuit_trip, LAST_HTTP_STATUS
 
 _GEMINI_MODELS = None
@@ -92,6 +92,8 @@ _DEAD_MODELS = {}   # {search_flag: {model, ...}} models that hit quota or were 
 
 
 def available(search=False):
+    if ai_time_left() <= 0:
+        return False
     if search:
         return bool(GEMINI_KEY and circuit_ok("ai_gemini")) or bool(XAI_KEY and circuit_ok("ai_xai"))
     return any([GEMINI_KEY and circuit_ok("ai_gemini"), XAI_KEY and circuit_ok("ai_xai"),

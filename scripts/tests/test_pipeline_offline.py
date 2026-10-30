@@ -90,6 +90,18 @@ def passage_xml(roll):
     return f"<rollcall-vote>{meta}<vote-data>{v}</vote-data></rollcall-vote>".encode()
 
 
+def war_powers_xml(roll):
+    """Roll 3 = party-line war-powers vote: every Democrat Yea. Must NOT make every Democrat anti."""
+    meta = (f"<vote-metadata><congress>{config.CURRENT_CONGRESS}</congress><legis-num>H CON RES 40</legis-num>"
+            f"<vote-question>On Agreeing to the Resolution</vote-question><vote-result>Failed</vote-result>"
+            f"<action-date>20-Jul-{YEAR}</action-date><vote-desc>Directing the President to remove United "
+            f"States Armed Forces from hostilities against Iran (War Powers Resolution)</vote-desc></vote-metadata>")
+    v = "".join(f'<recorded-vote><legislator name-id="{m["bg"]}" party="{m["party"]}" state="{m["state"]}">'
+                f'{m["last"]}</legislator><vote>{"Yea" if m["party"] == "D" else "Nay"}</vote></recorded-vote>'
+                for m in house)
+    return f"<rollcall-vote>{meta}<vote-data>{v}</vote-data></rollcall-vote>".encode()
+
+
 def senate_menu():
     return b"<vote_summary><votes></votes></vote_summary>"
 
@@ -120,6 +132,8 @@ def router(url):
             return roll_xml(1)
         if y == YEAR and r == 2:
             return passage_xml(2)
+        if y == YEAR and r == 3:
+            return war_powers_xml(3)
         return None
     if "vote_menu" in url:
         return senate_menu()
@@ -141,10 +155,16 @@ net._request = fake_request
 os.makedirs(os.environ["AECT_CACHE_DIR"], exist_ok=True)
 with open(os.path.join(os.environ["AECT_CACHE_DIR"], "vote_judgments.json"), "w") as f:
     json.dump({f"house-{YEAR}-1": {"relevant": True, "anti_position": "Yea", "significance": "major",
+                                    "category": "arms_aid", "recipients": ["Israel"], "version": 2,
                                     "topic": "Israel military aid", "summary": "Amendment to cut $3.3B FMF for Israel",
                                     "sources": [], "provider": "fixture"},
                f"house-{YEAR}-2": {"relevant": True, "anti_position": "Nay", "significance": "minor",
-                                    "topic": "approps", "summary": "Final passage", "sources": [], "provider": "fixture"}}, f)
+                                    "category": "arms_aid", "recipients": ["Israel", "Ukraine"], "version": 2,
+                                    "topic": "approps", "summary": "Final passage", "sources": [], "provider": "fixture"},
+               f"house-{YEAR}-3": {"relevant": True, "anti_position": "Yea", "significance": "major",
+                                    "category": "war_powers", "recipients": ["Iran"], "version": 2,
+                                    "topic": "Iran war powers", "summary": "Remove forces from Iran hostilities",
+                                    "sources": [], "provider": "fixture"}}, f)
 
 # run the pipeline with ROOT pointed at the temp dir
 import fetch_data  # noqa: E402
@@ -163,6 +183,8 @@ print("\nanti members:", len(anti), "R:", anti_r, "expected D:", expected_d)
 assert anti_r == ["Thomas Massie"], anti_r
 assert sum(1 for m in anti if m["party"] == "D") == expected_d
 assert members["Thomas Massie"]["antiArmsBasis"] == "votes"
+# the party-line war-powers vote is recorded as context but does not decide the dot
+assert members["Ro Khanna"]["other_foreign_policy"]["anti"] >= 1
 assert members["Thomas Massie"].get("primary_result") is None, "past-cycle win leaked into this cycle"
 assert data["meta"]["anti_by_party"]["R"] == 1
 assert len(data["members"]) == 535, len(data["members"])
