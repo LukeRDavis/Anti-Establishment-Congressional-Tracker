@@ -1,14 +1,14 @@
 {
- "run_at": "2026-10-30T09:26:01.931979+00:00",
- "runtime_s": 685,
+ "run_at": "2026-10-30T09:50:16.174923+00:00",
+ "runtime_s": 1212,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
-  "gemini": 0,
+  "gemini": 1,
   "xai": 0,
   "openrouter": 0,
   "groq": 0,
-  "failed": 1
+  "failed": 200
  },
  "streams": {
   "key:CONGRESS_KEY": {
@@ -89,19 +89,19 @@
   },
   "votes_house_xml": {
    "ok": true,
-   "count": 2176,
-   "requests": 1700,
-   "failures": 12,
+   "count": 2915,
+   "requests": 834,
+   "failures": 9,
    "errors": [
     "2026 roll 315: no <vote-metadata> (root <xml>)",
     "2026 roll 316: no <vote-metadata> (root <xml>)",
     "2026 roll 317: no <vote-metadata> (root <xml>)",
-    "2025 roll 363: no <vote-metadata> (root <xml>)",
-    "2025 roll 364: no <vote-metadata> (root <xml>)",
-    "2025 roll 365: no <vote-metadata> (root <xml>)"
+    "2022 roll 550: no <vote-metadata> (root <xml>)",
+    "2022 roll 551: no <vote-metadata> (root <xml>)",
+    "2022 roll 552: no <vote-metadata> (root <xml>)"
    ],
    "notes": [
-    "2176 House roll calls cached (+1500 this run)"
+    "2915 House roll calls cached (+739 this run)"
    ]
   },
   "votes_senate_xml": {
@@ -118,11 +118,13 @@
   "congress_gov": {
    "ok": true,
    "count": 539,
-   "requests": 3,
+   "requests": 75,
    "failures": 0,
    "errors": [],
    "notes": [
-    "539 current members"
+    "539 current members",
+    "house-vote fields: ['amendmentAuthor', 'amendmentNumber', 'amendmentType', 'congress', 'identifier', 'legislationNumber', 'legislationType', 'legislationUrl', 'result', 'rollCallNumber', 'sessionNumber', 'sourceDataURL', 'startDate', 'updateDate', 'votePartyTotal', 'voteQuestion', 'voteType']",
+    "amendment fields: ['actions', 'amendedBill', 'chamber', 'congress', 'description', 'latestAction', 'number', 'purpose', 'sponsors', 'submittedDate', 'type', 'updateDate']"
    ]
   },
   "fec_candidates": {
@@ -174,11 +176,14 @@
   "ai_gemini": {
    "ok": null,
    "count": 0,
-   "requests": 2,
-   "failures": 2,
+   "requests": 7,
+   "failures": 6,
    "errors": [
     "HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   \"error\": {     \"code\": 429,     \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",     \"status\": \"RESOURCE_EXHAUSTED\",     \"details\": [       {         \"@type\": \"type.googleapis.com/google.rpc",
-    "circuit opened: HTTP 429"
+    "HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?k :: {   \"error\": {     \"code\": 429,     \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",     \"status\": \"RESOURCE_EXHAUSTED\",     \"details\": [       {         \"@type\": \"type.googleapis.com/google.rpc",
+    "HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?k :: {   \"error\": {     \"code\": 429,     \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",     \"status\": \"RESOURCE_EXHAUSTED\",     \"details\": [       {         \"@type\": \"type.googleapis.com/google.rpc",
+    "TimeoutError: The read operation timed out",
+    "circuit opened: every available model is over quota or retired"
    ],
    "notes": [
     "models available: gemini-3.8-flash, gemini-3.7-flash, gemini-3.6-flash"
@@ -195,6 +200,26 @@
    ],
    "notes": []
   },
+  "ai_openrouter": {
+   "ok": null,
+   "count": 0,
+   "requests": 200,
+   "failures": 200,
+   "errors": [
+    "HTTP 404 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"This model is unavailable for free. The paid version is available now - use this slug instead: meta-llama/llama-3.3-70b-instruct\",\"code\":404},\"user_id\":\"user_3AZab6VtFFqnfl5azaqS3YXoh7f\"}"
+   ],
+   "notes": []
+  },
+  "ai_groq": {
+   "ok": null,
+   "count": 0,
+   "requests": 200,
+   "failures": 200,
+   "errors": [
+    "HTTP 404 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"The model `llama-3.3-70b-versatile` does not exist or you do not have access to it.\",\"type\":\"invalid_request_error\",\"code\":\"model_not_found\"}} "
+   ],
+   "notes": []
+  },
   "votes_ai_relevance": {
    "ok": false,
    "count": 0,
@@ -202,17 +227,17 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "809 topical roll calls \u00b7 0 judged relevant \u00b7 809 awaiting AI judgment \u2014 NO search-capable AI key (GEMINI_KEY or XAI_API_KEY)"
+    "904 topical roll calls \u00b7 0 judged relevant \u00b7 904 awaiting AI judgment \u2014 web-search AI unavailable; judging only votes with a recorded description"
    ]
   },
   "primary_calendar": {
-   "ok": false,
-   "count": 0,
-   "requests": 3,
+   "ok": true,
+   "count": 50,
+   "requests": 6,
    "failures": 0,
    "errors": [],
    "notes": [
-    "0 state primary dates for 2026; missing ['AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VT', 'WA', 'WI', 'WV', 'WY']"
+    "50 state primary dates for 2026"
    ]
   },
   "ballotpedia": {
@@ -226,7 +251,7 @@
   "wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 334,
+   "requests": 448,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -234,19 +259,19 @@
   "grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 42,
+   "requests": 99,
    "failures": 0,
    "errors": [],
    "notes": []
   },
   "enrichment": {
    "ok": true,
-   "count": 449,
+   "count": 624,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 250/250 this run \u00b7 449/4471 people have a bio"
+    "refreshed 250/250 this run \u00b7 624/4471 people have a bio"
    ]
   },
   "ai_positions": {
@@ -321,6 +346,6 @@
   "anti_candidates": 0,
   "relevant_votes": 0,
   "odds": 0,
-  "history_events_added": 33
+  "history_events_added": 0
  }
 }
