@@ -1,13 +1,13 @@
 {
- "run_at": "2026-10-30T11:44:41.458606+00:00",
- "runtime_s": 1802,
+ "run_at": "2026-10-30T12:01:21.074284+00:00",
+ "runtime_s": 844,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
   "gemini": 1,
   "xai": 0,
-  "openrouter": 54,
-  "groq": 23,
+  "openrouter": 2,
+  "groq": 19,
   "failed": 1
  },
  "streams": {
@@ -115,7 +115,7 @@
   "congress_gov": {
    "ok": true,
    "count": 539,
-   "requests": 47,
+   "requests": 27,
    "failures": 0,
    "errors": [],
    "notes": [
@@ -201,13 +201,13 @@
   "ai_groq": {
    "ok": null,
    "count": 0,
-   "requests": 28,
+   "requests": 25,
    "failures": 5,
    "errors": [
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 6477, Requested 1623. Please try again in 750ms. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Used 214, Requested 880. Please try again in 5.64s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Tool choice is none, but model called a tool\",\"type\":\"invalid_request_error\",\"code\":\"tool_use_failed\",\"failed_generation\":\"{\\\"name\\\": \\\"web.run\\\", \\\"arguments\\\": {\\\"query\\\": \\\"H R 8595 National Security, Department of State, and Related Programs Appropriations Act, 2027\\\", \\\"topn\\\": 5, \\\"source\\\": \\\"news\\\"}}\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `allam-2-7b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 4449, Requested 1960. Please try again in 4.09s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 6909, Requested 1386. Please try again in 2.2125s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Used 522, Requested 581. Please try again in 6.18s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Tool choice is none, but model called a tool\",\"type\":\"invalid_request_error\",\"code\":\"tool_use_failed\",\"failed_generation\":\"{\\\"name\\\": \\\"web.run\\\", \\\"arguments\\\": {\\n  \\\"search_query\\\": \\\"House roll call 246 2026-07-15 H R 8595 motion to recommit National Security Department of State and Related Programs Appropriations Act 2027\\\",\\n  \\\"topn\\\": 5,\\n  \\\"source\\\": \\\"news\\\"\\n}}\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `allam-2-7b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 3664, Requested 2839. Please try again in 5.029999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
     "circuit opened: every available model failed or is over quota"
    ],
    "notes": [
@@ -217,7 +217,7 @@
   "ai_openrouter": {
    "ok": null,
    "count": 0,
-   "requests": 59,
+   "requests": 7,
    "failures": 5,
    "errors": [
     "HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day\",\"code\":429,\"metadata\":{\"headers\":{\"X-RateLimit-Limit\":\"50\",\"X-RateLimit-Remaining\":\"0\",\"X-RateLimit-Reset\":\"1793404800000\"},\"limit_source\":\"openrouter_free_tier_daily\",\"remedy_hint\":\"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model ",
@@ -230,12 +230,12 @@
   },
   "votes_ai_relevance": {
    "ok": true,
-   "count": 37,
+   "count": 35,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "904 topical roll calls \u00b7 37 judged relevant \u00b7 666 awaiting AI judgment \u2014 web-search AI unavailable; judging only votes with a recorded description"
+    "904 topical roll calls \u00b7 35 judged relevant \u00b7 685 awaiting AI judgment \u2014 web-search AI unavailable; judging only votes with a recorded description"
    ]
   },
   "primary_calendar": {
@@ -259,7 +259,7 @@
   "wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 586,
+   "requests": 666,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -267,29 +267,29 @@
   "grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 168,
+   "requests": 208,
    "failures": 0,
    "errors": [],
    "notes": []
   },
   "enrichment": {
    "ok": true,
-   "count": 889,
+   "count": 966,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 250/250 this run \u00b7 889/4471 people have a bio"
+    "refreshed 250/250 this run \u00b7 966/4471 people have a bio"
    ]
   },
   "fec_websites": {
    "ok": true,
    "count": 483,
-   "requests": 289,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "looked up 289 committees \u00b7 483 campaign websites known"
+    "looked up 0 committees \u00b7 483 campaign websites known"
    ]
   },
   "ai_positions": {
@@ -305,11 +305,11 @@
   "fec_outside_spending": {
    "ok": true,
    "count": 405,
-   "requests": 5,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 5, 405 candidates with outside-spending records"
+    "refreshed 0, 405 candidates with outside-spending records"
    ]
   },
   "market_polymarket": {
@@ -344,26 +344,26 @@
   },
   "markets": {
    "ok": true,
-   "count": 88,
+   "count": 385,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "29813 market outcomes loaded \u00b7 88 tracked people matched"
+    "29813 market outcomes loaded \u00b7 385 tracked people matched"
    ]
   }
  },
  "summary": {
   "members": 533,
-  "anti_members": 136,
+  "anti_members": 38,
   "anti_by_party": {
-   "R": 2,
-   "D": 132,
+   "R": 0,
+   "D": 36,
    "I": 2
   },
   "anti_candidates": 0,
-  "relevant_votes": 37,
-  "odds": 88,
-  "history_events_added": 389
+  "relevant_votes": 35,
+  "odds": 385,
+  "history_events_added": 114
  }
 }
