@@ -43,13 +43,14 @@ For the roll call given, use web search to find out exactly what the measure or 
 - anti_position: "Yea" or "Nay" — the vote that REDUCES, BLOCKS, CONDITIONS or ENDS the aid/sale/authorization/deployment. A vote to cut aid → Yea is anti. A vote to approve or increase aid → Nay is anti. A war-powers resolution to remove forces → Yea is anti.
 - significance: "major" if restricting or approving foreign military aid/arms/war is the vote's main purpose (supplemental aid packages, amendments cutting or adding aid, arms-sale disapproval resolutions, war-powers resolutions). "minor" if it is a broad bill (e.g. final passage of an NDAA or full appropriations act) where foreign military aid is only one part.
 - category: "arms_aid" if the vote is about military aid, military financing, or arms sales/transfers to a foreign government; "war_powers" if it is about U.S. forces, hostilities, strikes or war authorizations; "other" otherwise.
+- measure_restricts: true if the measure or amendment being voted on itself cuts, blocks, conditions or ends the aid/sale/hostilities (e.g. a funding-cut amendment, an arms-sale disapproval resolution, a war-powers removal resolution, or a motion to discharge/proceed to one); false if it provides, approves or expands them.
 - recipients: the foreign countries whose military aid, arms or hostilities the vote is about, as English country names (e.g. ["Israel"], ["Ukraine", "Israel"], ["Iran"]). Empty if none.
 - summary: one plain sentence saying what the vote did, including dollar amounts and countries when known.
 
 Respond with JSON only:
-{"relevant": true|false, "anti_position": "Yea"|"Nay"|null, "significance": "major"|"minor"|null, "category": "arms_aid"|"war_powers"|"other", "recipients": ["..."], "topic": "short label", "summary": "..."}"""
+{"relevant": true|false, "anti_position": "Yea"|"Nay"|null, "significance": "major"|"minor"|null, "category": "arms_aid"|"war_powers"|"other", "measure_restricts": true|false, "recipients": ["..."], "topic": "short label", "summary": "..."}"""
 
-JUDGE_VERSION = 2   # bump when the judgment schema changes; older relevant judgments are re-asked
+JUDGE_VERSION = 3   # bump when the judgment schema changes; older relevant judgments are re-asked
 
 
 def _iso_date(raw):
@@ -333,6 +334,54 @@ def _amendment_context(rec):
         rec["congress_gov_amendment"] = f"{atype.upper()} {anum}"
 
 
+_BILL_TYPES = {"HR": "hr", "S": "s", "HRES": "hres", "SRES": "sres", "HJRES": "hjres",
+               "SJRES": "sjres", "HCONRES": "hconres", "SCONRES": "sconres"}
+
+
+def _sponsor(rec):
+    """Bioguide ID of whoever offered the measure (amendment author, else bill sponsor), from Congress.gov."""
+    if "sponsor" in rec:
+        return rec["sponsor"]
+    sid = None
+    if rec.get("congress_gov_amendment"):
+        atype, anum = rec["congress_gov_amendment"].lower().split()
+        a = (_cg(f"/amendment/{rec['congress']}/{atype}/{anum}") or {}).get("amendment") or {}
+        sid = ((a.get("sponsors") or [{}])[0]).get("bioguideId")
+    if not sid:
+        m = re.match(r"([A-Z\. ]+?)\s*(\d+)$", (rec.get("legis") or "").upper().strip())
+        if m:
+            btype = _BILL_TYPES.get(re.sub(r"[\. ]", "", m.group(1)))
+            if btype:
+                b = (_cg(f"/bill/{rec['congress']}/{btype}/{m.group(2)}") or {}).get("bill") or {}
+                sid = ((b.get("sponsors") or [{}])[0]).get("bioguideId")
+    rec["sponsor"] = sid
+    return sid
+
+
+def direction_check(rec, j):
+    """
+    Cross-check the AI's anti side against the record: whoever offered a
+    restricting measure votes for it, so their vote is the anti side (and the
+    opposite for a measure that provides aid). Corrects a flipped judgment.
+    """
+    if j.get("measure_restricts") is None or not j.get("anti_position"):
+        return j
+    sid = j.get("sponsor") or _sponsor(rec)
+    pos = ((rec.get("positions") or {}).get(sid) or [None])[0] if sid else None
+    if pos not in ("Yea", "Nay"):
+        return j
+    expected = pos if j["measure_restricts"] else ("Nay" if pos == "Yea" else "Yea")
+    j["sponsor"] = sid
+    if expected != j["anti_position"]:
+        print(f"    ↺ {rec['chamber']}-{rec['year']}-{rec['roll']}: anti side corrected "
+              f"{j['anti_position']}→{expected} (sponsor {sid} voted {pos})")
+        j["anti_position"] = expected
+        j["direction"] = "corrected_by_sponsor_vote"
+    else:
+        j["direction"] = "confirmed_by_sponsor_vote"
+    return j
+
+
 # ── AI judgment ───────────────────────────────────────────────────────────────
 def _judge(rec, judgments, budget_state):
     key = f"{rec['chamber']}-{rec['year']}-{rec['roll']}"
@@ -376,10 +425,13 @@ def _judge(rec, judgments, budget_state):
          "significance": result.get("significance") if result.get("significance") in ("major", "minor") else "minor",
          "category": result.get("category") if result.get("category") in ("arms_aid", "war_powers") else "other",
          "recipients": [str(c).strip()[:40] for c in (result.get("recipients") or []) if str(c).strip()][:6],
+         "measure_restricts": result.get("measure_restricts") if isinstance(result.get("measure_restricts"), bool) else None,
          "version": JUDGE_VERSION,
          "topic": (result.get("topic") or "")[:80], "summary": (result.get("summary") or "")[:400],
          "sources": (sources or [])[:4], "provider": provider, "grounded": bool(sources),
          "context": rec.get("amendment_purpose", "")[:300], "judged_at": now_iso()}
+    if j["relevant"]:
+        direction_check(rec, j)
     judgments[key] = j
     if j["relevant"]:
         print(f"    ✓ {key} {rec.get('legis','')}: {j['significance']} — anti={j['anti_position']} — {j['summary'][:90]}")

@@ -137,7 +137,9 @@ def main():
     ie = fec.fetch_outside_spending(anti_fec)
 
     print("\n[5] Prediction markets")
-    mk = markets.match_people({k: p for k, p in people.items() if p["antiArms"] and p.get("on_ballot")})
+    # odds for everyone on this cycle's ballot who is tracked: all incumbents up this cycle + anti candidates
+    mk = markets.match_people({k: p for k, p in people.items() if p.get("on_ballot")
+                               and (p["antiArms"] or p.get("incumbent"))})
 
     history = votes.congress_history(relevant)
     old = _load("data.json", {})

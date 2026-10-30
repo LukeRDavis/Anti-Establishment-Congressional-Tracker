@@ -124,6 +124,24 @@ def get_json(url, **kw):
 LAST_HTTP_STATUS = {}
 
 
+def _daily_limit(body):
+    """True for quotas that won't reset within the run (per-day / billing)."""
+    return bool(re.search(r"per[- ]day|perday|daily|billing|insufficient|credits", body or "", re.I))
+
+
+def _retry_after(e, body):
+    try:
+        h = int(float(e.headers.get("Retry-After", "0") or 0)) if e.headers else 0
+    except ValueError:
+        h = 0
+    m = re.search(r"try again in (?:(\d+)m)?([\d.]+)(ms|s)", body or "", re.I)
+    if m:
+        secs = float(m.group(2)) / (1000 if m.group(3).lower() == "ms" else 1) + 60 * int(m.group(1) or 0)
+        return max(h, secs)
+    m = re.search(r'retryDelay"?\s*:\s*"(\d+)s', body or "")
+    return max(h, int(m.group(1))) if m else (h or 8)
+
+
 def post_json(url, payload, headers=None, *, stream_name=None, timeout=90, trip_on=(401, 403)):
     circuit = stream_name
     LAST_HTTP_STATUS[stream_name] = None
@@ -141,10 +159,12 @@ def post_json(url, payload, headers=None, *, stream_name=None, timeout=90, trip_
             if e.code in (500, 502, 503) and attempt < 2:
                 time.sleep(4 * (attempt + 1))
                 continue
-            if e.code == 429 and attempt < 1:
-                wait = int(e.headers.get("Retry-After", "0") or 0) if e.headers else 0
-                time.sleep(min(max(wait, 3), 20))
-                continue
+            if e.code == 429 and attempt < 2 and not _daily_limit(body):
+                # per-minute limits say how long to wait ("try again in 5.64s"); honour it
+                wait = _retry_after(e, body)
+                if wait <= 45:
+                    time.sleep(max(wait, 2) + 0.5)
+                    continue
             msg = f"HTTP {e.code} {redact(url)[:90]} :: {body[:400]}"
             print(f"    {msg}")
             _hit(stream_name, failed=True, error=msg)

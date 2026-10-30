@@ -197,3 +197,13 @@ for r in data["races_2026"]:
     assert r["primary_result"] is None
 print("\nALL OFFLINE CHECKS PASSED")
 shutil.rmtree(tmp)
+
+# direction check: a flipped AI judgment is corrected by how the measure's sponsor voted
+from aect import votes  # noqa: E402
+rec = {"chamber": "senate", "year": YEAR, "roll": 9, "positions": {"S000033": ("Yea", "I", "VT")}}
+j = votes.direction_check(rec, {"anti_position": "Nay", "measure_restricts": True, "sponsor": "S000033"})
+assert j["anti_position"] == "Yea" and j["direction"] == "corrected_by_sponsor_vote", j
+j = votes.direction_check(rec, {"anti_position": "Nay", "measure_restricts": False, "sponsor": "S000033"})
+assert j["anti_position"] == "Nay" and j["direction"] == "confirmed_by_sponsor_vote", j
+print("direction check OK")
+
