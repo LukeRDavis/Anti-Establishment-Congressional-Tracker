@@ -85,7 +85,7 @@ def load_predictit():
     return out
 
 
-def load_polymarket(max_pages=60):
+def load_polymarket(max_pages=800):
     out, cursor, pages = [], "", 0
     headers = {"Origin": "https://polymarket.com", "Referer": "https://polymarket.com/"}
     while pages < max_pages:
@@ -114,7 +114,7 @@ def load_polymarket(max_pages=60):
         pages += 1
         if not cursor or cursor == "LTE=":
             break
-        time.sleep(0.1)
+        time.sleep(0.03)
     stream("market_polymarket", ok=pages > 0, count=len(out),
            note=f"{pages} catalog pages scanned · {len(out)} open congressional markets")
     return out

@@ -244,8 +244,11 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
         for cid in p.get("fec_ids", []):
             t = fec_totals.get(cid) or {}
             for f in ("raised", "spent", "cash"):
-                if t.get(f) is not None:
-                    tot[f] = (tot.get(f) or 0) + t[f]
+                try:
+                    v = float(t.get(f))
+                except (TypeError, ValueError):
+                    continue
+                tot[f] = (tot.get(f) or 0) + v
             ie = fec_ie.get(cid)
             if ie:
                 tot["ie_support"] = tot.get("ie_support", 0) + ie["support"]

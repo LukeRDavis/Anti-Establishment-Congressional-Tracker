@@ -75,6 +75,7 @@ def _parse_house_roll(raw, year, roll):
         return None
     meta = root.find("vote-metadata")
     if meta is None:
+        stream("votes_house_xml", error=f"{year} roll {roll}: no <vote-metadata> (root <{root.tag}>)")
         return None
     g = lambda t: (meta.findtext(t) or "").strip()
     rec = {
@@ -115,8 +116,12 @@ def _sync_house_year(year, cache, budget):
             misses += 1
             roll += 1
             continue
-        misses = 0
         parsed = _parse_house_roll(raw, year, roll)
+        if not parsed:
+            misses += 1
+            roll += 1
+            continue
+        misses = 0
         if parsed:
             rec, positions = parsed
             rec["candidate"] = _is_candidate(rec, yc)
@@ -126,7 +131,7 @@ def _sync_house_year(year, cache, budget):
         fetched += 1
         roll += 1
         time.sleep(0.05)
-    if misses >= 3 and year < TODAY.year:
+    if misses >= 3 and year < TODAY.year and len(yc["rolls"]) > 100:
         yc["complete"] = True
     return fetched
 

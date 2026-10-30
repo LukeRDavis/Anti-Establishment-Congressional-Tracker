@@ -51,6 +51,16 @@ def circuit_trip(service, why):
 def redact(url):
     return re.sub(r'((?:api_key|key)=)[^&]+', r'\1***', url)
 
+def _error_body(e, n=300):
+    try:
+        raw = e.read()
+        if raw[:2] == b"\x1f\x8b":
+            raw = gzip.decompress(raw)
+        return raw[:n].decode(errors="replace").replace("\n", " ")
+    except Exception:
+        return ""
+
+
 def _request(url, *, data=None, headers=None, timeout=30, method=None):
     h = {"User-Agent": USER_AGENT, "Accept-Encoding": "gzip"}
     h.update(headers or {})
@@ -73,11 +83,7 @@ def get_bytes(url, *, stream_name=None, headers=None, timeout=30, retries=2,
             _hit(stream_name)
             return raw
         except urllib.error.HTTPError as e:
-            body = ""
-            try:
-                body = e.read()[:300].decode(errors="replace").replace("\n", " ")
-            except Exception:
-                pass
+            body = _error_body(e)
             if e.code == 404 and quiet_404:
                 _hit(stream_name)
                 return None
@@ -127,15 +133,11 @@ def post_json(url, payload, headers=None, *, stream_name=None, timeout=90, trip_
             _hit(stream_name)
             return json.loads(raw)
         except urllib.error.HTTPError as e:
-            body = ""
-            try:
-                body = e.read()[:300].decode(errors="replace").replace("\n", " ")
-            except Exception:
-                pass
+            body = _error_body(e, 600)
             if e.code in (429, 500, 502, 503) and attempt < 2:
                 time.sleep(6 * (attempt + 1))
                 continue
-            msg = f"HTTP {e.code} {redact(url)[:90]} :: {body[:200]}"
+            msg = f"HTTP {e.code} {redact(url)[:90]} :: {body[:400]}"
             print(f"    {msg}")
             _hit(stream_name, failed=True, error=msg)
             if e.code in trip_on or (e.code == 429 and attempt >= 2):

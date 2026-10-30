@@ -9,10 +9,42 @@ themselves still come from the primary sources.
 import json, os, re
 
 from .config import GEMINI_KEY, XAI_KEY, OPENROUTER_KEY, GROQ_KEY
-from .net import post_json, stream, circuit_ok
+from .net import post_json, get_json, stream, circuit_ok
 
-GEMINI_MODELS = [m for m in os.environ.get(
-    "AECT_GEMINI_MODELS", "gemini-2.5-flash,gemini-2.0-flash").split(",") if m]
+_GEMINI_MODELS = None
+
+
+def gemini_models():
+    """
+    Ask Google which models this key can use and pick the newest general
+    'flash' model that supports generateContent. Model names are retired
+    regularly, so none is written into the code. AECT_GEMINI_MODELS overrides.
+    """
+    global _GEMINI_MODELS
+    if _GEMINI_MODELS is not None:
+        return _GEMINI_MODELS
+    override = [m for m in os.environ.get("AECT_GEMINI_MODELS", "").split(",") if m]
+    if override:
+        _GEMINI_MODELS = override
+        return override
+    names = []
+    d = get_json(f"https://generativelanguage.googleapis.com/v1beta/models?pageSize=200&key={GEMINI_KEY}",
+                 stream_name="ai_gemini")
+    for m in (d or {}).get("models", []):
+        n = m.get("name", "").split("/")[-1]
+        if "generateContent" not in (m.get("supportedGenerationMethods") or []):
+            continue
+        if "flash" not in n or re.search(r"lite|image|tts|audio|live|embed|thinking|exp|8b", n):
+            continue
+        names.append(n)
+
+    def version(n):
+        nums = re.findall(r"\d+(?:\.\d+)?", n)
+        return (float(nums[0]) if nums else 0, "preview" not in n, -len(n))
+    names.sort(key=version, reverse=True)
+    _GEMINI_MODELS = names[:3]
+    stream("ai_gemini", note=f"models available: {', '.join(_GEMINI_MODELS) or 'none found'}")
+    return _GEMINI_MODELS
 XAI_MODEL        = os.environ.get("AECT_XAI_MODEL", "grok-4-1-fast")
 OPENROUTER_MODEL = os.environ.get("AECT_OPENROUTER_MODEL", "meta-llama/llama-3.3-70b-instruct:free")
 GROQ_MODEL       = os.environ.get("AECT_GROQ_MODEL", "llama-3.3-70b-versatile")
@@ -44,7 +76,8 @@ def parse_json_loose(text):
 def _gemini(system, prompt, search):
     if not GEMINI_KEY or not circuit_ok("ai_gemini"):
         return None, None
-    for model in GEMINI_MODELS:
+    models = gemini_models()
+    for model in models:
         url = (f"https://generativelanguage.googleapis.com/v1beta/models/"
                f"{model}:generateContent?key={GEMINI_KEY}")
         payload = {

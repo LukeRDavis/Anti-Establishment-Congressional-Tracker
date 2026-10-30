@@ -21,14 +21,23 @@ from .config import (BALLOTPEDIA, WIKIPEDIA_SUMMARY, GROKIPEDIA, CYCLE, STATE_NA
 from .net import get_text, get_json, stream, load_cache, save_cache, now_iso, age_hours, strip_html
 
 MONTHS = "January|February|March|April|May|June|July|August|September|October|November|December"
+MONTHS_ANY = MONTHS + "|Jan\\.|Feb\\.|Aug\\.|Sept\\.|Sep\\.|Oct\\.|Nov\\.|Dec\\."
 DATE_RE = rf"((?:{MONTHS}) \d{{1,2}}, {CYCLE})"
+DATE_ANY = rf"((?:{MONTHS_ANY}) \d{{1,2}}, {CYCLE})"
 
 
 def _iso(d):
-    try:
-        return datetime.strptime(d, "%B %d, %Y").date().isoformat()
-    except Exception:
-        return None
+    d = (d or "").replace("Sept.", "Sep.").replace(".", "")
+    for fmt in ("%B %d, %Y", "%b %d, %Y"):
+        try:
+            return datetime.strptime(d, fmt).date().isoformat()
+        except Exception:
+            continue
+    return None
+
+
+def _bp_url(title):
+    return f"{BALLOTPEDIA}/{urllib.parse.quote(_slug(title))}"
 
 
 # ── Primary calendar ──────────────────────────────────────────────────────────
@@ -38,16 +47,24 @@ def primary_calendar():
         stream("primary_calendar", ok=True, count=len(cache["dates"]), note="cache fresh")
         return cache["dates"]
     dates = {}
-    for path in (f"Statewide_primary_elections_calendar", f"State_primary_election_dates,_{CYCLE}",
-                 f"Primary_election_dates,_{CYCLE}"):
+    for path in (f"State_and_federal_candidate_filing_deadlines_for_{CYCLE}",
+                 f"Statewide_primary_elections_calendar", f"{CYCLE}_election_and_voting_dates"):
         html = get_text(f"{BALLOTPEDIA}/{path}", stream_name="primary_calendar")
         if not html:
             continue
+        # table rows: <td>Alabama</td><td>May 19, 2026</td> ...
+        for row in re.findall(r"<tr[^>]*>(.*?)</tr>", html, re.S | re.I):
+            cells = [strip_html(c) for c in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", row, re.S | re.I)]
+            if len(cells) >= 2 and cells[0] in STATE_ABBR.keys() | {v for v in STATE_NAMES.values()}:
+                ab = STATE_ABBR.get(cells[0].lower())
+                m = re.match(DATE_ANY, cells[1])
+                if ab and ab in VOTING_STATES and m and ab not in dates:
+                    dates[ab] = {"primary": _iso(m.group(1)), "source": f"ballotpedia:{path}"}
         text = strip_html(html)
         for ab, full in STATE_NAMES.items():
             if ab not in VOTING_STATES or ab in dates:
                 continue
-            m = re.search(rf"\b{re.escape(full)}\b[^.]{{0,80}}?{DATE_RE}", text)
+            m = re.search(rf"\b{re.escape(full)}\b[^.]{{0,80}}?{DATE_ANY}", text)
             if m:
                 rec = {"primary": _iso(m.group(1))}
                 after = text[m.end():m.end() + 160]
@@ -102,13 +119,13 @@ def wikipedia(name, state, chamber):
 def ballotpedia(name, state, chamber):
     full = STATE_NAMES.get(state, state)
     for title in (name, f"{name} ({full})", f"{name} ({full} congressional candidate)"):
-        html = get_text(f"{BALLOTPEDIA}/{_slug(title)}", stream_name="ballotpedia", retries=1)
+        html = get_text(_bp_url(title), stream_name="ballotpedia", retries=1)
         if not html or "may refer to" in html[:20000]:
             continue
         text = strip_html(html)
         if full not in text:
             continue
-        out = {"ballotpedia_url": f"{BALLOTPEDIA}/{_slug(title)}"}
+        out = {"ballotpedia_url": _bp_url(title)}
         site = re.search(r'href="(https?://[^"]+)"[^>]*>\s*(?:Campaign website|Official website|Campaign Website)',
                          html, re.I)
         if site:
