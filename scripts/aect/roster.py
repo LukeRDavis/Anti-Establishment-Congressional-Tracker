@@ -17,7 +17,7 @@ import xml.etree.ElementTree as ET
 from .config import (CLERK_MEMBERS_XML, SENATE_MEMBERS_XML, CONGRESS_API, CONGRESS_KEY,
                      CURRENT_CONGRESS, SESSION, SENATE_VOTE_MENU, SENATE_VOTE_XML,
                      CLERK_ROLL_XML, TODAY)
-from .net import get_bytes, get_json, stream, qs
+from .net import parse_xml, get_bytes, get_json, stream, qs
 
 
 def _district_num(raw):
@@ -33,7 +33,10 @@ def fetch_house():
     if not raw:
         stream("roster_house", ok=False, note="Clerk MemberData.xml unavailable")
         return [], []
-    root = ET.fromstring(raw)
+    root = parse_xml(raw, "roster_house", "MemberData.xml")
+    if root is None:
+        stream("roster_house", ok=False)
+        return [], []
     members, vacancies = [], []
     publish = root.get("publish-date", "")
     for m in root.iter("member"):
@@ -84,7 +87,10 @@ def fetch_senate():
     if not raw:
         stream("roster_senate", ok=False, note="senators_cfm.xml unavailable")
         return []
-    root = ET.fromstring(raw)
+    root = parse_xml(raw, "roster_senate", "senators_cfm.xml")
+    if root is None:
+        stream("roster_senate", ok=False)
+        return []
     out = []
     for m in root.iter("member"):
         bg = (m.findtext("bioguide_id") or "").strip()
@@ -135,8 +141,8 @@ def latest_house_roll_members(year, start_roll=None):
             hi = mid - 1
     raw = get_bytes(CLERK_ROLL_XML.format(year=year, roll=lo), stream_name="votes_house_xml")
     present = {}
-    if raw:
-        root = ET.fromstring(raw)
+    root = parse_xml(raw, "votes_house_xml", f"roll {lo}")
+    if root is not None:
         for rv in root.iter("recorded-vote"):
             leg = rv.find("legislator")
             if leg is not None and leg.get("name-id"):
@@ -150,7 +156,9 @@ def latest_senate_roll_members():
                      stream_name="votes_senate_xml")
     if not menu:
         return None, []
-    root = ET.fromstring(menu)
+    root = parse_xml(menu, "votes_senate_xml", "vote menu")
+    if root is None:
+        return None, []
     nums = [int(v.findtext("vote_number") or 0) for v in root.iter("vote")]
     if not nums:
         return None, []
@@ -159,7 +167,9 @@ def latest_senate_roll_members():
                     stream_name="votes_senate_xml")
     if not raw:
         return n, []
-    vroot = ET.fromstring(raw)
+    vroot = parse_xml(raw, "votes_senate_xml", f"vote {n}")
+    if vroot is None:
+        return n, []
     out = []
     for m in vroot.iter("member"):
         out.append({"last": (m.findtext("last_name") or "").strip(),

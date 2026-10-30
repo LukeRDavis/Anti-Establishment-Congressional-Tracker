@@ -192,3 +192,16 @@ def strip_html(html):
                  ("&lt;", "<"), ("&gt;", ">"), ("&#8217;", "'"), ("&#8211;", "–")):
         text = text.replace(a, b)
     return re.sub(r'\s+', ' ', text).strip()
+
+
+def parse_xml(raw, stream_name=None, what=""):
+    """Parse XML defensively — a blocked request often returns an HTML page instead."""
+    import xml.etree.ElementTree as ET
+    if not raw:
+        return None
+    try:
+        return ET.fromstring(raw)
+    except ET.ParseError as e:
+        head = raw[:160].decode(errors="replace").replace("\n", " ")
+        stream(stream_name, error=f"not XML ({what}): {e} :: {head}")
+        return None

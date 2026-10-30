@@ -23,7 +23,7 @@ from . import ai
 from .config import (CURRENT_CONGRESS, HISTORY_CONGRESSES, TODAY, CLERK_ROLL_XML,
                      CLERK_ROLL_PAGE, SENATE_VOTE_MENU, SENATE_VOTE_XML, congress_years,
                      ROLL_FETCH_BUDGET, AI_BUDGET_PER_RUN)
-from .net import get_bytes, stream, load_cache, save_cache, now_iso
+from .net import parse_xml, get_bytes, stream, load_cache, save_cache, now_iso
 
 TOPIC = re.compile(
     r"israel|gaza|palestin|ukrain|russia|iran|taiwan|yemen|houthi|hamas|hezbollah|lebanon|syria|iraq|"
@@ -70,7 +70,9 @@ def _norm_vote(v):
 
 # ── House ─────────────────────────────────────────────────────────────────────
 def _parse_house_roll(raw, year, roll):
-    root = ET.fromstring(raw)
+    root = parse_xml(raw, "votes_house_xml", f"{year} roll {roll}")
+    if root is None:
+        return None
     meta = root.find("vote-metadata")
     if meta is None:
         return None
@@ -114,10 +116,7 @@ def _sync_house_year(year, cache, budget):
             roll += 1
             continue
         misses = 0
-        try:
-            parsed = _parse_house_roll(raw, year, roll)
-        except ET.ParseError:
-            parsed = None
+        parsed = _parse_house_roll(raw, year, roll)
         if parsed:
             rec, positions = parsed
             rec["candidate"] = _is_candidate(rec, yc)
@@ -156,8 +155,9 @@ def _backfill_candidates(yc, year):
             newly.append(int(r))
     for r in newly:
         raw = get_bytes(CLERK_ROLL_XML.format(year=year, roll=r), stream_name="votes_house_xml")
-        if raw:
-            rec, positions = _parse_house_roll(raw, year, r)
+        parsed = _parse_house_roll(raw, year, r) if raw else None
+        if parsed:
+            rec, positions = parsed
             rec["candidate"] = True
             rec["positions"] = positions
             yc["rolls"][str(r)] = rec
@@ -173,7 +173,9 @@ def _sync_senate_session(congress, session, cache, budget):
                     stream_name="votes_senate_xml")
     if not raw:
         return 0
-    root = ET.fromstring(raw)
+    root = parse_xml(raw, "votes_senate_xml", f"vote menu {key}")
+    if root is None:
+        return 0
     fetched = 0
     year = congress_years(congress)[session - 1]
     for v in root.iter("vote"):
@@ -192,8 +194,8 @@ def _sync_senate_session(congress, session, cache, budget):
         if rec["candidate"] and fetched < budget:
             vraw = get_bytes(SENATE_VOTE_XML.format(congress=congress, session=session, vote=n),
                              stream_name="votes_senate_xml")
-            if vraw:
-                vroot = ET.fromstring(vraw)
+            vroot = parse_xml(vraw, "votes_senate_xml", f"vote {n}") if vraw else None
+            if vroot is not None:
                 rec["date"] = _iso_date(vroot.findtext("vote_date") or "") or rec["date"]
                 amend = vroot.find("amendment")
                 if amend is not None:

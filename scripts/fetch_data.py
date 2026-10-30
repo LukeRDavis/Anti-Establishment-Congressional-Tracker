@@ -173,5 +173,17 @@ def main():
     return 0
 
 
+def run():
+    import traceback
+    try:
+        return main()
+    except Exception:
+        tb = traceback.format_exc()
+        print(tb)
+        _write("pipeline_report.json", {"run_at": now_iso(), "crashed": True, "traceback": tb,
+                                        "ai_calls": ai.CALLS, "streams": STREAMS})
+        return 1
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(run())

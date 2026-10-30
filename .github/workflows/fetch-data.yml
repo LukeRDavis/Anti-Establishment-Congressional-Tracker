@@ -46,7 +46,12 @@ jobs:
           XAI_API_KEY:        ${{ secrets.XAI_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           GROQ_API_KEY:       ${{ secrets.GROQ_API_KEY }}
-        run: python scripts/fetch_data.py
+        run: |
+          set -o pipefail
+          python -u scripts/fetch_data.py 2>&1 | tee pipeline_log.full.txt
+          status=$?
+          tail -n 4000 pipeline_log.full.txt > pipeline_log.txt
+          exit $status
 
       - name: Stream report to job summary
         if: always()
@@ -70,7 +75,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.json candidates.json markets.json challengers.json history.json pipeline_report.json data/cache 2>/dev/null || true
+          git add data.json candidates.json markets.json challengers.json history.json pipeline_report.json pipeline_log.txt data/cache 2>/dev/null || true
           git diff --cached --quiet && exit 0
           git commit -m "chore: refresh data [skip ci]"
           for i in 1 2 3; do
