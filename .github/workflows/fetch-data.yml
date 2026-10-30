@@ -2,19 +2,23 @@ name: Refresh Data
 
 on:
   schedule:
-    # Every 4 hours — adjust as needed (cron UTC)
-    - cron: "0 */4 * * *"
-  # Also allow manual trigger from GitHub Actions tab
+    - cron: "0 */4 * * *"      # every 4 hours (UTC)
   workflow_dispatch:
+  push:
+    branches: [aect-v10]        # test runs for the v10 pipeline branch
 
 permissions:
   contents: write
 
+concurrency:
+  group: refresh-data-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   fetch:
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     steps:
-
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -23,19 +27,54 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Fetch API data
+      - name: Install dependencies
+        run: pip install pdfplumber
+
+      - name: Offline pipeline test
+        run: python scripts/tests/test_pipeline_offline.py
+
+      - name: Fetch live data
         env:
-          CONGRESS_KEY:  ${{ secrets.CONGRESS_KEY }}
-          FEC_KEY:       ${{ secrets.FEC_KEY }}
-          POLY_KEY:      ${{ secrets.POLY_KEY }}
-          LEGISCAN_KEY:  ${{ secrets.LEGISCAN_KEY }}
+          # Every key the pipeline can use. A secret that doesn't exist is
+          # passed as empty and reported as MISSING in the run summary.
+          CONGRESS_KEY:       ${{ secrets.CONGRESS_KEY }}
+          FEC_KEY:            ${{ secrets.FEC_KEY }}
+          LEGISCAN_KEY:       ${{ secrets.LEGISCAN_KEY }}
+          GEMINI_KEY:         ${{ secrets.GEMINI_KEY }}
+          GEMINI_API_KEY:     ${{ secrets.GEMINI_API_KEY }}
+          GOOGLE_API_KEY:     ${{ secrets.GOOGLE_API_KEY }}
+          XAI_API_KEY:        ${{ secrets.XAI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GROQ_API_KEY:       ${{ secrets.GROQ_API_KEY }}
         run: python scripts/fetch_data.py
 
-      - name: Commit data.json if changed
+      - name: Stream report to job summary
+        if: always()
+        run: |
+          if [ -f pipeline_report.json ]; then
+            python - <<'EOF' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          r = json.load(open("pipeline_report.json"))
+          print("## Data streams\n")
+          print("| Stream | Status | Count | Detail |\n|---|---|---|---|")
+          for k, s in sorted(r["streams"].items()):
+              st = "✅" if s["ok"] else ("❌" if s["ok"] is False else "·")
+              d = ((s.get("errors") or [])[:1] or (s.get("notes") or [])[-1:] or [""])[0].replace("|", "/")
+              print(f"| {k} | {st} | {s['count']} | {d[:140]} |")
+          print("\n```json\n" + json.dumps(r.get("summary", {}), indent=1) + "\n```")
+          EOF
+          fi
+
+      - name: Commit data
+        if: always()
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.json history.json challengers.json
-          # Only commit if there are actual changes
-          git diff --cached --quiet || git commit -m "chore: refresh data.json [skip ci]"
-          git push
+          git add data.json candidates.json markets.json challengers.json history.json pipeline_report.json data/cache 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m "chore: refresh data [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push && exit 0
+            sleep 5
+          done
+          exit 1

@@ -137,16 +137,16 @@ function getValidatedPoly(member, polyData, races) {
   return pd;
 }
 
+function side(m) {
+  // Independents sit with the party they caucus with (Kiley → R, Sanders/King → D)
+  if (m.caucus === "R" || m.caucus === "D") return m.caucus;
+  return m.party === "R" ? "R" : "D";
+}
+
 function dotColor(m) {
-  if (m.antiArms) {
-    if (m.party === "R") return "#e879f9";  // fuchsia — R anti-intervention
-    if (m.party === "I") return "#a3e635";  // lime    — Independent
-    return "#818cf8";                        // indigo  — D anti-intervention
-  }
-  if (m.party === "R") return "#7f1d1d";   // dim red  — regular R
-  if (m.party === "D") return "#1e3a5f";   // dim blue — regular D
-  if (m.party === "I") return "#1a2e1a";   // dim green — other
-  return "#1e2230";                         // grey — unknown
+  if (m._filler) return "#1e2230";
+  if (m.antiArms) return side(m) === "R" ? "#e879f9" : "#818cf8";
+  return side(m) === "R" ? "#7f1d1d" : "#1e3a5f";
 }
 
 function antiArmsTag(m) {
@@ -156,9 +156,7 @@ function antiArmsTag(m) {
 
 function antiArmsTagColor(m) {
   if (!m.antiArms) return "#374151";
-  if (m.party === "R") return "#e879f9";
-  if (m.party === "I") return "#a3e635";
-  return "#818cf8";
+  return side(m) === "R" ? "#e879f9" : "#818cf8";
 }
 
 function computeHemicycle(allMembers, chamber, cx, cy) {
@@ -169,11 +167,11 @@ function computeHemicycle(allMembers, chamber, cx, cy) {
     !["RETIRED","RESIGNED","DEFEATED","RETIRING","FAILED_PRIMARY"].includes(m.ps)
   );
 
-  const antiR    = active.filter(m =>  m.antiArms && m.party === "R");
-  const antiD    = active.filter(m =>  m.antiArms && m.party !== "R");
-  const restR    = active.filter(m => !m.antiArms && m.party === "R");
-  const restD    = active.filter(m => !m.antiArms && m.party === "D");
-  const restOther= active.filter(m => !m.antiArms && m.party !== "R" && m.party !== "D");
+  const antiR    = active.filter(m =>  m.antiArms && side(m) === "R");
+  const antiD    = active.filter(m =>  m.antiArms && side(m) === "D");
+  const restR    = active.filter(m => !m.antiArms && side(m) === "R");
+  const restD    = active.filter(m => !m.antiArms && side(m) === "D");
+  const restOther= [];
   const antiCount= antiR.length + antiD.length;
   const filler   = {_filler:true, antiArms:false, party:"", name:""};
 
@@ -316,10 +314,14 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
     else if (race && race.win_prob != null) p = race.win_prob;
     else if (race && race.winProb != null)  p = race.winProb;
     else if (race && race.departing)        p = 0;
-    else                                    p = 0.88;
-    trials.push({name: m.name, p, src: pm ? "poly" : "est"});
+    else if (m.not_up_this_cycle)           p = 1;
+    else if (["RETIRING","DEFEATED","RESIGNED"].includes(m.ps)) p = 0;
+    else if (window._aectRetention != null) p = window._aectRetention;
+    else return;  // no market and no measured base rate — leave unpriced
+    trials.push({name: m.name, p, src: pm ? "poly" : (m.not_up_this_cycle ? "seat" : "base")});
   });
 
+  const unpriced = [];
   const challSeen = new Set(trials.map(t => t.name.toLowerCase()));
   const allChalls = [
     ...(challengers||[]).filter(c => (c.chamber||"house") === ch),
@@ -335,8 +337,9 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
     const p = pm && pm.prob != null ? pm.prob
             : r.win_prob != null ? r.win_prob
             : r.winProb  != null ? r.winProb
-            : 0.12;  // default challenger win probability
-    trials.push({name: r.name, p, src: pm ? "poly" : "est", isChallenger: true});
+            : null;
+    if (p == null) { unpriced.push(r.name); return; }  // no market: don't invent odds
+    trials.push({name: r.name, p, src: pm ? "poly" : "market", isChallenger: true});
   });
 
   const mu     = trials.reduce((s,t) => s+t.p, 0);
@@ -435,7 +438,7 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
 
       <div style=${{marginTop:10,paddingTop:7,borderTop:"1px solid #1a1d27",
         fontSize:7,color:"#1e2230",fontFamily:FM,lineHeight:1.7}}>
-        P(reach N) = Φ((μ−N+0.5)/σ). Members default retention p=0.88 · challengers default p=0.12 · Polymarket live where available.
+        P(reach N) = Φ((μ−N+0.5)/σ). Prediction markets where available · incumbents without a market use the measured House retention rate${window._aectRetention!=null?` (${Math.round(window._aectRetention*100)}%)`:""} · ${unpriced.length} candidates without a market are not counted.
       </div>
     </div>`;
 }
@@ -1217,6 +1220,9 @@ function useData() {
           setCongressHistory(d.congress_history);
         }
 
+        window._appData = {descriptions: d.descriptions || {}};
+        window._aectRetention = d.meta && d.meta.incumbent_retention != null ? d.meta.incumbent_retention : null;
+        const v10Cands = (d.candidates || []).map(c => ({...c, ps: c.ps || "UPCOMING", chamber: c.chamber || "house"}));
         const taEndorsed  = (d.trackaipac_endorsed || []).map(c => ({
           ...c, ps: c.ps || "UPCOMING", chamber: c.chamber || "house",
         }));
@@ -1238,7 +1244,7 @@ function useData() {
             source:     "races_2026",
           }));
         const raceNames = new Set(raceChalls.map(c => c.name));
-        const allChalls = [
+        const allChalls = v10Cands.length ? v10Cands : [
           ...taEndorsed,
           ...rlcEndorsed.filter(c => !seenNames.has(c.name)),
           ...raceChalls.filter(c => !seenNames.has(c.name) && !raceNames.has("_dup")),
@@ -1693,8 +1699,8 @@ function App() {
   const ch        = chamber==="house" ? "house" : "senate";
   const chMem     = allMembers.filter(m => m.chamber === ch);
   const selMember = selected ? allMembers.find(m => m.name === selected) : null;
-  const sideR     = allMembers.filter(m=>m.antiArms&&m.party==="R"&&m.chamber===ch);
-  const sideD     = allMembers.filter(m=>m.antiArms&&m.party!=="R"&&m.chamber===ch);
+  const sideR     = allMembers.filter(m=>m.antiArms&&side(m)==="R"&&m.chamber===ch);
+  const sideD     = allMembers.filter(m=>m.antiArms&&side(m)==="D"&&m.chamber===ch);
   const challR    = challengers.filter(c=>c.party==="R"&&c.chamber===ch);
   const challD    = challengers.filter(c=>c.party!=="R"&&c.chamber===ch);
 
@@ -1770,10 +1776,10 @@ function App() {
       <!-- Legend + stat pills -->
       <div style=${{display:"flex",gap:5,flexWrap:"wrap",justifyContent:"center",marginBottom:7}}>
         ${[
-          {c:"#991b1b", bg:"rgba(153,27,27,.1)",  l:"Rep",            n:chMem.filter(m=>m.party==="R"&&!m.antiArms).length},
-          {c:"#e879f9", bg:"rgba(232,121,249,.1)", l:"Anti-Intv. R",  n:chMem.filter(m=>m.antiArms&&m.party==="R").length},
-          {c:"#818cf8", bg:"rgba(129,140,248,.1)", l:"Anti-Intv. D",  n:chMem.filter(m=>m.antiArms&&m.party!=="R").length},
-          {c:"#1e40af", bg:"rgba(30,64,175,.1)",   l:"Dem",           n:chMem.filter(m=>m.party==="D"&&!m.antiArms).length},
+          {c:"#991b1b", bg:"rgba(153,27,27,.1)",  l:"Rep",            n:chMem.filter(m=>side(m)==="R"&&!m.antiArms).length},
+          {c:"#e879f9", bg:"rgba(232,121,249,.1)", l:"Anti-Intv. R",  n:chMem.filter(m=>m.antiArms&&side(m)==="R").length},
+          {c:"#818cf8", bg:"rgba(129,140,248,.1)", l:"Anti-Intv. D",  n:chMem.filter(m=>m.antiArms&&side(m)==="D").length},
+          {c:"#1e40af", bg:"rgba(30,64,175,.1)",   l:"Dem",           n:chMem.filter(m=>side(m)==="D"&&!m.antiArms).length},
         ].map(b=>html`
           <span key=${b.l} style=${{display:"inline-flex",alignItems:"center",gap:4,background:b.bg,border:"1px solid "+b.c+"30",borderRadius:5,padding:"2px 7px",fontSize:9,fontFamily:FM,color:b.c}}>
             <span style=${{width:5,height:5,borderRadius:"50%",background:b.c,display:"inline-block"}}/>
