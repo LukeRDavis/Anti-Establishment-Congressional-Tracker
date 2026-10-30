@@ -71,11 +71,13 @@ def build_people(members, fec_cands, trackers):
         inc_by_last.setdefault((p["state"], _last(p["name"])), []).append(k)
 
     for cid, c in fec_cands.items():
+        if not (c.get("name") or "").strip():
+            continue
         seat_keys = by_seat.get((c["state"], c["chamber"], c["district"] if c["chamber"] == "house" else None), [])
         linked = next((k for k in seat_keys if _last(people[k]["name"]) == _last(c["name"])), None)
         if not linked:
             # a sitting member filing for a different seat (House → Senate, or a redrawn district)
-            first = _norm(c["name"]).split()[0] if c["name"] else ""
+            first = (_norm(c["name"]).split() or [""])[0]
             linked = next((k for k in inc_by_last.get((c["state"], _last(c["name"])), [])
                            if (_norm(people[k]["name"]).split() or [""])[0][:3] == first[:3]), None)
         if linked:
@@ -87,7 +89,7 @@ def build_people(members, fec_cands, trackers):
             continue
         key = f"FEC:{cid}"
         people[key] = {**c, "key": key, "incumbent": False, "fec_ids": [cid],
-                       "last_name": c["name"].split()[-1], "sources": ["fec"]}
+                       "last_name": (c["name"].split() or [""])[-1], "sources": ["fec"]}
 
     # tracker-listed names: attach to an existing person, or add if FEC hasn't got them
     name_index = {}
@@ -100,7 +102,7 @@ def build_people(members, fec_cands, trackers):
              or name_index.get((_last(rec["name"]), rec.get("state", ""), rec.get("chamber"), rec.get("district"))))
         if not k:
             k = f"TR:{_norm(rec['name'])}|{rec.get('state','')}"
-            people[k] = {"key": k, "name": rec["name"], "last_name": rec["name"].split()[-1],
+            people[k] = {"key": k, "name": rec["name"], "last_name": (rec["name"].split() or [""])[-1],
                          "party": rec.get("party", "?"), "state": rec.get("state", ""),
                          "district": rec.get("district"), "chamber": rec.get("chamber") or "house",
                          "incumbent": False, "sources": []}

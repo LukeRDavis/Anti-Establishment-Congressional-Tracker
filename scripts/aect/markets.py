@@ -36,8 +36,11 @@ def matches(text, person):
     if WRONG_YEAR.search(t) and str(CYCLE) not in t:
         return False
     w = _words(t)
-    first = person["name"].split()[0].lower()
-    last = person.get("last_name", person["name"].split()[-1]).lower().split()[-1]
+    names = person["name"].split()
+    if not names:
+        return False
+    first = names[0].lower()
+    last = ((person.get("last_name") or names[-1]).lower().split() or [names[-1].lower()])[-1]
     if last not in w:
         return False
     if first in w:
@@ -177,7 +180,8 @@ def match_people(people):
             # for outcome-style markets the outcome itself must be this person
             if c["src"] != "polymarket_live":
                 ow = _words(c["outcome"])
-                if p.get("last_name", p["name"].split()[-1]).lower().split()[-1] not in ow:
+                last = ((p.get("last_name") or p["name"]).lower().split() or [""])[-1]
+                if not last or last not in ow:
                     continue
             hits.append({**c, "stage": stage(c["market"]), "question": f"{c['market']} → {c['outcome']}"
                          if c["outcome"] not in ("Yes", "") else c["market"], "fetched_at": now_iso()})

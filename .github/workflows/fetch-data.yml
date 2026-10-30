@@ -47,9 +47,9 @@ jobs:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           GROQ_API_KEY:       ${{ secrets.GROQ_API_KEY }}
         run: |
-          set -o pipefail
-          python -u scripts/fetch_data.py 2>&1 | tee pipeline_log.full.txt
-          status=$?
+          status=0
+          python -u scripts/fetch_data.py > pipeline_log.full.txt 2>&1 || status=$?
+          cat pipeline_log.full.txt
           tail -n 4000 pipeline_log.full.txt > pipeline_log.txt
           exit $status
 

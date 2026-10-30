@@ -217,6 +217,76 @@ def _sync_senate_session(congress, session, cache, budget):
     return fetched
 
 
+# ── Senate via Voteview (senate.gov blocks GitHub's runners with HTTP 403) ────
+VOTEVIEW = "https://voteview.com/static/data/out/{kind}/S{congress}_{kind}.csv"
+_VV_CAST = {1: "Yea", 2: "Yea", 3: "Yea", 4: "Nay", 5: "Nay", 6: "Nay", 7: "Present", 8: "Present"}
+_VV_PARTY = {100: "D", 200: "R"}
+
+
+def _csv(url, stream_name):
+    import csv, io
+    raw = get_bytes(url, stream_name=stream_name, timeout=60)
+    if not raw:
+        return []
+    return list(csv.DictReader(io.StringIO(raw.decode("utf-8", errors="replace"))))
+
+
+def _sync_senate_voteview(congress, cache):
+    key = f"vv-{congress}"
+    sc = cache.setdefault(key, {"rolls": {}, "complete": False})
+    if sc.get("complete"):
+        return 0
+    rollcalls = _csv(VOTEVIEW.format(kind="rollcalls", congress=congress), "votes_senate_voteview")
+    if not rollcalls:
+        return 0
+    members = _csv(VOTEVIEW.format(kind="members", congress=congress), "votes_senate_voteview")
+    icpsr = {}
+    for m in members:
+        if m.get("chamber") != "Senate":
+            continue
+        try:
+            pc = int(float(m.get("party_code") or 0))
+        except ValueError:
+            pc = 0
+        icpsr[m.get("icpsr")] = (m.get("bioguide_id") or "", _VV_PARTY.get(pc, "I"), m.get("state_abbrev", ""))
+    candidates = {}
+    for r in rollcalls:
+        if r.get("chamber") != "Senate":
+            continue
+        n = int(float(r.get("rollnumber") or 0))
+        if not n or str(n) in sc["rolls"]:
+            continue
+        text = " ".join(r.get(f, "") for f in ("bill_number", "vote_question", "vote_desc", "dtl_desc"))
+        rec = {"chamber": "senate", "congress": congress, "roll": n,
+               "year": int((r.get("date") or "0")[:4] or 0), "date": r.get("date", ""),
+               "session": r.get("session"), "legis": r.get("bill_number", ""),
+               "question": r.get("vote_question", ""),
+               "desc": (r.get("vote_desc") or r.get("dtl_desc") or "")[:400],
+               "result": r.get("vote_result", ""), "candidate": bool(TOPIC.search(text)),
+               "url": (f"https://www.senate.gov/legislative/LIS/roll_call_votes/vote{congress}{r.get('session')}/"
+                       f"vote_{congress}_{r.get('session')}_{int(float(r.get('clerk_rollnumber') or n)):05d}.htm")}
+        sc["rolls"][str(n)] = rec
+        if rec["candidate"]:
+            candidates[n] = rec
+    if candidates:
+        for v in _csv(VOTEVIEW.format(kind="votes", congress=congress), "votes_senate_voteview"):
+            if v.get("chamber") != "Senate":
+                continue
+            n = int(float(v.get("rollnumber") or 0))
+            rec = candidates.get(n)
+            if not rec:
+                continue
+            who = icpsr.get(v.get("icpsr"))
+            if not who or not who[0]:
+                continue
+            cast = _VV_CAST.get(int(float(v.get("cast_code") or 9)), "Not Voting")
+            rec.setdefault("positions", {})[who[0]] = [cast, who[1], who[2]]
+    first, last = congress_years(congress)
+    if last < TODAY.year:
+        sc["complete"] = True
+    return len(candidates)
+
+
 # ── AI judgment ───────────────────────────────────────────────────────────────
 def _judge(rec, judgments, budget_state):
     key = f"{rec['chamber']}-{rec['year']}-{rec['roll']}"
@@ -273,7 +343,7 @@ def sync_votes():
             n = _sync_house_year(year, house_cache, budget - fetched_h)
             fetched_h += n
             _backfill_candidates(house_cache[str(year)], year)
-            fetched_s += _sync_senate_session(c, i + 1, senate_cache, 400)
+        fetched_s += _sync_senate_voteview(c, senate_cache)
     save_cache("votes_house", house_cache)
     save_cache("votes_senate", senate_cache)
 
@@ -286,8 +356,8 @@ def sync_votes():
     stream("votes_house_xml", ok=total_house > 0, count=total_house,
            note=f"{total_house} House roll calls cached (+{fetched_h} this run)")
     total_sen = sum(len(sc["rolls"]) for sc in senate_cache.values())
-    stream("votes_senate_xml", ok=total_sen > 0, count=total_sen,
-           note=f"{total_sen} Senate roll calls indexed (+{fetched_s} detailed this run)")
+    stream("votes_senate_voteview", ok=total_sen > 0, count=total_sen,
+           note=f"{total_sen} Senate roll calls indexed from Voteview (+{fetched_s} topical this run)")
 
     # newest first so the AI budget is spent on current votes before history
     all_rolls.sort(key=lambda r: (r.get("year", 0), r.get("roll", 0)), reverse=True)
@@ -316,9 +386,8 @@ def score_members(members, relevant_votes):
     for m in members:
         m["vote_record"] = []
     for v in relevant_votes:
-        index = by_bio if v["chamber"] == "house" else by_sen
         for key, (pos, party, state) in (v.get("positions") or {}).items():
-            m = index.get(key)
+            m = by_bio.get(key) or by_sen.get(key)
             if not m or pos not in ("Yea", "Nay"):
                 continue
             m["vote_record"].append({

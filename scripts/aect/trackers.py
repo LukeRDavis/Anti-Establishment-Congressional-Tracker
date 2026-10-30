@@ -11,8 +11,8 @@ still found through FEC and judged on their own words and record.
 import io, re
 from datetime import datetime
 
-from .config import (TRACKAIPAC_CONGRESS, TRACKAIPAC_ENDORSEMENTS, RLC_NEWS, RLC_INDEX_PAGE,
-                     STATE_ABBR, TTL_TRACKERS_H, TODAY)
+from .config import (TRACKAIPAC_CONGRESS, TRACKAIPAC_ENDORSEMENTS, RLC_NEWS, RLC_INDEX_PAGES,
+                     RLC_ENDORSE_PAGE, STATE_ABBR, TTL_TRACKERS_H, TODAY, CYCLE)
 from .net import get_text, get_bytes, stream, load_cache, save_cache, now_iso, age_hours, strip_html
 
 _DIST = re.compile(r'([A-Z]{2})-(\d+|AL|SEN|SENATE)\s*\[([RDIL])\]')
@@ -73,12 +73,15 @@ def trackaipac_endorsements():
 
 
 def _rlc_pdf_urls():
-    """Find the newest Liberty Index PDFs linked from rlc.org — no fixed file names."""
-    html = get_text(RLC_INDEX_PAGE, stream_name="rlc") or ""
-    links = re.findall(r'href="(https?://rlc\.org/wp-content/uploads/[^"]+?\.pdf)"', html, re.I)
+    """Find the newest Liberty Index PDFs linked from rlc.org's scorecard pages."""
+    links = []
+    for page in RLC_INDEX_PAGES:
+        html = get_text(page, stream_name="rlc") or ""
+        links += re.findall(r'(https?://rlc\.org/wp-content/uploads/[^"\'\s>]+?\.pdf)', html, re.I)
     house = [u for u in links if re.search(r'house', u, re.I)]
     senate = [u for u in links if re.search(r'senate', u, re.I)]
-    yr = lambda u: max([int(y) for y in re.findall(r'20\d\d', u)] or [0])
+    # edition year is the one in the file name, not the upload folder
+    yr = lambda u: max([int(y) for y in re.findall(r'20\d\d', u.rsplit("/", 1)[-1])] or [0])
     return (max(house, key=yr) if house else None, max(senate, key=yr) if senate else None)
 
 
@@ -96,7 +99,7 @@ def rlc_liberty_index():
     scores = {}
     for chamber, url in (("house", house_url), ("senate", senate_url)):
         if not url:
-            stream("rlc", note=f"no {chamber} Liberty Index PDF link found on {RLC_INDEX_PAGE}")
+            stream("rlc", note=f"no {chamber} Liberty Index PDF link found on the RLC scorecard pages")
             continue
         raw = get_bytes(url, stream_name="rlc")
         if not raw:
@@ -130,45 +133,62 @@ def rlc_liberty_index():
 
 
 def rlc_endorsements():
+    """
+    RLC posts a yearly '{cycle} National Endorsements' page plus individual news
+    posts. Both use sentences like 'The Republican Liberty Caucus proudly
+    endorses Brandon Herrera for Congress in TX-23.'
+    """
+    pat = re.compile(r'endorse[sd]?\s+(?:Congressman |Congresswoman |Senator |Rep\. |Sen\. )?'
+                     r'([A-Z][A-Za-z\.\'\- ]{3,40}?)\s+(?:for [A-Za-z\. ]{3,30}?\s+)?in\s+'
+                     r'([A-Z]{2})-(\d{1,2}|AL|Senate)\b')
+    pat_long = re.compile(r'(?:Endorses|Endorsed)\s+([A-Z][A-Za-z\.\'\- ]{3,40}?)\s+(?:for|in)\s+([^<\n"]{5,90})')
     out, seen = [], set()
-    for page in range(1, 5):
-        url = RLC_NEWS if page == 1 else f"{RLC_NEWS}page/{page}/"
+
+    def add(name, state, district, senate, where):
+        name = name.strip()
+        if name.lower() in seen or len(name) < 4:
+            return
+        seen.add(name.lower())
+        out.append({"name": name, "state": state, "party": "R",
+                    "chamber": "senate" if senate else "house",
+                    "district": None if senate else district,
+                    "source": "rlc_endorsed", "endorsed_for": where[:90]})
+
+    pages = [RLC_ENDORSE_PAGE.format(cycle=CYCLE)] + [RLC_NEWS if p == 1 else f"{RLC_NEWS}page/{p}/"
+                                                       for p in range(1, 4)]
+    for url in pages:
         html = get_text(url, stream_name="rlc")
         if not html:
-            break
-        for name, where in re.findall(
-                r'(?:Endorses|Endorsed)\s+([A-Z][A-Za-z\.\'\- ]{3,40}?)\s+(?:for|in)\s+([^<\n"]{5,90})', html):
-            if name.lower() in seen:
-                continue
-            seen.add(name.lower())
+            continue
+        text = strip_html(html)
+        for name, st, d in pat.findall(text):
+            senate = d.lower() == "senate"
+            add(name, st, None if senate else (0 if d == "AL" else int(d)), senate, f"{st}-{d}")
+        for name, where in pat_long.findall(html):
             w = where.lower()
             state = next((ab for full, ab in STATE_ABBR.items() if full in w), "")
+            if not state:
+                continue
             dm = re.search(r'(\d+)(?:st|nd|rd|th)', where)
-            senate = "senate" in w
-            out.append({"name": name.strip(), "state": state, "party": "R",
-                        "chamber": "senate" if senate else "house",
-                        "district": None if senate else (int(dm.group(1)) if dm else None),
-                        "source": "rlc_endorsed", "endorsed_for": where.strip()[:90]})
+            add(name, state, int(dm.group(1)) if dm else None, "senate" in w, where.strip())
     stream("rlc", note=f"endorsements: {len(out)} candidates")
     return out
 
 
 def fetch_all():
+    """Refresh each tracker on its own schedule; an empty result is retried next run."""
     cache = load_cache("trackers")
-    if age_hours(cache.get("fetched_at")) < TTL_TRACKERS_H and cache.get("ta_congress"):
-        for s in ("trackaipac", "rlc"):
-            stream(s, ok=True, note="cache fresh")
-        return cache
-    out = {
-        "ta_congress": trackaipac_congress(),
-        "ta_endorsed": trackaipac_endorsements(),
-        "rlc_index": rlc_liberty_index(),
-        "rlc_endorsed": rlc_endorsements(),
-        "fetched_at": now_iso(),
-    }
-    # keep previous values for any source that failed this run
-    for k in ("ta_congress", "ta_endorsed", "rlc_index", "rlc_endorsed"):
-        if not out[k] and cache.get(k):
+    fresh = age_hours(cache.get("fetched_at")) < TTL_TRACKERS_H
+    sources = {"ta_congress": trackaipac_congress, "ta_endorsed": trackaipac_endorsements,
+               "rlc_index": rlc_liberty_index, "rlc_endorsed": rlc_endorsements}
+    out = {"fetched_at": cache.get("fetched_at") if fresh else now_iso()}
+    for k, fn in sources.items():
+        if fresh and cache.get(k):
             out[k] = cache[k]
+            continue
+        out[k] = fn() or cache.get(k) or ({} if k in ("ta_congress", "rlc_index") else [])
+    stream("trackaipac", ok=bool(out["ta_congress"]))
+    stream("rlc", ok=bool(out["rlc_index"] or out["rlc_endorsed"]),
+           count=len(out["rlc_index"]) + len(out["rlc_endorsed"]))
     save_cache("trackers", out)
     return out

@@ -60,7 +60,9 @@ FEC_API            = "https://api.open.fec.gov/v1"
 TRACKAIPAC_CONGRESS     = "https://www.trackaipac.com/congress"
 TRACKAIPAC_ENDORSEMENTS = "https://www.trackaipac.com/endorsements"
 RLC_NEWS           = "https://rlc.org/category/news/national/"
-RLC_INDEX_PAGE     = "https://rlc.org/liberty-index/"
+RLC_INDEX_PAGES    = ["https://rlc.org/candidates/house-liberty-index-scorecards/",
+                      "https://rlc.org/candidates/senate-liberty-index-scorecards/"]
+RLC_ENDORSE_PAGE   = "https://rlc.org/news/{cycle}-national-endorsements/"
 BALLOTPEDIA        = "https://ballotpedia.org"
 WIKIPEDIA_SUMMARY  = "https://en.wikipedia.org/api/rest_v1/page/summary/{slug}"
 GROKIPEDIA         = "https://grokipedia.com/page/{slug}"
