@@ -20,10 +20,11 @@ import re, time
 import xml.etree.ElementTree as ET
 
 from . import ai
-from .config import (CURRENT_CONGRESS, HISTORY_CONGRESSES, TODAY, CLERK_ROLL_XML,
+from .config import (CONGRESS_API, CONGRESS_KEY,
+                     CURRENT_CONGRESS, HISTORY_CONGRESSES, TODAY, CLERK_ROLL_XML,
                      CLERK_ROLL_PAGE, SENATE_VOTE_MENU, SENATE_VOTE_XML, congress_years,
                      ROLL_FETCH_BUDGET, AI_BUDGET_PER_RUN)
-from .net import parse_xml, get_bytes, stream, load_cache, save_cache, now_iso
+from .net import parse_xml, get_bytes, get_json, stream, load_cache, save_cache, now_iso, qs, circuit_ok
 
 TOPIC = re.compile(
     r"israel|gaza|palestin|ukrain|russia|iran|taiwan|yemen|houthi|hamas|hezbollah|lebanon|syria|iraq|"
@@ -292,12 +293,55 @@ def _sync_senate_voteview(congress, cache):
     return len(candidates)
 
 
+# ── Congress.gov context for amendment roll calls ────────────────────────────
+_SHOWN_FIELDS = set()
+
+
+def _cg(path, **params):
+    if not CONGRESS_KEY or not circuit_ok("congress_gov"):
+        return None
+    return get_json(f"{CONGRESS_API}{path}?" + qs({"api_key": CONGRESS_KEY, "format": "json", **params}),
+                    stream_name="congress_gov")
+
+
+def _amendment_context(rec):
+    """Fill in what an amendment did, from Congress.gov, when the roll call XML doesn't say."""
+    if rec.get("amendment_purpose") or rec["chamber"] != "house" or not rec.get("amendment_author"):
+        return
+    sess = rec.get("session") or (1 if rec["year"] % 2 else 2)
+    sess = re.sub(r"\D", "", str(sess)) or "1"
+    d = _cg(f"/house-vote/{rec['congress']}/{sess}/{rec['roll']}")
+    v = (d or {}).get("houseRollCallVote") or {}
+    if v and "house-vote" not in _SHOWN_FIELDS:
+        _SHOWN_FIELDS.add("house-vote")
+        stream("congress_gov", note=f"house-vote fields: {sorted(v.keys())[:30]}")
+    atype = (v.get("amendmentType") or "").lower()
+    anum = v.get("amendmentNumber")
+    if not atype or not anum:
+        return
+    a = (_cg(f"/amendment/{rec['congress']}/{atype}/{anum}") or {}).get("amendment") or {}
+    if a and "amendment" not in _SHOWN_FIELDS:
+        _SHOWN_FIELDS.add("amendment")
+        stream("congress_gov", note=f"amendment fields: {sorted(a.keys())[:30]}")
+    purpose = a.get("purpose") or a.get("description") or ""
+    if purpose:
+        rec["amendment_purpose"] = purpose[:600]
+        rec["congress_gov_amendment"] = f"{atype.upper()} {anum}"
+
+
 # ── AI judgment ───────────────────────────────────────────────────────────────
 def _judge(rec, judgments, budget_state):
     key = f"{rec['chamber']}-{rec['year']}-{rec['roll']}"
     if key in judgments:
         return judgments[key]
-    if budget_state["left"] <= 0 or not ai.available(search=True):
+    if budget_state["left"] <= 0 or not ai.available_any():
+        budget_state["pending"] += 1
+        return None
+    _amendment_context(rec)
+    # Without web search the model must be given the measure's own text;
+    # an amendment with neither a description nor a purpose is left for later.
+    has_text = bool(rec.get("desc") or rec.get("amendment_purpose"))
+    if not ai.available(search=True) and not has_text:
         budget_state["pending"] += 1
         return None
     pt = rec.get("party_totals") or {}
@@ -316,7 +360,8 @@ def _judge(rec, judgments, budget_state):
         lines.append("Party totals: " + "; ".join(
             f"{p}: {v['yea']} yea / {v['nay']} nay" for p, v in pt.items()))
     lines.append(f"Result: {rec.get('result','')}  Source: {rec.get('url','')}")
-    result, sources, provider = ai.ask_json(JUDGE_SYSTEM, "\n".join(lines), search=True)
+    result, sources, provider = ai.ask_json(JUDGE_SYSTEM, "\n".join(lines), search=True,
+                                            allow_ungrounded=has_text)
     budget_state["left"] -= 1
     if not isinstance(result, dict) or "relevant" not in result:
         budget_state["pending"] += 1
@@ -325,7 +370,8 @@ def _judge(rec, judgments, budget_state):
          "anti_position": result.get("anti_position") if result.get("anti_position") in ("Yea", "Nay") else None,
          "significance": result.get("significance") if result.get("significance") in ("major", "minor") else "minor",
          "topic": (result.get("topic") or "")[:80], "summary": (result.get("summary") or "")[:400],
-         "sources": (sources or [])[:4], "provider": provider, "judged_at": now_iso()}
+         "sources": (sources or [])[:4], "provider": provider, "grounded": bool(sources),
+         "context": rec.get("amendment_purpose", "")[:300], "judged_at": now_iso()}
     judgments[key] = j
     if j["relevant"]:
         print(f"    ✓ {key} {rec.get('legis','')}: {j['significance']} — anti={j['anti_position']} — {j['summary'][:90]}")
@@ -366,7 +412,7 @@ def sync_votes():
 
     # newest first so the AI budget is spent on current votes before history
     all_rolls.sort(key=lambda r: (r.get("year", 0), r.get("roll", 0)), reverse=True)
-    state = {"left": AI_BUDGET_PER_RUN // 2, "pending": 0}
+    state = {"left": int(__import__("os").environ.get("AECT_VOTE_AI_BUDGET", "200")), "pending": 0}
     relevant = []
     for rec in all_rolls:
         j = _judge(rec, judgments, state)
@@ -377,7 +423,7 @@ def sync_votes():
            count=len(relevant),
            note=f"{len(all_rolls)} topical roll calls · {len(relevant)} judged relevant · "
                 f"{state['pending']} awaiting AI judgment"
-                + ("" if ai.available(search=True) else " — NO search-capable AI key (GEMINI_KEY or XAI_API_KEY)"))
+                + ("" if ai.available(search=True) else " — web-search AI unavailable; judging only votes with a recorded description"))
     return relevant
 
 

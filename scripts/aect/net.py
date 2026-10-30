@@ -121,8 +121,12 @@ def get_json(url, **kw):
         _hit(kw.get("stream_name"), failed=True, error=f"bad JSON from {redact(url)[:90]}: {e}")
         return None
 
+LAST_HTTP_STATUS = {}
+
+
 def post_json(url, payload, headers=None, *, stream_name=None, timeout=90, trip_on=(401, 403)):
     circuit = stream_name
+    LAST_HTTP_STATUS[stream_name] = None
     if circuit and not circuit_ok(circuit):
         return None
     data = json.dumps(payload).encode()
@@ -140,7 +144,8 @@ def post_json(url, payload, headers=None, *, stream_name=None, timeout=90, trip_
             msg = f"HTTP {e.code} {redact(url)[:90]} :: {body[:400]}"
             print(f"    {msg}")
             _hit(stream_name, failed=True, error=msg)
-            if e.code in trip_on or (e.code == 429 and attempt >= 2):
+            LAST_HTTP_STATUS[stream_name] = e.code
+            if e.code in trip_on:
                 circuit_trip(circuit, f"HTTP {e.code}")
             return None
         except Exception as e:

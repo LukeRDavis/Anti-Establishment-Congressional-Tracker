@@ -17,8 +17,9 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 from . import ai
 from .config import (BALLOTPEDIA, WIKIPEDIA_SUMMARY, GROKIPEDIA, CYCLE, STATE_NAMES, STATE_ABBR,
-                     TTL_ENRICH_H, ENRICH_BUDGET_PER_RUN, TODAY, VOTING_STATES)
-from .net import get_text, get_json, stream, load_cache, save_cache, now_iso, age_hours, strip_html
+                     TTL_ENRICH_H, ENRICH_BUDGET_PER_RUN, TODAY, VOTING_STATES, FEC_API, FEC_KEY)
+from .net import (get_text, get_json, stream, load_cache, save_cache, now_iso, age_hours, strip_html,
+                  qs, circuit_ok, circuit_trip)
 
 MONTHS = "January|February|March|April|May|June|July|August|September|October|November|December"
 MONTHS_ANY = MONTHS + "|Jan\\.|Feb\\.|Aug\\.|Sept\\.|Sep\\.|Oct\\.|Nov\\.|Dec\\."
@@ -47,6 +48,31 @@ def primary_calendar():
         stream("primary_calendar", ok=True, count=len(cache["dates"]), note="cache fresh")
         return cache["dates"]
     dates = {}
+    # 1. FEC's own election calendar (uses FEC_KEY; works from CI)
+    if FEC_KEY:
+        page, pages = 1, 1
+        while page <= pages:
+            d = get_json(f"{FEC_API}/election-dates/?" + qs({
+                "api_key": FEC_KEY, "election_year": CYCLE, "per_page": 100, "page": page}),
+                stream_name="primary_calendar")
+            if not d:
+                break
+            pages = d.get("pagination", {}).get("pages", 1)
+            for e in d.get("results", []):
+                st = (e.get("election_state") or "").upper()
+                typ = (e.get("election_type_id") or "").upper()
+                when = (e.get("election_date") or "")[:10]
+                offices = (e.get("office_sought") or "") + (e.get("election_type_full") or "")
+                if st not in VOTING_STATES or not when or "special" in offices.lower():
+                    continue
+                rec = dates.setdefault(st, {"source": "fec:election-dates"})
+                if typ == "P" and (not rec.get("primary") or when < rec["primary"]):
+                    rec["primary"] = when
+                elif typ in ("PR", "R") and not rec.get("runoff"):
+                    rec["runoff"] = when
+            page += 1
+        dates = {k: v for k, v in dates.items() if v.get("primary")}
+    # 2. Ballotpedia table for anything FEC didn't have
     for path in (f"State_and_federal_candidate_filing_deadlines_for_{CYCLE}",
                  f"Statewide_primary_elections_calendar", f"{CYCLE}_election_and_voting_dates"):
         html = get_text(f"{BALLOTPEDIA}/{path}", stream_name="primary_calendar")
@@ -72,7 +98,7 @@ def primary_calendar():
                 if r:
                     rec["runoff"] = _iso(r.group(1))
                 dates[ab] = rec
-        if len(dates) >= 45:
+        if len(dates) >= 50:
             break
     missing = sorted(VOTING_STATES - set(dates))
     if missing and ai.available(search=True):
@@ -116,10 +142,21 @@ def wikipedia(name, state, chamber):
     return {}
 
 
+def _bp_blocked(html):
+    head = html[:4000].lower()
+    return ("ballotpedia" not in head and len(html) < 20000) or "just a moment" in head \
+        or "challenge-platform" in head or "cf-browser-verification" in head
+
+
 def ballotpedia(name, state, chamber):
     full = STATE_NAMES.get(state, state)
+    if not circuit_ok("ballotpedia"):
+        return {}
     for title in (name, f"{name} ({full})", f"{name} ({full} congressional candidate)"):
         html = get_text(_bp_url(title), stream_name="ballotpedia", retries=1)
+        if html and _bp_blocked(html):
+            circuit_trip("ballotpedia", "bot-check page served instead of content")
+            return {}
         if not html or "may refer to" in html[:20000]:
             continue
         text = strip_html(html)

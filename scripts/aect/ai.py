@@ -9,7 +9,7 @@ themselves still come from the primary sources.
 import json, os, re
 
 from .config import GEMINI_KEY, XAI_KEY, OPENROUTER_KEY, GROQ_KEY
-from .net import post_json, get_json, stream, circuit_ok
+from .net import post_json, get_json, stream, circuit_ok, circuit_trip, LAST_HTTP_STATUS
 
 _GEMINI_MODELS = None
 
@@ -50,6 +50,7 @@ OPENROUTER_MODEL = os.environ.get("AECT_OPENROUTER_MODEL", "meta-llama/llama-3.3
 GROQ_MODEL       = os.environ.get("AECT_GROQ_MODEL", "llama-3.3-70b-versatile")
 
 CALLS = {"gemini": 0, "xai": 0, "openrouter": 0, "groq": 0, "failed": 0}
+_DEAD_MODELS = {}   # {search_flag: {model, ...}} models that hit quota or were retired this run
 
 
 def available(search=False):
@@ -76,7 +77,7 @@ def parse_json_loose(text):
 def _gemini(system, prompt, search):
     if not GEMINI_KEY or not circuit_ok("ai_gemini"):
         return None, None
-    models = gemini_models()
+    models = [m for m in gemini_models() if m not in _DEAD_MODELS.get(search, set())]
     for model in models:
         url = (f"https://generativelanguage.googleapis.com/v1beta/models/"
                f"{model}:generateContent?key={GEMINI_KEY}")
@@ -91,6 +92,8 @@ def _gemini(system, prompt, search):
             payload["generationConfig"]["responseMimeType"] = "application/json"
         resp = post_json(url, payload, stream_name="ai_gemini", trip_on=(401, 403))
         if not resp:
+            if LAST_HTTP_STATUS.get("ai_gemini") in (404, 429):
+                _DEAD_MODELS.setdefault(search, set()).add(model)   # quota/retired: skip it this run
             continue
         try:
             cand = resp["candidates"][0]
@@ -159,15 +162,23 @@ def _openai_compat(url, key, model, stream_name, system, prompt):
         return None, None
 
 
-def ask_json(system, prompt, *, search=False):
+def available_any():
+    return available(search=False)
+
+
+def ask_json(system, prompt, *, search=False, allow_ungrounded=False):
     """
     Returns (parsed_json, sources, provider) or (None, None, None).
-    search=True requires a provider with live web grounding; without one the
-    call is skipped rather than answered from stale model memory.
+    search=True asks for live web grounding. If no grounded provider answers
+    and allow_ungrounded=True (only used when the prompt already carries the
+    primary-source text the model needs), the non-search providers are tried.
     """
     order = [("gemini", lambda: _gemini(system, prompt, search)),
              ("xai",    lambda: _xai(system, prompt, search))]
-    if not search:
+    if search and allow_ungrounded:
+        order += [("gemini", lambda: _gemini(system, prompt, False)),
+                  ("xai",    lambda: _xai(system, prompt, False))]
+    if not search or allow_ungrounded:
         order += [("openrouter", lambda: _openai_compat(
                       "https://openrouter.ai/api/v1/chat/completions", OPENROUTER_KEY,
                       OPENROUTER_MODEL, "ai_openrouter", system, prompt)),
@@ -180,5 +191,8 @@ def ask_json(system, prompt, *, search=False):
             if name in ("openrouter", "groq"):
                 CALLS[name] += 1
             return result, (sources or []), name
+    if GEMINI_KEY and gemini_models() and all(
+            m in _DEAD_MODELS.get(search, set()) for m in gemini_models()):
+        circuit_trip("ai_gemini", "every available model is over quota or retired")
     CALLS["failed"] += 1
     return None, None, None
