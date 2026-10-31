@@ -50,6 +50,8 @@ jobs:
           # Gemini is paused until a spending cap is set. To resume, add a repository
           # variable AECT_GEMINI_PAUSED = false (Settings → Secrets and variables → Actions → Variables).
           AECT_GEMINI_PAUSED: ${{ vars.AECT_GEMINI_PAUSED || 'true' }}
+          # Most Gemini requests a single run may send (runs are every 4h → at most 6× this per day).
+          AECT_GEMINI_MAX_CALLS: ${{ vars.AECT_GEMINI_MAX_CALLS || '60' }}
         run: |
           status=0
           python -u scripts/fetch_data.py > pipeline_log.full.txt 2>&1 || status=$?

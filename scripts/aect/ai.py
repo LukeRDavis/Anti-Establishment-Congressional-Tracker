@@ -114,8 +114,17 @@ def parse_json_loose(text):
     return None
 
 
+# Spend guard: at most this many Gemini requests per pipeline run (AECT_GEMINI_MAX_CALLS).
+_GEMINI_MAX = int(os.environ.get("AECT_GEMINI_MAX_CALLS", "60"))
+_GEMINI_SENT = 0
+
+
 def _gemini(system, prompt, search):
+    global _GEMINI_SENT
     if not GEMINI_KEY or not circuit_ok("ai_gemini"):
+        return None, None
+    if _GEMINI_SENT >= _GEMINI_MAX:
+        circuit_trip("ai_gemini", f"per-run cap of {_GEMINI_MAX} requests reached")
         return None, None
     models = [m for m in gemini_models() if m not in _DEAD_MODELS.get(search, set())]
     for model in models:
@@ -130,6 +139,9 @@ def _gemini(system, prompt, search):
             payload["tools"] = [{"google_search": {}}]
         else:
             payload["generationConfig"]["responseMimeType"] = "application/json"
+        if _GEMINI_SENT >= _GEMINI_MAX:
+            break
+        _GEMINI_SENT += 1
         resp = post_json(url, payload, stream_name="ai_gemini", trip_on=(401, 403))
         if not resp:
             if LAST_HTTP_STATUS.get("ai_gemini") in (404, 429):
