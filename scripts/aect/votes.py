@@ -1,0 +1,577 @@
+"""
+Step 4a — the voting record, discovered rather than listed.
+
+House:  every roll call XML from clerk.house.gov for each year of the tracked
+        Congresses (no key; votes keyed by bioguide ID).
+Senate: the senate.gov vote menu + per-vote XML (no key).
+
+Each roll call is cached permanently once fetched (a recorded vote never
+changes). A cheap topical pre-filter narrows thousands of roll calls to the
+ones plausibly about foreign military aid, arms, or war powers, and then AI —
+grounded in live web search, because many amendment roll calls carry no
+description at all ("Massie of Kentucky Part A Amendment No. 8") — decides:
+  • is this vote actually about foreign military aid / arms / war authority?
+  • which side (Yea or Nay) is the anti-interventionist position?
+  • is it major (the vote's main purpose) or minor (a broad bill that only
+    partly touches it)?
+Judgments are cached forever per roll call, so each costs one AI call ever.
+"""
+import re, time
+import xml.etree.ElementTree as ET
+
+from . import ai
+from .config import (CONGRESS_API, CONGRESS_KEY,
+                     CURRENT_CONGRESS, HISTORY_CONGRESSES, TODAY, CLERK_ROLL_XML,
+                     CLERK_ROLL_PAGE, SENATE_VOTE_MENU, SENATE_VOTE_XML, congress_years,
+                     ROLL_FETCH_BUDGET, AI_BUDGET_PER_RUN, FOCUS_CATEGORY, FOCUS_RECIPIENTS)
+from .net import parse_xml, get_bytes, get_json, stream, load_cache, save_cache, now_iso, qs, circuit_ok
+
+TOPIC = re.compile(
+    r"israel|gaza|palestin|ukrain|russia|iran|taiwan|yemen|houthi|hamas|hezbollah|lebanon|syria|iraq|"
+    r"afghan|venezuel|military|armed forces|\barms\b|weapon|munition|missile|defen[cs]e|national security|"
+    r"department of state|state, foreign operations|foreign (?:military|assistance|aid|operations)|"
+    r"security assistance|war powers|use of military force|\baumf\b|troops|deploy|nato|"
+    r"foreign military (?:sale|financing)|arms sale|proposed sale|disapproval", re.I)
+
+_VOTE_NORM = {"aye": "Yea", "yea": "Yea", "yes": "Yea", "no": "Nay", "nay": "Nay",
+              "present": "Present", "not voting": "Not Voting"}
+
+JUDGE_SYSTEM = """You classify U.S. congressional roll-call votes for a tracker of anti-interventionist voting: opposition to foreign military aid, arms sales or transfers, war authorizations, foreign military deployments, and military financing for foreign governments.
+
+For the roll call given, use web search to find out exactly what the measure or amendment did, then decide:
+- relevant: true only if the vote is substantively about foreign military aid/financing, arms sales or transfers, war powers / use of force, or deploying U.S. forces abroad. Domestic defense matters (base names, pay, procurement for U.S. forces, cultural issues) are NOT relevant. Procedural votes are not relevant.
+- anti_position: "Yea" or "Nay" — the vote that REDUCES, BLOCKS, CONDITIONS or ENDS the aid/sale/authorization/deployment. A vote to cut aid → Yea is anti. A vote to approve or increase aid → Nay is anti. A war-powers resolution to remove forces → Yea is anti.
+- significance: "major" if restricting or approving foreign military aid/arms/war is the vote's main purpose (supplemental aid packages, amendments cutting or adding aid, arms-sale disapproval resolutions, war-powers resolutions). "minor" if it is a broad bill (e.g. final passage of an NDAA or full appropriations act) where foreign military aid is only one part.
+- category: "arms_aid" if the vote is about military aid, military financing, or arms sales/transfers to a foreign government; "war_powers" if it is about U.S. forces, hostilities, strikes or war authorizations; "other" otherwise.
+- measure_restricts: true if the measure or amendment being voted on itself cuts, blocks, conditions or ends the aid/sale/hostilities (e.g. a funding-cut amendment, an arms-sale disapproval resolution, a war-powers removal resolution, or a motion to discharge/proceed to one); false if it provides, approves or expands them.
+- recipients: the foreign countries whose military aid, arms or hostilities the vote is about, as English country names (e.g. ["Israel"], ["Ukraine", "Israel"], ["Iran"]). Empty if none.
+- summary: one plain sentence saying what the vote did, including dollar amounts and countries when known.
+
+Respond with JSON only:
+{"relevant": true|false, "anti_position": "Yea"|"Nay"|null, "significance": "major"|"minor"|null, "category": "arms_aid"|"war_powers"|"other", "measure_restricts": true|false, "recipients": ["..."], "topic": "short label", "summary": "..."}"""
+
+JUDGE_VERSION = 3   # bump when the judgment schema changes; older relevant judgments are re-asked
+
+
+def _iso_date(raw):
+    from datetime import datetime
+    raw = (raw or "").strip()
+    for fmt in ("%d-%b-%Y", "%B %d, %Y, %I:%M %p", "%B %d, %Y"):
+        try:
+            return datetime.strptime(re.sub(r"\s+", " ", raw), fmt).date().isoformat()
+        except ValueError:
+            continue
+    m = re.match(r"([A-Za-z]+ \d{1,2}, \d{4})", raw)
+    if m:
+        try:
+            return datetime.strptime(m.group(1), "%B %d, %Y").date().isoformat()
+        except ValueError:
+            pass
+    return raw
+
+
+def _norm_vote(v):
+    return _VOTE_NORM.get((v or "").strip().lower(), (v or "").strip())
+
+
+# ── House ─────────────────────────────────────────────────────────────────────
+def _parse_house_roll(raw, year, roll):
+    root = parse_xml(raw, "votes_house_xml", f"{year} roll {roll}")
+    if root is None:
+        return None
+    meta = root.find("vote-metadata")
+    if meta is None:
+        stream("votes_house_xml", error=f"{year} roll {roll}: no <vote-metadata> (root <{root.tag}>)")
+        return None
+    g = lambda t: (meta.findtext(t) or "").strip()
+    rec = {
+        "chamber": "house", "year": year, "roll": roll, "congress": int(g("congress") or 0),
+        "session": g("session"), "legis": g("legis-num"), "question": g("vote-question"),
+        "desc": g("vote-desc"), "amendment_num": g("amendment-num"),
+        "amendment_author": g("amendment-author"), "type": g("vote-type"),
+        "result": g("vote-result"), "date": _iso_date(g("action-date")),
+        "url": CLERK_ROLL_PAGE.format(year=year, roll=roll),
+        "party_totals": {},
+    }
+    for tp in meta.iter("totals-by-party"):
+        p = (tp.findtext("party") or "").strip()
+        rec["party_totals"][p] = {k: int(tp.findtext(f"{k}-total") or 0)
+                                  for k in ("yea", "nay", "present", "not-voting")}
+    positions = {}
+    for rv in root.iter("recorded-vote"):
+        leg = rv.find("legislator")
+        if leg is None:
+            continue
+        bid = leg.get("name-id") or ""
+        if bid:
+            positions[bid] = [_norm_vote(rv.findtext("vote")), leg.get("party", ""), leg.get("state", "")]
+    return rec, positions
+
+
+def _sync_house_year(year, cache, budget):
+    """Fetch every roll call for `year` not already cached. Returns rolls fetched."""
+    yc = cache.setdefault(str(year), {"rolls": {}, "complete": False})
+    if yc.get("complete"):
+        return 0
+    fetched, misses = 0, 0
+    roll = max([int(r) for r in yc["rolls"]] or [0]) + 1
+    while fetched < budget and misses < 3:
+        raw = get_bytes(CLERK_ROLL_XML.format(year=year, roll=roll), stream_name="votes_house_xml",
+                        timeout=20, retries=1)
+        if not raw:
+            misses += 1
+            roll += 1
+            continue
+        parsed = _parse_house_roll(raw, year, roll)
+        if not parsed:
+            misses += 1
+            roll += 1
+            continue
+        misses = 0
+        if parsed:
+            rec, positions = parsed
+            rec["candidate"] = _is_candidate(rec, yc)
+            if rec["candidate"]:
+                rec["positions"] = positions
+            yc["rolls"][str(roll)] = rec
+        fetched += 1
+        roll += 1
+        time.sleep(0.05)
+    if misses >= 3 and year < TODAY.year and len(yc["rolls"]) > 100:
+        yc["complete"] = True
+    return fetched
+
+
+def _is_candidate(rec, yc):
+    text = " ".join([rec.get("legis", ""), rec.get("question", ""), rec.get("desc", ""),
+                     rec.get("amendment_author", "")])
+    # remember each bill's title: amendment roll calls often carry no description
+    titles = yc.setdefault("bill_titles", {})
+    if rec.get("desc") and rec.get("legis") and not rec.get("amendment_author"):
+        titles.setdefault(rec["legis"], rec["desc"])
+    if TOPIC.search(text):
+        return True
+    title = titles.get(rec.get("legis", ""), "")
+    return bool(rec.get("amendment_author") and TOPIC.search(title))
+
+
+def _backfill_candidates(yc, year):
+    """Later passage votes reveal a bill's title; re-check earlier amendment rolls."""
+    titles = yc.get("bill_titles", {})
+    newly = []
+    for r, rec in yc["rolls"].items():
+        if rec.get("candidate") or not rec.get("amendment_author"):
+            continue
+        if TOPIC.search(titles.get(rec.get("legis", ""), "")):
+            newly.append(int(r))
+    for r in newly:
+        raw = get_bytes(CLERK_ROLL_XML.format(year=year, roll=r), stream_name="votes_house_xml")
+        parsed = _parse_house_roll(raw, year, r) if raw else None
+        if parsed:
+            rec, positions = parsed
+            rec["candidate"] = True
+            rec["positions"] = positions
+            yc["rolls"][str(r)] = rec
+
+
+# ── Senate ────────────────────────────────────────────────────────────────────
+def _sync_senate_session(congress, session, cache, budget):
+    key = f"{congress}-{session}"
+    sc = cache.setdefault(key, {"rolls": {}, "complete": False})
+    if sc.get("complete"):
+        return 0
+    raw = get_bytes(SENATE_VOTE_MENU.format(congress=congress, session=session),
+                    stream_name="votes_senate_xml")
+    if not raw:
+        return 0
+    root = parse_xml(raw, "votes_senate_xml", f"vote menu {key}")
+    if root is None:
+        return 0
+    fetched = 0
+    year = congress_years(congress)[session - 1]
+    for v in root.iter("vote"):
+        n = int(v.findtext("vote_number") or 0)
+        if not n or str(n) in sc["rolls"]:
+            continue
+        title = (v.findtext("title") or "").strip()
+        issue = (v.findtext("issue") or "").strip()
+        question = (v.findtext("question") or "").strip()
+        rec = {"chamber": "senate", "year": year, "roll": n, "congress": congress,
+               "session": session, "legis": issue, "question": question, "desc": title,
+               "result": (v.findtext("result") or "").strip(),
+               "date": (v.findtext("vote_date") or "").strip(),
+               "url": f"https://www.senate.gov/legislative/LIS/roll_call_votes/vote{congress}{session}/vote_{congress}_{session}_{n:05d}.htm"}
+        rec["candidate"] = bool(TOPIC.search(f"{issue} {question} {title}"))
+        if rec["candidate"] and fetched < budget:
+            vraw = get_bytes(SENATE_VOTE_XML.format(congress=congress, session=session, vote=n),
+                             stream_name="votes_senate_xml")
+            vroot = parse_xml(vraw, "votes_senate_xml", f"vote {n}") if vraw else None
+            if vroot is not None:
+                rec["date"] = _iso_date(vroot.findtext("vote_date") or "") or rec["date"]
+                amend = vroot.find("amendment")
+                if amend is not None:
+                    rec["amendment_num"] = (amend.findtext("amendment_number") or "").strip()
+                    rec["amendment_purpose"] = (amend.findtext("amendment_purpose") or "").strip()
+                rec["positions"] = {}
+                for m in vroot.iter("member"):
+                    k = f"{(m.findtext('last_name') or '').strip()}|{(m.findtext('state') or '').strip()}"
+                    rec["positions"][k] = [_norm_vote(m.findtext("vote_cast")),
+                                           (m.findtext("party") or "").strip(),
+                                           (m.findtext("state") or "").strip()]
+                fetched += 1
+                time.sleep(0.05)
+            else:
+                continue  # retry next run
+        sc["rolls"][str(n)] = rec
+    if year < TODAY.year:
+        sc["complete"] = True
+    return fetched
+
+
+# ── Senate via Voteview (senate.gov blocks GitHub's runners with HTTP 403) ────
+VOTEVIEW = "https://voteview.com/static/data/out/{kind}/S{congress}_{kind}.csv"
+_VV_CAST = {1: "Yea", 2: "Yea", 3: "Yea", 4: "Nay", 5: "Nay", 6: "Nay", 7: "Present", 8: "Present"}
+_VV_PARTY = {100: "D", 200: "R"}
+
+
+def _csv(url, stream_name):
+    import csv, io
+    raw = get_bytes(url, stream_name=stream_name, timeout=60)
+    if not raw:
+        return []
+    return list(csv.DictReader(io.StringIO(raw.decode("utf-8", errors="replace"))))
+
+
+def _sync_senate_voteview(congress, cache):
+    key = f"vv-{congress}"
+    sc = cache.setdefault(key, {"rolls": {}, "complete": False})
+    if sc.get("complete"):
+        return 0
+    rollcalls = _csv(VOTEVIEW.format(kind="rollcalls", congress=congress), "votes_senate_voteview")
+    if not rollcalls:
+        return 0
+    members = _csv(VOTEVIEW.format(kind="members", congress=congress), "votes_senate_voteview")
+    icpsr = {}
+    for m in members:
+        if m.get("chamber") != "Senate":
+            continue
+        try:
+            pc = int(float(m.get("party_code") or 0))
+        except ValueError:
+            pc = 0
+        icpsr[m.get("icpsr")] = (m.get("bioguide_id") or "", _VV_PARTY.get(pc, "I"), m.get("state_abbrev", ""))
+    candidates = {}
+    for r in rollcalls:
+        if r.get("chamber") != "Senate":
+            continue
+        n = int(float(r.get("rollnumber") or 0))
+        if not n or str(n) in sc["rolls"]:
+            continue
+        text = " ".join(r.get(f, "") for f in ("bill_number", "vote_question", "vote_desc", "dtl_desc"))
+        rec = {"chamber": "senate", "congress": congress, "roll": n,
+               "year": int((r.get("date") or "0")[:4] or 0), "date": r.get("date", ""),
+               "session": r.get("session"), "legis": r.get("bill_number", ""),
+               "question": r.get("vote_question", ""),
+               "desc": (r.get("vote_desc") or r.get("dtl_desc") or "")[:400],
+               "result": r.get("vote_result", ""), "candidate": bool(TOPIC.search(text)),
+               "url": (f"https://www.senate.gov/legislative/LIS/roll_call_votes/vote{congress}{r.get('session')}/"
+                       f"vote_{congress}_{r.get('session')}_{int(float(r.get('clerk_rollnumber') or n)):05d}.htm")}
+        sc["rolls"][str(n)] = rec
+        if rec["candidate"]:
+            candidates[n] = rec
+    if candidates:
+        for v in _csv(VOTEVIEW.format(kind="votes", congress=congress), "votes_senate_voteview"):
+            if v.get("chamber") != "Senate":
+                continue
+            n = int(float(v.get("rollnumber") or 0))
+            rec = candidates.get(n)
+            if not rec:
+                continue
+            who = icpsr.get(v.get("icpsr"))
+            if not who or not who[0]:
+                continue
+            cast = _VV_CAST.get(int(float(v.get("cast_code") or 9)), "Not Voting")
+            rec.setdefault("positions", {})[who[0]] = [cast, who[1], who[2]]
+    first, last = congress_years(congress)
+    if last < TODAY.year:
+        sc["complete"] = True
+    return len(candidates)
+
+
+# ── Congress.gov context for amendment roll calls ────────────────────────────
+_SHOWN_FIELDS = set()
+
+
+def _cg(path, **params):
+    if not CONGRESS_KEY or not circuit_ok("congress_gov"):
+        return None
+    return get_json(f"{CONGRESS_API}{path}?" + qs({"api_key": CONGRESS_KEY, "format": "json", **params}),
+                    stream_name="congress_gov")
+
+
+def _amendment_context(rec):
+    """Fill in what an amendment did, from Congress.gov, when the roll call XML doesn't say."""
+    if rec.get("amendment_purpose") or rec["chamber"] != "house" or not rec.get("amendment_author"):
+        return
+    sess = rec.get("session") or (1 if rec["year"] % 2 else 2)
+    sess = re.sub(r"\D", "", str(sess)) or "1"
+    d = _cg(f"/house-vote/{rec['congress']}/{sess}/{rec['roll']}")
+    v = (d or {}).get("houseRollCallVote") or {}
+    if v and "house-vote" not in _SHOWN_FIELDS:
+        _SHOWN_FIELDS.add("house-vote")
+        stream("congress_gov", note=f"house-vote fields: {sorted(v.keys())[:30]}")
+    atype = (v.get("amendmentType") or "").lower()
+    anum = v.get("amendmentNumber")
+    if not atype or not anum:
+        return
+    a = (_cg(f"/amendment/{rec['congress']}/{atype}/{anum}") or {}).get("amendment") or {}
+    if a and "amendment" not in _SHOWN_FIELDS:
+        _SHOWN_FIELDS.add("amendment")
+        stream("congress_gov", note=f"amendment fields: {sorted(a.keys())[:30]}")
+    purpose = a.get("purpose") or a.get("description") or ""
+    if purpose:
+        rec["amendment_purpose"] = purpose[:600]
+        rec["congress_gov_amendment"] = f"{atype.upper()} {anum}"
+
+
+_BILL_TYPES = {"HR": "hr", "S": "s", "HRES": "hres", "SRES": "sres", "HJRES": "hjres",
+               "SJRES": "sjres", "HCONRES": "hconres", "SCONRES": "sconres"}
+
+
+def _sponsor(rec):
+    """Bioguide ID of whoever offered the measure (amendment author, else bill sponsor), from Congress.gov."""
+    if "sponsor" in rec:
+        return rec["sponsor"]
+    sid = None
+    if rec.get("congress_gov_amendment"):
+        atype, anum = rec["congress_gov_amendment"].lower().split()
+        a = (_cg(f"/amendment/{rec['congress']}/{atype}/{anum}") or {}).get("amendment") or {}
+        sid = ((a.get("sponsors") or [{}])[0]).get("bioguideId")
+    if not sid:
+        m = re.match(r"([A-Z\. ]+?)\s*(\d+)$", (rec.get("legis") or "").upper().strip())
+        if m:
+            btype = _BILL_TYPES.get(re.sub(r"[\. ]", "", m.group(1)))
+            if btype:
+                b = (_cg(f"/bill/{rec['congress']}/{btype}/{m.group(2)}") or {}).get("bill") or {}
+                sid = ((b.get("sponsors") or [{}])[0]).get("bioguideId")
+    rec["sponsor"] = sid
+    return sid
+
+
+def direction_check(rec, j):
+    """
+    Cross-check the AI's anti side against the record: whoever offered a
+    restricting measure votes for it, so their vote is the anti side (and the
+    opposite for a measure that provides aid). Corrects a flipped judgment.
+    """
+    if j.get("measure_restricts") is None or not j.get("anti_position"):
+        return j
+    sid = j.get("sponsor") or _sponsor(rec)
+    pos = ((rec.get("positions") or {}).get(sid) or [None])[0] if sid else None
+    if pos not in ("Yea", "Nay"):
+        return j
+    expected = pos if j["measure_restricts"] else ("Nay" if pos == "Yea" else "Yea")
+    j["sponsor"] = sid
+    if expected != j["anti_position"]:
+        print(f"    ↺ {rec['chamber']}-{rec['year']}-{rec['roll']}: anti side corrected "
+              f"{j['anti_position']}→{expected} (sponsor {sid} voted {pos})")
+        j["anti_position"] = expected
+        j["direction"] = "corrected_by_sponsor_vote"
+    else:
+        j["direction"] = "confirmed_by_sponsor_vote"
+    return j
+
+
+# ── AI judgment ───────────────────────────────────────────────────────────────
+def _judge(rec, judgments, budget_state):
+    key = f"{rec['chamber']}-{rec['year']}-{rec['roll']}"
+    old = judgments.get(key)
+    if old and (not old.get("relevant") or old.get("version", 1) >= JUDGE_VERSION):
+        return old
+    if budget_state["left"] <= 0 or not ai.available_any():
+        budget_state["pending"] += 1
+        return old              # keep using the older judgment until it can be refreshed
+    _amendment_context(rec)
+    # Without web search the model must be given the measure's own text;
+    # an amendment with neither a description nor a purpose is left for later.
+    has_text = bool(rec.get("desc") or rec.get("amendment_purpose"))
+    if not ai.available(search=True) and not has_text:
+        budget_state["pending"] += 1
+        return old
+    pt = rec.get("party_totals") or {}
+    lines = [
+        f"Chamber: {'House' if rec['chamber']=='house' else 'Senate'} roll call {rec['roll']}, "
+        f"{rec.get('date','')} ({rec.get('congress')}th Congress)",
+        f"Measure: {rec.get('legis','')}",
+        f"Question: {rec.get('question','')}",
+        f"Description: {rec.get('desc','') or '(none recorded)'}",
+    ]
+    if rec.get("amendment_author") or rec.get("amendment_num"):
+        lines.append(f"Amendment: {rec.get('amendment_author','')} {rec.get('amendment_num','')}".strip())
+    if rec.get("amendment_purpose"):
+        lines.append(f"Amendment purpose: {rec['amendment_purpose']}")
+    if pt:
+        lines.append("Party totals: " + "; ".join(
+            f"{p}: {v['yea']} yea / {v['nay']} nay" for p, v in pt.items()))
+    lines.append(f"Result: {rec.get('result','')}  Source: {rec.get('url','')}")
+    result, sources, provider = ai.ask_json(JUDGE_SYSTEM, "\n".join(lines), search=True,
+                                            allow_ungrounded=has_text)
+    budget_state["left"] -= 1
+    if not isinstance(result, dict) or "relevant" not in result:
+        budget_state["pending"] += 1
+        return old
+    j = {"relevant": bool(result.get("relevant")),
+         "anti_position": result.get("anti_position") if result.get("anti_position") in ("Yea", "Nay") else None,
+         "significance": result.get("significance") if result.get("significance") in ("major", "minor") else "minor",
+         "category": result.get("category") if result.get("category") in ("arms_aid", "war_powers") else "other",
+         "recipients": [str(c).strip()[:40] for c in (result.get("recipients") or []) if str(c).strip()][:6],
+         "measure_restricts": result.get("measure_restricts") if isinstance(result.get("measure_restricts"), bool) else None,
+         "version": JUDGE_VERSION,
+         "topic": (result.get("topic") or "")[:80], "summary": (result.get("summary") or "")[:400],
+         "sources": (sources or [])[:4], "provider": provider, "grounded": bool(sources),
+         "context": rec.get("amendment_purpose", "")[:300], "judged_at": now_iso()}
+    if j["relevant"]:
+        direction_check(rec, j)
+    judgments[key] = j
+    if j["relevant"]:
+        print(f"    ✓ {key} {rec.get('legis','')}: {j['significance']} — anti={j['anti_position']} — {j['summary'][:90]}")
+    return j
+
+
+# ── Entry point ───────────────────────────────────────────────────────────────
+def sync_votes():
+    house_cache = load_cache("votes_house")
+    senate_cache = load_cache("votes_senate")
+    judgments = load_cache("vote_judgments")
+
+    congresses = list(range(CURRENT_CONGRESS - HISTORY_CONGRESSES + 1, CURRENT_CONGRESS + 1))
+    budget = ROLL_FETCH_BUDGET
+    fetched_h = fetched_s = 0
+    for c in reversed(congresses):          # newest first, so budget goes to what matters now
+        for i, year in reversed(list(enumerate(congress_years(c)))):
+            if year > TODAY.year:
+                continue
+            n = _sync_house_year(year, house_cache, budget - fetched_h)
+            fetched_h += n
+            _backfill_candidates(house_cache[str(year)], year)
+        fetched_s += _sync_senate_voteview(c, senate_cache)
+    save_cache("votes_house", house_cache)
+    save_cache("votes_senate", senate_cache)
+
+    all_rolls = []
+    for yc in house_cache.values():
+        all_rolls += [r for r in yc["rolls"].values() if r.get("candidate")]
+    for sc in senate_cache.values():
+        all_rolls += [r for r in sc["rolls"].values() if r.get("candidate") and r.get("positions")]
+    total_house = sum(len(yc["rolls"]) for yc in house_cache.values())
+    stream("votes_house_xml", ok=total_house > 0, count=total_house,
+           note=f"{total_house} House roll calls cached (+{fetched_h} this run)")
+    total_sen = sum(len(sc["rolls"]) for sc in senate_cache.values())
+    stream("votes_senate_voteview", ok=total_sen > 0, count=total_sen,
+           note=f"{total_sen} Senate roll calls indexed from Voteview (+{fetched_s} topical this run)")
+
+    # newest first so the AI budget is spent on current votes before history
+    all_rolls.sort(key=lambda r: (r.get("year", 0), r.get("roll", 0)), reverse=True)
+    def _stale(r):
+        j = judgments.get(f"{r['chamber']}-{r['year']}-{r['roll']}")
+        return bool(j and j.get("relevant") and j.get("version", 1) < JUDGE_VERSION)
+    all_rolls.sort(key=lambda r: not _stale(r))      # stable: stale relevant ones first, still newest first
+    state = {"left": int(__import__("os").environ.get("AECT_VOTE_AI_BUDGET", "200")), "pending": 0}
+    relevant = []
+    for i, rec in enumerate(all_rolls):
+        j = _judge(rec, judgments, state)
+        if j and j["relevant"] and j["anti_position"]:
+            relevant.append({**rec, **j})
+        if i % 20 == 19:
+            save_cache("vote_judgments", judgments)   # keep progress if the run is cut short
+    save_cache("vote_judgments", judgments)
+    stream("votes_ai_relevance", ok=bool(judgments) and state["pending"] == 0 or bool(relevant),
+           count=len(relevant),
+           note=f"{len(all_rolls)} topical roll calls · {len(relevant)} judged relevant · "
+                f"{state['pending']} awaiting AI judgment"
+                + ("" if ai.available(search=True) else " — web-search AI unavailable; judging only votes with a recorded description"))
+    return relevant
+
+
+def is_focus(v):
+    """A vote on the tracker's focus: arms/aid votes whose recipients are all focus countries."""
+    rec = {r.lower() for r in (v.get("recipients") or [])}
+    # A measure that itself cuts/blocks the aid is a focus vote whatever "significance"
+    # the model gave it; broad bills (final passage) count only when judged major.
+    pointed = v.get("measure_restricts") is True or v.get("significance") == "major"
+    return (pointed and v.get("category") == FOCUS_CATEGORY
+            and bool(rec) and rec <= FOCUS_RECIPIENTS)
+
+
+def score_members(members, relevant_votes):
+    """
+    Attach each member's record on the relevant votes. House votes match by
+    bioguide ID; Senate votes by (last name, state).
+    """
+    by_bio = {m["bioguide_id"]: m for m in members if m.get("bioguide_id")}
+    by_sen = {f"{m['last_name']}|{m['state']}": m for m in members if m["chamber"] == "senate"}
+    for m in members:
+        m["vote_record"] = []
+    for v in relevant_votes:
+        for key, (pos, party, state) in (v.get("positions") or {}).items():
+            m = by_bio.get(key) or by_sen.get(key)
+            if not m or pos not in ("Yea", "Nay"):
+                continue
+            m["vote_record"].append({
+                "congress": v["congress"], "chamber": v["chamber"], "roll": v["roll"],
+                "date": v["date"], "measure": v.get("legis", ""), "summary": v.get("summary", ""),
+                "significance": v["significance"], "position": pos,
+                "category": v.get("category", "other"), "recipients": v.get("recipients", []),
+                "focus": is_focus(v),
+                "anti": pos == v["anti_position"], "url": v.get("url", ""),
+            })
+    return members
+
+
+def incumbent_retention():
+    """
+    Share of House members voting in the previous Congress who are still
+    voting in the current one — the empirical re-election/retention rate,
+    used for incumbents that have no prediction market.
+    """
+    cache = load_cache("votes_house")
+    seen = {}
+    for yc in cache.values():
+        for rec in yc.get("rolls", {}).values():
+            if rec.get("positions"):
+                seen.setdefault(rec.get("congress"), set()).update(rec["positions"].keys())
+    prev, cur = seen.get(CURRENT_CONGRESS - 1), seen.get(CURRENT_CONGRESS)
+    if not prev or not cur or len(prev) < 300:
+        return None
+    return round(len(prev & cur) / len(prev), 3)
+
+
+def congress_history(relevant_votes):
+    """Per-Congress counts of members who took the anti position on a major vote."""
+    hist = {}
+    by_c = {}
+    for v in relevant_votes:
+        if not is_focus(v):
+            continue
+        by_c.setdefault(v["congress"], []).append(v)
+    for c, votes in by_c.items():
+        tally = {}
+        for v in votes:
+            for key, (pos, party, state) in (v.get("positions") or {}).items():
+                if pos not in ("Yea", "Nay"):
+                    continue
+                t = tally.setdefault(key, {"party": party[:1], "anti": 0, "total": 0})
+                t["total"] += 1
+                t["anti"] += pos == v["anti_position"]
+        rec = {"congress": c, "label": f"{c}th", "years": "–".join(map(str, congress_years(c))),
+               "focus_votes": len(votes), "source": "clerk.house.gov + senate.gov roll calls (AI-judged)"}
+        for p in ("R", "D", "I"):
+            anti = [t for t in tally.values() if t["party"] == p and t["anti"] > 0]
+            rec[f"hard{p}"] = sum(1 for t in anti if t["anti"] / t["total"] >= 0.5)
+            rec[f"soft{p}"] = sum(1 for t in anti if t["anti"] / t["total"] < 0.5)
+        rec["key_events"] = [f"{v['date']}: {v.get('legis','')} — {v.get('summary','')}"
+                             for v in sorted(votes, key=lambda v: v["date"])][-8:]
+        if c == CURRENT_CONGRESS:
+            rec["is_live"] = True
+        hist[str(c)] = rec
+    return hist
