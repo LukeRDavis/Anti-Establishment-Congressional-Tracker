@@ -141,6 +141,12 @@ def fetch(people):
         d = p.get("seeking", {}).get("district", p.get("district"))
         if ch == "house" and d:
             districts.setdefault(p["state"], set()).add(int(d))
+    # a state's real districts are the ones its sitting delegation holds (FEC filers sometimes
+    # list a state-legislative district, e.g. "FL-59"); don't go looking for pages that can't exist
+    seats = {}
+    for p in people.values():
+        if p.get("incumbent") and p["chamber"] == "house" and p.get("district") is not None:
+            seats[p["state"]] = max(seats.get(p["state"], 0), int(p["district"] or 0))
     fetched = 0
     for state, chamber in sorted(want):
         key = f"{state}|{chamber}"
@@ -175,7 +181,7 @@ def fetch(people):
         if chamber == "house":
             pages = {}
             for d in sorted(districts.get(state, ())):
-                if entry["races"].get(str(d)):
+                if entry["races"].get(str(d)) or (state in seats and d > seats[state]):
                     continue
                 text, url = _fetch_page(_district_title(state, d))
                 if text:
