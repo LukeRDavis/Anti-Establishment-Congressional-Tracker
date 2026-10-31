@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-31T21:41:20.984569+00:00",
+ "generated_at": "2026-10-31T22:22:41.226836+00:00",
  "challengers": [
   {
    "name": "Mai Vang",
@@ -121,20 +121,45 @@
    "evidence": [
     "We must impose an arms embargo on and stop sending our tax dollars to Israel. (https://ko4congress.com/)"
    ],
-   "ps": "RESULTS_PENDING",
+   "ps": "WON",
    "note": "We must impose an arms embargo on and stop sending our tax dollars to Israel. (https://ko4congress.com/)",
    "website": "https://ko4congress.com/",
    "fec_ids": [
     "H6NY12297"
    ],
    "primaryDate": "2026-06-23",
-   "primary_result": null,
-   "primary_result_source": null,
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_New_York",
    "general_result": null,
    "endorsed_by": [
     "trackaipac_endorsed"
    ],
    "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "John Vincent",
+   "party": "D",
+   "state": "SC",
+   "district": 7,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "statements",
+   "evidence": [
+    "Introduce Legislation to Address Healthcare and Deficit Spending (https://VINCENT4CONGRESS.ORG)"
+   ],
+   "ps": "WON",
+   "note": "Introduce Legislation to Address Healthcare and Deficit Spending (https://VINCENT4CONGRESS.ORG)",
+   "website": "https://VINCENT4CONGRESS.ORG",
+   "fec_ids": [
+    "H6SC07034"
+   ],
+   "primaryDate": "2026-06-09",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_South_Carolina",
+   "general_result": null,
+   "endorsed_by": [],
+   "source": "fec"
   },
   {
    "name": "Angelica Duenas",
