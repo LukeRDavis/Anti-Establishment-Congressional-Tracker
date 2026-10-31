@@ -24,7 +24,7 @@ from .net import get_json, stream, load_cache, save_cache, now_iso, age_hours
 
 API = "https://en.wikipedia.org/w/api.php"
 TTL_H = 6
-PARSE_VERSION = 3          # bump when the parser changes so cached pages are re-read
+PARSE_VERSION = 4          # bump when the parser changes so cached pages are re-read
 
 
 def _norm(s):
@@ -151,6 +151,20 @@ def fetch(people):
         for title in _titles(state, chamber):
             text, url = _fetch_page(title)
             if text:
+                if chamber == "house" and not _boxes(text):
+                    # big delegations split results into sub-articles ("{{Main|… (Districts 1–26)}}");
+                    # read every linked sub-article of this same election and parse them together
+                    subs = []
+                    for m in re.finditer(r"\{\{\s*(?:main|see also|further)\s*\|([^}]*)\}\}", text, re.I):
+                        for t in m.group(1).split("|"):
+                            t = t.strip()
+                            if "=" not in t and str(CYCLE) in t and STATE_NAMES[state] in t and t not in subs:
+                                subs.append(t)
+                    for t in subs[:6]:
+                        sub, _ = _fetch_page(t)
+                        if sub:
+                            text += "\n" + sub
+                            fetched += 1
                 entry.update(url=url, races={str(d): _boxes(sec) for d, sec in _sections(text, chamber).items()})
                 if not any(entry["races"].values()):
                     heads = re.findall(r"\n(={2,4}[^\n]{0,80})", text)[:12]
