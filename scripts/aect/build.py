@@ -13,6 +13,7 @@ from datetime import date
 from .config import (CYCLE, CURRENT_CONGRESS, NEXT_CONGRESS, TODAY, STATE_NAMES,
                      FOCUS_CATEGORY, FOCUS_RECIPIENTS)
 from .votes import is_focus
+from .results import result_for
 
 
 def _norm(s):
@@ -136,7 +137,7 @@ def build_people(members, fec_cands, trackers):
 
 
 # ── Election status ───────────────────────────────────────────────────────────
-def apply_status(people, enrichment, calendar, fec_cands):
+def apply_status(people, enrichment, calendar, fec_cands, results=None):
     class_up = senate_class_up(CYCLE)
     filers = {cid for p in people.values() for cid in p.get("fec_ids", [])}
     for k, p in people.items():
@@ -156,6 +157,14 @@ def apply_status(people, enrichment, calendar, fec_cands):
         if pr and prd and _past(prd) and (not p["primary_date"] or _past(p["primary_date"])):
             p["primary_result"] = pr
             p["primary_result_source"] = e.get("primary_result_text", "")
+        if results is not None and p.get("on_ballot", True):
+            r = result_for(p, results)
+            if r["primary"] and not p.get("primary_result") and p["primary_date"] and _past(p["primary_date"]):
+                p["primary_result"] = r["primary"]
+                p["primary_result_source"] = r["source"]
+            if r["general"] and _past(p["general_date"]):
+                p["general_result"] = r["general"]
+                p["general_result_source"] = r["source"]
 
         on_ballot = bool(p.get("fec_ids")) or (p.get("chamber") == "house" and p.get("incumbent"))
         if p["chamber"] == "senate" and p.get("incumbent") and not p.get("fec_ids"):
@@ -186,6 +195,10 @@ def apply_status(people, enrichment, calendar, fec_cands):
                 p["ps"] = "RESULTS_PENDING"
             else:
                 p["ps"] = "UPCOMING"
+        if p.get("general_result") == "LOST":
+            p["ps"] = "DEFEATED"
+        elif p.get("general_result") == "WON":
+            p["ps"] = "RE-ELECTED" if p.get("incumbent") else "ELECTED"
     return people
 
 
@@ -291,6 +304,8 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
                 "ps": p.get("ps", "UPCOMING"), "note": p.get("note", ""),
                 "website": p.get("website", ""), "fec_ids": p.get("fec_ids", []),
                 "primaryDate": p.get("primary_date"), "primary_result": p.get("primary_result"),
+                "primary_result_source": p.get("primary_result_source"),
+                "general_result": p.get("general_result"),
                 "endorsed_by": [s for s in p.get("sources", []) if s.endswith("endorsed")]}
         if p.get("incumbent"):
             members.append({**base, "bioguide_id": p.get("bioguide_id", ""), "caucus": p.get("caucus", ""),

@@ -207,3 +207,29 @@ j = votes.direction_check(rec, {"anti_position": "Nay", "measure_restricts": Fal
 assert j["anti_position"] == "Nay" and j["direction"] == "confirmed_by_sponsor_vote", j
 print("direction check OK")
 
+
+# Wikipedia result boxes: top-two primary + general nominee list
+from aect import results  # noqa: E402
+page = """== District 27 ==
+{{Election box begin no change|title=2026 California's 27th congressional district election<ref>x</ref>}}
+{{Election box begin no change|title=Primary election}}
+{{Election box candidate with party link|party=Democratic Party (United States)|candidate=[[George Whitesides]] (incumbent)|votes=80,000|percentage=48.0}}
+{{Election box candidate with party link|party=Democratic Party (United States)|candidate=Caleb Norwood|votes=20,000|percentage=12.0}}
+{{Election box candidate with party link|party=Republican Party (United States)|candidate=Jane Roe|votes=66,000|percentage=40.0}}
+{{Election box end}}
+{{Election box begin no change|title=General election}}
+{{Election box candidate with party link|party=Democratic Party (United States)|candidate=[[George Whitesides]] (incumbent)|votes=|percentage=}}
+{{Election box candidate with party link|party=Republican Party (United States)|candidate=Jane Roe|votes=|percentage=}}
+{{Election box end}}
+== District 28 ==
+nothing
+"""
+races = {str(d): results._boxes(sec) for d, sec in results._sections(page, "house").items()}
+cache = {"CA|house": {"url": "u", "races": races}}
+norwood = {"name": "Caleb Norwood", "full_name": "Caleb Gabriel Norwood", "last_name": "Norwood",
+           "state": "CA", "district": 27, "chamber": "house"}
+white = {"name": "George Whitesides", "last_name": "Whitesides", "state": "CA", "district": 27, "chamber": "house"}
+assert results.result_for(norwood, cache)["primary"] == "LOST", races
+assert results.result_for(white, cache)["primary"] == "WON"
+assert results.result_for(white, cache)["general"] is None      # not counted yet
+print("wikipedia results OK")

@@ -27,7 +27,7 @@ import json, os, sys, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from aect import ai, roster, fec, trackers, votes, enrich, positions, markets, build
+from aect import ai, roster, fec, trackers, votes, enrich, positions, markets, build, results
 from aect.config import KEYS, CYCLE, CURRENT_CONGRESS, TODAY
 from aect.net import STREAMS, stream, now_iso
 
@@ -113,7 +113,9 @@ def main():
                                           for c in people[k].get("fec_ids", [])] or [0]))
     priority = list(dict.fromkeys(tracked + voters + [k for k, p in people.items() if p["incumbent"]] + by_money))
     enrichment = enrich.enrich_people(people, priority)
-    build.apply_status(people, enrichment, calendar, fec_cands)
+    build.apply_status(people, enrichment, calendar, fec_cands)        # sets on_ballot
+    election = results.fetch(people)
+    build.apply_status(people, enrichment, calendar, fec_cands, election)
 
     print("\n[4b] Candidate positions (AI research)")
     live = [k for k in priority if not people[k]["incumbent"] and people[k].get("ps") != "DEFEATED"]

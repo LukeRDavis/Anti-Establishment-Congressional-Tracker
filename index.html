@@ -290,6 +290,11 @@ function StatusBadge({ps}) {
     DEFEATED:        ["#3b0000","#f87171"],
     RETIRING:        ["#1a1d27","#6b7280"],
     FAILED_PRIMARY:  ["#3b0000","#f87171"],
+    WON:             ["#064e3b","#4ade80"],
+    ELECTED:         ["#064e3b","#4ade80"],
+    "RE-ELECTED":    ["#064e3b","#4ade80"],
+    RESULTS_PENDING: ["#1a1d27","#fbbf24"],
+    UPCOMING:        ["#1a1d27","#9ca3af"],
   };
   const [bg, fg] = MAP[ps] || ["#1a1d27","#4b5563"];
   return html`<span style=${{
