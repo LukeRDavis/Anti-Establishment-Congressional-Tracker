@@ -18,7 +18,7 @@ AECT pipeline v10 — 2026-10-31 · 119th Congress · 2026 cycle
 
 [2] FEC candidates and finance
   [fec_candidates] 4353 active 2026 House+Senate filers
-  [fec_finance] totals for 3861 filers
+  [fec_finance] totals for 4037 filers
 
 [4c] Trackers
   [trackaipac] /congress: 533 members, 24 approved
@@ -47,58 +47,130 @@ AECT pipeline v10 — 2026-10-31 · 119th Congress · 2026 cycle
     ✓ house-2023-303 H R 2670: major — anti=Yea — Failed amendment to the FY2024 NDAA to strike $300 million authorized for the Ukraine Secu
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20,
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20,
-    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, 
-    ✓ senate-2023-270 SJRES44: major — anti=Yea — The Senate rejected a motion to discharge a joint resolution that would have ordered the r
-    ✓ house-2023-201 H CON RES 30: major — anti=Yea — The resolution directed the President to remove all United States Armed Forces, except tho
+  [ai_groq] models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
+    ✓ house-2023-305 H R 2670: minor — anti=Yea — The amendment would have struck a feasibility study for creating a Center of Excellence in
+    ✓ house-2023-304 H R 2670: major — anti=Yea — The Gaetz amendment to H.R. 2670 sought to prohibit all security assistance for Ukraine un
+    ✓ house-2023-303 H R 2670: major — anti=Yea — An amendment to strike $300 million in foreign military aid for Ukraine and eliminate land
+    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20,
+    ✓ senate-2023-270 SJRES44: major — anti=Yea — A joint resolution directing the removal of U.S. armed forces from unauthorized hostilitie
+    ✓ house-2023-201 H CON RES 30: major — anti=Yea — Resolution directing the President to remove all United States Armed Forces, except those 
     ↺ senate-2023-201: anti side corrected Yea→Nay (sponsor R000122 voted Nay)
-    ✓ senate-2023-201 S2226: minor — anti=Nay — The amendment would have required independent audits of U.S. military, economic, and human
+    ✓ senate-2023-201 S2226: minor — anti=Nay — The amendment would have required independent audits of U.S. military, economic and humani
     ↺ senate-2023-195: anti side corrected Yea→Nay (sponsor R000122 voted Nay)
     ✓ senate-2023-195 S2226: major — anti=Nay — The Senate rejected an amendment that would have limited the availability of funds for U.S
-    ✓ senate-2023-192 S2226: minor — anti=None — The Senate rejected an amendment to the Foreign Assistance Act of 1961 that would clarify 
-    ✓ house-2023-136 H CON RES 21: major — anti=Yea — The resolution would direct the President to withdraw U.S. armed forces from Syria under t
-    ✓ senate-2023-77 S316: major — anti=Yea — The Senate passed S316, repealing the authorizations for use of military force against Ira
+    ↺ senate-2023-192: anti side corrected Yea→Nay (sponsor R000122 voted Nay)
+    ✓ senate-2023-192 S2226: minor — anti=Nay — An amendment to clarify the meaning of "aggregate value" for the President's drawdown auth
+    ✓ house-2023-136 H CON RES 21: major — anti=Yea — The resolution directed the President to withdraw U.S. armed forces from Syria under the W
+    ✓ senate-2023-77 S316: major — anti=Yea — The bill repealed the authorizations for use of military force against Iraq.
     ↺ senate-2023-76: anti side corrected Yea→Nay (sponsor K000384 voted Nay)
     ✓ senate-2023-76 S316: major — anti=Nay — The amendment would have repealed the authorizations for use of military force against Ira
     ↺ senate-2023-75: anti side corrected Yea→Nay (sponsor K000384 voted Nay)
     ✓ senate-2023-75 S316: major — anti=Nay — The Senate rejected an amendment to repeal the authorizations for use of military force ag
     ↺ senate-2023-74: anti side corrected Yea→Nay (sponsor K000384 voted Nay)
-    ✓ senate-2023-74 S316: major — anti=Nay — The Senate rejected an amendment that would have repealed the authorizations for use of mi
+    ✓ senate-2023-74 S316: major — anti=Nay — The amendment would have repealed the authorizations for use of military force against Ira
     ↺ senate-2023-73: anti side corrected Yea→Nay (sponsor K000384 voted Nay)
-    ✓ senate-2023-73 S316: major — anti=Nay — The Senate rejected an amendment that would have repealed the authorizations for use of mi
-    ✓ senate-2023-72 S316: major — anti=Nay — The Senate rejected an amendment that would have repealed the authorizations for use of mi
+    ✓ senate-2023-73 S316: major — anti=Nay — The amendment sought to repeal the authorizations for use of military force against Iraq.
+    ↺ senate-2023-72: anti side corrected Yea→Nay (sponsor K000384 voted Nay)
+    ✓ senate-2023-72 S316: major — anti=Nay — An amendment to repeal the authorizations for use of military force against Iraq was consi
     ↺ senate-2023-71: anti side corrected Yea→Nay (sponsor K000384 voted Nay)
-    ✓ senate-2023-71 S316: major — anti=Nay — The Senate rejected an amendment to repeal the authorizations for use of military force ag
-    ✓ senate-2023-70 S316: major — anti=Yea — The Senate invoked cloture on a bill to repeal the authorization for use of military force
+    ✓ senate-2023-71 S316: major — anti=Nay — An amendment to repeal the authorizations for use of military force against Iraq was rejec
+    ✓ senate-2023-70 S316: major — anti=Yea — The Senate agreed to a cloture motion on a bill that would repeal the authorization for us
     ↺ senate-2023-69: anti side corrected Yea→Nay (sponsor K000384 voted Nay)
-    ✓ senate-2023-69 S316: major — anti=Nay — The amendment sought a delayed, conditional repeal of the 2002 Authorization for Use of Mi
+    ✓ senate-2023-69 S316: major — anti=Nay — The amendment would have provided for a delayed, conditional repeal of the 2002 Authorizat
     ↺ senate-2023-67: anti side corrected Yea→Nay (sponsor K000384 voted Nay)
-    ✓ senate-2023-67 S316: major — anti=Nay — The Senate rejected an amendment (S316) that would have terminated all authorizations for 
+    ✓ senate-2023-67 S316: major — anti=Nay — The Senate rejected an amendment that would have terminated existing authorizations for th
     ↺ senate-2023-66: anti side corrected Yea→Nay (sponsor K000384 voted Nay)
-    ✓ senate-2023-66 S316: major — anti=Nay — The Senate rejected an amendment that would have narrowed the 2002 Authorization for Use o
+    ✓ senate-2023-66 S316: major — anti=Nay — The amendment aimed to provide more targeted authority under the 2002 Authorization for Us
     ↺ senate-2023-65: anti side corrected Yea→Nay (sponsor K000384 voted Nay)
-    ✓ senate-2023-65 S316: major — anti=Nay — The Senate rejected an amendment to repeal the 2001 Authorization for Use of Military Forc
+    ✓ senate-2023-65 S316: major — anti=Nay — The Senate rejected an amendment that would have repealed the 2001 Authorization for Use o
     ✓ senate-2022-719 HR7691: major — anti=Nay — The bill provided emergency supplemental appropriations for assistance to Ukraine for the 
-  [votes_ai_relevance] 904 topical roll calls · 109 judged relevant · 151 awaiting AI judgment — web-search AI unavailable; judging only votes with a recorded description
+    ✓ house-2022-348 H R 7900: major — anti=Yea — The amendment would reduce the sunset provision for Section 5112(c) of the Department of S
+    ✓ house-2022-339 H R 7900: major — anti=Yea — Amendment prohibits the President from selling or exporting new F‑16s or upgrade kits to T
+    ✓ house-2022-335 H R 7900: minor — anti=Yea — Amendment to prohibit U.S. military presence in Syria without Congressional approval withi
+    ✓ house-2022-329 H R 7900: minor — anti=None — The amendment required the Secretary of Defense to conduct a gender analysis of the Intern
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198654, Requested 1842. Please try again in 3m34.272s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 2048. The request's expected output tokens exceed the enforced limit; reduce max_tokens (or the request's expected output) and try again. Need more tokens? Upgrade to Dev Tier today at https://console
+    ✓ house-2022-316 H R 7900: major — anti=Yea — The amendment sought to cut the National Defense Authorization Act for FY2023 by $100 bill
+    ✓ house-2022-145 H R 7691: major — anti=Nay — Provided $5.5 billion in additional military aid to Ukraine.
+    ✓ house-2022-144 H RES 1097: major — anti=Nay — The House passed a resolution to agree to consider the Additional Ukraine Supplemental App
+    ✓ house-2022-141 S 3522: major — anti=None — Passed the Ukraine Democracy Defense Lend-Lease Act, providing aid to Ukraine.
+  [votes_ai_relevance] 904 topical roll calls · 116 judged relevant · 87 awaiting AI judgment
 
 [3] General information
   [primary_calendar] cache fresh
-    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Lana_Leguia :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
-    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Michael_Thompson_Florida_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
-    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Robert_Strickler_Pennsylvania_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
-    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Steven_Wright_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
-    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Everett_Jackson :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
-    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Niina_Threlfall-Baum :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
-    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Casey_Norton_Georgia_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
-    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Hunter_Miranda_California_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
-    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Julie_Perry_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
-    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Timothy_Veldhuizen_Colorado_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
-    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Favian_Valencia_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
-    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Rebecca_Mueller :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
-  [enrichment] refreshed 250/250 this run · 1146/4474 people have a bio
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Connor_Burbridge_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Brianna_Woodson_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Thomas_Stalcup :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Kiana_Bierria-Anderson_New_York_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Mariela_Roca_Maryland_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Jeffery_Belle :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Jesse_Vodvarka :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/James_Russell_Arkansas_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Christian_Hurd_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Pearl_Vuorinen :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Krista_Penn :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Nicholas_Manganaro :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Leonard_Fechter_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Michael_Stansfield :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Ethan_Dunbar_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Mark_Wheeler :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Clarence_Blalock :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Lorenzo_Santos :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+  [enrichment] refreshed 250/250 this run · 1145/4474 people have a bio
+  [wikipedia_results] 85 state election pages (85 refreshed) · 1147 result boxes
 
 [4b] Candidate positions (AI research)
-  [fec_websites] looked up 0 committees · 483 campaign websites known
-  [ai_positions] no AI provider available
+  [fec_websites] looked up 189 committees · 629 campaign websites known
+    HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
+  ⚡ ai_gemini: circuit opened (every available model is over quota or retired) — skipping its remaining calls
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.VOTEJOHNMILLS.ORG
+    HTTP 403 https://WWW.SHERRODBROWN.COM :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
+    HTTP 403 https://WWW.RAJAFORIL.COM :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://TUREK4IOWA.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://VOTE4ANTHONY.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://COOKEFORWISCONSIN.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://MICHELETAFOYA.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://PEGGYFLANAGAN.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://OSBORNFORSENATE.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://MIKECOLLINSGA.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.NATEMORRIS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW,SHAWNFORGEORGIA.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://ELAINEFORCONGRESS.COM/
+    RemoteDisconnected: Remote end closed connection without response :: https://WWW.BLAKEMIGUEZ.COM
+    HTTP 520 https://PAIGEFORPA.COM :: error code: 520 
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://AGERFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.KILLINFORCOLORADO.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.KOHFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.ODEFOROHIO.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://WWW.LAURIEBUCKHOUTFORCONGRESS.COM/
+    RemoteDisconnected: Remote end closed connection without response :: https://WWW.PIAFORCONGRESS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://SHANNONTAYLORVA.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://SCOTTCOLOM.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.HALLIEFORARKANSAS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.LUKEBRONIN.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://POINDEXTERFORCONGRESS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.DANIELBISS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://WWW.PAULWASSGREN.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://STEFANYSHAHEEN.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.MICHAELECHOLS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.WILEYNICKEL.COM/
+    RemoteDisconnected: Remote end closed connection without response :: https://WWW.OJEDAFORNC.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://BETHMACYFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://FRIENDSOFMICHAELBOUCHARD.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://BENMCADAMSUTAH.COM/
+    HTTP 520 https://WWW.ELECTMIKEBELTRAN.COM :: error code: 520 
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://DONNAFORCONGRESS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://DANGREENFL.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://DRPANFORCONGRESS.COM/
+    InvalidURL: URL can't contain control characters. 'NONE AT THIS TIME' (found at least ' ') :: https://NONE AT THIS TIME
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://RAKHIFORCONGRESS.COM/
+    URLError: <urlopen error [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1016)> :: https://ERICCONROY.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://BALEDALTON.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://WWW.VOTEMIKEMCGUIRE.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://WWW.WELLMANFORMO.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://MELISSAHERNANDEZ2026.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://CHRISJONESFORCONGRESS.COM
+  [ai_positions] researched 60 this run (campaign_site_text: 60) · 123 total · 14 with cited anti-interventionist positions
 
 [4d] Outside spending
   [fec_outside_spending] refreshed 106, 411 candidates with outside-spending records
@@ -113,16 +185,16 @@ AECT pipeline v10 — 2026-10-31 · 119th Congress · 2026 cycle
 STREAM                       STATUS     COUNT  NOTES / ERRORS
 ────────────────────────────────────────────────────────────────────────
 ai_gemini                    —              0  HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "er
-ai_groq                      —              0  models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
-ai_positions                 FAIL          63  no AI provider available
+ai_groq                      —              0  HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model 
+ai_positions                 OK           123  researched 60 this run (campaign_site_text: 60) · 123 total · 14 with cited anti-interventionist positions
 ai_xai                       —              0  HTTP 403 https://api.x.ai/v1/responses :: {"code":"permission-denied","error":"Your newly created team doesn't
 ballotpedia                  —              0  
 congress_gov                 OK           539  amendment fields: ['actions', 'amendedBill', 'chamber', 'congress', 'description', 'latestAction', 'number', '
-enrichment                   OK          1146  refreshed 250/250 this run · 1146/4474 people have a bio
+enrichment                   OK          1145  refreshed 250/250 this run · 1145/4474 people have a bio
 fec_candidates               OK          4353  4353 active 2026 House+Senate filers
-fec_finance                  OK          3861  totals for 3861 filers
+fec_finance                  OK          4037  totals for 4037 filers
 fec_outside_spending         OK           411  refreshed 106, 411 candidates with outside-spending records
-fec_websites                 OK           483  looked up 0 committees · 483 campaign websites known
+fec_websites                 OK           629  looked up 189 committees · 629 campaign websites known
 grokipedia                   —              0  
 market_kalshi                OK         25259  40 pages · 25259 political markets
 market_polymarket            OK          1028  800 catalog pages scanned · 1028 open congressional markets
@@ -133,11 +205,12 @@ rlc                          OK           283  endorsements: 9 candidates
 roster_house                 OK           433  433 Representatives + 6 delegates, 2 vacancies (published October 1, 2026)
 roster_senate                OK           100  100 senators (file last updated 2026-10-08T14:47-05:00)
 trackaipac                   OK           533  /endorsements: 38 endorsed candidates
-votes_ai_relevance           OK           109  904 topical roll calls · 109 judged relevant · 151 awaiting AI judgment — web-search AI unavailable; judging o
+votes_ai_relevance           OK           116  904 topical roll calls · 116 judged relevant · 87 awaiting AI judgment
 votes_house_xml              OK          2915  2026 roll 315: no <vote-metadata> (root <xml>)
 votes_senate_voteview        OK          2555  2555 Senate roll calls indexed from Voteview (+0 topical this run)
 votes_senate_xml             —              0  HTTP 403 https://www.senate.gov/legislative/LIS/roll_call_lists/vote_menu_119_2.xml :: <!DOCTYPE HTML PUBLIC "
-wikipedia                    —              0  HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Lana_Leguia :: You are making too many requests to 
+wikipedia                    —              0  HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Connor_Burbridge_politician :: You are making too m
+wikipedia_results            OK            85  85 state election pages (85 refreshed) · 1147 result boxes
 ════════════════════════════════════════════════════════════════════════
 {
  "members": 533,
@@ -148,7 +221,7 @@ wikipedia                    —              0  HTTP 429 https://en.wikipedia.o
   "I": 2
  },
  "anti_candidates": 6,
- "relevant_votes": 109,
+ "relevant_votes": 116,
  "odds": 358,
  "history_events_added": 0
 }

@@ -1,14 +1,14 @@
 {
- "run_at": "2026-10-31T19:46:18.748646+00:00",
- "runtime_s": 3517,
+ "run_at": "2026-10-31T20:49:58.547567+00:00",
+ "runtime_s": 3800,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
-  "gemini": 11,
+  "gemini": 9,
   "xai": 0,
   "openrouter": 0,
-  "groq": 126,
-  "failed": 0
+  "groq": 252,
+  "failed": 1
  },
  "streams": {
   "key:CONGRESS_KEY": {
@@ -115,7 +115,7 @@
   "congress_gov": {
    "ok": true,
    "count": 539,
-   "requests": 52,
+   "requests": 139,
    "failures": 0,
    "errors": [],
    "notes": [
@@ -136,12 +136,12 @@
   },
   "fec_finance": {
    "ok": true,
-   "count": 3861,
+   "count": 4037,
    "requests": 46,
    "failures": 0,
    "errors": [],
    "notes": [
-    "totals for 3861 filers"
+    "totals for 4037 filers"
    ]
   },
   "trackaipac": {
@@ -179,8 +179,8 @@
   "ai_gemini": {
    "ok": null,
    "count": 0,
-   "requests": 21,
-   "failures": 9,
+   "requests": 16,
+   "failures": 7,
    "errors": [
     "HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   \"error\": {     \"code\": 429,     \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",     \"status\": \"RESOURCE_EXHAUSTED\",     \"details\": [       {         \"@type\": \"type.googleapis.com/google.rpc",
     "HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?k :: {   \"error\": {     \"code\": 429,     \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \",     \"status\": \"RESOURCE_EXHAUSTED\",     \"details\": [       {         \"@type\": \"type.googleapis.com/google.rpc",
@@ -207,21 +207,24 @@
   "ai_groq": {
    "ok": null,
    "count": 0,
-   "requests": 127,
-   "failures": 0,
-   "errors": [],
+   "requests": 255,
+   "failures": 2,
+   "errors": [
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198654, Requested 1842. Please try again in 3m34.272s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 2048. The request's expected output tokens exceed the enforced limit; reduce max_tokens (or the request's expected output) and try again. Need more tokens? Upgrade to Dev Tier today at https://console"
+   ],
    "notes": [
     "models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b"
    ]
   },
   "votes_ai_relevance": {
    "ok": true,
-   "count": 109,
+   "count": 116,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "904 topical roll calls \u00b7 109 judged relevant \u00b7 151 awaiting AI judgment \u2014 web-search AI unavailable; judging only votes with a recorded description"
+    "904 topical roll calls \u00b7 116 judged relevant \u00b7 87 awaiting AI judgment"
    ]
   },
   "primary_calendar": {
@@ -245,54 +248,79 @@
   "wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 700,
-   "failures": 12,
+   "requests": 702,
+   "failures": 18,
    "errors": [
-    "HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Lana_Leguia :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho",
-    "HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Michael_Thompson_Florida_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho",
-    "HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Robert_Strickler_Pennsylvania_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho",
-    "HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Steven_Wright_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho",
-    "HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Everett_Jackson :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho",
-    "HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Niina_Threlfall-Baum :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho"
+    "HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Connor_Burbridge_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho",
+    "HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Brianna_Woodson_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho",
+    "HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Thomas_Stalcup :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho",
+    "HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Kiana_Bierria-Anderson_New_York_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho",
+    "HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Mariela_Roca_Maryland_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho",
+    "HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Jeffery_Belle :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho"
    ],
    "notes": []
   },
   "grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 225,
+   "requests": 226,
    "failures": 0,
    "errors": [],
    "notes": []
   },
   "enrichment": {
    "ok": true,
-   "count": 1146,
+   "count": 1145,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 250/250 this run \u00b7 1146/4474 people have a bio"
+    "refreshed 250/250 this run \u00b7 1145/4474 people have a bio"
+   ]
+  },
+  "wikipedia_results": {
+   "ok": true,
+   "count": 85,
+   "requests": 119,
+   "failures": 0,
+   "errors": [],
+   "notes": [
+    "85 state election pages (85 refreshed) \u00b7 1147 result boxes"
    ]
   },
   "fec_websites": {
    "ok": true,
-   "count": 483,
-   "requests": 0,
+   "count": 629,
+   "requests": 189,
    "failures": 0,
    "errors": [],
    "notes": [
-    "looked up 0 committees \u00b7 483 campaign websites known"
+    "looked up 189 committees \u00b7 629 campaign websites known"
    ]
   },
+  "campaign_sites": {
+   "ok": null,
+   "count": 0,
+   "requests": 114,
+   "failures": 48,
+   "errors": [
+    "HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA",
+    "URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.VOTEJOHNMILLS.ORG",
+    "HTTP 403 https://WWW.SHERRODBROWN.COM :: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA",
+    "HTTP 403 https://WWW.RAJAFORIL.COM :: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA",
+    "URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://TUREK4IOWA.COM/",
+    "URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://VOTE4ANTHONY.COM/"
+   ],
+   "notes": []
+  },
   "ai_positions": {
-   "ok": false,
-   "count": 63,
+   "ok": true,
+   "count": 123,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "no AI provider available"
+    "researched 60 this run (campaign_site_text: 60) \u00b7 123 total \u00b7 14 with cited anti-interventionist positions"
    ]
   },
   "fec_outside_spending": {
@@ -355,7 +383,7 @@
    "I": 2
   },
   "anti_candidates": 6,
-  "relevant_votes": 109,
+  "relevant_votes": 116,
   "odds": 358,
   "history_events_added": 0
  }
