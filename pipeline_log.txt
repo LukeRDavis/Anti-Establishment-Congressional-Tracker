@@ -1,4 +1,4 @@
-AECT pipeline v10 — 2026-10-30 · 119th Congress · 2026 cycle
+AECT pipeline v10 — 2026-10-31 · 119th Congress · 2026 cycle
 
 [Keys]
   CONGRESS_KEY         present
@@ -17,138 +17,127 @@ AECT pipeline v10 — 2026-10-30 · 119th Congress · 2026 cycle
   [congress_gov] 539 current members
 
 [2] FEC candidates and finance
-  [fec_candidates] cache fresh
-  [fec_finance] cache fresh
+  [fec_candidates] 4353 active 2026 House+Senate filers
+  [fec_finance] totals for 3861 filers
 
 [4c] Trackers
+  [trackaipac] /congress: 533 members, 24 approved
+  [trackaipac] /endorsements: 38 endorsed candidates
+  [rlc] Liberty Index cache fresh
+  [rlc] endorsements: 9 candidates
 
-  People universe: 4471 (533 members, 3938 candidates)
+  People universe: 4474 (533 members, 3941 candidates)
 
 [4a] Roll-call votes
   [votes_house_xml] 2915 House roll calls cached (+0 this run)
   [votes_senate_voteview] 2555 Senate roll calls indexed from Voteview (+0 topical this run)
+  [congress_gov] house-vote fields: ['amendmentAuthor', 'amendmentNumber', 'amendmentType', 'congress', 'identifier', 'legislationNumber', 'legislationType', 'legislationUrl', 'result', 'rollCallNumber', 'sessionNumber', 'sourceDataURL', 'startDate', 'updateDate', 'votePartyTotal', 'voteQuestion', 'voteType']
+  [congress_gov] amendment fields: ['actions', 'amendedBill', 'chamber', 'congress', 'description', 'latestAction', 'number', 'purpose', 'sponsors', 'submittedDate', 'textVersions', 'type', 'updateDate']
   [ai_gemini] models available: gemini-3.8-flash, gemini-3.7-flash, gemini-3.6-flash
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc
     HTTP 403 https://api.x.ai/v1/responses :: {"code":"permission-denied","error":"Your newly created team doesn't have any credits or licenses yet. You can purchase those on https://console.x.ai/team/55ff7aec-2862-4402-9ddd-4f8250d1da04."}
   ⚡ ai_xai: circuit opened (HTTP 403) — skipping its remaining calls
+    HTTP 503 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "error": {     "code": 503,     "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",     "status": "UNAVAILABLE"   } } 
+    HTTP 503 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?k :: {   "error": {     "code": 503,     "message": "This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",     "status": "UNAVAILABLE"   } } 
+  [ai_groq] models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
+    ✓ house-2023-305 H R 2670: minor — anti=Yea — The amendment would have struck a feasibility study for creating a Center of Excellence in
+    ✓ house-2023-304 H R 2670: major — anti=Yea — This amendment offered by Rep. Matt Gaetz sought to prohibit all federal security assistan
+    ✓ house-2023-303 H R 2670: major — anti=Yea — Failed amendment to the FY2024 NDAA to strike $300 million authorized for the Ukraine Secu
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20,
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20,
-    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20,
-  [ai_groq] models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
-    ✓ house-2024-335 H R 8771: minor — anti=Nay — The House passed H.R. 8771, appropriating funds for the Department of State, foreign opera
-  [congress_gov] house-vote fields: ['amendmentAuthor', 'amendmentNumber', 'amendmentType', 'congress', 'identifier', 'legislationNumber', 'legislationType', 'legislationUrl', 'result', 'rollCallNumber', 'sessionNumber', 'sourceDataURL', 'startDate', 'updateDate', 'votePartyTotal', 'voteQuestion', 'voteType']
-  [congress_gov] amendment fields: ['actions', 'amendedBill', 'chamber', 'congress', 'description', 'latestAction', 'number', 'purpose', 'sponsors', 'submittedDate', 'type', 'updateDate']
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199154, Requested 1424. Please try again in 4m9.696s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-    ✓ house-2024-239 H R 8580: major — anti=Yea — The House voted down an amendment to strike funding for the North Atlantic Treaty Organiza
-    ✓ house-2024-217 H R 8369: major — anti=Nay — Passed the Israel Security Assistance Support Act, which authorizes additional military ai
-    ↺ house-2024-216: anti side corrected Nay→Yea (sponsor C000059 voted Nay)
-    ✓ house-2024-216 H R 8369: major — anti=Yea — The House voted to reject a motion to recommit the Israel Security Assistance Support Act,
-    ✓ house-2024-152 H R 8034: major — anti=Nay — Passed the Israel Security Supplemental Appropriations Act, 2024, providing $14.3 billion 
-    ✓ house-2024-151 H R 8035: major — anti=Nay — Passed the Ukraine Security Supplemental Appropriations Act, 2024, providing approximately
-    ↺ house-2024-150: anti side corrected Nay→Yea (sponsor C001053 voted Nay)
-    ✓ house-2024-150 H R 8035: major — anti=Yea — The House voted on a motion to recommit the Ukraine Security Supplemental Appropriations A
-    ✓ house-2024-149 H R 8035: major — anti=None — The House rejected an amendment to eliminate all non-military funding for Ukraine, thereby
-    ✓ house-2024-147 H R 8035: major — anti=Yea — The House rejected an amendment that would have struck provisions increasing the President
-    ✓ house-2024-137 H R 6046: major — anti=Nay — The House passed the Standing Against Houthi Aggression Act, authorizing the use of milita
-    ✓ house-2024-123 H R 5921: major — anti=Yea — Passed the No U.S. Financing for Iran Act, which prohibits the use of U.S. government fund
-    ✓ house-2024-38 H R 7217: major — anti=Nay — The House voted down a motion to suspend the rules and pass the Israel Security Supplement
-    ✓ house-2023-687 H R 5961: major — anti=Yea — Passed the No Funds for Iranian Terrorism Act, which prohibits the use of U.S. funds for t
-    ✓ house-2023-684 H R 5961: minor — anti=Yea — The House agreed to an amendment prohibiting the President from waiving statutory restrict
-    ✓ house-2023-682 H R 5961: major — anti=Yea — The House agreed to an amendment prohibiting the use of federal funds to provide financial
-    ✓ house-2023-561 H R 340: major — anti=Yea — Passed the Hamas and Other Palestinian Terrorist Groups International Financing Prevention
-    ✓ house-2023-500 H R 4665: minor — anti=Nay — Passed the Department of State, Foreign Operations, and Related Programs Appropriations Ac
-    ↺ house-2023-498: anti side corrected Nay→Yea (sponsor B001248 voted Yea)
-    ✓ house-2023-498 H R 4665: minor — anti=Yea — The House rejected an amendment to reduce foreign assistance to countries based on the num
-    ✓ house-2023-497 H R 4665: minor — anti=Yea — The House rejected an amendment that would have prohibited the use of funds from the bill 
-    ✓ house-2023-482 H R 4665: major — anti=Yea — The House voted down an amendment that would have prohibited the use of funds in the bill 
-    ✓ house-2023-476 H R 4665: minor — anti=Yea — The House voted down an amendment to the FY2024 State Department and Foreign Operations Ap
-    ✓ house-2023-475 H R 4665: major — anti=Yea — The House rejected an amendment to prohibit the use of funds for the Lebanese Armed Forces
-    ✓ house-2023-474 H R 4665: major — anti=Yea — The House voted down an amendment that would have prohibited the use of funds to initiate 
-    ✓ house-2023-473 H R 4665: major — anti=Yea — The House voted down an amendment to prohibit assistance to Ukraine, thereby allowing the 
-    ✓ house-2023-468 H R 4665: major — anti=Yea — The House rejected an amendment to reduce Economic Support Fund funding for Egypt and Jord
-    ✓ house-2023-439 H R 4365: minor — anti=Yea — The House rejected an amendment to prohibit the use of funds from the bill to transfer clu
-    ✓ house-2023-438 H R 4365: major — anti=Yea — The House voted down an amendment by Rep. Matt Gaetz that would have prohibited the provis
-    ✓ house-2023-432 H R 4365: major — anti=Yea — The vote rejected an amendment to reduce funding for the Ukraine Security Assistance Initi
-    ✓ house-2023-371 H R 4366: minor — anti=Yea — The House rejected an amendment to reduce the NATO Security Investment Program account by 
-    ✓ house-2023-370 H R 4366: minor — anti=Yea — The House rejected an amendment to reduce the NATO Security Investment Program by $3 milli
-    ✓ senate-2023-333 SJRES51: major — anti=Yea — The Senate rejected a motion to discharge a joint resolution that would have directed the 
-    ✓ house-2023-323 H R 2670: major — anti=Yea — The House agreed to an amendment prohibiting the Department of Defense from providing any 
-    ✓ house-2023-319 H R 2670: minor — anti=Yea — The House rejected an amendment to strike Section 217 of H.R. 2670, which would have remov
-    ✓ house-2023-317 H R 2670: major — anti=Yea — The House rejected an amendment that would have prohibited the sale or transfer of cluster
-    ✓ senate-2023-309 HR6126: major — anti=Yea — The Senate voted to table H.R. 6126, a bill providing emergency supplemental appropriation
-    ✓ house-2023-307 H R 2670: major — anti=Yea — The vote failed to adopt an amendment that would have struck the provision extending lend-
-  [votes_ai_relevance] 904 topical roll calls · 88 judged relevant · 286 awaiting AI judgment
+    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 5, 
+    ✓ senate-2023-270 SJRES44: major — anti=Yea — The Senate rejected a motion to discharge a joint resolution that would have ordered the r
+    ✓ house-2023-201 H CON RES 30: major — anti=Yea — The resolution directed the President to remove all United States Armed Forces, except tho
+    ↺ senate-2023-201: anti side corrected Yea→Nay (sponsor R000122 voted Nay)
+    ✓ senate-2023-201 S2226: minor — anti=Nay — The amendment would have required independent audits of U.S. military, economic, and human
+    ↺ senate-2023-195: anti side corrected Yea→Nay (sponsor R000122 voted Nay)
+    ✓ senate-2023-195 S2226: major — anti=Nay — The Senate rejected an amendment that would have limited the availability of funds for U.S
+    ✓ senate-2023-192 S2226: minor — anti=None — The Senate rejected an amendment to the Foreign Assistance Act of 1961 that would clarify 
+    ✓ house-2023-136 H CON RES 21: major — anti=Yea — The resolution would direct the President to withdraw U.S. armed forces from Syria under t
+    ✓ senate-2023-77 S316: major — anti=Yea — The Senate passed S316, repealing the authorizations for use of military force against Ira
+    ↺ senate-2023-76: anti side corrected Yea→Nay (sponsor K000384 voted Nay)
+    ✓ senate-2023-76 S316: major — anti=Nay — The amendment would have repealed the authorizations for use of military force against Ira
+    ↺ senate-2023-75: anti side corrected Yea→Nay (sponsor K000384 voted Nay)
+    ✓ senate-2023-75 S316: major — anti=Nay — The Senate rejected an amendment to repeal the authorizations for use of military force ag
+    ↺ senate-2023-74: anti side corrected Yea→Nay (sponsor K000384 voted Nay)
+    ✓ senate-2023-74 S316: major — anti=Nay — The Senate rejected an amendment that would have repealed the authorizations for use of mi
+    ↺ senate-2023-73: anti side corrected Yea→Nay (sponsor K000384 voted Nay)
+    ✓ senate-2023-73 S316: major — anti=Nay — The Senate rejected an amendment that would have repealed the authorizations for use of mi
+    ✓ senate-2023-72 S316: major — anti=Nay — The Senate rejected an amendment that would have repealed the authorizations for use of mi
+    ↺ senate-2023-71: anti side corrected Yea→Nay (sponsor K000384 voted Nay)
+    ✓ senate-2023-71 S316: major — anti=Nay — The Senate rejected an amendment to repeal the authorizations for use of military force ag
+    ✓ senate-2023-70 S316: major — anti=Yea — The Senate invoked cloture on a bill to repeal the authorization for use of military force
+    ↺ senate-2023-69: anti side corrected Yea→Nay (sponsor K000384 voted Nay)
+    ✓ senate-2023-69 S316: major — anti=Nay — The amendment sought a delayed, conditional repeal of the 2002 Authorization for Use of Mi
+    ↺ senate-2023-67: anti side corrected Yea→Nay (sponsor K000384 voted Nay)
+    ✓ senate-2023-67 S316: major — anti=Nay — The Senate rejected an amendment (S316) that would have terminated all authorizations for 
+    ↺ senate-2023-66: anti side corrected Yea→Nay (sponsor K000384 voted Nay)
+    ✓ senate-2023-66 S316: major — anti=Nay — The Senate rejected an amendment that would have narrowed the 2002 Authorization for Use o
+    ↺ senate-2023-65: anti side corrected Yea→Nay (sponsor K000384 voted Nay)
+    ✓ senate-2023-65 S316: major — anti=Nay — The Senate rejected an amendment to repeal the 2001 Authorization for Use of Military Forc
+    ✓ senate-2022-719 HR7691: major — anti=Nay — The bill provided emergency supplemental appropriations for assistance to Ukraine for the 
+  [votes_ai_relevance] 904 topical roll calls · 109 judged relevant · 151 awaiting AI judgment — web-search AI unavailable; judging only votes with a recorded description
 
 [3] General information
   [primary_calendar] cache fresh
-  [enrichment] refreshed 250/250 this run · 1089/4471 people have a bio
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Lana_Leguia :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Michael_Thompson_Florida_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Robert_Strickler_Pennsylvania_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Steven_Wright_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Everett_Jackson :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Niina_Threlfall-Baum :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Casey_Norton_Georgia_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Hunter_Miranda_California_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Julie_Perry_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Timothy_Veldhuizen_Colorado_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Favian_Valencia_politician :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+    HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Rebecca_Mueller :: You are making too many requests to the API. Please follow the best practices at https://www.mediawiki.org/wiki/Wikimedia_APIs/Rate_limits. If you are unsure ho
+  [enrichment] refreshed 250/250 this run · 1146/4474 people have a bio
 
 [4b] Candidate positions (AI research)
   [fec_websites] looked up 0 committees · 483 campaign websites known
-  ⚡ ai_gemini: circuit opened (every available model is over quota or retired) — skipping its remaining calls
-    HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.VOTEJOHNMILLS.ORG
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199149, Requested 1543. Please try again in 4m58.944s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-    HTTP 403 https://WWW.SHERRODBROWN.COM :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
-    HTTP 403 https://WWW.RAJAFORIL.COM :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://TUREK4IOWA.COM/
-    HTTP 403 https://WWW.ALEXVINDMAN.COM :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://VOTE4ANTHONY.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://COOKEFORWISCONSIN.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://MICHELETAFOYA.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://KEITHGROSS.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://PEGGYFLANAGAN.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.MCMORROWFORMICHIGAN.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://OSBORNFORSENATE.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://MIKECOLLINSGA.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.NATEMORRIS.COM
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW,SHAWNFORGEORGIA.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://ELAINEFORCONGRESS.COM/
-    RemoteDisconnected: Remote end closed connection without response :: https://WWW.BLAKEMIGUEZ.COM
-    HTTP 520 https://PAIGEFORPA.COM :: error code: 520 
-  [ai_positions] researched 60 this run (campaign_site_text: 60) · 63 total · 9 with cited anti-interventionist positions
+  [ai_positions] no AI provider available
 
 [4d] Outside spending
-  [fec_outside_spending] refreshed 6, 411 candidates with outside-spending records
+  [fec_outside_spending] refreshed 106, 411 candidates with outside-spending records
 
 [5] Prediction markets
   [market_polymarket] 800 catalog pages scanned · 1028 open congressional markets
-  [market_kalshi] 40 pages · 28031 political markets
-  [market_predictit] 754 live contracts
-  [markets] 29813 market outcomes loaded · 389 tracked people matched
+  [market_kalshi] 40 pages · 25259 political markets
+  [market_predictit] 756 live contracts
+  [markets] 27043 market outcomes loaded · 358 tracked people matched
 
 ════════════════════════════════════════════════════════════════════════
 STREAM                       STATUS     COUNT  NOTES / ERRORS
 ────────────────────────────────────────────────────────────────────────
 ai_gemini                    —              0  HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "er
-ai_groq                      —              0  HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model 
-ai_positions                 OK            63  researched 60 this run (campaign_site_text: 60) · 63 total · 9 with cited anti-interventionist positions
+ai_groq                      —              0  models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
+ai_positions                 FAIL          63  no AI provider available
 ai_xai                       —              0  HTTP 403 https://api.x.ai/v1/responses :: {"code":"permission-denied","error":"Your newly created team doesn't
 ballotpedia                  —              0  
-campaign_sites               —              0  HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</ti
 congress_gov                 OK           539  amendment fields: ['actions', 'amendedBill', 'chamber', 'congress', 'description', 'latestAction', 'number', '
-enrichment                   OK          1089  refreshed 250/250 this run · 1089/4471 people have a bio
-fec_candidates               OK          4350  cache fresh
-fec_finance                  OK          3938  cache fresh
-fec_outside_spending         OK           411  refreshed 6, 411 candidates with outside-spending records
+enrichment                   OK          1146  refreshed 250/250 this run · 1146/4474 people have a bio
+fec_candidates               OK          4353  4353 active 2026 House+Senate filers
+fec_finance                  OK          3861  totals for 3861 filers
+fec_outside_spending         OK           411  refreshed 106, 411 candidates with outside-spending records
 fec_websites                 OK           483  looked up 0 committees · 483 campaign websites known
 grokipedia                   —              0  
-market_kalshi                OK         28031  40 pages · 28031 political markets
+market_kalshi                OK         25259  40 pages · 25259 political markets
 market_polymarket            OK          1028  800 catalog pages scanned · 1028 open congressional markets
-market_predictit             OK           754  754 live contracts
-markets                      OK           389  29813 market outcomes loaded · 389 tracked people matched
+market_predictit             OK           756  756 live contracts
+markets                      OK           358  27043 market outcomes loaded · 358 tracked people matched
 primary_calendar             OK            50  cache fresh
-rlc                          OK           283  
+rlc                          OK           283  endorsements: 9 candidates
 roster_house                 OK           433  433 Representatives + 6 delegates, 2 vacancies (published October 1, 2026)
 roster_senate                OK           100  100 senators (file last updated 2026-10-08T14:47-05:00)
-trackaipac                   OK             0  
-votes_ai_relevance           OK            88  904 topical roll calls · 88 judged relevant · 286 awaiting AI judgment
+trackaipac                   OK           533  /endorsements: 38 endorsed candidates
+votes_ai_relevance           OK           109  904 topical roll calls · 109 judged relevant · 151 awaiting AI judgment — web-search AI unavailable; judging o
 votes_house_xml              OK          2915  2026 roll 315: no <vote-metadata> (root <xml>)
 votes_senate_voteview        OK          2555  2555 Senate roll calls indexed from Voteview (+0 topical this run)
 votes_senate_xml             —              0  HTTP 403 https://www.senate.gov/legislative/LIS/roll_call_lists/vote_menu_119_2.xml :: <!DOCTYPE HTML PUBLIC "
-wikipedia                    —              0  
+wikipedia                    —              0  HTTP 429 https://en.wikipedia.org/api/rest_v1/page/summary/Lana_Leguia :: You are making too many requests to 
 ════════════════════════════════════════════════════════════════════════
 {
  "members": 533,
@@ -159,7 +148,7 @@ wikipedia                    —              0
   "I": 2
  },
  "anti_candidates": 6,
- "relevant_votes": 88,
- "odds": 389,
+ "relevant_votes": 109,
+ "odds": 358,
  "history_events_added": 0
 }
