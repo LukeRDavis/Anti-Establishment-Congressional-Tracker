@@ -17,6 +17,11 @@ def _env(*names):
 CONGRESS_KEY   = _env("CONGRESS_KEY", "CONGRESS_API_KEY")
 FEC_KEY        = _env("FEC_KEY", "FEC_API_KEY")
 GEMINI_KEY     = _env("GEMINI_KEY", "GEMINI_API_KEY", "GOOGLE_API_KEY")
+# Kill switch: AECT_GEMINI_PAUSED=true drops the key so no Gemini request is ever made
+# (set as a repository variable; the workflow defaults it to paused).
+GEMINI_PAUSED  = os.environ.get("AECT_GEMINI_PAUSED", "").strip().lower() in ("1", "true", "yes", "on")
+if GEMINI_PAUSED:
+    GEMINI_KEY = ""
 XAI_KEY        = _env("XAI_API_KEY", "XAI_KEY", "GROK_API_KEY")
 OPENROUTER_KEY = _env("OPENROUTER_API_KEY", "OPENROUTER_KEY")
 GROQ_KEY       = _env("GROQ_API_KEY", "GROQ_KEY")

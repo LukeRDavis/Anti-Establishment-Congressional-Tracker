@@ -28,7 +28,7 @@ import json, os, sys, time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from aect import ai, roster, fec, trackers, votes, enrich, positions, markets, build, results
-from aect.config import KEYS, CYCLE, CURRENT_CONGRESS, TODAY
+from aect.config import KEYS, CYCLE, CURRENT_CONGRESS, TODAY, GEMINI_PAUSED
 from aect.net import STREAMS, stream, now_iso
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -78,6 +78,10 @@ def main():
     print(f"AECT pipeline v10 — {TODAY} · {CURRENT_CONGRESS}th Congress · {CYCLE} cycle\n")
     print("[Keys]")
     for k, v in KEYS.items():
+        if k == "GEMINI_KEY" and GEMINI_PAUSED:
+            print(f"  {k:20} PAUSED (AECT_GEMINI_PAUSED) — no Gemini calls this run")
+            stream(f"key:{k}", ok=None, note="paused by AECT_GEMINI_PAUSED")
+            continue
         print(f"  {k:20} {'present' if v else 'MISSING'}")
         stream(f"key:{k}", ok=bool(v))
 
