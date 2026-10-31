@@ -27,152 +27,230 @@ AECT pipeline v10 — 2026-10-31 · 119th Congress · 2026 cycle
 [4a] Roll-call votes
   [votes_house_xml] 2915 House roll calls cached (+0 this run)
   [votes_senate_voteview] 2555 Senate roll calls indexed from Voteview (+0 topical this run)
+  [votes_ai_relevance] 904 topical roll calls · 126 judged relevant · 0 awaiting AI judgment
+
+[3] General information
+  [primary_calendar] cache fresh
+  [enrichment] refreshed 250/250 this run · 1238/4474 people have a bio
+    results: 2026 United States House of Representatives elections in California has no result boxes · 35277 chars · headings ['==Redistricting==', '===Background===', '==Overview==', '==Statewide polling==', '=== Statewide congressional polls ===', '==Districts 1–26==', '==Districts 27–52==', '==Notes==', '==References==', '==External links=='] · templates ['cite web', 'efn', 'efn-ua', 'elections in california', 'elections in california footer', 'endplainlist', 'for', 'horizontal toc', 'infobox election', 'main', 'maplink', 'notelist', 'notelist-ua', 'party color', 'party shading/democratic', 'party shading/democratic/hold', 'party shading/independent', 'party shading/republican/hold', 'party stripe', 'plainlist', 'shading pvi', 'short description', 'small', 'sortname', 'switcher', 'table alignment', 'use american english', 'use mdy dates', 'ushr']
+    results: no page "2026 California's 1st congressional district election"
+    results: no page "2026 California's 2nd congressional district election"
+    results: no page "2026 California's 3rd congressional district election"
+    results: no page "2026 California's 4th congressional district election"
+    results: no page "2026 California's 5th congressional district election"
+    results: no page "2026 California's 6th congressional district election"
+    results: no page "2026 California's 7th congressional district election"
+    results: no page "2026 California's 8th congressional district election"
+    results: no page "2026 California's 9th congressional district election"
+    results: no page "2026 California's 10th congressional district election"
+    results: no page "2026 California's 11th congressional district election"
+    results: no page "2026 California's 12th congressional district election"
+    results: no page "2026 California's 13th congressional district election"
+    results: no page "2026 California's 14th congressional district election"
+    results: no page "2026 California's 15th congressional district election"
+    results: no page "2026 California's 16th congressional district election"
+    results: no page "2026 California's 17th congressional district election"
+    results: no page "2026 California's 18th congressional district election"
+    results: no page "2026 California's 19th congressional district election"
+    results: no page "2026 California's 20th congressional district election"
+    results: no page "2026 California's 21st congressional district election"
+    results: no page "2026 California's 22nd congressional district election"
+    results: no page "2026 California's 23rd congressional district election"
+    results: no page "2026 California's 24th congressional district election"
+    results: no page "2026 California's 25th congressional district election"
+    results: no page "2026 California's 26th congressional district election"
+    results: no page "2026 California's 27th congressional district election"
+    results: no page "2026 California's 28th congressional district election"
+    results: no page "2026 California's 29th congressional district election"
+    results: no page "2026 California's 30th congressional district election"
+    results: no page "2026 California's 31st congressional district election"
+    results: no page "2026 California's 32nd congressional district election"
+    results: no page "2026 California's 33rd congressional district election"
+    results: no page "2026 California's 34th congressional district election"
+    results: no page "2026 California's 35th congressional district election"
+    results: no page "2026 California's 36th congressional district election"
+    results: no page "2026 California's 37th congressional district election"
+    results: no page "2026 California's 38th congressional district election"
+    results: no page "2026 California's 39th congressional district election"
+    results: no page "2026 California's 40th congressional district election"
+    results: no page "2026 California's 41st congressional district election"
+    results: no page "2026 California's 42nd congressional district election"
+    results: no page "2026 California's 43rd congressional district election"
+    results: no page "2026 California's 44th congressional district election"
+    results: no page "2026 California's 45th congressional district election"
+    results: no page "2026 California's 46th congressional district election"
+    results: no page "2026 California's 47th congressional district election"
+    results: no page "2026 California's 48th congressional district election"
+    results: no page "2026 California's 49th congressional district election"
+    results: no page "2026 California's 50th congressional district election"
+    results: no page "2026 California's 51st congressional district election"
+    results: no page "2026 California's 52nd congressional district election"
+    results: no page "2026 Connecticut's 2nd congressional district election"
+    results: no page "2026 Connecticut's 3rd congressional district election"
+    results: no page "2026 Florida's 59th congressional district election"
+    results: no page "2026 Georgia's 23rd congressional district election"
+    results: no page "2026 Iowa's 17th congressional district election"
+    results: no page "2026 Illinois's 51st congressional district election"
+    results: no page "2026 Maryland's 9th congressional district election"
+    results: no page "2026 Mississippi's 11th congressional district election"
+    results: no page "2026 Montana's 22nd congressional district election"
+    results: no page "2026 New Mexico's 66th congressional district election"
+    results: no page "2026 New York's 28th congressional district election"
+    results: no page "2026 Ohio's 65th congressional district election"
+    results: no page "2026 Oklahoma's 82nd congressional district election"
+    results: no page "2026 Pennsylvania's 36th congressional district election"
+    results: no page "2026 South Carolina's 86th congressional district election"
+    results: no page "2026 South Carolina's 89th congressional district election"
+    results: no page "2026 Utah's 9th congressional district election"
+    results: no page "2026 Utah's 71st congressional district election"
+    results: no page "2026 Washington's 12th congressional district election"
+    results: no page "2026 Washington's 38th congressional district election"
+  [wikipedia_results] 85 state election pages (85 refreshed) · 1147 result boxes
+
+[4b] Candidate positions (AI research)
+  [fec_websites] looked up 0 committees · 629 campaign websites known
   [ai_gemini] models available: gemini-3.8-flash, gemini-3.7-flash, gemini-3.6-flash
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc
     HTTP 403 https://api.x.ai/v1/responses :: {"code":"permission-denied","error":"Your newly created team doesn't have any credits or licenses yet. You can purchase those on https://console.x.ai/team/55ff7aec-2862-4402-9ddd-4f8250d1da04."}
   ⚡ ai_xai: circuit opened (HTTP 403) — skipping its remaining calls
-    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20,
-    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20,
-  [ai_groq] models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
-    ✓ house-2022-136 H R 6089: major — anti=Yea — The Stop Iranian Drones Act, passed by the House, bans U.S. assistance and export of drone
-    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20,
-    ✓ house-2022-130 H R 6930: major — anti=Nay — The Asset Seizure for Ukraine Reconstruction Act authorized the use of seized Russian asse
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199025, Requested 1236. Please try again in 1m52.752s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-    ↺ house-2022-70: anti side corrected Nay→Yea (sponsor D000399 voted Yea)
-    ✓ house-2022-70 H R 6968: major — anti=Yea — Passed the Suspending Energy Imports from Russia Act, which imposed a ban on the importati
-    ✓ senate-2021-484 SJRES31: major — anti=Yea — The Senate voted on a motion to discharge a joint resolution that would have disapproved a
-  [congress_gov] house-vote fields: ['amendmentAuthor', 'amendmentNumber', 'amendmentType', 'congress', 'identifier', 'legislationNumber', 'legislationType', 'legislationUrl', 'result', 'rollCallNumber', 'sessionNumber', 'sourceDataURL', 'startDate', 'updateDate', 'votePartyTotal', 'voteQuestion', 'voteType']
-  [congress_gov] amendment fields: ['actions', 'amendedBill', 'chamber', 'congress', 'description', 'latestAction', 'number', 'purpose', 'sponsors', 'submittedDate', 'textVersions', 'type', 'updateDate']
-    ✓ house-2021-279 H R 4350: major — anti=Yea — The House agreed to an amendment requiring the suspension of U.S. sustainment and maintena
-    ✓ house-2021-278 H R 4350: major — anti=Yea — The House agreed to an amendment to H.R. 4350 that terminates U.S. military logistical sup
-    ✓ house-2021-276 H R 4350: major — anti=Yea — The House voted down an amendment that would have prohibited the U.S. military presence in
-    ✓ house-2021-243 H R 4373: minor — anti=Nay — Passed the Department of State, Foreign Operations, and Related Programs Appropriations Ac
-    ✓ house-2021-172 H R 256: major — anti=Yea — The House voted to repeal the 2002 Authorization for Use of Military Force Against Iraq, r
-    ↺ house-2021-171: anti side corrected Yea→Nay (sponsor L000551 voted Nay)
-    ✓ house-2021-171 H R 256: major — anti=Nay — The House voted on a motion to recommit H.R. 256, which sought to repeal the 2002 Authoriz
-  [votes_ai_relevance] 904 topical roll calls · 126 judged relevant · 0 awaiting AI judgment
-
-[3] General information
-  [primary_calendar] cache fresh
-  [enrichment] refreshed 250/250 this run · 1193/4474 people have a bio
-  [wikipedia_results] 85 state election pages (85 refreshed) · 1147 result boxes
-
-[4b] Candidate positions (AI research)
-  [fec_websites] looked up 0 committees · 629 campaign websites known
   ⚡ ai_gemini: circuit opened (every available model is over quota or retired) — skipping its remaining calls
     HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.VOTEJOHNMILLS.ORG
     HTTP 403 https://WWW.SHERRODBROWN.COM :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
     HTTP 403 https://WWW.RAJAFORIL.COM :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://TUREK4IOWA.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://VOTE4ANTHONY.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://COOKEFORWISCONSIN.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://MICHELETAFOYA.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://PEGGYFLANAGAN.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://OSBORNFORSENATE.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://MIKECOLLINSGA.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://TUREK4IOWA.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://VOTE4ANTHONY.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://COOKEFORWISCONSIN.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://MICHELETAFOYA.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://PEGGYFLANAGAN.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://OSBORNFORSENATE.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://MIKECOLLINSGA.COM/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.NATEMORRIS.COM
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW,SHAWNFORGEORGIA.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://ELAINEFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://ELAINEFORCONGRESS.COM/
     RemoteDisconnected: Remote end closed connection without response :: https://WWW.BLAKEMIGUEZ.COM
     HTTP 520 https://PAIGEFORPA.COM :: error code: 520 
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://AGERFORCONGRESS.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.KILLINFORCOLORADO.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.KOHFORCONGRESS.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.ODEFOROHIO.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://WWW.LAURIEBUCKHOUTFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://AGERFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.KILLINFORCOLORADO.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.KOHFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.ODEFOROHIO.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://WWW.LAURIEBUCKHOUTFORCONGRESS.COM/
     RemoteDisconnected: Remote end closed connection without response :: https://WWW.PIAFORCONGRESS.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://SHANNONTAYLORVA.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://SCOTTCOLOM.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://SHANNONTAYLORVA.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://SCOTTCOLOM.COM/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.HALLIEFORARKANSAS.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.LUKEBRONIN.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://POINDEXTERFORCONGRESS.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.DANIELBISS.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://WWW.PAULWASSGREN.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://STEFANYSHAHEEN.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.LUKEBRONIN.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://POINDEXTERFORCONGRESS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.DANIELBISS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://WWW.PAULWASSGREN.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://STEFANYSHAHEEN.COM/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.MICHAELECHOLS.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.WILEYNICKEL.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.WILEYNICKEL.COM/
     RemoteDisconnected: Remote end closed connection without response :: https://WWW.OJEDAFORNC.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://BETHMACYFORCONGRESS.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://FRIENDSOFMICHAELBOUCHARD.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://BENMCADAMSUTAH.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://BETHMACYFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://FRIENDSOFMICHAELBOUCHARD.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://BENMCADAMSUTAH.COM/
     HTTP 520 https://WWW.ELECTMIKEBELTRAN.COM :: error code: 520 
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://DONNAFORCONGRESS.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://DANGREENFL.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://DRPANFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://DONNAFORCONGRESS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://DANGREENFL.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://DRPANFORCONGRESS.COM/
     InvalidURL: URL can't contain control characters. 'NONE AT THIS TIME' (found at least ' ') :: https://NONE AT THIS TIME
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://RAKHIFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://RAKHIFORCONGRESS.COM/
     URLError: <urlopen error [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1016)> :: https://ERICCONROY.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://BALEDALTON.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://WWW.VOTEMIKEMCGUIRE.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://WWW.WELLMANFORMO.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://MELISSAHERNANDEZ2026.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://CHRISJONESFORCONGRESS.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://WWW.ACHILLESFORIDAHO.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.ADRIANBOAFO.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://BALEDALTON.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://WWW.VOTEMIKEMCGUIRE.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://WWW.WELLMANFORMO.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://MELISSAHERNANDEZ2026.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://CHRISJONESFORCONGRESS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://WWW.ACHILLESFORIDAHO.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.ADRIANBOAFO.COM/
     URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)> :: https://MARKLAMBFORCONGRESS.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://WWW.MARTYJACKLEY.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://GALLANTNY.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://ROMEROFORCOLORADO.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://JOHNDEATONFORSENATE.CO
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://BROOKEPINTOFORCONGRESS.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.ELIOTTRODRIGUEZ.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.DANFORUSA.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://WWW.BERAFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://GALLANTNY.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://ROMEROFORCOLORADO.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://JOHNDEATONFORSENATE.CO
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://BROOKEPINTOFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.ELIOTTRODRIGUEZ.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.DANFORUSA.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://WWW.BERAFORCONGRESS.COM/
     HTTP 520 https://OLIVERGILBERT.VOTE :: error code: 520 
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.LILYTANGWILLIAMS.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.ELECTJDFORD.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://DONCOOVERFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.LILYTANGWILLIAMS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.ELECTJDFORD.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://DONCOOVERFORCONGRESS.COM/
     RemoteDisconnected: Remote end closed connection without response :: https://AMYROMA.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://VOTEFICKER.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://VOTEFICKER.COM/
     RemoteDisconnected: Remote end closed connection without response :: https://DOROTHYMCAULIFFE.COM
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.MICHELLESTEELFORCONGRESS.COM
     HTTP 403 https://WWW.ISAIAHMARTIN.ORG :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://WWW.ALANPARDEE.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://BACKNEBRASKA.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://BACKNEBRASKA.COM
     URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)> :: https://WWW.GILLFORNJ.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://PAULDANS.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://ELECTTERESA.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://JOINROBERTWHITE.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://STEVETOTHFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://PAULDANS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://ELECTTERESA.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://JOINROBERTWHITE.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://STEVETOTHFORCONGRESS.COM/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.MANDELFORCONGRESS.US
     HTTP 520 https://WWW.JENKINSFORFL.COM :: error code: 520 
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.SNEEDFORCONGRESS.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://AUDREYFORCONGRESS.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://HECTORMUJICA.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.CLIFFJOHNSONFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.SNEEDFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://AUDREYFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://HECTORMUJICA.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.CLIFFJOHNSONFORCONGRESS.COM/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.ERBECKFOROHIO.COM
-    HTTP 402 https://ETHAN4CONGRESS.COM :: Payment required  DEPLOYMENT_DISABLED  iad1::hc2mv-1793484673662-8a8235715c27 
+    HTTP 402 https://ETHAN4CONGRESS.COM :: Payment required  DEPLOYMENT_DISABLED  pdx1::mhvv6-1793485987241-f45b0a040644 
     RemoteDisconnected: Remote end closed connection without response :: https://JENANELSON.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://JAMESMARTINFORFLORIDA.COM/
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 1425. The request's expected output tokens exceed the enforced limit; reduce max_tokens (or the request's expected output) and try again. Need more tokens? Upgrade to Dev Tier today at https://console
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://CHAPINFORCONGRESS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://JAMESMARTINFORFLORIDA.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://CHAPINFORCONGRESS.COM
     RemoteDisconnected: Remote end closed connection without response :: https://WWW.RICHARD.VOTE
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'WWW.JULIEEMERSON.ORG'. (_ssl.c:1016)> :: https://WWW.JULIEEMERSON.ORG
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.DRKUMAR4CONGRESS.COM/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.PLASKETTFORCONGRESS.ORG
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.DRKUMAR4CONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.PLASKETTFORCONGRESS.ORG
     URLError: <urlopen error [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1016)> :: https://WWW.RICKEDMONDS.COM
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199915, Requested 1818. Please try again in 12m28.656s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-  [ai_openrouter] models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/gemma-4-31b-it:free, nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free, xingchen-agi/xing4.0-29b-a4b:free
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1793491200000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model 
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1793491200000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model 
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1793491200000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model 
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own pro
+  [ai_groq] models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'WWW.AARONFORNY23.COM'. (_ssl.c:1016)> :: https://WWW.AARONFORNY23.COM
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.DEFORDFORCONGRESS.COM
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://KATYFORKANSAS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://KATYFORKANSAS.COM/
     RemoteDisconnected: Remote end closed connection without response :: https://MICAHQJONES.COM
     HTTP 520 https://WWW.GRANTHAMFORCONGRESS.COM :: error code: 520 
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `allam-2-7b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 2468, Requested 3899. Please try again in 3.67s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-  ⚡ ai_groq: circuit opened (every available model failed or is over quota) — skipping its remaining calls
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own pro
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own pro
-  [ai_positions] researched 60 this run (campaign_site_text: 60) · 180 total · 15 with cited anti-interventionist positions
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.CHRISTINAFORCA.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://JAMIFLOYDFORCONGRESS.COM/
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199073, Requested 1383. Please try again in 3m16.992s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://WWW.HALPINFORCONGRESS.COM/
+    URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1016)> :: https://WWW.JAKEFORCONGRESS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.CAITLINROURK.COM/
+    URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'WWW.MEGANOROURKEFORCONGRESS.COM'. (_ssl.c:1016)> :: https://WWW.MEGANOROURKEFORCONGRESS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://N/A
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://TOMSMITHFORMI.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.DANFORMAINE.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://VOTEJACKPERRY.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WILSONFORCONGRESS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://LISARAMIREZ.COM/
+    URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)> :: https://EHRFORCONGRESS.US
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://GRAYZELFORCONGRESS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://ABELCHAVEZFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.ELLMANFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://NINALINHFORCONGRESS26.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://SUSANSTOREYRUBIOFORCONGRESS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.VANCILFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://TARADURANT.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.ALEXHAWKINSFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.BGP4AZ.COM
+    URLError: <urlopen error [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1016)> :: https://DEANNAGORDON.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.RAYMONDESMITHJR.COM
+    URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://RICKJAKIOUS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.DYLANHEWITT.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://JOELFORKENTUCKY.COM/
+    HTTP 520 https://RONDAKENNEDY.COM :: error code: 520 
+    HTTP 520 https://SALAAMFORVA.COM :: error code: 520 
+    RemoteDisconnected: Remote end closed connection without response :: https://VOTEGEORGEFORCONGRESS.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.ELECTMARKROBERTGORDON.COM/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.MELISAFORMINNESOTA.COM/
+    RemoteDisconnected: Remote end closed connection without response :: https://VINCENTMATRISCIANOFORCONGRESS.COM
+  [ai_positions] researched 60 this run (campaign_site_text: 60) · 240 total · 18 with cited anti-interventionist positions
 
 [4d] Outside spending
-  [fec_outside_spending] refreshed 1, 412 candidates with outside-spending records
+  [fec_outside_spending] refreshed 1, 413 candidates with outside-spending records
 
 [5] Prediction markets
   [market_polymarket] 800 catalog pages scanned · 1028 open congressional markets
@@ -185,16 +263,15 @@ STREAM                       STATUS     COUNT  NOTES / ERRORS
 ────────────────────────────────────────────────────────────────────────
 ai_gemini                    —              0  HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "er
 ai_groq                      —              0  HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model 
-ai_openrouter                —              0  HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-model
-ai_positions                 OK           180  researched 60 this run (campaign_site_text: 60) · 180 total · 15 with cited anti-interventionist positions
+ai_positions                 OK           240  researched 60 this run (campaign_site_text: 60) · 240 total · 18 with cited anti-interventionist positions
 ai_xai                       —              0  HTTP 403 https://api.x.ai/v1/responses :: {"code":"permission-denied","error":"Your newly created team doesn't
 ballotpedia                  —              0  
 campaign_sites               —              0  HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</ti
-congress_gov                 OK           539  amendment fields: ['actions', 'amendedBill', 'chamber', 'congress', 'description', 'latestAction', 'number', '
-enrichment                   OK          1193  refreshed 250/250 this run · 1193/4474 people have a bio
+congress_gov                 OK           539  539 current members
+enrichment                   OK          1238  refreshed 250/250 this run · 1238/4474 people have a bio
 fec_candidates               OK          4353  cache fresh
 fec_finance                  OK          4037  cache fresh
-fec_outside_spending         OK           412  refreshed 1, 412 candidates with outside-spending records
+fec_outside_spending         OK           413  refreshed 1, 413 candidates with outside-spending records
 fec_websites                 OK           629  looked up 0 committees · 629 campaign websites known
 grokipedia                   —              0  
 market_kalshi                OK         25333  40 pages · 25333 political markets
@@ -221,7 +298,7 @@ wikipedia_results            OK            85  85 state election pages (85 refre
   "D": 136,
   "I": 2
  },
- "anti_candidates": 7,
+ "anti_candidates": 8,
  "relevant_votes": 126,
  "odds": 358,
  "history_events_added": 0

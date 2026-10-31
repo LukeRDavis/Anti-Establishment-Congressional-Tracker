@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-31T22:22:41.226836+00:00",
+ "generated_at": "2026-10-31T22:50:44.890347+00:00",
  "challengers": [
   {
    "name": "Mai Vang",
@@ -187,6 +187,31 @@
     "trackaipac_endorsed"
    ],
    "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Joseph Tache",
+   "party": "O",
+   "state": "MA",
+   "district": null,
+   "chamber": "senate",
+   "antiArms": true,
+   "antiArmsLevel": "yes",
+   "antiArmsBasis": "statements",
+   "evidence": [
+    "Free Palestine and end the billionaires\u2019 war drive! (https://TACHE4MA.COM)"
+   ],
+   "ps": "WON",
+   "note": "Free Palestine and end the billionaires\u2019 war drive! (https://TACHE4MA.COM)",
+   "website": "https://TACHE4MA.COM",
+   "fec_ids": [
+    "S6MA00288"
+   ],
+   "primaryDate": "2026-09-01",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_Massachusetts",
+   "general_result": null,
+   "endorsed_by": [],
+   "source": "fec"
   }
  ]
 }
