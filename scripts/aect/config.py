@@ -23,6 +23,10 @@ GEMINI_PAUSED  = os.environ.get("AECT_GEMINI_PAUSED", "").strip().lower() in ("1
 if GEMINI_PAUSED:
     GEMINI_KEY = ""
 XAI_KEY        = _env("XAI_API_KEY", "XAI_KEY", "GROK_API_KEY")
+# xAI has no free tier — every call spends prepaid credit — so it is off unless AECT_XAI_ENABLED=true.
+XAI_ENABLED    = os.environ.get("AECT_XAI_ENABLED", "").strip().lower() in ("1", "true", "yes", "on")
+if not XAI_ENABLED:
+    XAI_KEY = ""
 OPENROUTER_KEY = _env("OPENROUTER_API_KEY", "OPENROUTER_KEY")
 GROQ_KEY       = _env("GROQ_API_KEY", "GROQ_KEY")
 LEGISCAN_KEY   = _env("LEGISCAN_KEY", "LEGISCAN_API_KEY")

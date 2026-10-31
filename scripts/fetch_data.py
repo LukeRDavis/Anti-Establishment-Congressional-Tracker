@@ -28,7 +28,7 @@ import json, os, sys, time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from aect import ai, roster, fec, trackers, votes, enrich, positions, markets, build, results
-from aect.config import KEYS, CYCLE, CURRENT_CONGRESS, TODAY, GEMINI_PAUSED
+from aect.config import KEYS, CYCLE, CURRENT_CONGRESS, TODAY, GEMINI_PAUSED, XAI_ENABLED
 from aect.net import STREAMS, stream, now_iso
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -81,6 +81,10 @@ def main():
         if k == "GEMINI_KEY" and GEMINI_PAUSED:
             print(f"  {k:20} PAUSED (AECT_GEMINI_PAUSED) — no Gemini calls this run")
             stream(f"key:{k}", ok=None, note="paused by AECT_GEMINI_PAUSED")
+            continue
+        if k == "XAI_API_KEY" and not XAI_ENABLED:
+            print(f"  {k:20} OFF (paid-only provider; set AECT_XAI_ENABLED=true to use)")
+            stream(f"key:{k}", ok=None, note="off: no free tier")
             continue
         print(f"  {k:20} {'present' if v else 'MISSING'}")
         stream(f"key:{k}", ok=bool(v))
