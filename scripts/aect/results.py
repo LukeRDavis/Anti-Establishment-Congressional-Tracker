@@ -24,7 +24,7 @@ from .net import get_json, stream, load_cache, save_cache, now_iso, age_hours
 
 API = "https://en.wikipedia.org/w/api.php"
 TTL_H = 6
-PARSE_VERSION = 2          # bump when the parser changes so cached pages are re-read
+PARSE_VERSION = 3          # bump when the parser changes so cached pages are re-read
 
 
 def _norm(s):
@@ -56,21 +56,22 @@ def _param(tpl, name):
 def _boxes(text):
     """Every {{Election box begin}} … {{Election box end}} block, with title and candidates."""
     out = []
-    starts = [m.start() for m in re.finditer(r"\{\{\s*Election box begin", text, re.I)]
+    starts = [m.start() for m in re.finditer(r"\{\{\s*Election[ _]box[ _](?:begin|top)", text, re.I)]
     for i, s in enumerate(starts):
-        e = text.find("{{Election box end", s)
+        m_end = re.compile(r"\{\{\s*Election[ _]box[ _]end", re.I).search(text, s)
+        e = m_end.start() if m_end else -1
         nxt = starts[i + 1] if i + 1 < len(starts) else len(text)
         block = text[s:(e if e != -1 and e < nxt else nxt)]
         title = _clean_name(_param(block, "title"))
         cands = []
-        for m in re.finditer(r"\{\{\s*Election box (winning candidate|candidate)[^|]*((?:\{\{[^{}]*\}\}|[^{}])*)\}\}",
+        for m in re.finditer(r"\{\{\s*Election[ _]box[ _](winning[ _]candidate|candidate)[^|]*((?:\{\{[^{}]*\}\}|[^{}])*)\}\}",
                              block, re.I):
             name = _clean_name(_param(m.group(2), "candidate"))
             if not name or name.lower() in ("write-in", "write-ins", "other", "none of these candidates"):
                 continue
             cands.append({"name": name, "votes": _num(_param(m.group(2), "votes")),
                           "pct": _num(_param(m.group(2), "percentage")),
-                          "winner": m.group(1).lower() == "winning candidate"})
+                          "winner": m.group(1).lower().startswith("winning")})
         t = title.lower()
         kind = "runoff" if "runoff" in t else "primary" if re.search(r"primar|nonpartisan|top[- ]two|jungle", t) else "general"
         out.append({"title": title, "kind": kind, "candidates": cands, "special": "special" in t,
@@ -82,14 +83,18 @@ def _sections(text, chamber):
     """{district: wikitext} for a House page; {None: page} for a Senate page or an at-large state."""
     if chamber == "senate":
         return {None: text}
-    parts = re.split(r"\n(={2,4})\s*District\s+(\d+)\s*\1\s*\n", "\n" + text)
+    # "== District 7 ==", "=== [[California's 7th congressional district|District 7]] ===",
+    # "== District 7 (Sacramento) ==", or "== 2026 California's 7th congressional district election =="
+    parts = re.split(r"\n(={2,4})[^=\n]*?(?:District\s+(\d+)\b|\b(\d+)(?:st|nd|rd|th)\s+congressional\s+district)"
+                     r"[^=\n]*\1[ \t]*(?=\n)", "\n" + text, flags=re.I)
     if len(parts) == 1:
         return {0: text}
     out = {}
-    for i in range(1, len(parts) - 2, 3):
-        body = parts[i + 2]
-        nxt = re.search(r"\n={2}[^=]", body)            # stop at the next top-level section
-        out[int(parts[i + 1])] = body[:nxt.start()] if nxt else body
+    for i in range(1, len(parts) - 3, 4):
+        level, num, body = len(parts[i]), parts[i + 1] or parts[i + 2], parts[i + 3]
+        nxt = re.search(r"\n={2,%d}[^=]" % level, body)  # stop at the next heading of the same or higher level
+        d = int(num)
+        out[d] = out.get(d, "") + (body[:nxt.start()] if nxt else body)
     return out
 
 
@@ -147,6 +152,10 @@ def fetch(people):
             text, url = _fetch_page(title)
             if text:
                 entry.update(url=url, races={str(d): _boxes(sec) for d, sec in _sections(text, chamber).items()})
+                if not any(entry["races"].values()):
+                    heads = re.findall(r"\n(={2,4}[^\n]{0,80})", text)[:12]
+                    tpls = sorted({t.strip().lower() for t in re.findall(r"\{\{\s*([A-Za-z][^|}\n]{2,40})", text)})[:40]
+                    print(f"    results: {title} has no result boxes · {len(text)} chars · headings {heads} · templates {tpls}")
                 fetched += 1
                 break
         if chamber == "house":
@@ -159,6 +168,8 @@ def fetch(people):
                     entry["races"][str(d)] = _boxes(text)
                     pages[str(d)] = url
                     fetched += 1
+                else:
+                    print(f"    results: no page \"{_district_title(state, d)}\"")
             if pages:
                 entry["district_urls"] = pages
         cache[key] = entry
