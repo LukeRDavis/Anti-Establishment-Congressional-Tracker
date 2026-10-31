@@ -61,7 +61,22 @@ def _error_body(e, n=300):
         return ""
 
 
+_HOST_LAST = {}
+_HOST_GAP = {"wikipedia.org": float(os.environ.get("AECT_WIKI_MIN_INTERVAL", "1.0"))}
+
+def _host_pace(url):
+    host = urllib.parse.urlsplit(url).hostname or ""
+    for suffix, gap in _HOST_GAP.items():
+        if host == suffix or host.endswith("." + suffix):
+            wait = _HOST_LAST.get(suffix, 0) + gap - time.time()
+            if wait > 0:
+                time.sleep(wait)
+            _HOST_LAST[suffix] = time.time()
+            return
+
+
 def _request(url, *, data=None, headers=None, timeout=30, method=None):
+    _host_pace(url)
     h = {"User-Agent": USER_AGENT, "Accept-Encoding": "gzip"}
     h.update(headers or {})
     req = urllib.request.Request(url, data=data, headers=h, method=method)
@@ -88,8 +103,9 @@ def get_bytes(url, *, stream_name=None, headers=None, timeout=30, retries=2,
                 _hit(stream_name)
                 return None
             if e.code == 429 and attempt < retries:
-                wait = int(e.headers.get("Retry-After", "0") or 0) or 8 * (attempt + 1)
-                time.sleep(min(wait, 30))
+                ra = (e.headers.get("Retry-After") or "0").strip()
+                wait = int(ra) if ra.isdigit() else 0
+                time.sleep(min(wait or 10 * (attempt + 1), 60))
                 continue
             msg = f"HTTP {e.code} {redact(url)[:110]} :: {body[:160]}"
             print(f"    {msg}")

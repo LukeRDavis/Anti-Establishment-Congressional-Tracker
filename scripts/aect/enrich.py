@@ -128,7 +128,7 @@ def _slug(name):
 def wikipedia(name, state, chamber):
     for title in (name, f"{name} (politician)", f"{name} ({STATE_NAMES.get(state, state)} politician)"):
         d = get_json(WIKIPEDIA_SUMMARY.format(slug=urllib.parse.quote(_slug(title))),
-                     stream_name="wikipedia", retries=1)
+                     stream_name="wikipedia", retries=2)
         if not d or d.get("type") == "disambiguation":
             continue
         extract = d.get("extract", "")
