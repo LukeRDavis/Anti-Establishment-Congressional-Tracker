@@ -343,6 +343,10 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
             "chamber_seats": {ch: sum(1 for m in members if m["chamber"] == ch)
                                   + sum(1 for v in meta_extra.get("vacancies", []) if v.get("chamber", "house") == ch)
                               for ch in ("house", "senate")},
+            # sitting members by caucus — the majority's margin is derived from this, not assumed
+            "chamber_party": {ch: {pt: sum(1 for m in members if m["chamber"] == ch
+                                           and (m.get("caucus") or m["party"]) == pt) for pt in ("R", "D", "I")}
+                              for ch in ("house", "senate")},
             "congress": CURRENT_CONGRESS, "next_congress": NEXT_CONGRESS,
             "member_count": len(members), "anti_intervention_count": len(anti_members),
             "anti_by_party": {pt: sum(1 for m in anti_members if (m.get("caucus") or m["party"]) == pt)
