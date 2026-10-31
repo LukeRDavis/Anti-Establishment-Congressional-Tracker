@@ -5,7 +5,8 @@ on:
     - cron: "0 */4 * * *"      # every 4 hours (UTC)
   workflow_dispatch:
   push:
-    branches: [aect-v10]        # test runs for the v10 pipeline branch
+    branches: [main]
+    paths: ["scripts/**", ".github/workflows/**"]   # code changes refresh the data immediately
 
 permissions:
   contents: write
