@@ -24,6 +24,7 @@ from .net import get_json, stream, load_cache, save_cache, now_iso, age_hours
 
 API = "https://en.wikipedia.org/w/api.php"
 TTL_H = 6
+PARSE_VERSION = 2          # bump when the parser changes so cached pages are re-read
 
 
 def _norm(s):
@@ -72,7 +73,7 @@ def _boxes(text):
                           "winner": m.group(1).lower() == "winning candidate"})
         t = title.lower()
         kind = "runoff" if "runoff" in t else "primary" if re.search(r"primar|nonpartisan|top[- ]two|jungle", t) else "general"
-        out.append({"title": title, "kind": kind, "candidates": cands,
+        out.append({"title": title, "kind": kind, "candidates": cands, "special": "special" in t,
                     "counted": any((c["votes"] or 0) > 0 for c in cands)})
     return out
 
@@ -111,27 +112,59 @@ def _fetch_page(title):
         d["parse"].get("title", title).replace(" ", "_"))
 
 
+def _ordinal(n):
+    return f"{n}{'th' if 10 <= n % 100 <= 20 else {1: 'st', 2: 'nd', 3: 'rd'}.get(n % 10, 'th')}"
+
+
+def _district_title(state, n):
+    return f"{CYCLE} {STATE_NAMES[state]}'s {_ordinal(n)} congressional district election"
+
+
 def fetch(people):
-    """Parse result boxes for every state/chamber with someone tracked on the ballot."""
+    """Parse result boxes for every state/chamber with someone tracked on the ballot.
+
+    Some statewide pages (California's, for one) carry no result templates and
+    link out to one page per district instead; those districts are read from
+    their own "{cycle} {State}'s Nth congressional district election" page."""
     cache = load_cache("election_results")
-    want = sorted({(p["state"], p.get("seeking", {}).get("chamber", p["chamber"]))
-                   for p in people.values() if p.get("on_ballot") and p.get("state") in VOTING_STATES})
-    fetched = 0
-    for state, chamber in want:
-        key = f"{state}|{chamber}"
-        if age_hours((cache.get(key) or {}).get("fetched_at")) < TTL_H:
+    want, districts = set(), {}
+    for p in people.values():
+        if not (p.get("on_ballot") and p.get("state") in VOTING_STATES):
             continue
+        ch = p.get("seeking", {}).get("chamber", p["chamber"])
+        want.add((p["state"], ch))
+        d = p.get("seeking", {}).get("district", p.get("district"))
+        if ch == "house" and d:
+            districts.setdefault(p["state"], set()).add(int(d))
+    fetched = 0
+    for state, chamber in sorted(want):
+        key = f"{state}|{chamber}"
+        old = cache.get(key) or {}
+        if old.get("v") == PARSE_VERSION and age_hours(old.get("fetched_at")) < TTL_H:
+            continue
+        entry = {"fetched_at": now_iso(), "v": PARSE_VERSION, "url": None, "races": {}}
         for title in _titles(state, chamber):
             text, url = _fetch_page(title)
             if text:
-                cache[key] = {"fetched_at": now_iso(), "url": url,
-                              "races": {str(d): _boxes(sec) for d, sec in _sections(text, chamber).items()}}
+                entry.update(url=url, races={str(d): _boxes(sec) for d, sec in _sections(text, chamber).items()})
                 fetched += 1
                 break
-        else:
-            cache[key] = {"fetched_at": now_iso(), "url": None, "races": {}}
+        if chamber == "house":
+            pages = {}
+            for d in sorted(districts.get(state, ())):
+                if entry["races"].get(str(d)):
+                    continue
+                text, url = _fetch_page(_district_title(state, d))
+                if text:
+                    entry["races"][str(d)] = _boxes(text)
+                    pages[str(d)] = url
+                    fetched += 1
+            if pages:
+                entry["district_urls"] = pages
+        cache[key] = entry
     save_cache("election_results", cache)
-    pages = sum(1 for v in cache.values() if v.get("url"))
+    pages = sum(1 for v in cache.values() if v.get("url")) + \
+        sum(len(v.get("district_urls", {})) for v in cache.values())
     boxes = sum(len(b) for v in cache.values() for b in v.get("races", {}).values())
     stream("wikipedia_results", ok=pages > 0, count=pages,
            note=f"{pages} state election pages ({fetched} refreshed) · {boxes} result boxes")
@@ -161,7 +194,15 @@ def result_for(p, cache):
     mine = lambda b: next((c for c in b["candidates"] if _same_person(p, c["name"])), None)
     general = [b for b in boxes if b["kind"] == "general" and b["candidates"]]
     primaries = [b for b in boxes if b["kind"] in ("primary", "runoff") and mine(b)]
-    out = {"primary": None, "general": None, "source": page.get("url")}
+    # a district or seat holding a special election and a regular one on the same page:
+    # pair each primary only with the general of the same election
+    if len({b["special"] for b in boxes if b["kind"] != "general"}) > 1 and primaries:
+        flag = primaries[-1]["special"]
+        general = [b for b in general if b.get("special") == flag]
+    src = (page.get("district_urls") or {}).get(str(dist or 0)) or page.get("url")
+    out = {"primary": None, "general": None, "source": src}
+    if not primaries and any(mine(b) for b in general):
+        out["primary"] = "WON"          # on the general ballot with no contested primary (nominee / unopposed)
     if primaries:
         if general:
             out["primary"] = "WON" if any(mine(b) for b in general) else "LOST"

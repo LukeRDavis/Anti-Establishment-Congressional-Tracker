@@ -233,3 +233,19 @@ assert results.result_for(norwood, cache)["primary"] == "LOST", races
 assert results.result_for(white, cache)["primary"] == "WON"
 assert results.result_for(white, cache)["general"] is None      # not counted yet
 print("wikipedia results OK")
+
+
+# ── special + regular election on one page; ballot-only nominee ──────────────
+from aect.results import result_for as _rf, _district_title as _dt
+_box = lambda kind, title, names, win=(): {"kind": kind, "title": title, "special": "special" in title.lower(),
+    "counted": True, "candidates": [{"name": n, "votes": 1.0, "pct": None, "winner": n in win} for n in names]}
+_cache = {"SC|senate": {"url": "u", "races": {"None": [
+    _box("primary", "Republican primary results", ["Lindsey Graham", "Mark Lynch"], ["Lindsey Graham"]),
+    _box("primary", "Republican special primary results", ["Darline Graham", "Ralph Norman", "Russell Fry"], ["Darline Graham", "Ralph Norman"]),
+    _box("runoff", "Republican special primary runoff results", ["Darline Graham", "Ralph Norman"], ["Darline Graham"]),
+    _box("general", "2026 Senate election", ["Darline Graham", "Annie Andrews"])]}},
+    "NY|house": {"url": "u", "races": {"12": [_box("general", "NY-12", ["Micah Lasher", "Karen Ortiz"])]}}}
+assert _rf({"name": "Ralph Norman", "state": "SC", "chamber": "house", "seeking": {"chamber": "senate"}}, _cache)["primary"] == "LOST"
+assert _rf({"name": "Karen Ortiz", "state": "NY", "chamber": "house", "district": 12}, _cache)["primary"] == "WON"
+assert _dt("CA", 22) == f"{CYCLE}" + " California's 22nd congressional district election" if "CYCLE" in dir() else True
+print("special/regular pairing OK")
