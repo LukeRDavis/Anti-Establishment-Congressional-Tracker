@@ -27,7 +27,7 @@ import json, os, sys, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from aect import ai, roster, fec, trackers, votes, enrich, positions, markets, build, results
+from aect import establishment, ai, roster, fec, trackers, votes, enrich, positions, markets, build, results
 from aect.config import KEYS, CYCLE, CURRENT_CONGRESS, TODAY, GEMINI_PAUSED, XAI_ENABLED
 from aect.net import STREAMS, stream, now_iso, clean_url
 
@@ -145,6 +145,13 @@ def main():
     print("\n[4d] Outside spending")
     anti_fec = [cid for p in people.values() if p["antiArms"] for cid in p.get("fec_ids", [])]
     ie = fec.fetch_outside_spending(anti_fec)
+
+    print("\n[4e] Reliable vs soft anti-establishment (AI over scraped dossiers)")
+    establishment.run(people, ie, fec_cands)
+    # anyone the dossier newly marked anti needs outside-spending records too
+    extra = [cid for p in people.values() if p.get("antiArms") for cid in p.get("fec_ids", []) if cid not in ie]
+    if extra:
+        ie = fec.fetch_outside_spending(anti_fec + extra)
 
     print("\n[5] Prediction markets")
     # odds for everyone on this cycle's ballot who is tracked: all incumbents up this cycle + anti candidates

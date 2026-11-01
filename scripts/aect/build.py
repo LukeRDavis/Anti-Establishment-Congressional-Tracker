@@ -306,7 +306,10 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
                 "primaryDate": p.get("primary_date"), "primary_result": p.get("primary_result"),
                 "primary_result_source": p.get("primary_result_source"),
                 "general_result": p.get("general_result"),
-                "endorsed_by": [s for s in p.get("sources", []) if s.endswith("endorsed")]}
+                "endorsed_by": [s for s in p.get("sources", []) if s.endswith("endorsed")],
+                # hard = reliable, counted toward thresholds; soft = shown, not counted
+                "antiTier": p.get("antiTier"), "tier_source": p.get("tier_source"),
+                "tier_reason": p.get("tier_reason"), "tier_evidence": p.get("tier_evidence", [])}
         if p.get("incumbent"):
             members.append({**base, "bioguide_id": p.get("bioguide_id", ""), "caucus": p.get("caucus", ""),
                             "lobby_total": p.get("lobby_total", 0), "pacs": p.get("pacs", []),
@@ -330,6 +333,7 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
                 "win_prob": bm["prob"] if bm else None, "win_prob_src": bm["src"] if bm else "",
                 "win_prob_stage": bm["stage"] if bm else None,
                 "note": p.get("note", ""), "evidence": p["antiArmsEvidence"],
+                "antiTier": p.get("antiTier"),
             })
 
     anti_members = [m for m in members if m["antiArms"]]
@@ -351,6 +355,12 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
             "member_count": len(members), "anti_intervention_count": len(anti_members),
             "anti_by_party": {pt: sum(1 for m in anti_members if (m.get("caucus") or m["party"]) == pt)
                               for pt in ("R", "D", "I")},
+            "anti_by_tier": {ch: {t: sum(1 for m in anti_members if m["chamber"] == ch and m.get("antiTier") == t)
+                                  for t in ("hard", "soft")} for ch in ("house", "senate")},
+            "tier_rules": {"hard": "sustained record across Congresses/years, consistent statements, not funded by "
+                                   "the focus-issue lobby — counted toward thresholds",
+                           "soft": "first-time, one-off or pre-primary anti votes/statements, or contradicted by "
+                                   "lobby money — shown, not counted"},
             "candidate_count": len(candidates), "odds_covered": len(poly),
             "relevant_votes": len(relevant_votes), "streams": streams,
             "sources": {
@@ -358,6 +368,8 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
                 "candidates": f"FEC {CYCLE} filings (all House + Senate filers)",
                 "votes": "clerk.house.gov + senate.gov roll-call XML, relevance judged by AI with web search",
                 "positions": "AI web research with cited sources",
+                "tiers": "AI judgment over scraped Wikipedia · Grokipedia · Ballotpedia · news/opinion feeds, "
+                         "with vote record, TrackAIPAC money, FEC outside spending and donor employers",
                 "finance": "OpenFEC totals + independent expenditures",
                 "markets": "Polymarket CLOB · Kalshi · PredictIt",
                 "bios": "Wikipedia · Ballotpedia · Grokipedia",

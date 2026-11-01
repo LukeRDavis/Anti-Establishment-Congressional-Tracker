@@ -162,9 +162,15 @@ function side(m) {
 }
 
 const LEAVING = ["DEFEATED","RETIRING","FAILED_PRIMARY"];
+// hard = reliable, counted toward thresholds; soft = shown, not counted.
+// Data from before tiers existed has no antiTier, so it counts as before.
+const HIGH_ODDS = 0.5;   // market probability that separates "likely" from "long shot" new candidates
+function isHard(m) { return !!m.antiArms && (m.antiTier ? m.antiTier === "hard" : true); }
+function isSoft(m) { return !!m.antiArms && m.antiTier === "soft"; }
 
 function dotColor(m) {
   if (m._filler) return "#1e2230";
+  if (isSoft(m)) return side(m) === "R" ? "#7e4a86" : "#4a5191";   // soft: muted, not counted
   if (m.antiArms) return side(m) === "R" ? "#e879f9" : "#818cf8";
   return side(m) === "R" ? "#7f1d1d" : "#1e3a5f";
 }
@@ -176,6 +182,7 @@ function antiArmsTag(m) {
 
 function antiArmsTagColor(m) {
   if (!m.antiArms) return "#374151";
+  if (isSoft(m)) return "#8b8fa8";
   return side(m) === "R" ? "#e879f9" : "#818cf8";
 }
 
@@ -186,8 +193,9 @@ function computeHemicycle(allMembers, chamber, cx, cy) {
   // so only true vacancies are empty seats.
   const active = allMembers.filter(m => m.chamber === ch && !["RETIRED","RESIGNED"].includes(m.ps));
 
-  const antiR    = active.filter(m =>  m.antiArms && side(m) === "R");
-  const antiD    = active.filter(m =>  m.antiArms && side(m) === "D");
+  // reliable members sit at the outer edge, soft ones between them and their party
+  const antiR    = active.filter(m =>  m.antiArms && side(m) === "R").sort((a,b) => isHard(b) - isHard(a));
+  const antiD    = active.filter(m =>  m.antiArms && side(m) === "D").sort((a,b) => isHard(a) - isHard(b));
   const restR    = active.filter(m => !m.antiArms && side(m) === "R");
   const restD    = active.filter(m => !m.antiArms && side(m) === "D");
   const restOther= [];
@@ -319,18 +327,21 @@ function ArmsBadge({member}) {
     fontSize:7, fontFamily:FM, padding:"1px 6px",
     borderRadius:3, background:color+"18", color,
     border:"1px solid "+color+"30", letterSpacing:"0.06em",
-  }}>◈ Anti-Intervention</span>`;
+  }} title=${(member.tier_reason||"") + (member.tier_source ? " · judged by " + (member.tier_source.startsWith("ai") ? "AI (" + member.tier_source.slice(3) + ")" : "rule") : "")}>
+    ${isSoft(member) ? "◇ Soft anti · not counted" : member.antiTier === "hard" ? "◈ Reliable anti-intervention" : "◈ Anti-Intervention"}</span>`;
 }
 
 function ProgressBars({chamber, members, allMembers, challengers, racesData, polyData}) {
-  const current = members.filter(m => m.antiArms).length;
+  // reliable incumbents who will still hold the seat; soft members are shown but never counted
+  const current = members.filter(m => isHard(m) && !LEAVING.includes(m.ps)).length;
+  const softN   = members.filter(isSoft).length;
   const ch = chamber;
 
   const races = racesData || [];
 
   const trials = [];
 
-  members.filter(m => m.antiArms).forEach(m => {
+  members.filter(isHard).forEach(m => {
     const race   = races.find(r => r.name === m.name && r.chamber === ch);
     const pm     = getValidatedPoly(m, polyData, races);
     let p;
@@ -358,11 +369,12 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
     const pm = getValidatedPoly(r, polyData, races);
     const ps = r.ps || r.status || "";
     if (["LOST","WITHDREW","DEFEATED","FAILED_PRIMARY"].includes(ps)) return;
+    if (r.antiTier === "soft" || r.antiTier === "none") return;   // only reliable candidates count
     const p = pm && pm.prob != null ? pm.prob
             : r.win_prob != null ? r.win_prob
             : r.winProb  != null ? r.winProb
             : null;
-    if (p == null) { unpriced.push(r.name); return; }  // no market: don't invent odds
+    if (p == null) { unpriced.push({name: r.name, party: r.party}); return; }  // no market: don't invent odds
     trials.push({name: r.name, p, party: r.party, src: pm ? "poly" : "market", isChallenger: true});
   });
 
@@ -404,8 +416,10 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
       <div style=${{display:"flex",gap:8,marginBottom:7,flexWrap:"wrap",alignItems:"center",fontFamily:FM,fontSize:8}}>
         <span style=${{display:"flex",alignItems:"center",gap:4}}>
           <span style=${{width:9,height:9,borderRadius:2,background:"#818cf8",display:"inline-block"}}/>
-          <span style=${{color:"#818cf8",fontWeight:600}}>${current} members</span>
+          <span style=${{color:"#818cf8",fontWeight:600}}>${current} reliable members</span>
         </span>
+        ${softN>0 ? html`<span title="First-time, one-off or pre-primary anti votes/statements, or lobby-funded — shown, not counted"
+          style=${{color:"#6b7280"}}>(${softN} soft, not counted)</span>` : null}
         ${challCount>0 ? html`
           <span style=${{color:"#4b5563"}}>+</span>
           <span style=${{color:"#a78bfa"}}>${challCount} candidates</span>` : null}
@@ -418,8 +432,13 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
       </div>
 
       ${THRESHOLDS_FOR(chamber).map((th,i) => {
-        // party-scoped thresholds (rule-vote bloc) count only that party's anti members
-        const cur     = th.party ? members.filter(m => m.antiArms && (m.caucus||m.party) === th.party).length : current;
+        // party-scoped thresholds (rule-vote bloc) count only that party's members
+        const inParty = x => !th.party || (x.caucus||x.party) === th.party;
+        const cur     = members.filter(m => isHard(m) && !LEAVING.includes(m.ps) && inParty(m)).length;
+        const newHi   = trials.filter(t => t.isChallenger && t.p >= HIGH_ODDS && inParty(t)).length;
+        const newLo   = trials.filter(t => t.isChallenger && t.p < HIGH_ODDS && inParty(t)).length
+                      + unpriced.filter(inParty).length;
+        const segW    = n => Math.min(100, (n / th.n) * 100);
         const thMu    = th.party ? trials.filter(t => t.party === th.party).reduce((s,t) => s+t.p, 0) : mu;
         const pct     = Math.min(100, Math.round((cur/th.n)*100));
         const reached = cur >= th.n;
@@ -448,7 +467,11 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
               </div>
             </div>
             <div style=${{height:7,borderRadius:4,background:"#1a1d27",overflow:"hidden",marginBottom:4,position:"relative"}}>
-              <div style=${{position:"absolute",left:0,top:0,height:"100%",
+              <div title=${newLo+" new candidates with low market odds (or no market)"} style=${{position:"absolute",left:0,top:0,height:"100%",
+                width:segW(cur+newHi+newLo)+"%",background:"#c7d2fe",opacity:0.28,borderRadius:4,transition:"width 0.8s ease"}}/>
+              <div title=${newHi+" new candidates with high market odds"} style=${{position:"absolute",left:0,top:0,height:"100%",
+                width:segW(cur+newHi)+"%",background:"#a5b4fc",opacity:0.6,borderRadius:4,transition:"width 0.8s ease"}}/>
+              <div title=${cur+" reliable incumbents"} style=${{position:"absolute",left:0,top:0,height:"100%",
                 width:pct+"%",background:reached?"#4ade80":"#818cf8",
                 borderRadius:4,transition:"width 0.8s ease"}}/>
               ${!reached ? html`
@@ -456,6 +479,12 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
                   background:"#a5b4fc",opacity:0.5,left:muPct+"%"}}/>` : null}
             </div>
             <div style=${{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:3}}>
+              <div style=${{fontSize:8,fontFamily:FM,color:"#6b7280",width:"100%"}}>
+                <span style=${{color:"#818cf8"}}>■ ${cur} reliable incumbents</span>
+                <span style=${{color:"#a5b4fc",opacity:.85}}> + ■ ${newHi} new, likely to win</span>
+                <span style=${{color:"#c7d2fe",opacity:.6}}> + ■ ${newLo} new, long shot</span>
+                ${cur+newHi+newLo>=th.n&&!reached?html`<span style=${{color:"#fbbf24"}}> · reachable only with new candidates</span>`:null}
+              </div>
               <div style=${{fontSize:8,fontFamily:FM,color:pc,flex:1}}>
                 ${reached
                   ? "✓ Threshold reached with current coalition"
@@ -468,7 +497,7 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
 
       <div style=${{marginTop:10,paddingTop:7,borderTop:"1px solid #1a1d27",
         fontSize:7,color:"#1e2230",fontFamily:FM,lineHeight:1.7}}>
-        P(reach N) = Φ((μ−N+0.5)/σ). Prediction markets where available · incumbents without a market use the measured House retention rate${window._aectRetention!=null?` (${Math.round(window._aectRetention*100)}%)`:""} · ${unpriced.length} candidates without a market are not counted.
+        P(reach N) = Φ((μ−N+0.5)/σ). Prediction markets where available · incumbents without a market use the measured House retention rate${window._aectRetention!=null?` (${Math.round(window._aectRetention*100)}%)`:""} · ${unpriced.length} reliable candidates without a market are shown as long shots and left out of μ · soft members are never counted.
       </div>
     </div>`;
 }
@@ -516,7 +545,8 @@ function BillsPanel({bills}) {
 function MemberBox({title, color, members, challengers, racesData, fecData, polyData, onSelect}) {
   const [tab, setTab] = useState("members");
 
-  const active   = members.filter(m => !["RETIRED","RESIGNED","DEFEATED","RETIRING","FLIPPED"].includes(m.ps));
+  const active   = members.filter(m => !["RETIRED","RESIGNED","DEFEATED","RETIRING","FLIPPED"].includes(m.ps))
+                           .sort((a,b) => isHard(b) - isHard(a));   // reliable first, soft after
   const departed = members.filter(m => ["RETIRED","RESIGNED","DEFEATED","FLIPPED","RETIRING"].includes(m.ps));
 
   // Build a combined candidates list: anti-establishment incumbents (with odds)
@@ -1145,10 +1175,11 @@ function useData() {
         setPolyBase(baseP);
 
         if (d.meta && d.meta.fetched_at) setFetchedAt(d.meta.fetched_at);
-        const anti  = memberList.filter(m => m.antiArms).length;
+        const anti  = memberList.filter(isHard).length;
+        const soft  = memberList.filter(isSoft).length;
         const age   = (d.meta && d.meta.fetched_at)
           ? Math.round((Date.now() - new Date(d.meta.fetched_at)) / 60000) : "?";
-        setStatus("✓ " + anti + " anti-intervention · " + memberList.length + " members · " + age + "m ago");
+        setStatus("✓ " + anti + " reliable anti-intervention" + (soft ? " · " + soft + " soft" : "") + " · " + memberList.length + " members · " + age + "m ago");
         clearTimeout(window._aectLoadTimeout);
 
         const racesList = d.races || d.races_2026 || [];
@@ -1655,8 +1686,9 @@ function App() {
       <div style=${{display:"flex",gap:5,flexWrap:"wrap",justifyContent:"center",marginBottom:7}}>
         ${[
           {c:"#991b1b", bg:"rgba(153,27,27,.1)",  l:"Rep",            n:chMem.filter(m=>side(m)==="R"&&!m.antiArms).length},
-          {c:"#e879f9", bg:"rgba(232,121,249,.1)", l:"Anti-Intv. R",  n:chMem.filter(m=>m.antiArms&&side(m)==="R").length},
-          {c:"#818cf8", bg:"rgba(129,140,248,.1)", l:"Anti-Intv. D",  n:chMem.filter(m=>m.antiArms&&side(m)==="D").length},
+          {c:"#e879f9", bg:"rgba(232,121,249,.1)", l:"Reliable anti R", n:chMem.filter(m=>isHard(m)&&side(m)==="R").length},
+          {c:"#818cf8", bg:"rgba(129,140,248,.1)", l:"Reliable anti "+(chMem.some(m=>m.party==="I"&&isHard(m))?"D/I":"D"), n:chMem.filter(m=>isHard(m)&&side(m)==="D").length},
+          {c:"#6b70b0", bg:"rgba(74,81,145,.12)",  l:"Soft anti (not counted)", n:chMem.filter(isSoft).length},
           {c:"#1e40af", bg:"rgba(30,64,175,.1)",   l:"Dem",           n:chMem.filter(m=>side(m)==="D"&&!m.antiArms).length},
           {c:"#9ca3af", bg:"transparent", ring:true, l:"Leaving (hollow)", n:chMem.filter(m=>LEAVING.includes(m.ps)).length},
         ].map(b=>html`
@@ -1694,7 +1726,7 @@ function App() {
               )}
               ${positions.map((pos,i)=>{
                 if (!pos || pos._filler) return html`<circle key=${i} cx=${pos?pos._x:-999} cy=${pos?pos._y:-999} r=${dotR} fill="#111419" opacity=".4"/>`;
-                const dimDot = showAnti && !pos.antiArms;
+                const dimDot = showAnti && !isHard(pos);
                 const leaving = LEAVING.includes(pos.ps);
                 const isSel  = selected === pos.name;
                 const isHov  = hovered  === pos.name;
@@ -1704,7 +1736,7 @@ function App() {
                 const r      = isHov ? dotR+1.5 : dotR;
                 return html`<g key=${i}>
                   ${isSel?html`<circle cx=${pos._x} cy=${pos._y} r=${dotR+5} fill="none" stroke=${color} stroke-width="1.5" opacity=".4"/>`:null}
-                  ${pos.antiArms&&!dimDot?html`<circle cx=${pos._x} cy=${pos._y} r=${dotR+2.5} fill="none" stroke=${color} stroke-width=".8" opacity=".18"/>`:null}
+                  ${isHard(pos)&&!dimDot?html`<circle cx=${pos._x} cy=${pos._y} r=${dotR+2.5} fill="none" stroke=${color} stroke-width=".8" opacity=".18"/>`:null}
                   ${atRisk?html`<circle cx=${pos._x} cy=${pos._y} r=${dotR+3} fill="none" stroke="#fbbf24" stroke-width="1" opacity=".4" stroke-dasharray="2,2"/>`:null}
                   <circle cx=${pos._x} cy=${pos._y} r=${r}
                     fill=${dimDot?"#111419":leaving?"#0f1117":color} opacity=${dimDot?0.12:1}

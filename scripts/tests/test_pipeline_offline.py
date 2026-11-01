@@ -249,3 +249,23 @@ assert _rf({"name": "Ralph Norman", "state": "SC", "chamber": "house", "seeking"
 assert _rf({"name": "Karen Ortiz", "state": "NY", "chamber": "house", "district": 12}, _cache)["primary"] == "WON"
 assert _dt("CA", 22) == f"{CYCLE}" + " California's 22nd congressional district election" if "CYCLE" in dir() else True
 print("special/regular pairing OK")
+
+
+# ── reliable (hard) vs soft anti-establishment ───────────────────────────────
+from aect import establishment as _E
+_v = lambda c, d, anti: {"congress": c, "date": d, "focus": True, "anti": anti, "measure": "X", "position": "Yea",
+                         "summary": "s", "url": "u"}
+_hard = {"name": "A", "antiArms": True, "incumbent": True, "lobby_total": 0, "sources": [], "fec_ids": [],
+         "primary_date": "2026-06-02", "vote_record": [_v(118, "2024-04-20", True), _v(119, "2026-07-15", True)]}
+_soft_new = {**_hard, "vote_record": [_v(119, "2025-07-18", False), _v(119, "2026-07-15", True)]}
+_soft_paid = {**_hard, "lobby_total": 50000}
+_pre_primary = {**_hard, "primary_date": "2026-08-04",
+                "vote_record": [_v(119, "2026-03-01", True), _v(119, "2026-07-15", True)]}
+assert _E.rule_tier(_E.facts(_hard, {}), _hard)[0] == "hard"
+assert _E.rule_tier(_E.facts(_soft_new, {}), _soft_new)[0] == "soft"          # first-time 2026 anti vote
+assert _E.rule_tier(_E.facts(_soft_paid, {}), _soft_paid)[0] == "soft"        # lobby-funded
+assert _E.rule_tier(_E.facts(_pre_primary, {}), _pre_primary)[0] == "soft"    # only in the year before a primary
+_ie = {"H1": {"spenders": [{"committee": "UNITED DEMOCRACY PROJECT ('UDP')", "side": "support", "amount": 5e5}]}}
+_udp = {**_hard, "fec_ids": ["H1"]}
+assert _E.rule_tier(_E.facts(_udp, _ie), _udp)[0] == "soft"                   # lobby super PAC backed them
+print("hard/soft tiers OK")
