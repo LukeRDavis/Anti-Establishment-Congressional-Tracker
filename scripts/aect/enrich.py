@@ -180,6 +180,11 @@ def ballotpedia(name, state, chamber):
             return {}
         if not html:
             BP_OUTCOMES["no_page"] = BP_OUTCOMES.get("no_page", 0) + 1
+            # Ballotpedia answers some hosts with an empty 200 for every page — a quiet block.
+            # After a run of those with nothing matched, stop asking for the rest of the run.
+            if BP_OUTCOMES["no_page"] >= 12 and not BP_OUTCOMES.get("matched"):
+                circuit_trip("ballotpedia", "only empty responses (blocked for this host)")
+                return {}
             continue
         if "may refer to" in html[:20000]:
             BP_OUTCOMES["disambiguation"] = BP_OUTCOMES.get("disambiguation", 0) + 1
