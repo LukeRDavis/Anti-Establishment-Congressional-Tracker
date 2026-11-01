@@ -75,6 +75,19 @@ def _host_pace(url):
             return
 
 
+def clean_url(u):
+    """FEC website fields come in every shape: 'WWW.X.COM', 'HTTPS://X.COM/', 'https://HTTPS://x.com'."""
+    u = (u or "").strip().strip("\"'<>")
+    if not u:
+        return ""
+    u = re.sub(r"^(?:https?:?/*)+", "", u, flags=re.I)      # drop any (repeated, mangled) scheme
+    host, _, path = u.partition("/")
+    host = host.lower().rstrip(".")
+    if "." not in host or " " in host:
+        return ""
+    return f"https://{host}" + (f"/{path}" if path else "/")
+
+
 def _request(url, *, data=None, headers=None, timeout=30, method=None):
     _host_pace(url)
     h = {"User-Agent": USER_AGENT, "Accept-Encoding": "gzip"}

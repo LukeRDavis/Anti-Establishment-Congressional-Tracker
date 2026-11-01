@@ -148,20 +148,47 @@ def _bp_blocked(html):
         or "challenge-platform" in head or "cf-browser-verification" in head
 
 
+BP_OUTCOMES = {}
+_BP_PROBES = []
+
+
+def _bp_probe(url):
+    """First few lookups: record status, size and <title> so a silent miss is visible in the report."""
+    import urllib.request, urllib.error
+    from .net import _request
+    try:
+        raw = _request(url, timeout=20)
+        t = re.search(rb"<title>(.*?)</title>", raw[:20000], re.S | re.I)
+        _BP_PROBES.append(f"200 {len(raw)}B '{(t.group(1).decode(errors='replace') if t else '')[:60]}' {url[-40:]}")
+    except urllib.error.HTTPError as e:
+        _BP_PROBES.append(f"{e.code} {url[-40:]}")
+    except Exception as e:
+        _BP_PROBES.append(f"{type(e).__name__} {url[-40:]}")
+
+
 def ballotpedia(name, state, chamber):
     full = STATE_NAMES.get(state, state)
     if not circuit_ok("ballotpedia"):
         return {}
     for title in (name, f"{name} ({full})", f"{name} ({full} congressional candidate)"):
+        if len(_BP_PROBES) < 4:
+            _bp_probe(_bp_url(title))
         html = get_text(_bp_url(title), stream_name="ballotpedia", retries=1)
         if html and _bp_blocked(html):
+            BP_OUTCOMES["blocked"] = BP_OUTCOMES.get("blocked", 0) + 1
             circuit_trip("ballotpedia", "bot-check page served instead of content")
             return {}
-        if not html or "may refer to" in html[:20000]:
+        if not html:
+            BP_OUTCOMES["no_page"] = BP_OUTCOMES.get("no_page", 0) + 1
+            continue
+        if "may refer to" in html[:20000]:
+            BP_OUTCOMES["disambiguation"] = BP_OUTCOMES.get("disambiguation", 0) + 1
             continue
         text = strip_html(html)
         if full not in text:
+            BP_OUTCOMES["other_state"] = BP_OUTCOMES.get("other_state", 0) + 1
             continue
+        BP_OUTCOMES["matched"] = BP_OUTCOMES.get("matched", 0) + 1
         out = {"ballotpedia_url": _bp_url(title)}
         site = re.search(r'href="(https?://[^"]+)"[^>]*>\s*(?:Campaign website|Official website|Campaign Website)',
                          html, re.I)
@@ -254,4 +281,8 @@ def enrich_people(people, priority_keys):
     have_desc = sum(1 for k in people if cache.get(k, {}).get("description"))
     stream("enrichment", ok=done > 0 or have_desc > 0, count=have_desc,
            note=f"refreshed {done}/{len(todo)} this run · {have_desc}/{len(people)} people have a bio")
+    if BP_OUTCOMES or _BP_PROBES:
+        matched = BP_OUTCOMES.get("matched", 0)
+        stream("ballotpedia", ok=matched > 0, count=matched,
+               note=f"outcomes {BP_OUTCOMES} · probes: {' | '.join(_BP_PROBES)}")
     return cache

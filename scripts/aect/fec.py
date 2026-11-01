@@ -11,7 +11,7 @@ Endpoints (OpenFEC):
 import re, time
 
 from .config import FEC_API, FEC_KEY, CYCLE, TTL_FEC_H
-from .net import get_json, stream, qs, load_cache, save_cache, now_iso, age_hours
+from .net import get_json, stream, qs, load_cache, save_cache, now_iso, age_hours, clean_url
 
 _SUFFIX = re.compile(r"\b(JR|SR|II|III|IV|MR|MRS|MS|DR|HON|REV|PHD|MD|ESQ)\b\.?", re.I)
 
@@ -182,9 +182,7 @@ def fetch_websites(committee_ids, budget=300):
         if d is None:
             break
         res = (d.get("results") or [{}])[0]
-        site = (res.get("website") or "").strip()
-        if site and not site.startswith("http"):
-            site = "https://" + site
+        site = clean_url(res.get("website"))
         cache[cid] = site
         time.sleep(0.1)
     save_cache("fec_websites", cache)

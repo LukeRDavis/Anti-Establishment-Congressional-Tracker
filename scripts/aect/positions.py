@@ -47,8 +47,8 @@ def _prompt(p, website_text):
     return "\n".join(lines)
 
 
-TEXT_ONLY = f"""You read a U.S. congressional candidate's own campaign-website text and decide whether it states an explicit anti-interventionist position: cutting, conditioning or ending U.S. military aid or arms sales to a foreign government, an arms embargo, opposing a U.S. war or strike, or withdrawing U.S. forces.
-Use ONLY the text provided. Do not use outside knowledge. Quote or closely paraphrase the sentence that states the position.
+TEXT_ONLY = f"""You read text about a U.S. congressional candidate (their own campaign website, or their encyclopedia biography) and decide whether it states an explicit anti-interventionist position: cutting, conditioning or ending U.S. military aid or arms sales to a foreign government, an arms embargo, opposing a U.S. war or strike, or withdrawing U.S. forces.
+Use ONLY the text provided. Do not use outside knowledge. A position counts only if the text says the candidate holds or voted for it. Quote or closely paraphrase the sentence that states the position.
 focus is true if that position concerns military aid or arms to {_FOCUS} specifically.
 Respond with JSON only:
 {{"anti_interventionist": true|false, "focus": true|false, "strength": "strong"|"moderate"|"none", "rejects_aipac_money": true|false|null, "quote": "the sentence from the text, or empty", "summary": "one sentence"}}"""
@@ -71,7 +71,8 @@ def research(people, order, ttl_h=TTL_AI_PERSON_H, budget=None):
     for key in order:
         if done >= budget:
             break
-        if age_hours(cache.get(key, {}).get("researched_at")) < ttl_h:
+        prev = cache.get(key, {})
+        if age_hours(prev.get("researched_at")) < ttl_h and not (grounded and prev.get("method") == "no_source"):
             continue
         p = people[key]
         site_text = ""
@@ -85,13 +86,19 @@ def research(people, order, ttl_h=TTL_AI_PERSON_H, budget=None):
             method = "web_search"
         if not isinstance(result, dict):
             # no grounded answer: fall back to what the candidate's own site says
-            if len(site_text) < 200:
-                continue            # nothing of their own to read without web search
+            src_url, src_text, method = p.get("website"), site_text, "campaign_site_text"
+            if len(src_text) < 200 and p.get("wikipedia_url") and len(p.get("description") or "") >= 200:
+                src_url, src_text, method = p["wikipedia_url"], p["description"], "wikipedia_text"
+            if len(src_text) < 200:
+                # nothing readable without web search; note it so blocked sites aren't re-fetched every run
+                cache[key] = {**prev, "method": "no_source", "researched_at": now_iso()} if not prev.get("evidence") \
+                    else {**prev, "researched_at": now_iso()}
+                methods["no_source"] = methods.get("no_source", 0) + 1
+                continue
             result, sources, provider = ai.ask_json(
-                TEXT_ONLY, f"Candidate: {p['name']}\nWebsite: {p['website']}\n\n{site_text[:6000]}")
-            method = "campaign_site_text"
+                TEXT_ONLY, f"Candidate: {p['name']}\nSource: {src_url}\n\n{src_text[:6000]}")
             if isinstance(result, dict) and result.get("quote"):
-                result["evidence"] = [{"claim": result["quote"][:300], "url": p["website"], "date": ""}]
+                result["evidence"] = [{"claim": result["quote"][:300], "url": src_url, "date": ""}]
         methods[method] = methods.get(method, 0) + 1
         done += 1
         if done % 10 == 0:

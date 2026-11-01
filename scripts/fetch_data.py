@@ -29,7 +29,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from aect import ai, roster, fec, trackers, votes, enrich, positions, markets, build, results
 from aect.config import KEYS, CYCLE, CURRENT_CONGRESS, TODAY, GEMINI_PAUSED, XAI_ENABLED
-from aect.net import STREAMS, stream, now_iso
+from aect.net import STREAMS, stream, now_iso, clean_url
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -135,7 +135,7 @@ def main():
             for fid in people[k].get("fec_ids", []):
                 for cid in fec_cands.get(fid, {}).get("committee_ids", [])[:1]:
                     if sites.get(cid):
-                        people[k]["website"] = sites[cid]
+                        people[k]["website"] = clean_url(sites[cid])
     no_vote_members = [k for k in tracked if people[k]["incumbent"] and not people[k].get("vote_record")]
     pos = positions.research(people, list(dict.fromkeys(
         [k for k in live if k in tracked] + no_vote_members + live)))
