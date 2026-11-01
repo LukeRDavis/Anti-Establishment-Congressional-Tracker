@@ -19,10 +19,14 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
   [congress_gov] 539 current members
 
 [2] FEC candidates and finance
-  [fec_candidates] cache fresh
-  [fec_finance] cache fresh
+  [fec_candidates] 4353 active 2026 House+Senate filers
+  [fec_finance] totals for 3984 filers
 
 [4c] Trackers
+  [trackaipac] /congress: 533 members, 24 approved
+  [trackaipac] /endorsements: 38 endorsed candidates
+  [rlc] Liberty Index cache fresh
+  [rlc] endorsements: 9 candidates
 
   People universe: 4474 (533 members, 3941 candidates)
 
@@ -33,7 +37,7 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
 
 [3] General information
   [primary_calendar] cache fresh
-  [enrichment] refreshed 250/250 this run · 1386/4474 people have a bio
+  [enrichment] refreshed 250/250 this run · 1416/4474 people have a bio
     results: no page "2026 Connecticut's 2nd congressional district election"
     results: no page "2026 Connecticut's 3rd congressional district election"
   [wikipedia_results] 85 state election pages (87 refreshed) · 1251 result boxes
@@ -54,11 +58,14 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.NATEMORRIS.COM
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW,SHAWNFORGEORGIA.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://ELAINEFORCONGRESS.COM/
+    RemoteDisconnected: Remote end closed connection without response :: https://WWW.BLAKEMIGUEZ.COM
+    HTTP 520 https://PAIGEFORPA.COM :: error code: 520 
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://AGERFORCONGRESS.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.KILLINFORCOLORADO.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.KOHFORCONGRESS.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.ODEFOROHIO.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://WWW.LAURIEBUCKHOUTFORCONGRESS.COM/
+    RemoteDisconnected: Remote end closed connection without response :: https://WWW.PIAFORCONGRESS.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://SHANNONTAYLORVA.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://SCOTTCOLOM.COM/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.HALLIEFORARKANSAS.COM
@@ -69,9 +76,11 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://STEFANYSHAHEEN.COM/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.MICHAELECHOLS.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.WILEYNICKEL.COM/
+    RemoteDisconnected: Remote end closed connection without response :: https://WWW.OJEDAFORNC.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://BETHMACYFORCONGRESS.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://FRIENDSOFMICHAELBOUCHARD.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://BENMCADAMSUTAH.COM/
+    HTTP 520 https://WWW.ELECTMIKEBELTRAN.COM :: error code: 520 
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://DONNAFORCONGRESS.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://DANGREENFL.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://DRPANFORCONGRESS.COM/
@@ -97,8 +106,10 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.LILYTANGWILLIAMS.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.ELECTJDFORD.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://DONCOOVERFORCONGRESS.COM/
+    RemoteDisconnected: Remote end closed connection without response :: https://AMYROMA.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://VOTEFICKER.COM/
-    URLError: <urlopen error [Errno 104] Connection reset by peer> :: https://WWW.MICHELLESTEELFORCONGRESS.COM
+    RemoteDisconnected: Remote end closed connection without response :: https://DOROTHYMCAULIFFE.COM
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.MICHELLESTEELFORCONGRESS.COM
     HTTP 403 https://WWW.ISAIAHMARTIN.ORG :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://WWW.ALANPARDEE.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://BACKNEBRASKA.COM
@@ -108,12 +119,15 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://JOINROBERTWHITE.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://STEVETOTHFORCONGRESS.COM/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.MANDELFORCONGRESS.US
+    HTTP 520 https://WWW.JENKINSFORFL.COM :: error code: 520 
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.SNEEDFORCONGRESS.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://HECTORMUJICA.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.CLIFFJOHNSONFORCONGRESS.COM/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.ERBECKFOROHIO.COM
+    RemoteDisconnected: Remote end closed connection without response :: https://JENANELSON.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://JAMESMARTINFORFLORIDA.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://CHAPINFORCONGRESS.COM
+    RemoteDisconnected: Remote end closed connection without response :: https://WWW.RICHARD.VOTE
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'WWW.JULIEEMERSON.ORG'. (_ssl.c:1016)> :: https://WWW.JULIEEMERSON.ORG
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.DRKUMAR4CONGRESS.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.PLASKETTFORCONGRESS.ORG
@@ -121,7 +135,8 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'WWW.AARONFORNY23.COM'. (_ssl.c:1016)> :: https://WWW.AARONFORNY23.COM
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.DEFORDFORCONGRESS.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://KATYFORKANSAS.COM/
-    HTTP 403 https://WWW.GRANTHAMFORCONGRESS.COM :: 403 | Access blocked 
+    RemoteDisconnected: Remote end closed connection without response :: https://MICAHQJONES.COM
+    HTTP 520 https://WWW.GRANTHAMFORCONGRESS.COM :: error code: 520 
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.CHRISTINAFORCA.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://JAMIFLOYDFORCONGRESS.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://WWW.HALPINFORCONGRESS.COM/
@@ -135,6 +150,7 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WILSONFORCONGRESS.COM
     URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)> :: https://EHRFORCONGRESS.US
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://GRAYZELFORCONGRESS.COM
+    URLError: <urlopen error timed out> :: https://WWW.BEN4CONGRESS.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.ELLMANFORCONGRESS.COM/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://SUSANSTOREYRUBIOFORCONGRESS.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.VANCILFORCONGRESS.COM/
@@ -146,8 +162,12 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://RICKJAKIOUS.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.DYLANHEWITT.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://JOELFORKENTUCKY.COM/
+    HTTP 520 https://RONDAKENNEDY.COM :: error code: 520 
+    HTTP 520 https://SALAAMFORVA.COM :: error code: 520 
+    RemoteDisconnected: Remote end closed connection without response :: https://VOTEGEORGEFORCONGRESS.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.ELECTMARKROBERTGORDON.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.MELISAFORMINNESOTA.COM/
+    RemoteDisconnected: Remote end closed connection without response :: https://VINCENTMATRISCIANOFORCONGRESS.COM
     URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://VOTEANNA4CONGRESS.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.JOYFORVA.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.BRIANBURLEY.COM
@@ -162,6 +182,7 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://JOSHCOWENMI.COM/
     URLError: <urlopen error [Errno 111] Connection refused> :: https://BLAU4CONGRESS.COM
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)> :: https://WWW.KATHERINEALEMAN.COM
+    RemoteDisconnected: Remote end closed connection without response :: https://BRADMEYER.ORG
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.DAVEYOUNGFORCOLORADO.COM/
     InvalidURL: URL can't contain control characters. 'DEPLOY MALLOY.COM' (found at least ' ') :: https://DEPLOY MALLOY.COM
     HTTP 403 https://WWW.YENBAILEYFORCONGRESS.COM :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
@@ -186,13 +207,13 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
   [ai_positions] researched 0 this run (none) · 304 total · 19 with cited anti-interventionist positions
 
 [4d] Outside spending
-  [fec_outside_spending] refreshed 0, 413 candidates with outside-spending records
+  [fec_outside_spending] refreshed 108, 413 candidates with outside-spending records
 
 [5] Prediction markets
   [market_polymarket] 800 catalog pages scanned · 1028 open congressional markets
-  [market_kalshi] 40 pages · 25333 political markets
+  [market_kalshi] 40 pages · 25327 political markets
   [market_predictit] 757 live contracts
-  [markets] 27118 market outcomes loaded · 358 tracked people matched
+  [markets] 27112 market outcomes loaded · 358 tracked people matched
 
 ════════════════════════════════════════════════════════════════════════
 STREAM                       STATUS     COUNT  NOTES / ERRORS
@@ -201,21 +222,21 @@ ai_positions                 OK           304  researched 0 this run (none) · 3
 ballotpedia                  —              0  
 campaign_sites               —              0  HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</ti
 congress_gov                 OK           539  539 current members
-enrichment                   OK          1386  refreshed 250/250 this run · 1386/4474 people have a bio
-fec_candidates               OK          4353  cache fresh
-fec_finance                  OK          4037  cache fresh
-fec_outside_spending         OK           413  refreshed 0, 413 candidates with outside-spending records
+enrichment                   OK          1416  refreshed 250/250 this run · 1416/4474 people have a bio
+fec_candidates               OK          4353  4353 active 2026 House+Senate filers
+fec_finance                  OK          3984  totals for 3984 filers
+fec_outside_spending         OK           413  refreshed 108, 413 candidates with outside-spending records
 fec_websites                 OK           651  looked up 0 committees · 651 campaign websites known
 grokipedia                   —              0  
-market_kalshi                OK         25333  40 pages · 25333 political markets
+market_kalshi                OK         25327  40 pages · 25327 political markets
 market_polymarket            OK          1028  800 catalog pages scanned · 1028 open congressional markets
 market_predictit             OK           757  757 live contracts
-markets                      OK           358  27118 market outcomes loaded · 358 tracked people matched
+markets                      OK           358  27112 market outcomes loaded · 358 tracked people matched
 primary_calendar             OK            50  cache fresh
-rlc                          OK           283  
+rlc                          OK           283  endorsements: 9 candidates
 roster_house                 OK           433  433 Representatives + 6 delegates, 2 vacancies (published October 1, 2026)
 roster_senate                OK           100  100 senators (file last updated 2026-10-08T14:47-05:00)
-trackaipac                   OK             0  
+trackaipac                   OK           533  /endorsements: 38 endorsed candidates
 votes_ai_relevance           OK           126  904 topical roll calls · 126 judged relevant · 0 awaiting AI judgment — web-search AI unavailable; judging onl
 votes_house_xml              OK          2915  2026 roll 315: no <vote-metadata> (root <xml>)
 votes_senate_voteview        OK          2555  2555 Senate roll calls indexed from Voteview (+0 topical this run)

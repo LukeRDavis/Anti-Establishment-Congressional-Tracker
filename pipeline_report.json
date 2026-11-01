@@ -1,6 +1,6 @@
 {
- "run_at": "2026-11-01T05:54:43.424170+00:00",
- "runtime_s": 961,
+ "run_at": "2026-11-01T15:14:02.620586+00:00",
+ "runtime_s": 1183,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
@@ -129,38 +129,44 @@
   "fec_candidates": {
    "ok": true,
    "count": 4353,
-   "requests": 0,
+   "requests": 44,
    "failures": 0,
    "errors": [],
    "notes": [
-    "cache fresh"
+    "4353 active 2026 House+Senate filers"
    ]
   },
   "fec_finance": {
    "ok": true,
-   "count": 4037,
-   "requests": 0,
+   "count": 3984,
+   "requests": 46,
    "failures": 0,
    "errors": [],
    "notes": [
-    "cache fresh"
+    "totals for 3984 filers"
    ]
   },
   "trackaipac": {
    "ok": true,
-   "count": 0,
-   "requests": 0,
+   "count": 533,
+   "requests": 2,
    "failures": 0,
    "errors": [],
-   "notes": []
+   "notes": [
+    "/congress: 533 members, 24 approved",
+    "/endorsements: 38 endorsed candidates"
+   ]
   },
   "rlc": {
    "ok": true,
    "count": 283,
-   "requests": 0,
+   "requests": 4,
    "failures": 0,
    "errors": [],
-   "notes": []
+   "notes": [
+    "Liberty Index cache fresh",
+    "endorsements: 9 candidates"
+   ]
   },
   "votes_senate_voteview": {
    "ok": true,
@@ -203,7 +209,7 @@
   "wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 718,
+   "requests": 734,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -211,19 +217,19 @@
   "grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 234,
+   "requests": 242,
    "failures": 0,
    "errors": [],
    "notes": []
   },
   "enrichment": {
    "ok": true,
-   "count": 1386,
+   "count": 1416,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 250/250 this run \u00b7 1386/4474 people have a bio"
+    "refreshed 250/250 this run \u00b7 1416/4474 people have a bio"
    ]
   },
   "wikipedia_results": {
@@ -250,7 +256,7 @@
    "ok": null,
    "count": 0,
    "requests": 195,
-   "failures": 143,
+   "failures": 160,
    "errors": [
     "HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA",
     "URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.VOTEJOHNMILLS.ORG",
@@ -274,11 +280,11 @@
   "fec_outside_spending": {
    "ok": true,
    "count": 413,
-   "requests": 0,
+   "requests": 108,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 0, 413 candidates with outside-spending records"
+    "refreshed 108, 413 candidates with outside-spending records"
    ]
   },
   "market_polymarket": {
@@ -293,12 +299,12 @@
   },
   "market_kalshi": {
    "ok": true,
-   "count": 25333,
+   "count": 25327,
    "requests": 40,
    "failures": 0,
    "errors": [],
    "notes": [
-    "40 pages \u00b7 25333 political markets"
+    "40 pages \u00b7 25327 political markets"
    ]
   },
   "market_predictit": {
@@ -318,7 +324,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "27118 market outcomes loaded \u00b7 358 tracked people matched"
+    "27112 market outcomes loaded \u00b7 358 tracked people matched"
    ]
   }
  },
