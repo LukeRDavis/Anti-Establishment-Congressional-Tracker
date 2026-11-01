@@ -1,13 +1,13 @@
 {
- "run_at": "2026-11-01T00:20:19.077103+00:00",
- "runtime_s": 858,
+ "run_at": "2026-11-01T05:54:43.424170+00:00",
+ "runtime_s": 961,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
   "gemini": 0,
   "xai": 0,
-  "openrouter": 1,
-  "groq": 6,
+  "openrouter": 0,
+  "groq": 0,
   "failed": 0
  },
  "streams": {
@@ -203,7 +203,7 @@
   "wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 688,
+   "requests": 718,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -211,29 +211,29 @@
   "grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 219,
+   "requests": 234,
    "failures": 0,
    "errors": [],
    "notes": []
   },
   "enrichment": {
    "ok": true,
-   "count": 1346,
+   "count": 1386,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 250/250 this run \u00b7 1346/4474 people have a bio"
+    "refreshed 250/250 this run \u00b7 1386/4474 people have a bio"
    ]
   },
   "wikipedia_results": {
    "ok": true,
    "count": 85,
-   "requests": 0,
+   "requests": 123,
    "failures": 0,
    "errors": [],
    "notes": [
-    "85 state election pages (0 refreshed) \u00b7 1251 result boxes"
+    "85 state election pages (87 refreshed) \u00b7 1251 result boxes"
    ]
   },
   "fec_websites": {
@@ -249,41 +249,17 @@
   "campaign_sites": {
    "ok": null,
    "count": 0,
-   "requests": 202,
+   "requests": 195,
    "failures": 143,
    "errors": [
     "HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA",
     "URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.VOTEJOHNMILLS.ORG",
     "HTTP 403 https://WWW.SHERRODBROWN.COM :: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA",
     "HTTP 403 https://WWW.RAJAFORIL.COM :: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA",
-    "URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://TUREK4IOWA.COM/",
-    "URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://VOTE4ANTHONY.COM/"
+    "URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://TUREK4IOWA.COM/",
+    "URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://VOTE4ANTHONY.COM/"
    ],
    "notes": []
-  },
-  "ai_groq": {
-   "ok": null,
-   "count": 0,
-   "requests": 11,
-   "failures": 3,
-   "errors": [
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198864, Requested 1759. Please try again in 4m29.136s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198493, Requested 2098. Please try again in 4m15.312s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198521, Requested 1777. Please try again in 2m8.735999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} "
-   ],
-   "notes": [
-    "models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b"
-   ]
-  },
-  "ai_openrouter": {
-   "ok": null,
-   "count": 0,
-   "requests": 2,
-   "failures": 0,
-   "errors": [],
-   "notes": [
-    "models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/gemma-4-31b-it:free, nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free, xingchen-agi/xing4.0-29b-a4b:free"
-   ]
   },
   "ai_positions": {
    "ok": true,
@@ -292,7 +268,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "researched 7 this run (campaign_site_text: 7) \u00b7 304 total \u00b7 19 with cited anti-interventionist positions"
+    "researched 0 this run (none) \u00b7 304 total \u00b7 19 with cited anti-interventionist positions"
    ]
   },
   "fec_outside_spending": {
@@ -327,12 +303,12 @@
   },
   "market_predictit": {
    "ok": true,
-   "count": 756,
+   "count": 757,
    "requests": 1,
    "failures": 0,
    "errors": [],
    "notes": [
-    "756 live contracts"
+    "757 live contracts"
    ]
   },
   "markets": {
@@ -342,7 +318,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "27117 market outcomes loaded \u00b7 358 tracked people matched"
+    "27118 market outcomes loaded \u00b7 358 tracked people matched"
    ]
   }
  },

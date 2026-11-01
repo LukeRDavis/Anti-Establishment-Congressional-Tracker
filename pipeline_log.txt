@@ -33,8 +33,10 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
 
 [3] General information
   [primary_calendar] cache fresh
-  [enrichment] refreshed 250/250 this run · 1346/4474 people have a bio
-  [wikipedia_results] 85 state election pages (0 refreshed) · 1251 result boxes
+  [enrichment] refreshed 250/250 this run · 1386/4474 people have a bio
+    results: no page "2026 Connecticut's 2nd congressional district election"
+    results: no page "2026 Connecticut's 3rd congressional district election"
+  [wikipedia_results] 85 state election pages (87 refreshed) · 1251 result boxes
 
 [4b] Candidate positions (AI research)
   [fec_websites] looked up 0 committees · 651 campaign websites known
@@ -42,17 +44,16 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.VOTEJOHNMILLS.ORG
     HTTP 403 https://WWW.SHERRODBROWN.COM :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
     HTTP 403 https://WWW.RAJAFORIL.COM :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://TUREK4IOWA.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://VOTE4ANTHONY.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://COOKEFORWISCONSIN.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://MICHELETAFOYA.COM
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://PEGGYFLANAGAN.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://OSBORNFORSENATE.COM
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://MIKECOLLINSGA.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://TUREK4IOWA.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://VOTE4ANTHONY.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://COOKEFORWISCONSIN.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://MICHELETAFOYA.COM
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://PEGGYFLANAGAN.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://OSBORNFORSENATE.COM
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://MIKECOLLINSGA.COM/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.NATEMORRIS.COM
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW,SHAWNFORGEORGIA.COM
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://ELAINEFORCONGRESS.COM/
-    RemoteDisconnected: Remote end closed connection without response :: https://WWW.BLAKEMIGUEZ.COM
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://ELAINEFORCONGRESS.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://AGERFORCONGRESS.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.KILLINFORCOLORADO.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.KOHFORCONGRESS.COM/
@@ -61,11 +62,11 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://SHANNONTAYLORVA.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://SCOTTCOLOM.COM/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.HALLIEFORARKANSAS.COM
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.LUKEBRONIN.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://POINDEXTERFORCONGRESS.COM
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.DANIELBISS.COM
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://WWW.PAULWASSGREN.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://STEFANYSHAHEEN.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.LUKEBRONIN.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://POINDEXTERFORCONGRESS.COM
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.DANIELBISS.COM
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://WWW.PAULWASSGREN.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://STEFANYSHAHEEN.COM/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.MICHAELECHOLS.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.WILEYNICKEL.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://BETHMACYFORCONGRESS.COM/
@@ -76,13 +77,13 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://DRPANFORCONGRESS.COM/
     InvalidURL: URL can't contain control characters. 'NONE AT THIS TIME' (found at least ' ') :: https://NONE AT THIS TIME
     URLError: <urlopen error [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1016)> :: https://ERICCONROY.COM
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://BALEDALTON.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://WWW.VOTEMIKEMCGUIRE.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://WWW.WELLMANFORMO.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://MELISSAHERNANDEZ2026.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://CHRISJONESFORCONGRESS.COM
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://WWW.ACHILLESFORIDAHO.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.ADRIANBOAFO.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://BALEDALTON.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://WWW.VOTEMIKEMCGUIRE.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://WWW.WELLMANFORMO.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://MELISSAHERNANDEZ2026.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://CHRISJONESFORCONGRESS.COM
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://WWW.ACHILLESFORIDAHO.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.ADRIANBOAFO.COM/
     URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)> :: https://MARKLAMBFORCONGRESS.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://WWW.MARTYJACKLEY.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://GALLANTNY.COM
@@ -92,19 +93,20 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.ELIOTTRODRIGUEZ.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.DANFORUSA.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://WWW.BERAFORCONGRESS.COM/
+    HTTP 520 https://OLIVERGILBERT.VOTE :: error code: 520 
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.LILYTANGWILLIAMS.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.ELECTJDFORD.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://DONCOOVERFORCONGRESS.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://VOTEFICKER.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.MICHELLESTEELFORCONGRESS.COM
+    URLError: <urlopen error [Errno 104] Connection reset by peer> :: https://WWW.MICHELLESTEELFORCONGRESS.COM
     HTTP 403 https://WWW.ISAIAHMARTIN.ORG :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://WWW.ALANPARDEE.COM
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://BACKNEBRASKA.COM
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://BACKNEBRASKA.COM
     URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)> :: https://WWW.GILLFORNJ.COM
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://PAULDANS.COM
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://ELECTTERESA.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://JOINROBERTWHITE.COM
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://STEVETOTHFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://PAULDANS.COM
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://ELECTTERESA.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://JOINROBERTWHITE.COM
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://STEVETOTHFORCONGRESS.COM/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.MANDELFORCONGRESS.US
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.SNEEDFORCONGRESS.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://HECTORMUJICA.COM/
@@ -113,8 +115,8 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://JAMESMARTINFORFLORIDA.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://CHAPINFORCONGRESS.COM
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'WWW.JULIEEMERSON.ORG'. (_ssl.c:1016)> :: https://WWW.JULIEEMERSON.ORG
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.DRKUMAR4CONGRESS.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.PLASKETTFORCONGRESS.ORG
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.DRKUMAR4CONGRESS.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.PLASKETTFORCONGRESS.ORG
     URLError: <urlopen error [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1016)> :: https://WWW.RICKEDMONDS.COM
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'WWW.AARONFORNY23.COM'. (_ssl.c:1016)> :: https://WWW.AARONFORNY23.COM
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.DEFORDFORCONGRESS.COM
@@ -124,21 +126,21 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://JAMIFLOYDFORCONGRESS.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://WWW.HALPINFORCONGRESS.COM/
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1016)> :: https://WWW.JAKEFORCONGRESS.COM
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.CAITLINROURK.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.CAITLINROURK.COM/
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'WWW.MEGANOROURKEFORCONGRESS.COM'. (_ssl.c:1016)> :: https://WWW.MEGANOROURKEFORCONGRESS.COM
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://N/A
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://TOMSMITHFORMI.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://N/A
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://TOMSMITHFORMI.COM/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.DANFORMAINE.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://VOTEJACKPERRY.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WILSONFORCONGRESS.COM
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://VOTEJACKPERRY.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WILSONFORCONGRESS.COM
     URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)> :: https://EHRFORCONGRESS.US
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://GRAYZELFORCONGRESS.COM
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.ELLMANFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://GRAYZELFORCONGRESS.COM
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.ELLMANFORCONGRESS.COM/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://SUSANSTOREYRUBIOFORCONGRESS.COM
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.VANCILFORCONGRESS.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://TARADURANT.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.ALEXHAWKINSFORCONGRESS.COM/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://WWW.BGP4AZ.COM
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.VANCILFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://TARADURANT.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.ALEXHAWKINSFORCONGRESS.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.BGP4AZ.COM
     URLError: <urlopen error [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1016)> :: https://DEANNAGORDON.COM
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.RAYMONDESMITHJR.COM
     URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://RICKJAKIOUS.COM
@@ -155,9 +157,9 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://DANIELBUTIEREZ4CONGRESS2024.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://MICHAELACHIARADIO.COM
     URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)> :: https://WONGFORCONGRESS.COM
-    URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1016)> :: https://WWW.JOHNCROISANT.COM
+    URLError: <urlopen error timed out> :: https://WWW.JOHNCROISANT.COM
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.TONYGUYFORCONGRESS.COM
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTPS://JOSHCOWENMI.COM/
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://JOSHCOWENMI.COM/
     URLError: <urlopen error [Errno 111] Connection refused> :: https://BLAU4CONGRESS.COM
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)> :: https://WWW.KATHERINEALEMAN.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.DAVEYOUNGFORCOLORADO.COM/
@@ -169,24 +171,19 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://VIVIOFORCONGRESS.COM
     URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://DALOURNY.NYC
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'WWW.JIMINHOFE.COM'. (_ssl.c:1016)> :: https://WWW.JIMINHOFE.COM
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://HTTP://WWW.MARYPELTOLA.COM
+    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTP://WWW.MARYPELTOLA.COM
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://KEVINFORIOWA.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.VOTESMEAD.COM
-  [ai_groq] models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.LAUREN4CONGRESS.COM/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://SECURE.WINRED.COM/SENATOR-AWA-FOR-CONGRESS/DONATE-HERE
     URLError: <urlopen error [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1016)> :: https://HESLOPFORCONGRESS.COM
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198864, Requested 1759. Please try again in 4m29.136s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.DRKEDNERMAXIMEFORCONGRESS.COM
     URLError: <urlopen error [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1016)> :: https://WWW.KATHLEENRIEBE.COM
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198493, Requested 2098. Please try again in 4m15.312s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198521, Requested 1777. Please try again in 2m8.735999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-  [ai_openrouter] models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/gemma-4-31b-it:free, nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free, xingchen-agi/xing4.0-29b-a4b:free
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1016)> :: https://ROPERFORCONGRESS.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://MITCHELLJACOB.COM
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.VOTEJOHNMILLS.ORG
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.VOTEJOHNMILLS.ORG
-  [ai_positions] researched 7 this run (campaign_site_text: 7) · 304 total · 19 with cited anti-interventionist positions
+  [ai_positions] researched 0 this run (none) · 304 total · 19 with cited anti-interventionist positions
 
 [4d] Outside spending
   [fec_outside_spending] refreshed 0, 413 candidates with outside-spending records
@@ -194,19 +191,17 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
 [5] Prediction markets
   [market_polymarket] 800 catalog pages scanned · 1028 open congressional markets
   [market_kalshi] 40 pages · 25333 political markets
-  [market_predictit] 756 live contracts
-  [markets] 27117 market outcomes loaded · 358 tracked people matched
+  [market_predictit] 757 live contracts
+  [markets] 27118 market outcomes loaded · 358 tracked people matched
 
 ════════════════════════════════════════════════════════════════════════
 STREAM                       STATUS     COUNT  NOTES / ERRORS
 ────────────────────────────────────────────────────────────────────────
-ai_groq                      —              0  HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model 
-ai_openrouter                —              0  models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/gemma-4-31b-it:free, nvidia/nemotron-3-nano-o
-ai_positions                 OK           304  researched 7 this run (campaign_site_text: 7) · 304 total · 19 with cited anti-interventionist positions
+ai_positions                 OK           304  researched 0 this run (none) · 304 total · 19 with cited anti-interventionist positions
 ballotpedia                  —              0  
 campaign_sites               —              0  HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</ti
 congress_gov                 OK           539  539 current members
-enrichment                   OK          1346  refreshed 250/250 this run · 1346/4474 people have a bio
+enrichment                   OK          1386  refreshed 250/250 this run · 1386/4474 people have a bio
 fec_candidates               OK          4353  cache fresh
 fec_finance                  OK          4037  cache fresh
 fec_outside_spending         OK           413  refreshed 0, 413 candidates with outside-spending records
@@ -214,8 +209,8 @@ fec_websites                 OK           651  looked up 0 committees · 651 cam
 grokipedia                   —              0  
 market_kalshi                OK         25333  40 pages · 25333 political markets
 market_polymarket            OK          1028  800 catalog pages scanned · 1028 open congressional markets
-market_predictit             OK           756  756 live contracts
-markets                      OK           358  27117 market outcomes loaded · 358 tracked people matched
+market_predictit             OK           757  757 live contracts
+markets                      OK           358  27118 market outcomes loaded · 358 tracked people matched
 primary_calendar             OK            50  cache fresh
 rlc                          OK           283  
 roster_house                 OK           433  433 Representatives + 6 delegates, 2 vacancies (published October 1, 2026)
@@ -226,7 +221,7 @@ votes_house_xml              OK          2915  2026 roll 315: no <vote-metadata>
 votes_senate_voteview        OK          2555  2555 Senate roll calls indexed from Voteview (+0 topical this run)
 votes_senate_xml             —              0  HTTP 403 https://www.senate.gov/legislative/LIS/roll_call_lists/vote_menu_119_2.xml :: <!DOCTYPE HTML PUBLIC "
 wikipedia                    —              0  
-wikipedia_results            OK            85  85 state election pages (0 refreshed) · 1251 result boxes
+wikipedia_results            OK            85  85 state election pages (87 refreshed) · 1251 result boxes
 ════════════════════════════════════════════════════════════════════════
 {
  "members": 533,
