@@ -1,6 +1,6 @@
 {
- "run_at": "2026-11-01T15:14:02.620586+00:00",
- "runtime_s": 1183,
+ "run_at": "2026-11-01T20:37:21.443921+00:00",
+ "runtime_s": 802,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
@@ -129,44 +129,38 @@
   "fec_candidates": {
    "ok": true,
    "count": 4353,
-   "requests": 44,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "4353 active 2026 House+Senate filers"
+    "cache fresh"
    ]
   },
   "fec_finance": {
    "ok": true,
    "count": 3984,
-   "requests": 46,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "totals for 3984 filers"
+    "cache fresh"
    ]
   },
   "trackaipac": {
    "ok": true,
-   "count": 533,
-   "requests": 2,
+   "count": 0,
+   "requests": 0,
    "failures": 0,
    "errors": [],
-   "notes": [
-    "/congress: 533 members, 24 approved",
-    "/endorsements: 38 endorsed candidates"
-   ]
+   "notes": []
   },
   "rlc": {
    "ok": true,
    "count": 283,
-   "requests": 4,
+   "requests": 0,
    "failures": 0,
    "errors": [],
-   "notes": [
-    "Liberty Index cache fresh",
-    "endorsements: 9 candidates"
-   ]
+   "notes": []
   },
   "votes_senate_voteview": {
    "ok": true,
@@ -209,7 +203,7 @@
   "wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 734,
+   "requests": 722,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -217,29 +211,29 @@
   "grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 242,
+   "requests": 236,
    "failures": 0,
    "errors": [],
    "notes": []
   },
   "enrichment": {
    "ok": true,
-   "count": 1416,
+   "count": 1459,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 250/250 this run \u00b7 1416/4474 people have a bio"
+    "refreshed 250/250 this run \u00b7 1459/4474 people have a bio"
    ]
   },
   "wikipedia_results": {
    "ok": true,
    "count": 85,
-   "requests": 123,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "85 state election pages (87 refreshed) \u00b7 1251 result boxes"
+    "85 state election pages (0 refreshed) \u00b7 1251 result boxes"
    ]
   },
   "fec_websites": {
@@ -280,11 +274,11 @@
   "fec_outside_spending": {
    "ok": true,
    "count": 413,
-   "requests": 108,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 108, 413 candidates with outside-spending records"
+    "refreshed 0, 413 candidates with outside-spending records"
    ]
   },
   "market_polymarket": {
@@ -299,12 +293,12 @@
   },
   "market_kalshi": {
    "ok": true,
-   "count": 25327,
+   "count": 25378,
    "requests": 40,
    "failures": 0,
    "errors": [],
    "notes": [
-    "40 pages \u00b7 25327 political markets"
+    "40 pages \u00b7 25378 political markets"
    ]
   },
   "market_predictit": {
@@ -324,7 +318,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "27112 market outcomes loaded \u00b7 358 tracked people matched"
+    "27163 market outcomes loaded \u00b7 358 tracked people matched"
    ]
   }
  },

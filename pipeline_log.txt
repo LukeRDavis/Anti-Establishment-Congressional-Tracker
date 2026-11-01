@@ -19,14 +19,10 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
   [congress_gov] 539 current members
 
 [2] FEC candidates and finance
-  [fec_candidates] 4353 active 2026 House+Senate filers
-  [fec_finance] totals for 3984 filers
+  [fec_candidates] cache fresh
+  [fec_finance] cache fresh
 
 [4c] Trackers
-  [trackaipac] /congress: 533 members, 24 approved
-  [trackaipac] /endorsements: 38 endorsed candidates
-  [rlc] Liberty Index cache fresh
-  [rlc] endorsements: 9 candidates
 
   People universe: 4474 (533 members, 3941 candidates)
 
@@ -37,10 +33,8 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
 
 [3] General information
   [primary_calendar] cache fresh
-  [enrichment] refreshed 250/250 this run · 1416/4474 people have a bio
-    results: no page "2026 Connecticut's 2nd congressional district election"
-    results: no page "2026 Connecticut's 3rd congressional district election"
-  [wikipedia_results] 85 state election pages (87 refreshed) · 1251 result boxes
+  [enrichment] refreshed 250/250 this run · 1459/4474 people have a bio
+  [wikipedia_results] 85 state election pages (0 refreshed) · 1251 result boxes
 
 [4b] Candidate positions (AI research)
   [fec_websites] looked up 0 committees · 651 campaign websites known
@@ -150,7 +144,7 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WILSONFORCONGRESS.COM
     URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)> :: https://EHRFORCONGRESS.US
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://GRAYZELFORCONGRESS.COM
-    URLError: <urlopen error timed out> :: https://WWW.BEN4CONGRESS.COM
+    URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1016)> :: https://WWW.BEN4CONGRESS.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.ELLMANFORCONGRESS.COM/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://SUSANSTOREYRUBIOFORCONGRESS.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.VANCILFORCONGRESS.COM/
@@ -177,10 +171,10 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://DANIELBUTIEREZ4CONGRESS2024.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://MICHAELACHIARADIO.COM
     URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)> :: https://WONGFORCONGRESS.COM
-    URLError: <urlopen error timed out> :: https://WWW.JOHNCROISANT.COM
+    URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1016)> :: https://WWW.JOHNCROISANT.COM
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.TONYGUYFORCONGRESS.COM
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://JOSHCOWENMI.COM/
-    URLError: <urlopen error [Errno 111] Connection refused> :: https://BLAU4CONGRESS.COM
+    URLError: <urlopen error [Errno 104] Connection reset by peer> :: https://BLAU4CONGRESS.COM
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)> :: https://WWW.KATHERINEALEMAN.COM
     RemoteDisconnected: Remote end closed connection without response :: https://BRADMEYER.ORG
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://HTTPS://WWW.DAVEYOUNGFORCOLORADO.COM/
@@ -207,13 +201,13 @@ AECT pipeline v10 — 2026-11-01 · 119th Congress · 2026 cycle
   [ai_positions] researched 0 this run (none) · 304 total · 19 with cited anti-interventionist positions
 
 [4d] Outside spending
-  [fec_outside_spending] refreshed 108, 413 candidates with outside-spending records
+  [fec_outside_spending] refreshed 0, 413 candidates with outside-spending records
 
 [5] Prediction markets
   [market_polymarket] 800 catalog pages scanned · 1028 open congressional markets
-  [market_kalshi] 40 pages · 25327 political markets
+  [market_kalshi] 40 pages · 25378 political markets
   [market_predictit] 757 live contracts
-  [markets] 27112 market outcomes loaded · 358 tracked people matched
+  [markets] 27163 market outcomes loaded · 358 tracked people matched
 
 ════════════════════════════════════════════════════════════════════════
 STREAM                       STATUS     COUNT  NOTES / ERRORS
@@ -222,27 +216,27 @@ ai_positions                 OK           304  researched 0 this run (none) · 3
 ballotpedia                  —              0  
 campaign_sites               —              0  HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</ti
 congress_gov                 OK           539  539 current members
-enrichment                   OK          1416  refreshed 250/250 this run · 1416/4474 people have a bio
-fec_candidates               OK          4353  4353 active 2026 House+Senate filers
-fec_finance                  OK          3984  totals for 3984 filers
-fec_outside_spending         OK           413  refreshed 108, 413 candidates with outside-spending records
+enrichment                   OK          1459  refreshed 250/250 this run · 1459/4474 people have a bio
+fec_candidates               OK          4353  cache fresh
+fec_finance                  OK          3984  cache fresh
+fec_outside_spending         OK           413  refreshed 0, 413 candidates with outside-spending records
 fec_websites                 OK           651  looked up 0 committees · 651 campaign websites known
 grokipedia                   —              0  
-market_kalshi                OK         25327  40 pages · 25327 political markets
+market_kalshi                OK         25378  40 pages · 25378 political markets
 market_polymarket            OK          1028  800 catalog pages scanned · 1028 open congressional markets
 market_predictit             OK           757  757 live contracts
-markets                      OK           358  27112 market outcomes loaded · 358 tracked people matched
+markets                      OK           358  27163 market outcomes loaded · 358 tracked people matched
 primary_calendar             OK            50  cache fresh
-rlc                          OK           283  endorsements: 9 candidates
+rlc                          OK           283  
 roster_house                 OK           433  433 Representatives + 6 delegates, 2 vacancies (published October 1, 2026)
 roster_senate                OK           100  100 senators (file last updated 2026-10-08T14:47-05:00)
-trackaipac                   OK           533  /endorsements: 38 endorsed candidates
+trackaipac                   OK             0  
 votes_ai_relevance           OK           126  904 topical roll calls · 126 judged relevant · 0 awaiting AI judgment — web-search AI unavailable; judging onl
 votes_house_xml              OK          2915  2026 roll 315: no <vote-metadata> (root <xml>)
 votes_senate_voteview        OK          2555  2555 Senate roll calls indexed from Voteview (+0 topical this run)
 votes_senate_xml             —              0  HTTP 403 https://www.senate.gov/legislative/LIS/roll_call_lists/vote_menu_119_2.xml :: <!DOCTYPE HTML PUBLIC "
 wikipedia                    —              0  
-wikipedia_results            OK            85  85 state election pages (87 refreshed) · 1251 result boxes
+wikipedia_results            OK            85  85 state election pages (0 refreshed) · 1251 result boxes
 ════════════════════════════════════════════════════════════════════════
 {
  "members": 533,
