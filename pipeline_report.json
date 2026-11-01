@@ -1,14 +1,14 @@
 {
- "run_at": "2026-11-01T00:05:42.189768+00:00",
- "runtime_s": 868,
+ "run_at": "2026-11-01T00:20:19.077103+00:00",
+ "runtime_s": 858,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
   "gemini": 0,
   "xai": 0,
-  "openrouter": 0,
-  "groq": 7,
-  "failed": 1
+  "openrouter": 1,
+  "groq": 6,
+  "failed": 0
  },
  "streams": {
   "key:CONGRESS_KEY": {
@@ -38,12 +38,14 @@
    ]
   },
   "key:XAI_API_KEY": {
-   "ok": true,
+   "ok": null,
    "count": 0,
    "requests": 0,
    "failures": 0,
    "errors": [],
-   "notes": []
+   "notes": [
+    "off: no free tier"
+   ]
   },
   "key:OPENROUTER_API_KEY": {
    "ok": true,
@@ -177,7 +179,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "904 topical roll calls \u00b7 126 judged relevant \u00b7 0 awaiting AI judgment"
+    "904 topical roll calls \u00b7 126 judged relevant \u00b7 0 awaiting AI judgment \u2014 web-search AI unavailable; judging only votes with a recorded description"
    ]
   },
   "primary_calendar": {
@@ -248,7 +250,7 @@
    "ok": null,
    "count": 0,
    "requests": 202,
-   "failures": 159,
+   "failures": 143,
    "errors": [
     "HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA",
     "URLError: <urlopen error [Errno -2] Name or service not known> :: https://WWW.VOTEJOHNMILLS.ORG",
@@ -259,29 +261,28 @@
    ],
    "notes": []
   },
-  "ai_xai": {
-   "ok": null,
-   "count": 0,
-   "requests": 1,
-   "failures": 2,
-   "errors": [
-    "HTTP 403 https://api.x.ai/v1/responses :: {\"code\":\"permission-denied\",\"error\":\"Your newly created team doesn't have any credits or licenses yet. You can purchase those on https://console.x.ai/team/55ff7aec-2862-4402-9ddd-4f8250d1da04.\"}",
-    "circuit opened: HTTP 403"
-   ],
-   "notes": []
-  },
   "ai_groq": {
    "ok": null,
    "count": 0,
    "requests": 11,
    "failures": 3,
    "errors": [
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199212, Requested 1662. Please try again in 6m17.568s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198943, Requested 1973. Please try again in 6m35.712s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198646, Requested 1654. Please try again in 2m9.6s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} "
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198864, Requested 1759. Please try again in 4m29.136s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198493, Requested 2098. Please try again in 4m15.312s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198521, Requested 1777. Please try again in 2m8.735999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} "
    ],
    "notes": [
     "models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b"
+   ]
+  },
+  "ai_openrouter": {
+   "ok": null,
+   "count": 0,
+   "requests": 2,
+   "failures": 0,
+   "errors": [],
+   "notes": [
+    "models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/gemma-4-31b-it:free, nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free, xingchen-agi/xing4.0-29b-a4b:free"
    ]
   },
   "ai_positions": {
@@ -291,7 +292,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "researched 7 this run (campaign_site_text: 7) \u00b7 304 total \u00b7 20 with cited anti-interventionist positions"
+    "researched 7 this run (campaign_site_text: 7) \u00b7 304 total \u00b7 19 with cited anti-interventionist positions"
    ]
   },
   "fec_outside_spending": {
