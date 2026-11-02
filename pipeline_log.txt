@@ -19,10 +19,14 @@ AECT pipeline v10 — 2026-11-02 · 119th Congress · 2026 cycle
   [congress_gov] 539 current members
 
 [2] FEC candidates and finance
-  [fec_candidates] cache fresh
-  [fec_finance] cache fresh
+  [fec_candidates] 4353 active 2026 House+Senate filers
+  [fec_finance] totals for 3953 filers
 
 [4c] Trackers
+  [trackaipac] /congress: 533 members, 24 approved
+  [trackaipac] /endorsements: 38 endorsed candidates
+  [rlc] Liberty Index cache fresh
+  [rlc] endorsements: 9 candidates
 
   People universe: 4474 (533 members, 3941 candidates)
 
@@ -33,27 +37,31 @@ AECT pipeline v10 — 2026-11-02 · 119th Congress · 2026 cycle
 
 [3] General information
   [primary_calendar] cache fresh
-  [enrichment] refreshed 0/0 this run · 1534/4474 people have a bio
-  [wikipedia_results] 85 state election pages (0 refreshed) · 1251 result boxes
+  ⚡ ballotpedia: circuit opened (only empty responses (blocked for this host)) — skipping its remaining calls
+  [enrichment] refreshed 250/250 this run · 1534/4474 people have a bio
+  [ballotpedia] outcomes {'no_page': 17} · probes: 200 0B '' https://ballotpedia.org/Robert_Aderholt | 200 0B '' https://ballotpedia.org/Barry_Moore | 200 0B '' https://ballotpedia.org/Gary_Palmer | 200 0B '' https://ballotpedia.org/Shomari_Figures | 200 0B '' https://ballotpedia.org/Dale_Strong | 200 0B '' https://ballotpedia.org/Mike_Rogers
+    results: no page "2026 Connecticut's 2nd congressional district election"
+    results: no page "2026 Connecticut's 3rd congressional district election"
+  [wikipedia_results] 85 state election pages (87 refreshed) · 1251 result boxes
 
 [4b] Candidate positions (AI research)
   [fec_websites] looked up 0 committees · 651 campaign websites known
   [ai_groq] models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199643, Requested 608. Please try again in 1m48.432s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 2048. The request's expected output tokens exceed the enforced limit; reduce max_tokens (or the request's expected output) and try again. Need more tokens? Upgrade to Dev Tier today at https://console
-  [ai_positions] researched 60 this run (no_source: 799, wikipedia_text: 60) · 2171 total · 19 with cited anti-interventionist positions
+  [ai_positions] researched 19 this run (no_source: 494, wikipedia_text: 19) · 2684 total · 19 with cited anti-interventionist positions
 
 [4d] Outside spending
-  [fec_outside_spending] refreshed 0, 460 candidates with outside-spending records
+  [fec_outside_spending] refreshed 108, 457 candidates with outside-spending records
 
 [4e] Reliable vs soft anti-establishment (AI over scraped dossiers)
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 4929, Requested 5868. Please try again in 20.9775s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Used 3975, Requested 4340. Please try again in 11.271428571s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Please reduce the length of the messages or completion.","type":"invalid_request_error","param":"messages","code":"context_length_exceeded"}} 
   [ai_openrouter] models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/gemma-4-31b-it:free, nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free, xingchen-agi/xing4.0-29b-a4b:free
     HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1793664000000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model 
     HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1793664000000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model 
     HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests per day","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"50","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1793664000000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model 
     HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own pro
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 6723, Requested 6094. Please try again in 36.1275s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 5297, Requested 5011. Please try again in 17.31s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
   ⚡ ai_groq: circuit opened (every available model failed or is over quota) — skipping its remaining calls
     HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own pro
     HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own pro
@@ -80,51 +88,48 @@ AECT pipeline v10 — 2026-11-02 · 119th Congress · 2026 cycle
     HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own pro
     HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own pro
     HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own pro
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own pro
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own pro
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own pro
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own pro
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own pro
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own pro
-  [establishment_tiers] 34 hard · 113 soft · judged 40 with AI this run · verdicts from AI 2, rule 145 · AI has reviewed 15 of 3192 members and running candidates (514 with signals)
+  [establishment_tiers] 34 hard · 113 soft · judged 36 with AI this run · verdicts from AI 5, rule 142 · AI has reviewed 15 of 3192 members and running candidates (574 with signals)
 
 [5] Prediction markets
   [market_polymarket] 800 catalog pages scanned · 1028 open congressional markets
-  [market_kalshi] 40 pages · 25414 political markets
-  [market_predictit] 757 live contracts
-  [markets] 27199 market outcomes loaded · 358 tracked people matched
+  [market_kalshi] 40 pages · 25500 political markets
+  [market_predictit] 764 live contracts
+  [markets] 27292 market outcomes loaded · 358 tracked people matched
 
 ════════════════════════════════════════════════════════════════════════
 STREAM                       STATUS     COUNT  NOTES / ERRORS
 ────────────────────────────────────────────────────────────────────────
 ai_groq                      —              0  HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model 
 ai_openrouter                —              0  HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-model
-ai_positions                 OK          2171  researched 60 this run (no_source: 799, wikipedia_text: 60) · 2171 total · 19 with cited anti-interventionist 
+ai_positions                 OK          2684  researched 19 this run (no_source: 494, wikipedia_text: 19) · 2684 total · 19 with cited anti-interventionist 
+ballotpedia                  FAIL           0  circuit opened: only empty responses (blocked for this host)
 congress_gov                 OK           539  539 current members
 dossier_grokipedia           —              0  
 dossier_news_bing            —              0  
 dossier_news_google          —              0  
 dossier_wikipedia            —              0  
-enrichment                   OK          1534  refreshed 0/0 this run · 1534/4474 people have a bio
-establishment_tiers          OK            34  34 hard · 113 soft · judged 40 with AI this run · verdicts from AI 2, rule 145 · AI has reviewed 15 of 3192 me
-fec_candidates               OK          4353  cache fresh
-fec_finance                  OK          4035  cache fresh
-fec_outside_spending         OK           460  refreshed 0, 460 candidates with outside-spending records
+enrichment                   OK          1534  refreshed 250/250 this run · 1534/4474 people have a bio
+establishment_tiers          OK            34  34 hard · 113 soft · judged 36 with AI this run · verdicts from AI 5, rule 142 · AI has reviewed 15 of 3192 me
+fec_candidates               OK          4353  4353 active 2026 House+Senate filers
+fec_finance                  OK          3953  totals for 3953 filers
+fec_outside_spending         OK           457  refreshed 108, 457 candidates with outside-spending records
 fec_websites                 OK           651  looked up 0 committees · 651 campaign websites known
-market_kalshi                OK         25414  40 pages · 25414 political markets
+grokipedia                   —              0  
+market_kalshi                OK         25500  40 pages · 25500 political markets
 market_polymarket            OK          1028  800 catalog pages scanned · 1028 open congressional markets
-market_predictit             OK           757  757 live contracts
-markets                      OK           358  27199 market outcomes loaded · 358 tracked people matched
+market_predictit             OK           764  764 live contracts
+markets                      OK           358  27292 market outcomes loaded · 358 tracked people matched
 primary_calendar             OK            50  cache fresh
-rlc                          OK           283  
+rlc                          OK           283  endorsements: 9 candidates
 roster_house                 OK           433  433 Representatives + 6 delegates, 2 vacancies (published October 1, 2026)
 roster_senate                OK           100  100 senators (file last updated 2026-10-08T14:47-05:00)
-trackaipac                   OK             0  
+trackaipac                   OK           533  /endorsements: 38 endorsed candidates
 votes_ai_relevance           OK           126  904 topical roll calls · 126 judged relevant · 0 awaiting AI judgment — web-search AI unavailable; judging onl
 votes_house_xml              OK          2915  2026 roll 315: no <vote-metadata> (root <xml>)
 votes_senate_voteview        OK          2555  2555 Senate roll calls indexed from Voteview (+0 topical this run)
 votes_senate_xml             —              0  HTTP 403 https://www.senate.gov/legislative/LIS/roll_call_lists/vote_menu_119_2.xml :: <!DOCTYPE HTML PUBLIC "
-wikipedia_results            OK            85  85 state election pages (0 refreshed) · 1251 result boxes
+wikipedia                    —              0  
+wikipedia_results            OK            85  85 state election pages (87 refreshed) · 1251 result boxes
 ════════════════════════════════════════════════════════════════════════
 {
  "members": 533,
@@ -137,5 +142,5 @@ wikipedia_results            OK            85  85 state election pages (0 refres
  "anti_candidates": 8,
  "relevant_votes": 126,
  "odds": 358,
- "history_events_added": 217
+ "history_events_added": 0
 }
