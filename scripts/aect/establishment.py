@@ -87,6 +87,7 @@ def facts(p, ie):
     dfx = p.get("_defections", [])
     return {
         "party_defections_to_anti": len(dfx),
+        "bills_on_arms_aid_war": p.get("_bills", []),
         "defection_examples": [f"{v['date']} {v['measure']}: {v['summary'][:110]}" for v in dfx[-6:]],
         "incumbent": bool(p.get("incumbent")),
         "focus_votes": len(focus), "anti_focus_votes": len(anti),
@@ -336,6 +337,38 @@ def _screen(p, fec_totals):
     return None
 
 
+_BILL_TOPIC = re.compile(r"israel|gaza|palestin|arms|weapon|munition|military (?:aid|assistance|financing)|"
+                         r"security assistance|foreign military|embargo|war powers|authorization for use of military|"
+                         r"\baumf\b|hostilities|ukraine|taiwan|iran|yemen|foreign aid|block the bombs", re.I)
+BILLS_BUDGET = int(os.environ.get("AECT_BILLS_BUDGET", "200"))
+
+
+def _bills(p, cache, budget):
+    """A member's sponsored + cosponsored bills on arms, aid and war (current and previous Congress),
+    from Congress.gov. Returns (rows, fetched_now)."""
+    from .votes import _cg
+    bg = p.get("bioguide_id")
+    if not bg:
+        return [], False
+    hit = cache.get(bg) or {}
+    if age_hours(hit.get("at")) < 72 or budget <= 0:
+        return hit.get("rows", []), False
+    rows = []
+    for kind, label in (("sponsored-legislation", "sponsored"), ("cosponsored-legislation", "cosponsored")):
+        d = _cg(f"/member/{bg}/{kind}", limit=250)
+        if d is None:
+            return hit.get("rows", []), True
+        items = d.get("sponsoredLegislation") or d.get("cosponsoredLegislation") or []
+        for it in items:
+            title = (it.get("title") or (it.get("latestTitle") or {}).get("title") or "").strip()
+            if not title or not _BILL_TOPIC.search(title) or (it.get("congress") or 0) < CURRENT_CONGRESS - 1:
+                continue
+            num = f"{(it.get('type') or '').upper()} {it.get('number', '')}".strip()
+            rows.append(f"{label} {num} ({it.get('congress')}th, {it.get('introducedDate', '')}): {title[:150]}")
+    cache[bg] = {"at": now_iso(), "rows": rows[:25]}
+    return rows[:25], True
+
+
 _MARKERS = re.compile(r"america first|anti-?war|libertarian|aipac|foreign aid|israel|gaza|anti-?establishment|"
                       r"populist|freedom caucus|justice democrats|\bdsa\b|democratic socialist|insurgent|"
                       r"outsider|ceasefire|forever wars?|interventionis|military aid|rand paul|massie", re.I)
@@ -361,31 +394,38 @@ def run(people, ie, fec_cands, fec_totals=None):
     cache = load_cache("establishment")
     emp_cache = load_cache("fec_employers")
     _mark_defections(people)
+    # Everyone is reviewed: every sitting member and every candidate still in the running.
+    # Signals (focus votes, party defections, endorsements, statements, outsider campaigns,
+    # news markers, arms/aid/war bills) only decide who is reviewed FIRST.
+    bill_cache = load_cache("member_bills")
+    head_cache = load_cache("headline_screen")
+    bills_left, heads_left = BILLS_BUDGET, HEADLINE_BUDGET
     keys = []
     for k, p in people.items():
+        running = (not p.get("incumbent") and p.get("on_ballot") and p.get("ps") not in ("DEFEATED", "WITHDREW")
+                   and p.get("primary_result") not in ("LOST", "WITHDREW"))
+        if not (p.get("incumbent") or running):
+            continue
+        if p.get("incumbent"):
+            p["_bills"], fetched = _bills(p, bill_cache, bills_left)
+            bills_left -= fetched
         why = _screen(p, fec_totals)
-        if why:
-            p["_screen"] = why
-            keys.append(k)
-    # November nominees with no signal yet: a cheap headline check decides who gets investigated
-    head_cache = load_cache("headline_screen")
-    looked = 0
-    for k, p in people.items():
-        if k in keys or p.get("incumbent") or not p.get("on_ballot") or p.get("primary_result") != "WON":
-            continue
-        if looked >= HEADLINE_BUDGET and age_hours((head_cache.get(k) or {}).get("at")) >= 72:
-            continue
-        why, fetched = _headline_screen({**p, "key": k}, head_cache)
-        looked += fetched
-        if why:
-            p["_screen"] = why
-            keys.append(k)
+        if not why and p.get("_bills"):
+            why = f"sponsors/cosponsors {len(p['_bills'])} arms, aid or war bills"
+        if not why and running and p.get("primary_result") == "WON":
+            why, fetched = _headline_screen({**p, "key": k}, head_cache) if heads_left > 0 or \
+                age_hours((head_cache.get(k) or {}).get("at")) < 72 else (None, False)
+            heads_left -= fetched
+        p["_signal"] = bool(why)
+        p["_screen"] = why or "routine review (no signal found yet)"
+        keys.append(k)
+    save_cache("member_bills", bill_cache)
     save_cache("headline_screen", head_cache)
     # never-AI-judged first; then focus-marked members, candidates on the ballot, party defectors
     def prio(k):
         p, old = people[k], cache.get(k) or {}
         judged_ai = old.get("v") == JUDGE_VERSION and old.get("source", "").startswith("ai")
-        return (judged_ai, not p.get("antiArms"), p.get("incumbent") and not p.get("antiArms"))
+        return (judged_ai, not p.get("antiArms"), not p.get("_signal"), not p.get("incumbent"))
     keys.sort(key=prio)
     judged = 0
     counts = {"hard": 0, "soft": 0, "none": 0}
@@ -395,7 +435,8 @@ def run(people, ie, fec_cands, fec_totals=None):
         p = people[k]
         f = facts(p, ie)
         old = cache.get(k) or {}
-        fresh = old.get("v") == JUDGE_VERSION and age_hours(old.get("at")) < TTL_H and old.get("source", "").startswith("ai")
+        ttl = TTL_H * (2 if old.get("tier") == "none" else 1)
+        fresh = old.get("v") == JUDGE_VERSION and age_hours(old.get("at")) < ttl and old.get("source", "").startswith("ai")
         verdict = old if fresh and old.get("facts_fp") == _fingerprint(f, "x" * old.get("text_len", 0)) else None
         if verdict is None and can_ai and judged < BUDGET and ai_time_left() > 120:
             text, urls = dossier(p)
@@ -451,5 +492,7 @@ def run(people, ie, fec_cands, fec_totals=None):
     save_cache("fec_employers", emp_cache)
     stream("establishment_tiers", ok=bool(keys), count=counts["hard"],
            note=f"{counts['hard']} hard · {counts['soft']} soft · judged {judged} with AI this run · "
-                f"verdicts from AI {sources['ai']}, rule {sources['rule']}")
+                f"verdicts from AI {sources['ai']}, rule {sources['rule']} · AI has reviewed "
+                f"{sum(1 for k in keys if (cache.get(k) or {}).get('source', '').startswith('ai'))} of {len(keys)} "
+                f"members and running candidates ({sum(1 for k in keys if people[k].get('_signal'))} with signals)")
     return counts
