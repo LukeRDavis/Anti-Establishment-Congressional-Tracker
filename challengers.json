@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-01T23:41:00.193828+00:00",
+ "generated_at": "2026-11-02T00:32:07.620870+00:00",
  "challengers": [
   {
    "name": "Mai Vang",
@@ -26,6 +26,10 @@
    "endorsed_by": [
     "trackaipac_endorsed"
    ],
+   "antiTier": "hard",
+   "tier_source": "rule",
+   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
+   "tier_evidence": [],
    "source": "fec+trackaipac_endorsed"
   },
   {
@@ -53,6 +57,10 @@
    "endorsed_by": [
     "trackaipac_endorsed"
    ],
+   "antiTier": "hard",
+   "tier_source": "rule",
+   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
+   "tier_evidence": [],
    "source": "fec+trackaipac_endorsed"
   },
   {
@@ -80,6 +88,10 @@
    "endorsed_by": [
     "trackaipac_endorsed"
    ],
+   "antiTier": "hard",
+   "tier_source": "rule",
+   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
+   "tier_evidence": [],
    "source": "fec+trackaipac_endorsed"
   },
   {
@@ -107,6 +119,10 @@
    "endorsed_by": [
     "trackaipac_endorsed"
    ],
+   "antiTier": "hard",
+   "tier_source": "rule",
+   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
+   "tier_evidence": [],
    "source": "fec+trackaipac_endorsed"
   },
   {
@@ -134,6 +150,10 @@
    "endorsed_by": [
     "trackaipac_endorsed"
    ],
+   "antiTier": "hard",
+   "tier_source": "rule",
+   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
+   "tier_evidence": [],
    "source": "fec+trackaipac_endorsed"
   },
   {
@@ -159,6 +179,10 @@
    "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_South_Carolina",
    "general_result": null,
    "endorsed_by": [],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "statements not yet corroborated by record, donors or trackers",
+   "tier_evidence": [],
    "source": "fec"
   },
   {
@@ -186,6 +210,10 @@
    "endorsed_by": [
     "trackaipac_endorsed"
    ],
+   "antiTier": "hard",
+   "tier_source": "rule",
+   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
+   "tier_evidence": [],
    "source": "fec+trackaipac_endorsed"
   },
   {
@@ -211,6 +239,10 @@
    "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_Massachusetts",
    "general_result": null,
    "endorsed_by": [],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "statements not yet corroborated by record, donors or trackers",
+   "tier_evidence": [],
    "source": "fec"
   }
  ]

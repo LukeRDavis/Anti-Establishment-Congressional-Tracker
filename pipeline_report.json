@@ -1,14 +1,14 @@
 {
- "run_at": "2026-11-01T23:40:59.437957+00:00",
- "runtime_s": 1231,
+ "run_at": "2026-11-02T00:32:06.770850+00:00",
+ "runtime_s": 3051,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
   "gemini": 0,
   "xai": 0,
-  "openrouter": 0,
-  "groq": 60,
-  "failed": 0
+  "openrouter": 13,
+  "groq": 66,
+  "failed": 6
  },
  "streams": {
   "key:CONGRESS_KEY": {
@@ -199,15 +199,17 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "outcomes {'no_page': 750} \u00b7 probes: 200 0B '' https://ballotpedia.org/Christopher_Hurt | 200 0B '' https://ballotpedia.org/Deadra_Marsh-Foy | 200 0B '' https://ballotpedia.org/Philip_Suarez | 200 0B '' https://ballotpedia.org/Joshua_Lovell | 200 0B '' ://ballotpedia.org/Aiden_Shotwell-Morgan | 200 0B '' https://ballotpedia.org/Stephen_Long"
+    "outcomes {'no_page': 750} \u00b7 probes: 200 0B '' ://ballotpedia.org/Aiden_Shotwell-Morgan | 200 0B '' https://ballotpedia.org/Deadra_Marsh-Foy | 200 0B '' https://ballotpedia.org/Stephen_Long | 200 0B '' https://ballotpedia.org/Philip_Suarez | 200 0B '' https://ballotpedia.org/Christopher_Hurt | 200 0B '' https://ballotpedia.org/Joshua_Lovell"
    ]
   },
   "wikipedia": {
    "ok": null,
    "count": 0,
    "requests": 712,
-   "failures": 0,
-   "errors": [],
+   "failures": 1,
+   "errors": [
+    "HTTP 503 https://en.wikipedia.org/api/rest_v1/page/summary/Chelsae_Pile :: upstream connect error or disconnect/reset before headers. reset reason: remote connection failure"
+   ],
    "notes": []
   },
   "grokipedia": {
@@ -252,7 +254,7 @@
    "ok": null,
    "count": 0,
    "requests": 48,
-   "failures": 7,
+   "failures": 12,
    "errors": [
     "HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA",
     "URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/",
@@ -266,9 +268,15 @@
   "ai_groq": {
    "ok": null,
    "count": 0,
-   "requests": 61,
-   "failures": 0,
-   "errors": [],
+   "requests": 73,
+   "failures": 5,
+   "errors": [
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 6165, Requested 4060. Please try again in 16.6875s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Used 3007, Requested 4075. Please try again in 702.857142ms. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Please reduce the length of the messages or completion.\",\"type\":\"invalid_request_error\",\"param\":\"messages\",\"code\":\"context_length_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 6025, Requested 5524. Please try again in 26.6175s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "circuit opened: every available model failed or is over quota"
+   ],
    "notes": [
     "models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b"
    ]
@@ -293,6 +301,53 @@
     "refreshed 0, 413 candidates with outside-spending records"
    ]
   },
+  "dossier_wikipedia": {
+   "ok": null,
+   "count": 0,
+   "requests": 24,
+   "failures": 0,
+   "errors": [],
+   "notes": []
+  },
+  "dossier_grokipedia": {
+   "ok": null,
+   "count": 0,
+   "requests": 25,
+   "failures": 0,
+   "errors": [],
+   "notes": []
+  },
+  "dossier_news_google": {
+   "ok": null,
+   "count": 0,
+   "requests": 25,
+   "failures": 0,
+   "errors": [],
+   "notes": []
+  },
+  "ai_openrouter": {
+   "ok": null,
+   "count": 0,
+   "requests": 48,
+   "failures": 13,
+   "errors": [
+    "HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations\",\"provider_name\":\"Google AI Studio\",\"is_byok\":false,\"provider_error_code\":\"429\",\"limit_source\":\"upstream_provider_shared_pool\",\"remedy_hint\":",
+    "HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own key to accumulate your rate limits: https://openrouter.ai/settings/integrations\",\"provider_name\":\"Phala\",\"is_byok\":false,\"limit_source\":\"upstream_provider_shared_pool\",\"remedy_hint\":\"Retry shortly, add your own pro"
+   ],
+   "notes": [
+    "models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/gemma-4-31b-it:free, nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free, xingchen-agi/xing4.0-29b-a4b:free"
+   ]
+  },
+  "establishment_tiers": {
+   "ok": true,
+   "count": 33,
+   "requests": 0,
+   "failures": 0,
+   "errors": [],
+   "notes": [
+    "33 hard \u00b7 114 soft \u00b7 judged 25 with AI this run \u00b7 verdicts from AI 19, rule 128"
+   ]
+  },
   "market_polymarket": {
    "ok": true,
    "count": 1028,
@@ -305,12 +360,12 @@
   },
   "market_kalshi": {
    "ok": true,
-   "count": 25411,
+   "count": 25414,
    "requests": 40,
    "failures": 0,
    "errors": [],
    "notes": [
-    "40 pages \u00b7 25411 political markets"
+    "40 pages \u00b7 25414 political markets"
    ]
   },
   "market_predictit": {
@@ -330,7 +385,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "27196 market outcomes loaded \u00b7 358 tracked people matched"
+    "27199 market outcomes loaded \u00b7 358 tracked people matched"
    ]
   }
  },
