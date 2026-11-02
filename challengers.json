@@ -1,159 +1,299 @@
 {
- "generated_at": "2026-11-02T06:14:57.505494+00:00",
+ "generated_at": "2026-11-02T07:16:14.383539+00:00",
  "challengers": [
   {
-   "name": "Angelica Duenas",
-   "party": "D",
-   "state": "CA",
-   "district": 29,
+   "name": "Willie Montague",
+   "party": "R",
+   "state": "FL",
+   "district": 10,
    "chamber": "house",
    "antiArms": true,
-   "antiArmsLevel": "yes",
-   "antiArmsBasis": "statements",
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
    "evidence": [
-    "I will never vote to send U.S. weapons or military aid to Israel. (https://angelica4congress.com/)"
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
    ],
-   "ps": "WON",
-   "note": "I will never vote to send U.S. weapons or military aid to Israel. (https://angelica4congress.com/)",
-   "website": "https://angelica4congress.com/",
+   "ps": "RESULTS_PENDING",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.teamwillie.com/",
    "fec_ids": [
-    "H8CA29100"
+    "H0FL10113"
    ],
-   "primaryDate": "2026-06-02",
-   "primary_result": "WON",
-   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_California",
+   "primaryDate": "2026-08-18",
+   "primary_result": null,
+   "primary_result_source": null,
    "general_result": null,
    "endorsed_by": [
-    "trackaipac_endorsed"
+    "rlc_endorsed"
    ],
-   "antiTier": "hard",
+   "antiTier": "soft",
    "tier_source": "rule",
-   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
    "tier_evidence": [],
-   "source": "fec+trackaipac_endorsed"
+   "tier_risk": null,
+   "tier_screen": "endorsed by RLC",
+   "source": "fec+rlc_endorsed"
   },
   {
-   "name": "Melat Kiros",
+   "name": "Missi Hesketh",
    "party": "D",
-   "state": "CO",
-   "district": 1,
-   "chamber": "house",
-   "antiArms": true,
-   "antiArmsLevel": "yes",
-   "antiArmsBasis": "statements",
-   "evidence": [
-    "Arms Embargo (https://www.kirosforco.com/)"
-   ],
-   "ps": "WON",
-   "note": "Arms Embargo (https://www.kirosforco.com/)",
-   "website": "https://www.kirosforco.com/",
-   "fec_ids": [
-    "H6CO01273"
-   ],
-   "primaryDate": "2026-06-30",
-   "primary_result": "WON",
-   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Colorado",
-   "general_result": null,
-   "endorsed_by": [
-    "trackaipac_endorsed"
-   ],
-   "antiTier": "hard",
-   "tier_source": "rule",
-   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
-   "tier_evidence": [],
-   "source": "fec+trackaipac_endorsed"
-  },
-  {
-   "name": "William Lawrence",
-   "party": "D",
-   "state": "MI",
+   "state": "MO",
    "district": 7,
    "chamber": "house",
    "antiArms": true,
-   "antiArmsLevel": "yes",
-   "antiArmsBasis": "statements",
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
    "evidence": [
-    "Stop arms sales to Israel & other human rights violators (https://wewill2026.com/)"
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
    ],
    "ps": "WON",
-   "note": "Stop arms sales to Israel & other human rights violators (https://wewill2026.com/)",
-   "website": "https://wewill2026.com/",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.missiformo.com/",
    "fec_ids": [
-    "H6MI07298"
+    "H4MO07156"
    ],
    "primaryDate": "2026-08-04",
    "primary_result": "WON",
-   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Michigan",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Missouri",
    "general_result": null,
    "endorsed_by": [
     "trackaipac_endorsed"
    ],
-   "antiTier": "hard",
+   "antiTier": "soft",
    "tier_source": "rule",
-   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
    "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
    "source": "fec+trackaipac_endorsed"
   },
   {
-   "name": "Karen Ortiz",
-   "party": "I",
-   "state": "NY",
+   "name": "Jerrad Christian",
+   "party": "D",
+   "state": "OH",
    "district": 12,
    "chamber": "house",
    "antiArms": true,
-   "antiArmsLevel": "yes",
-   "antiArmsBasis": "statements",
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
    "evidence": [
-    "We must impose an arms embargo on and stop sending our tax dollars to Israel. (https://ko4congress.com/)"
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
    ],
    "ps": "WON",
-   "note": "We must impose an arms embargo on and stop sending our tax dollars to Israel. (https://ko4congress.com/)",
-   "website": "https://ko4congress.com/",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.christianforohio.com/",
    "fec_ids": [
-    "H6NY12297"
+    "H4OH12080"
    ],
-   "primaryDate": "2026-06-23",
+   "primaryDate": "2026-05-05",
    "primary_result": "WON",
-   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_New_York",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Ohio",
    "general_result": null,
    "endorsed_by": [
     "trackaipac_endorsed"
    ],
-   "antiTier": "hard",
+   "antiTier": "soft",
    "tier_source": "rule",
-   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
    "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
    "source": "fec+trackaipac_endorsed"
   },
   {
-   "name": "Robert People",
-   "party": "D",
-   "state": "FL",
-   "district": 15,
+   "name": "Brandon Herrera",
+   "party": "R",
+   "state": "TX",
+   "district": 23,
    "chamber": "house",
    "antiArms": true,
-   "antiArmsLevel": "yes",
-   "antiArmsBasis": "statements",
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
    "evidence": [
-    "No AIPAC No arms shipments to Israel (https://www.peopleforcongress.com/)"
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
    ],
    "ps": "WON",
-   "note": "No AIPAC No arms shipments to Israel (https://www.peopleforcongress.com/)",
-   "website": "https://www.peopleforcongress.com/",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://brandonherreraforcongress.com/",
    "fec_ids": [
-    "H6FL15168"
+    "H4TX23120"
    ],
-   "primaryDate": "2026-08-18",
+   "primaryDate": "2026-03-03",
    "primary_result": "WON",
-   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Florida",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Texas",
+   "general_result": null,
+   "endorsed_by": [
+    "rlc_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by RLC",
+   "source": "fec+rlc_endorsed"
+  },
+  {
+   "name": "Tanya Lloyd",
+   "party": "D",
+   "state": "TX",
+   "district": 27,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.tanyafortexas.com/",
+   "fec_ids": [
+    "H4TX27089"
+   ],
+   "primaryDate": "2026-03-03",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Texas",
    "general_result": null,
    "endorsed_by": [
     "trackaipac_endorsed"
    ],
-   "antiTier": "hard",
+   "antiTier": "soft",
    "tier_source": "rule",
-   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
    "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Case Dixon",
+   "party": "R",
+   "state": "AL",
+   "district": 6,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "DEFEATED",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "",
+   "fec_ids": [
+    "H6AL06135"
+   ],
+   "primaryDate": "2026-05-19",
+   "primary_result": "LOST",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Alabama",
+   "general_result": null,
+   "endorsed_by": [
+    "rlc_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by RLC",
+   "source": "fec+rlc_endorsed"
+  },
+  {
+   "name": "Terri Green",
+   "party": "D",
+   "state": "AR",
+   "district": 1,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "cited anti-interventionist statements, not on the focus issue"
+   ],
+   "ps": "RESULTS_PENDING",
+   "note": "cited anti-interventionist statements, not on the focus issue",
+   "website": "https://www.terrigreenforarkansas.com/",
+   "fec_ids": [
+    "H6AR01155"
+   ],
+   "primaryDate": "2026-03-03",
+   "primary_result": null,
+   "primary_result_source": null,
+   "general_result": null,
+   "endorsed_by": [],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "cited anti-interventionist statements, not on the focus issue",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "cited anti-interventionist statements (not on the focus issue)",
+   "source": "fec"
+  },
+  {
+   "name": "Robb Ryerse",
+   "party": "D",
+   "state": "AR",
+   "district": 3,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.robbforcongress.com/",
+   "fec_ids": [
+    "H6AR03128"
+   ],
+   "primaryDate": "2026-03-03",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Arkansas",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Elizabeth Lee",
+   "party": "D",
+   "state": "AZ",
+   "district": 5,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.nurselee4az.com/",
+   "fec_ids": [
+    "H6AZ05240"
+   ],
+   "primaryDate": "2026-07-21",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Arizona",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
    "source": "fec+trackaipac_endorsed"
   },
   {
@@ -185,6 +325,858 @@
    "tier_source": "rule",
    "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
    "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "marked anti on the focus issue by votes or statements",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Connie Chan",
+   "party": "D",
+   "state": "CA",
+   "district": 11,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.conniechansf.com/",
+   "fec_ids": [
+    "H6CA11268"
+   ],
+   "primaryDate": "2026-06-02",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_California",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Randy Villegas",
+   "party": "D",
+   "state": "CA",
+   "district": 22,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.villegasforcongress.com/",
+   "fec_ids": [
+    "H6CA22190"
+   ],
+   "primaryDate": "2026-06-02",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_California",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Tessa Hodge",
+   "party": "D",
+   "state": "CA",
+   "district": 23,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://tessaforca.com/",
+   "fec_ids": [
+    "H6CA23230"
+   ],
+   "primaryDate": "2026-06-02",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_California",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Angela Gonzales-Torres",
+   "party": "D",
+   "state": "CA",
+   "district": 34,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.angela4congress.com/",
+   "fec_ids": [
+    "H6CA34286"
+   ],
+   "primaryDate": "2026-06-02",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_California",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Marni Von Wilpert",
+   "party": "D",
+   "state": "CA",
+   "district": 48,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "cited anti-interventionist statements, not on the focus issue"
+   ],
+   "ps": "WON",
+   "note": "cited anti-interventionist statements, not on the focus issue",
+   "website": "https://marnivonwilpert.com/",
+   "fec_ids": [
+    "H6CA48310"
+   ],
+   "primaryDate": "2026-06-02",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_California",
+   "general_result": null,
+   "endorsed_by": [],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "cited anti-interventionist statements, not on the focus issue",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "cited anti-interventionist statements (not on the focus issue)",
+   "source": "fec"
+  },
+  {
+   "name": "Melat Kiros",
+   "party": "D",
+   "state": "CO",
+   "district": 1,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "yes",
+   "antiArmsBasis": "statements",
+   "evidence": [
+    "Arms Embargo (https://www.kirosforco.com/)"
+   ],
+   "ps": "WON",
+   "note": "Arms Embargo (https://www.kirosforco.com/)",
+   "website": "https://www.kirosforco.com/",
+   "fec_ids": [
+    "H6CO01273"
+   ],
+   "primaryDate": "2026-06-30",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Colorado",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "hard",
+   "tier_source": "rule",
+   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "marked anti on the focus issue by votes or statements",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Ralph Mills",
+   "party": "R",
+   "state": "FL",
+   "district": 1,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "RESULTS_PENDING",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.votejohnmills.org/",
+   "fec_ids": [
+    "H6FL01143"
+   ],
+   "primaryDate": "2026-08-18",
+   "primary_result": null,
+   "primary_result_source": null,
+   "general_result": null,
+   "endorsed_by": [
+    "rlc_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by RLC",
+   "source": "fec+rlc_endorsed"
+  },
+  {
+   "name": "Mike Klein",
+   "party": "I",
+   "state": "FL",
+   "district": 3,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://mikeklein4congress.com/",
+   "fec_ids": [
+    "H6FL03149"
+   ],
+   "primaryDate": "2026-08-18",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Florida",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Eric Yonce",
+   "party": "D",
+   "state": "FL",
+   "district": 6,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.yonceforcongress.com/",
+   "fec_ids": [
+    "H6FL06340"
+   ],
+   "primaryDate": "2026-08-18",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Florida",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Robert People",
+   "party": "D",
+   "state": "FL",
+   "district": 15,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "yes",
+   "antiArmsBasis": "statements",
+   "evidence": [
+    "No AIPAC No arms shipments to Israel (https://www.peopleforcongress.com/)"
+   ],
+   "ps": "WON",
+   "note": "No AIPAC No arms shipments to Israel (https://www.peopleforcongress.com/)",
+   "website": "https://www.peopleforcongress.com/",
+   "fec_ids": [
+    "H6FL15168"
+   ],
+   "primaryDate": "2026-08-18",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Florida",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "hard",
+   "tier_source": "rule",
+   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "marked anti on the focus issue by votes or statements",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Nicole Locklin",
+   "party": "D",
+   "state": "FL",
+   "district": 26,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://locklinforcongress.com/",
+   "fec_ids": [
+    "H6FL26058"
+   ],
+   "primaryDate": "2026-08-18",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Florida",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Paul Nolley",
+   "party": "D",
+   "state": "IL",
+   "district": 16,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.nolleyforcongress.com/",
+   "fec_ids": [
+    "H6IL16108"
+   ],
+   "primaryDate": "2026-03-17",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Illinois",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Kelly Thompson",
+   "party": "D",
+   "state": "IN",
+   "district": 3,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "cited anti-interventionist statements, not on the focus issue"
+   ],
+   "ps": "WON",
+   "note": "cited anti-interventionist statements, not on the focus issue",
+   "website": "https://kellythompsonforcongress.com/",
+   "fec_ids": [
+    "H6IN03294"
+   ],
+   "primaryDate": "2026-05-05",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Indiana",
+   "general_result": null,
+   "endorsed_by": [],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "cited anti-interventionist statements, not on the focus issue",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "cited anti-interventionist statements (not on the focus issue)",
+   "source": "fec"
+  },
+  {
+   "name": "Drew Cox",
+   "party": "D",
+   "state": "IN",
+   "district": 4,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.drewcox.org/",
+   "fec_ids": [
+    "H6IN04193"
+   ],
+   "primaryDate": "2026-05-05",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Indiana",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Matt Dunlap",
+   "party": "D",
+   "state": "ME",
+   "district": 2,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "cited anti-interventionist statements, not on the focus issue"
+   ],
+   "ps": "WON",
+   "note": "cited anti-interventionist statements, not on the focus issue",
+   "website": "https://www.mattdunlapforuscongress.com/",
+   "fec_ids": [
+    "H6ME02171"
+   ],
+   "primaryDate": "2026-06-09",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Maine",
+   "general_result": null,
+   "endorsed_by": [],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "cited anti-interventionist statements, not on the focus issue",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "cited anti-interventionist statements (not on the focus issue)",
+   "source": "fec"
+  },
+  {
+   "name": "William Lawrence",
+   "party": "D",
+   "state": "MI",
+   "district": 7,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "yes",
+   "antiArmsBasis": "statements",
+   "evidence": [
+    "Stop arms sales to Israel & other human rights violators (https://wewill2026.com/)"
+   ],
+   "ps": "WON",
+   "note": "Stop arms sales to Israel & other human rights violators (https://wewill2026.com/)",
+   "website": "https://wewill2026.com/",
+   "fec_ids": [
+    "H6MI07298"
+   ],
+   "primaryDate": "2026-08-04",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Michigan",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "hard",
+   "tier_source": "rule",
+   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "marked anti on the focus issue by votes or statements",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Donavan McKinney",
+   "party": "D",
+   "state": "MI",
+   "district": 13,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.donavanforcongress.com/",
+   "fec_ids": [
+    "H6MI13254"
+   ],
+   "primaryDate": "2026-08-04",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Michigan",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Jacob Johnson",
+   "party": "D",
+   "state": "MN",
+   "district": 1,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "cited anti-interventionist statements, not on the focus issue"
+   ],
+   "ps": "WON",
+   "note": "cited anti-interventionist statements, not on the focus issue",
+   "website": "https://jakejohnsonforcongress.com/",
+   "fec_ids": [
+    "H6MN01190"
+   ],
+   "primaryDate": "2026-08-11",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Minnesota",
+   "general_result": null,
+   "endorsed_by": [],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "cited anti-interventionist statements, not on the focus issue",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "cited anti-interventionist statements (not on the focus issue)",
+   "source": "fec"
+  },
+  {
+   "name": "Ashley Bell",
+   "party": "D",
+   "state": "NC",
+   "district": 10,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.ashleybellforcongress.com/",
+   "fec_ids": [
+    "H6NC10174"
+   ],
+   "primaryDate": "2026-03-03",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_North_Carolina",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Adam Hamawy",
+   "party": "D",
+   "state": "NJ",
+   "district": 12,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://hamawyfornj.com/",
+   "fec_ids": [
+    "H6NJ12417"
+   ],
+   "primaryDate": "2026-06-02",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_New_Jersey",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Claire Valdez",
+   "party": "D",
+   "state": "NY",
+   "district": 7,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://clairevaldezforcongress.com/",
+   "fec_ids": [
+    "H6NY07214"
+   ],
+   "primaryDate": "2026-06-23",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_New_York",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Karen Ortiz",
+   "party": "I",
+   "state": "NY",
+   "district": 12,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "yes",
+   "antiArmsBasis": "statements",
+   "evidence": [
+    "We must impose an arms embargo on and stop sending our tax dollars to Israel. (https://ko4congress.com/)"
+   ],
+   "ps": "WON",
+   "note": "We must impose an arms embargo on and stop sending our tax dollars to Israel. (https://ko4congress.com/)",
+   "website": "https://ko4congress.com/",
+   "fec_ids": [
+    "H6NY12297"
+   ],
+   "primaryDate": "2026-06-23",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_New_York",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "hard",
+   "tier_source": "rule",
+   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "marked anti on the focus issue by votes or statements",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Darializa Avila Chevalier",
+   "party": "D",
+   "state": "NY",
+   "district": 13,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.darializaforcongress.com/",
+   "fec_ids": [
+    "H6NY13279"
+   ],
+   "primaryDate": "2026-06-23",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_New_York",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Don Leonard",
+   "party": "D",
+   "state": "OH",
+   "district": 15,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://donforohio.com/",
+   "fec_ids": [
+    "H6OH15112"
+   ],
+   "primaryDate": "2026-05-05",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Ohio",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Christopher Rabb",
+   "party": "D",
+   "state": "PA",
+   "district": 3,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.chrisrabb.com/",
+   "fec_ids": [
+    "H6PA03203"
+   ],
+   "primaryDate": "2026-05-19",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Pennsylvania",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Justin Wagner",
+   "party": "D",
+   "state": "PA",
+   "district": 16,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.justinwagnerforcongress.com/",
+   "fec_ids": [
+    "H6PA16379"
+   ],
+   "primaryDate": "2026-05-19",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Pennsylvania",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
    "source": "fec+trackaipac_endorsed"
   },
   {
@@ -214,6 +1206,464 @@
    "tier_source": "rule",
    "tier_reason": "statements not yet corroborated by record, donors or trackers",
    "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "marked anti on the focus issue by votes or statements",
+   "source": "fec"
+  },
+  {
+   "name": "Kristi Burke",
+   "party": "D",
+   "state": "TN",
+   "district": 1,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.votekristiburke.com/",
+   "fec_ids": [
+    "H6TN01537"
+   ],
+   "primaryDate": "2026-08-06",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Tennessee",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Justin Pearson",
+   "party": "D",
+   "state": "TN",
+   "district": 9,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.votejustinj.com/",
+   "fec_ids": [
+    "H6TN09449"
+   ],
+   "primaryDate": "2026-08-06",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Tennessee",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Jon Bonck",
+   "party": "R",
+   "state": "TX",
+   "district": 38,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "cited anti-interventionist statements, not on the focus issue"
+   ],
+   "ps": "WON",
+   "note": "cited anti-interventionist statements, not on the focus issue",
+   "website": "https://www.jonbonck.com/",
+   "fec_ids": [
+    "H6TX02244"
+   ],
+   "primaryDate": "2026-03-03",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Texas",
+   "general_result": null,
+   "endorsed_by": [],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "cited anti-interventionist statements, not on the focus issue",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "cited anti-interventionist statements (not on the focus issue)",
+   "source": "fec"
+  },
+  {
+   "name": "Briscoe Cain",
+   "party": "R",
+   "state": "TX",
+   "district": 9,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "DEFEATED",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "",
+   "fec_ids": [
+    "H6TX09124"
+   ],
+   "primaryDate": "2026-03-03",
+   "primary_result": "LOST",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Texas",
+   "general_result": null,
+   "endorsed_by": [
+    "rlc_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by RLC",
+   "source": "fec+rlc_endorsed"
+  },
+  {
+   "name": "Kyle Rable",
+   "party": "D",
+   "state": "TX",
+   "district": 19,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.rableforwesttexas.com/",
+   "fec_ids": [
+    "H6TX19198"
+   ],
+   "primaryDate": "2026-03-03",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Texas",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Paul Rojas",
+   "party": "R",
+   "state": "TX",
+   "district": 21,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "DEFEATED",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "",
+   "fec_ids": [
+    "H6TX21384"
+   ],
+   "primaryDate": "2026-03-03",
+   "primary_result": "LOST",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Texas",
+   "general_result": null,
+   "endorsed_by": [
+    "rlc_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by RLC",
+   "source": "fec+rlc_endorsed"
+  },
+  {
+   "name": "Danny Minton",
+   "party": "D",
+   "state": "TX",
+   "district": 6,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.dannyfortexas.com/",
+   "fec_ids": [
+    "H6TX25203"
+   ],
+   "primaryDate": "2026-03-03",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Texas",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Steven Shook",
+   "party": "D",
+   "state": "TX",
+   "district": 26,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://shookforcongress2026.com/",
+   "fec_ids": [
+    "H6TX26144"
+   ],
+   "primaryDate": "2026-03-03",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Texas",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Frederick Haynes",
+   "party": "D",
+   "state": "TX",
+   "district": 30,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.haynesforcongress.com/",
+   "fec_ids": [
+    "H6TX30245"
+   ],
+   "primaryDate": "2026-03-03",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Texas",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Justin Early",
+   "party": "D",
+   "state": "TX",
+   "district": 31,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.votejustinearly.com/",
+   "fec_ids": [
+    "H6TX31094"
+   ],
+   "primaryDate": "2026-03-03",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Texas",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "John Duresky",
+   "party": "D",
+   "state": "WA",
+   "district": 4,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "endorsed by an anti-establishment tracker; stance not yet corroborated"
+   ],
+   "ps": "WON",
+   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "website": "https://www.johnduresky4congress.com/",
+   "fec_ids": [
+    "H6WA04190"
+   ],
+   "primaryDate": "2026-08-04",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Washington",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "endorsed by TrackAIPAC",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Vincent George",
+   "party": "D",
+   "state": "WV",
+   "district": 1,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "cited anti-interventionist statements, not on the focus issue"
+   ],
+   "ps": "WON",
+   "note": "cited anti-interventionist statements, not on the focus issue",
+   "website": "https://vincegeorgeforcongress.com/",
+   "fec_ids": [
+    "H6WV01160"
+   ],
+   "primaryDate": "2026-05-12",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_West_Virginia",
+   "general_result": null,
+   "endorsed_by": [],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "cited anti-interventionist statements, not on the focus issue",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "cited anti-interventionist statements (not on the focus issue)",
+   "source": "fec"
+  },
+  {
+   "name": "Angelica Duenas",
+   "party": "D",
+   "state": "CA",
+   "district": 29,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "yes",
+   "antiArmsBasis": "statements",
+   "evidence": [
+    "I will never vote to send U.S. weapons or military aid to Israel. (https://angelica4congress.com/)"
+   ],
+   "ps": "WON",
+   "note": "I will never vote to send U.S. weapons or military aid to Israel. (https://angelica4congress.com/)",
+   "website": "https://angelica4congress.com/",
+   "fec_ids": [
+    "H8CA29100"
+   ],
+   "primaryDate": "2026-06-02",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_California",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "hard",
+   "tier_source": "rule",
+   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "marked anti on the focus issue by votes or statements",
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Charles Booker",
+   "party": "D",
+   "state": "KY",
+   "district": null,
+   "chamber": "senate",
+   "antiArms": true,
+   "antiArmsLevel": "soft",
+   "antiArmsBasis": "anti_establishment",
+   "evidence": [
+    "cited anti-interventionist statements, not on the focus issue"
+   ],
+   "ps": "WON",
+   "note": "cited anti-interventionist statements, not on the focus issue",
+   "website": "https://charlesbooker.org/",
+   "fec_ids": [
+    "S6KY00385"
+   ],
+   "primaryDate": "2026-05-19",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_Kentucky",
+   "general_result": null,
+   "endorsed_by": [],
+   "antiTier": "soft",
+   "tier_source": "rule",
+   "tier_reason": "cited anti-interventionist statements, not on the focus issue",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "cited anti-interventionist statements (not on the focus issue)",
    "source": "fec"
   },
   {
@@ -243,6 +1693,8 @@
    "tier_source": "rule",
    "tier_reason": "statements not yet corroborated by record, donors or trackers",
    "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "marked anti on the focus issue by votes or statements",
    "source": "fec"
   }
  ]
