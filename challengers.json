@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-02T07:16:14.383539+00:00",
+ "generated_at": "2026-11-02T08:08:34.098953+00:00",
  "challengers": [
   {
    "name": "Willie Montague",
@@ -165,39 +165,6 @@
    "tier_risk": null,
    "tier_screen": "endorsed by TrackAIPAC",
    "source": "fec+trackaipac_endorsed"
-  },
-  {
-   "name": "Case Dixon",
-   "party": "R",
-   "state": "AL",
-   "district": 6,
-   "chamber": "house",
-   "antiArms": true,
-   "antiArmsLevel": "soft",
-   "antiArmsBasis": "anti_establishment",
-   "evidence": [
-    "endorsed by an anti-establishment tracker; stance not yet corroborated"
-   ],
-   "ps": "DEFEATED",
-   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
-   "website": "",
-   "fec_ids": [
-    "H6AL06135"
-   ],
-   "primaryDate": "2026-05-19",
-   "primary_result": "LOST",
-   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Alabama",
-   "general_result": null,
-   "endorsed_by": [
-    "rlc_endorsed"
-   ],
-   "antiTier": "soft",
-   "tier_source": "rule",
-   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
-   "tier_evidence": [],
-   "tier_risk": null,
-   "tier_screen": "endorsed by RLC",
-   "source": "fec+rlc_endorsed"
   },
   {
    "name": "Terri Green",
@@ -1308,39 +1275,6 @@
    "source": "fec"
   },
   {
-   "name": "Briscoe Cain",
-   "party": "R",
-   "state": "TX",
-   "district": 9,
-   "chamber": "house",
-   "antiArms": true,
-   "antiArmsLevel": "soft",
-   "antiArmsBasis": "anti_establishment",
-   "evidence": [
-    "endorsed by an anti-establishment tracker; stance not yet corroborated"
-   ],
-   "ps": "DEFEATED",
-   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
-   "website": "",
-   "fec_ids": [
-    "H6TX09124"
-   ],
-   "primaryDate": "2026-03-03",
-   "primary_result": "LOST",
-   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Texas",
-   "general_result": null,
-   "endorsed_by": [
-    "rlc_endorsed"
-   ],
-   "antiTier": "soft",
-   "tier_source": "rule",
-   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
-   "tier_evidence": [],
-   "tier_risk": null,
-   "tier_screen": "endorsed by RLC",
-   "source": "fec+rlc_endorsed"
-  },
-  {
    "name": "Kyle Rable",
    "party": "D",
    "state": "TX",
@@ -1372,39 +1306,6 @@
    "tier_risk": null,
    "tier_screen": "endorsed by TrackAIPAC",
    "source": "fec+trackaipac_endorsed"
-  },
-  {
-   "name": "Paul Rojas",
-   "party": "R",
-   "state": "TX",
-   "district": 21,
-   "chamber": "house",
-   "antiArms": true,
-   "antiArmsLevel": "soft",
-   "antiArmsBasis": "anti_establishment",
-   "evidence": [
-    "endorsed by an anti-establishment tracker; stance not yet corroborated"
-   ],
-   "ps": "DEFEATED",
-   "note": "endorsed by an anti-establishment tracker; stance not yet corroborated",
-   "website": "",
-   "fec_ids": [
-    "H6TX21384"
-   ],
-   "primaryDate": "2026-03-03",
-   "primary_result": "LOST",
-   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Texas",
-   "general_result": null,
-   "endorsed_by": [
-    "rlc_endorsed"
-   ],
-   "antiTier": "soft",
-   "tier_source": "rule",
-   "tier_reason": "endorsed by an anti-establishment tracker; stance not yet corroborated",
-   "tier_evidence": [],
-   "tier_risk": null,
-   "tier_screen": "endorsed by RLC",
-   "source": "fec+rlc_endorsed"
   },
   {
    "name": "Danny Minton",
