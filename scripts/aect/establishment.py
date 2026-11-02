@@ -38,7 +38,7 @@ from .config import (CYCLE, CURRENT_CONGRESS, FEC_API, FEC_KEY, FOCUS_RECIPIENTS
 from .net import (get_text, get_json, stream, load_cache, save_cache, now_iso, age_hours,
                   strip_html, qs, circuit_ok)
 
-JUDGE_VERSION = 2
+JUDGE_VERSION = 3
 TTL_H = float(os.environ.get("AECT_TIER_TTL_H", str(24 * 7)))
 BUDGET = int(os.environ.get("AECT_TIER_BUDGET", "40"))
 # breaking from one's own party toward the anti side this many times screens a member in
@@ -78,6 +78,10 @@ def facts(p, ie):
     focus = sorted([v for v in rec if v.get("focus")], key=lambda v: v["date"])
     anti = [v for v in focus if v["anti"]]
     congs = sorted({v["congress"] for v in anti})
+    # has the record HELD? the latest Congress in which they cast focus votes must be mostly anti
+    last_c = max((v["congress"] for v in focus), default=None)
+    last = [v for v in focus if v["congress"] == last_c]
+    held = bool(last) and sum(v["anti"] for v in last) / len(last) >= 0.5
     pd = p.get("primary_date")
     pre_primary = bool(anti and pd and all(
         0 <= (date.fromisoformat(pd) - date.fromisoformat(v["date"])).days <= 365 for v in anti))
@@ -93,6 +97,8 @@ def facts(p, ie):
         "focus_votes": len(focus), "anti_focus_votes": len(anti),
         "anti_congresses": congs, "first_anti_vote": anti[0]["date"] if anti else None,
         "anti_ratio": round(len(anti) / len(focus), 2) if focus else None,
+        "latest_congress_focus": f"{sum(v['anti'] for v in last)}/{len(last)} anti in the {last_c}th" if last else None,
+        "record_held_in_latest_congress": held,
         "all_anti_within_year_before_primary": pre_primary,
         "lobby_money_trackaipac": p.get("lobby_total") or 0,
         "lobby_outside_support": round(sup), "lobby_outside_oppose": round(opp),
@@ -103,6 +109,13 @@ def facts(p, ie):
         "other_foreign_policy_anti": f"{other.get('anti', 0)}/{other.get('votes', 0)}",
         "statement": (p.get("position_research") or {}).get("summary") or None,
     }
+
+
+def _sustained(f):
+    """The bar an incumbent must clear to count: anti on the focus votes in 2+ Congresses,
+    mostly anti overall, and still anti in the latest Congress they voted in."""
+    return (f["anti_focus_votes"] >= 2 and len(f["anti_congresses"]) >= 2
+            and (f["anti_ratio"] or 0) >= 0.6 and f["record_held_in_latest_congress"])
 
 
 def rule_tier(f, p):
@@ -118,10 +131,12 @@ def rule_tier(f, p):
         return "none", "no anti-establishment signal found yet"
     funded = f["lobby_money_trackaipac"] >= LOBBY_LIMIT or f["lobby_outside_support"] > 0
     if f["incumbent"] and f["focus_votes"]:
-        sustained = f["anti_focus_votes"] >= 2 and len(f["anti_congresses"]) >= 2 and (f["anti_ratio"] or 0) >= 0.6
+        sustained = _sustained(f)
         if sustained and not funded and not f["all_anti_within_year_before_primary"]:
-            return "hard", "anti on the focus votes across more than one Congress, without focus-lobby money"
-        why = ("lobby-funded" if funded else "anti record is recent or one-off" if not sustained
+            return "hard", "anti on the focus votes across more than one Congress and still holding, without focus-lobby money"
+        why = ("lobby-funded" if funded
+               else "anti votes not kept up in the latest Congress" if f["anti_focus_votes"] >= 2 and not f["record_held_in_latest_congress"]
+               else "anti record is recent or one-off" if not sustained
                else "anti votes only in the year before a primary")
         return "soft", why
     # never served in Congress (or no focus votes cast): need corroboration beyond their own words
@@ -264,7 +279,8 @@ SYSTEM = f"""You investigate whether a U.S. member of Congress or congressional 
 
 Judge in three passes:
 1. OPTIMISTIC appraisal: actively look for every credible anti-establishment signal in the facts and sources — votes that break from their own party toward the anti side, opposition to war or foreign-aid packages (any country), refusing or being targeted by lobby money, tracker endorsements (TrackAIPAC, RLC), outsider campaigns, statements in news and opinion pieces. Do not dismiss someone because they have no anti vote on {_FOCUS} yet.
-2. REALISTIC boundaries: HARD (reliable, counted toward thresholds) needs a sustained record that has held when it cost something — anti positions across more than one Congress or several years, consistent statements, not funded by the {_FOCUS} lobby (TrackAIPAC lobby money, United Democracy Project / DMFI / AIPAC support) and plausibly willing to vote against arms to {_FOCUS}. SOFT (shown, never counted) is for real but partial or untested signals: first-time, one-off or recent anti votes (e.g. a 2026 vote reacting to civilian deaths in Gaza, or positioning in the months before a primary); broad anti-war / America-First / anti-foreign-aid stances that still back arms to {_FOCUS}; endorsements without a record; votes contradicted by lobby money. NONE only if there is no meaningful anti-establishment signal.
+2. REALISTIC boundaries: HARD (anti-establishment: shown in the center of the chart and counted toward thresholds) needs a sustained record that has held when it cost something — anti positions on {_FOCUS} across more than one Congress or several years AND still held in the latest Congress, consistent statements, not funded by the {_FOCUS} lobby (TrackAIPAC lobby money, United Democracy Project / DMFI / AIPAC support) and plausibly willing to vote against arms to {_FOCUS}. SOFT (treated as establishment, never counted) is for real but partial or untested signals: first-time, one-off or recent anti votes (e.g. a 2026 vote reacting to civilian deaths in Gaza, or positioning in the months before a primary); broad anti-war / America-First / anti-foreign-aid stances that still back arms to {_FOCUS}; endorsements without a record; votes contradicted by lobby money. NONE only if there is no meaningful anti-establishment signal.
+CALIBRATION: HARD is rare. By this standard nearly every member of Congress is establishment, including most self-described America First, Freedom Caucus, progressive or anti-war members. Party-line or procedural defections, votes against spending bills, rhetoric, caucus membership or a single vote do NOT make someone anti-establishment. A member who voted anti on {_FOCUS} once and then voted for arms to {_FOCUS} later has NOT held the line: at most SOFT. SOFT is treated as establishment on the tracker, so when in doubt choose SOFT or NONE.
 3. PESSIMISTIC risk: assess how likely they are to fold — leadership and party pressure, primary threats, dependence on lobby or establishment donors, business and donor-employer ties, ambition for other office. High risk pushes HARD down to SOFT.
 
 Candidates who have NEVER served in Congress: if the sources show a state-level or local record (state legislature, council, mayor), judge that record the same way. If there is no such record, judge the INTEGRITY of their statements against their donors, business relationships and the trackers: HARD only if the statements are explicit and solid AND their relationships are clean or irrelevant; otherwise SOFT.
@@ -425,7 +441,8 @@ def run(people, ie, fec_cands, fec_totals=None):
     def prio(k):
         p, old = people[k], cache.get(k) or {}
         judged_ai = old.get("v") == JUDGE_VERSION and old.get("source", "").startswith("ai")
-        return (judged_ai, not p.get("antiArms"), not p.get("_signal"), not p.get("incumbent"))
+        was_hard = old.get("tier") == "hard"
+        return (judged_ai, not was_hard, not p.get("antiArms"), not p.get("_signal"), not p.get("incumbent"))
     keys.sort(key=prio)
     judged = 0
     counts = {"hard": 0, "soft": 0, "none": 0}
@@ -454,6 +471,10 @@ def run(people, ie, fec_cands, fec_totals=None):
                         "notes": (res.get("risk_notes") or "")[:240]}
                 if tier == "hard" and "high" in (risk["political"], risk["capital"]):
                     tier = "soft"                    # pessimistic risk check: likely to fold
+                if tier == "hard" and f["incumbent"] and f["focus_votes"] and not _sustained(f):
+                    tier = "soft"                    # a sitting member's record must have held
+                if tier == "hard" and not f["incumbent"] and res.get("confidence") != "high":
+                    tier = "soft"                    # a newcomer needs a confident, cited verdict
                 verdict = {"tier": tier, "reason": (res.get("reason") or "")[:300], "evidence": ev,
                            "risk": risk, "scope": res.get("scope"),
                            "confidence": res.get("confidence"), "prior_office": res.get("prior_office"),
@@ -468,10 +489,10 @@ def run(people, ie, fec_cands, fec_totals=None):
         if verdict is None:
             tier, why = rule_tier(f, p)
             verdict = {"tier": tier, "reason": why, "evidence": [], "source": "rule"}
-        p["antiTier"] = verdict["tier"] if (p.get("antiArms") or verdict["tier"] in ("hard", "soft")) else None
-        if verdict["tier"] in ("hard", "soft") and not p.get("antiArms"):
-            # screened in on broader signals (party defections, endorsements, outsider, news):
-            # shown on the tracker — soft is never counted, hard counts like any reliable member
+        p["antiTier"] = verdict["tier"] if (p.get("antiArms") or verdict["tier"] == "hard") else None
+        if verdict["tier"] == "hard" and not p.get("antiArms"):
+            # screened in on broader signals (endorsements, outsider campaign, news, bills) and
+            # judged reliable: counts like any anti-establishment member. Soft signals are not shown.
             p["antiArms"], p["antiArmsLevel"], p["antiArmsBasis"] = True, verdict["tier"], "anti_establishment"
             p["antiArmsEvidence"] = ([f"{e['claim']} ({e['url']})" for e in verdict.get("evidence", [])[:2]]
                                      or [verdict["reason"]])

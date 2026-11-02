@@ -268,4 +268,12 @@ assert _E.rule_tier(_E.facts(_pre_primary, {}), _pre_primary)[0] == "soft"    # 
 _ie = {"H1": {"spenders": [{"committee": "UNITED DEMOCRACY PROJECT ('UDP')", "side": "support", "amount": 5e5}]}}
 _udp = {**_hard, "fec_ids": ["H1"]}
 assert _E.rule_tier(_E.facts(_udp, _ie), _udp)[0] == "soft"                   # lobby super PAC backed them
+# anti twice in the 118th, then pro-aid on both 119th votes: the record did not hold
+_lapsed = {**_hard, "vote_record": [_v(118, "2023-11-02", True), _v(118, "2024-04-20", True),
+                                    _v(119, "2025-07-18", False), _v(119, "2026-07-15", False)]}
+assert _E.rule_tier(_E.facts(_lapsed, {}), _lapsed)[0] == "soft"
+# party defections alone no longer put anyone on the chart
+_defector = {"name": "B", "antiArms": False, "incumbent": True, "sources": [], "fec_ids": [],
+             "_defections": [{"date": "2025-01-01", "measure": "X", "summary": "s"}] * 30, "vote_record": []}
+assert _E.rule_tier(_E.facts(_defector, {}), _defector)[0] in ("soft", "none")
 print("hard/soft tiers OK")

@@ -162,17 +162,19 @@ function side(m) {
 }
 
 const LEAVING = ["DEFEATED","RETIRING","FAILED_PRIMARY"];
-// hard = reliable, counted toward thresholds; soft = shown, not counted.
+// Two groups only: anti-establishment (the pipeline's "hard" verdict) or establishment.
+// Anyone the pipeline judged "soft" (first-time, one-off, lapsed or lobby-funded anti
+// signals) is establishment here. On load, antiArms is set to this verdict (see App).
 // Data from before tiers existed has no antiTier, so it counts as before.
 const HIGH_ODDS = 0.5;   // market probability that separates "likely" from "long shot" new candidates
-function isHard(m) { return !!m.antiArms && (m.antiTier ? m.antiTier === "hard" : true); }
-function isSoft(m) { return !!m.antiArms && m.antiTier === "soft"; }
+function isAntiE(m) { return !!m.antiArms && (m.antiTier ? m.antiTier === "hard" : true); }
+const isHard = m => !!m.antiArms;
+const COL = {estR:"#dc2626", estD:"#2563eb", antiR:"#fca5a5", antiD:"#93c5fd"};
 
 function dotColor(m) {
   if (m._filler) return "#1e2230";
-  if (isSoft(m)) return side(m) === "R" ? "#7e4a86" : "#4a5191";   // soft: muted, not counted
-  if (m.antiArms) return side(m) === "R" ? "#e879f9" : "#818cf8";
-  return side(m) === "R" ? "#7f1d1d" : "#1e3a5f";
+  if (m.antiArms) return side(m) === "R" ? COL.antiR : COL.antiD;
+  return side(m) === "R" ? COL.estR : COL.estD;
 }
 
 function antiArmsTag(m) {
@@ -182,8 +184,7 @@ function antiArmsTag(m) {
 
 function antiArmsTagColor(m) {
   if (!m.antiArms) return "#374151";
-  if (isSoft(m)) return "#8b8fa8";
-  return side(m) === "R" ? "#e879f9" : "#818cf8";
+  return side(m) === "R" ? COL.antiR : COL.antiD;
 }
 
 function computeHemicycle(allMembers, chamber, cx, cy) {
@@ -193,9 +194,10 @@ function computeHemicycle(allMembers, chamber, cx, cy) {
   // so only true vacancies are empty seats.
   const active = allMembers.filter(m => m.chamber === ch && !["RETIRED","RESIGNED"].includes(m.ps));
 
-  // reliable members sit at the outer edge, soft ones between them and their party
-  const antiR    = active.filter(m =>  m.antiArms && side(m) === "R").sort((a,b) => isHard(b) - isHard(a));
-  const antiD    = active.filter(m =>  m.antiArms && side(m) === "D").sort((a,b) => isHard(a) - isHard(b));
+  // establishment Republicans from the left, establishment Democrats from the right,
+  // anti-establishment members of both parties crowd the center
+  const antiR    = active.filter(m =>  m.antiArms && side(m) === "R");
+  const antiD    = active.filter(m =>  m.antiArms && side(m) === "D");
   const restR    = active.filter(m => !m.antiArms && side(m) === "R");
   const restD    = active.filter(m => !m.antiArms && side(m) === "D");
   const restOther= [];
@@ -230,9 +232,8 @@ function computeHemicycle(allMembers, chamber, cx, cy) {
   }
   total = rowCounts.reduce((s,v) => s+v, 0);
 
-  // ── Per-row allocation: [antiD | restD | restR | antiR] ─────────────────
-  // Anti-establishment members sit at the OUTER EDGE of their own party's side:
-  // Anti-D far left, regular D inner-left, regular R inner-right, Anti-R far right.
+  // ── Per-row allocation: [restR | antiR | antiD | restD] ─────────────────
+  // Establishment R far left, anti-E R and anti-E D in the center, establishment D far right.
   // Each group gets seats proportional to its share of total, with a correction
   // loop so each group sums to exactly its real count.
   const nAntiD = antiD.length, nAntiR = antiR.length;
@@ -266,7 +267,7 @@ function computeHemicycle(allMembers, chamber, cx, cy) {
     const count = rowCounts[ri];
     const r     = radii[ri];
 
-    // Build row left→right: antiD | restD | restR | antiR
+    // Build row left→right: restR | antiR | antiD | restD
     const row = [];
     const aDn = antiDPerRow[ri], rDn = restDPerRow[ri];
     const rRn = restRPerRow[ri], aRn = antiRPerRow[ri];
@@ -275,10 +276,10 @@ function computeHemicycle(allMembers, chamber, cx, cy) {
     const rowSum = aDn + rDn + rRn + aRn;
     const pad    = count - rowSum;  // usually 0, occasionally ±1
 
-    for (let s = 0; s < aDn; s++)        row.push(antiDq.length  ? antiDq.shift()  : filler);
-    for (let s = 0; s < rDn + pad; s++)  row.push(restDq.length  ? restDq.shift()  : filler);
     for (let s = 0; s < rRn; s++)        row.push(restRq.length  ? restRq.shift()  : filler);
     for (let s = 0; s < aRn; s++)        row.push(antiRq.length  ? antiRq.shift()  : filler);
+    for (let s = 0; s < aDn; s++)        row.push(antiDq.length  ? antiDq.shift()  : filler);
+    for (let s = 0; s < rDn + pad; s++)  row.push(restDq.length  ? restDq.shift()  : filler);
 
     // Seat positions: equal angular spacing across the semicircle
     for (let s = 0; s < count; s++) {
@@ -334,13 +335,12 @@ function ArmsBadge({member}) {
                   + (member.tier_risk.notes ? " (" + member.tier_risk.notes + ")" : "") : "",
               member.tier_source ? "Judged by " + (member.tier_source.startsWith("ai") ? "AI (" + member.tier_source.slice(3) + ")" : "rule") : ""
              ].filter(Boolean).join("\n")}>
-    ${isSoft(member) ? "◇ Soft anti · not counted" : member.antiTier === "hard" ? "◈ Reliable anti-intervention" : "◈ Anti-Intervention"}</span>`;
+    ◈ Anti-establishment</span>`;
 }
 
 function ProgressBars({chamber, members, allMembers, challengers, racesData, polyData}) {
-  // reliable incumbents who will still hold the seat; soft members are shown but never counted
+  // anti-establishment incumbents who will still hold the seat
   const current = members.filter(m => isHard(m) && !LEAVING.includes(m.ps)).length;
-  const softN   = members.filter(isSoft).length;
   const ch = chamber;
 
   const races = racesData || [];
@@ -416,17 +416,15 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
   return html`
     <div style=${{background:"#0f1117",border:"1px solid #1e2230",borderRadius:12,padding:"12px 14px",width:"100%",boxSizing:"border-box"}}>
       <div style=${{fontSize:9,color:"#a78bfa",fontFamily:FM,letterSpacing:"0.14em",textTransform:"uppercase",marginBottom:7}}>
-        ◈ Anti-Intervention Coalition · ${chamber==="senate"?"Senate":"House"}
+        ◈ Anti-Establishment Coalition · ${chamber==="senate"?"Senate":"House"}
       </div>
 
       <!-- one legend for every bar -->
       <div style=${{display:"flex",gap:10,marginBottom:10,flexWrap:"wrap",alignItems:"center",fontFamily:FM,fontSize:8,color:"#6b7280"}}>
-        ${[["#818cf8",1,"Reliable incumbents"],["#a5b4fc",.55,"New, likely to win (≥"+Math.round(HIGH_ODDS*100)+"% odds)"],
+        ${[["#818cf8",1,"Anti-establishment incumbents"],["#a5b4fc",.55,"New, likely to win (≥"+Math.round(HIGH_ODDS*100)+"% odds)"],
            ["#c7d2fe",.25,"New, long shot / no market"]].map(([c,o,l])=>html`
           <span key=${l} style=${{display:"inline-flex",alignItems:"center",gap:4}}>
             <span style=${{width:10,height:6,borderRadius:2,background:c,opacity:o,display:"inline-block"}}/>${l}</span>`)}
-        ${softN>0 ? html`<span title="First-time, one-off or pre-primary anti votes/statements, or lobby-funded — shown on the chart, never counted"
-          style=${{color:"#4b5563"}}>· ${softN} soft not counted</span>` : null}
         ${polyCount>0 ? html`<span style=${{color:"#4ade80"}}>· ◉ ${polyCount} live odds</span>` : null}
       </div>
 
@@ -444,7 +442,7 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
         const pc      = probColor(prob);
         const need    = Math.max(0, th.n-cur);
         const pTxt    = reached ? "reached" : prob < 0.01 ? "<1% by Nov "+CYCLE() : Math.round(prob*100)+"% by Nov "+CYCLE();
-        const segs    = [[cur,"#818cf8",1,cur+" reliable incumbents"],
+        const segs    = [[cur,"#818cf8",1,cur+" anti-establishment incumbents"],
                          [newHi,"#a5b4fc",.55,newHi+" new candidates likely to win"],
                          [newLo,"#c7d2fe",.25,newLo+" new candidates, long shots"]];
 
@@ -463,9 +461,9 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
                 <div key=${t} title=${t} style=${{width:w(n)+"%",background:reached&&c==="#818cf8"?"#4ade80":c,opacity:o,transition:"width 0.8s ease"}}/>`)}
             </div>
             <div style=${{fontSize:8,fontFamily:FM,color:"#4b5563",marginTop:4,lineHeight:1.5}}>
-              ${reached ? html`<span style=${{color:"#4ade80"}}>✓ Reached with reliable incumbents alone. </span>`
+              ${reached ? html`<span style=${{color:"#4ade80"}}>✓ Reached with anti-establishment incumbents alone. </span>`
                 : cur+newHi+newLo>=th.n ? html`<span style=${{color:"#fbbf24"}}>Reachable only if new candidates win. </span>`
-                : html`<span>Needs ${need} more reliable votes. </span>`}
+                : html`<span>Needs ${need} more anti-establishment votes. </span>`}
               ${th.desc}
             </div>
           </div>`;
@@ -473,7 +471,7 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
 
       <div style=${{marginTop:10,paddingTop:7,borderTop:"1px solid #1a1d27",
         fontSize:7,color:"#374151",fontFamily:FM,lineHeight:1.7}}>
-        Expected reliable seats after Nov ${CYCLE()}: μ=${mu.toFixed(1)} ± ${sigma.toFixed(1)}. P(reach N) = Φ((μ−N+0.5)/σ). Prediction markets where available · incumbents without a market use the measured House retention rate${window._aectRetention!=null?` (${Math.round(window._aectRetention*100)}%)`:""} · ${unpriced.length} reliable candidates without a market are shown as long shots and left out of μ · soft members are never counted.
+        Expected anti-establishment seats after Nov ${CYCLE()}: μ=${mu.toFixed(1)} ± ${sigma.toFixed(1)}. P(reach N) = Φ((μ−N+0.5)/σ). Prediction markets where available · incumbents without a market use the measured House retention rate${window._aectRetention!=null?` (${Math.round(window._aectRetention*100)}%)`:""} · ${unpriced.length} anti-establishment candidates without a market are shown as long shots and left out of μ · members with only first-time, one-off, lapsed or lobby-funded anti signals count as establishment (see About).
       </div>
     </div>`;
 }
@@ -522,7 +520,7 @@ function MemberBox({title, color, members, challengers, racesData, fecData, poly
   const [tab, setTab] = useState("members");
 
   const active   = members.filter(m => !["RETIRED","RESIGNED","DEFEATED","RETIRING","FLIPPED"].includes(m.ps))
-                           .sort((a,b) => isHard(b) - isHard(a));   // reliable first, soft after
+                           .sort((a,b) => isHard(b) - isHard(a));   // anti-establishment first
   const departed = members.filter(m => ["RETIRED","RESIGNED","DEFEATED","FLIPPED","RETIRING"].includes(m.ps));
 
   // Build a combined candidates list: anti-establishment incumbents (with odds)
@@ -617,7 +615,7 @@ function MemberBox({title, color, members, challengers, racesData, fecData, poly
       </div>
       <div style=${{maxHeight:440,overflowY:"auto"}}>
         ${tab==="members"?html`
-          ${active.length>0?html`<div style=${{padding:"3px 9px",background:"#090b0e",fontSize:8,color:"#374151",fontFamily:FM,letterSpacing:"0.1em",textTransform:"uppercase"}}>◈ Anti-Intervention</div>`:null}
+          ${active.length>0?html`<div style=${{padding:"3px 9px",background:"#090b0e",fontSize:8,color:"#374151",fontFamily:FM,letterSpacing:"0.1em",textTransform:"uppercase"}}>◈ Anti-establishment</div>`:null}
           <${Section} items=${active}/>
           <${Section} label="Departed" items=${departed}/>
         `:html`
@@ -1128,9 +1126,10 @@ function useData() {
 
         window._aectMeta = d.meta || {};
         let memberList = d.members || [];
-        // antiArms is decided by the pipeline (official roll calls + cited statements). No frontend overrides.
+        // The pipeline decides (official roll calls, FEC, trackers, AI review of sources).
+        // Only its "hard" verdict is anti-establishment; everything else is establishment.
         memberList = memberList.map(m => ({
-          ...m,
+          ...m, antiFlagged: !!m.antiArms, antiArms: isAntiE(m),
           note: (m.note||"").replace(/[-–—]?\s*classified soft\.?/gi,"").trim(),
         }));
 
@@ -1142,7 +1141,8 @@ function useData() {
 
         window._appData = {descriptions: d.descriptions || {}};
         window._aectRetention = d.meta && d.meta.incumbent_retention != null ? d.meta.incumbent_retention : null;
-        const allChalls = (d.candidates || []).map(c => ({...c, ps: c.ps || "UPCOMING", chamber: c.chamber || "house"}));
+        const allChalls = (d.candidates || []).filter(isAntiE)
+          .map(c => ({...c, antiArms: true, ps: c.ps || "UPCOMING", chamber: c.chamber || "house"}));
         setChalls(allChalls);
         const raceList = d.races || d.races_2026 || [];
         if (raceList.length) setRaces(raceList);
@@ -1153,10 +1153,9 @@ function useData() {
 
         if (d.meta && d.meta.fetched_at) setFetchedAt(d.meta.fetched_at);
         const anti  = memberList.filter(isHard).length;
-        const soft  = memberList.filter(isSoft).length;
         const age   = (d.meta && d.meta.fetched_at)
           ? Math.round((Date.now() - new Date(d.meta.fetched_at)) / 60000) : "?";
-        setStatus("✓ " + anti + " reliable anti-intervention" + (soft ? " · " + soft + " soft" : "") + " · " + memberList.length + " members · " + age + "m ago");
+        setStatus("✓ " + anti + " anti-establishment" + " · " + memberList.length + " members · " + age + "m ago");
         clearTimeout(window._aectLoadTimeout);
 
         const racesList = d.races || d.races_2026 || [];
@@ -1221,6 +1220,31 @@ function useData() {
 // congress_history loaded dynamically from data.json
 
 // race data comes from data.json (races)
+
+function About({members}) {
+  const n = members.filter(m => m.antiArms).length;
+  const flagged = members.filter(m => m.antiFlagged && !m.antiArms).length;
+  const focus = ((META().focus || {}).recipients || ["Israel"]).join(", ");
+  const H = t => html`<div style=${{fontSize:11,fontWeight:700,color:"#f0ebe0",margin:"14px 0 5px"}}>${t}</div>`;
+  const P = t => html`<p style=${{fontSize:11,lineHeight:1.6,color:"#9ca3af",margin:"0 0 8px"}}>${t}</p>`;
+  return html`<div style=${{width:"100%",maxWidth:760,background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,padding:"16px 20px"}}>
+    <div style=${{fontSize:14,fontWeight:700,color:"#f0ebe0"}}>How this tracker decides who is anti-establishment</div>
+    ${H("The standard, for now: arms to " + focus)}
+    ${P("For now the line is drawn on U.S. military aid and arms to " + focus + ", where party leaders, the foreign-policy lobby and its donors pull hardest in both parties. Broader anti-war, anti-foreign-aid or America First positions are weighed as context, never as a substitute.")}
+    ${H("Two groups, not three")}
+    ${P("Every member and candidate is either anti-establishment or establishment. The chart seats establishment Republicans (solid red) from the left and establishment Democrats (solid blue) from the right. Anti-establishment members crowd the center, light red for Republicans and light blue for Democrats and independents.")}
+    ${H("What it takes to count")}
+    ${P("A sitting member counts only with a record that has held when it cost something: anti votes on the focus issue in more than one Congress, mostly anti overall, still anti in the latest Congress, not funded by the focus lobby (TrackAIPAC-tracked money, United Democracy Project, DMFI, AIPAC-aligned super PACs), and not clustered just before a primary.")}
+    ${P("A candidate who never served in Congress is judged on any state or local record. Without one, their statements are checked against their donors, their business ties and the trackers. They count only when the statements are explicit and their relationships are clean.")}
+    ${H("Why a vote or a speech is not enough")}
+    ${P("Many members cast a first anti vote in 2026 in response to civilian deaths in Gaza, or ahead of a primary. Others defect from their party on spending or procedure, or campaign as outsiders but still back the arms packages. Some voted anti once and then voted for the aid again. These signals are real but untested, and history says most such members fold under leadership, donor or primary pressure. So they are treated as establishment and never counted toward any threshold.")}
+    ${P("Right now " + n + " sitting members count as anti-establishment. Another " + flagged + " have at least one anti vote or statement but do not meet the bar.")}
+    ${H("How the judgment is made")}
+    ${P("All data is fetched automatically: official House and Senate roll calls, Congress.gov sponsored and cosponsored bills, FEC filings, donors and outside spending, TrackAIPAC and RLC, Wikipedia, Grokipedia and news coverage. Free-tier AI models read that dossier in three passes: an optimistic search for every real signal, realistic limits on what counts, and a pessimistic look at political and money risk. The vote-record bar is a hard limit; the AI can lower a verdict, but it can never lift a sitting member over that bar. Where no AI is available, a conservative rule decides. Each member's detail panel says which one did.")}
+    ${H("Thresholds")}
+    ${P("The coalition bars count anti-establishment incumbents, plus new anti-establishment candidates shaded by their betting-market odds. Lighter shades mean likely winners (≥" + Math.round(HIGH_ODDS*100) + "%); the lightest mean long shots or no market.")}
+  </div>`;
+}
 
 function CandidateTimeline({allMembers, challengers, racesData, polyData, descriptions}) {
   descriptions = (descriptions && typeof descriptions === 'object') ? descriptions : {};
@@ -1559,6 +1583,7 @@ function App() {
   const [hovered,  setHovered]  = useState(null);
   const [showAnti, setShowAnti] = useState(false);
   const [showTimeline, setShowTimeline] = useState(false);
+  const [showAbout,    setShowAbout]    = useState(false);
 
   const {allMembers, bills, challengers, history, races, congressHistory, fecData, polyData, polyLive, polyUpdated, polyLoading, fetchedAt, status, loaded, descriptions} = useData();
 
@@ -1643,13 +1668,13 @@ function App() {
       <!-- Chamber toggle -->
       <div style=${{display:"flex",gap:2,background:"#161920",borderRadius:10,padding:3,marginBottom:9,border:"1px solid #1e2230"}}>
         ${["house","senate"].map(c=>html`
-          <button key=${c} onClick=${()=>{setChamber(c);setSelected(null);setShowTimeline(false);}}
+          <button key=${c} onClick=${()=>{setChamber(c);setSelected(null);setShowTimeline(false);setShowAbout(false);}}
             style=${{padding:"5px 15px",borderRadius:8,border:"none",cursor:"pointer",fontFamily:FM,fontSize:10,
               letterSpacing:"0.08em",textTransform:"uppercase",fontWeight:600,
               background:chamber===c?"#f0ebe0":"transparent",color:chamber===c?"#0a0c10":"#6b7280"}}>
             ${(c==="senate"?"Senate · ":"House · ")+((META().chamber_seats||{})[c]||(c==="senate"?100:435))}
           </button>`)}
-        <button onClick=${()=>setShowTimeline(v=>!v)}
+        <button onClick=${()=>{setShowTimeline(v=>!v);setShowAbout(false);}}
           style=${{padding:"5px 15px",borderRadius:8,border:"none",cursor:"pointer",fontFamily:FM,fontSize:10,
             letterSpacing:"0.08em",textTransform:"uppercase",fontWeight:600,
             background:showTimeline?"#1a0a2e":"transparent",
@@ -1657,16 +1682,23 @@ function App() {
             borderLeft:"1px solid #1e2230"}}>
           📈 Timeline
         </button>
+        <button onClick=${()=>{setShowAbout(v=>!v);setShowTimeline(false);}}
+          style=${{padding:"5px 15px",borderRadius:8,border:"none",cursor:"pointer",fontFamily:FM,fontSize:10,
+            letterSpacing:"0.08em",textTransform:"uppercase",fontWeight:600,
+            background:showAbout?"#1a0a2e":"transparent",
+            color:showAbout?"#a5b4fc":"#6b7280",
+            borderLeft:"1px solid #1e2230"}}>
+          ⓘ About
+        </button>
       </div>
 
       <!-- Legend + stat pills -->
       <div style=${{display:"flex",gap:5,flexWrap:"wrap",justifyContent:"center",marginBottom:7}}>
         ${[
-          {c:"#991b1b", bg:"rgba(153,27,27,.1)",  l:"Rep",            n:chMem.filter(m=>side(m)==="R"&&!m.antiArms).length},
-          {c:"#e879f9", bg:"rgba(232,121,249,.1)", l:"Reliable anti R", n:chMem.filter(m=>isHard(m)&&side(m)==="R").length},
-          {c:"#818cf8", bg:"rgba(129,140,248,.1)", l:"Reliable anti "+(chMem.some(m=>m.party==="I"&&isHard(m))?"D/I":"D"), n:chMem.filter(m=>isHard(m)&&side(m)==="D").length},
-          {c:"#6b70b0", bg:"rgba(74,81,145,.12)",  l:"Soft anti (not counted)", n:chMem.filter(isSoft).length},
-          {c:"#1e40af", bg:"rgba(30,64,175,.1)",   l:"Dem",           n:chMem.filter(m=>side(m)==="D"&&!m.antiArms).length},
+          {c:COL.estR,  bg:"rgba(220,38,38,.1)",   l:"Establishment R", n:chMem.filter(m=>side(m)==="R"&&!m.antiArms).length},
+          {c:COL.antiR, bg:"rgba(252,165,165,.1)", l:"Anti-E R",        n:chMem.filter(m=>isHard(m)&&side(m)==="R").length},
+          {c:COL.antiD, bg:"rgba(147,197,253,.1)", l:"Anti-E "+(chMem.some(m=>m.party==="I"&&isHard(m))?"D/I":"D"), n:chMem.filter(m=>isHard(m)&&side(m)==="D").length},
+          {c:COL.estD,  bg:"rgba(37,99,235,.1)",   l:"Establishment D", n:chMem.filter(m=>side(m)==="D"&&!m.antiArms).length},
           {c:"#9ca3af", bg:"transparent", faded:true, l:"Leaving (faded)", n:chMem.filter(m=>LEAVING.includes(m.ps)).length},
         ].map(b=>html`
           <span key=${b.l} style=${{display:"inline-flex",alignItems:"center",gap:4,background:b.bg,border:"1px solid "+b.c+"30",borderRadius:5,padding:"2px 7px",fontSize:9,fontFamily:FM,color:b.c}}>
@@ -1675,20 +1707,20 @@ function App() {
           </span>`)}
         <button onClick=${()=>setShowAnti(v=>!v)}
           style=${{padding:"2px 7px",borderRadius:5,border:"1px solid #7c3aed33",background:showAnti?"#7c3aed1a":"transparent",color:showAnti?"#c084fc":"#4b5563",fontFamily:FM,fontSize:9,cursor:"pointer"}}>
-          ${showAnti?"Show all":"Highlight anti-intervention"}
+          ${showAnti?"Show all":"Highlight anti-establishment"}
         </button>
 
       </div>
 
       <!-- Three columns / Timeline toggle -->
-      ${showTimeline ? html`
+      ${showAbout ? html`<${About} members=${allMembers}/>` : showTimeline ? html`
         <div style=${{width:"100%",maxWidth:860,display:"flex",flexDirection:"column",alignItems:"center",gap:10}}>
           <${CandidateTimeline} allMembers=${allMembers} challengers=${challengers} polyData=${polyData} racesData=${races} descriptions=${descriptions || {}}/>
         </div>`
       : html`
       <div class="three-col" style=${{display:"flex",gap:10,alignItems:"flex-start",flexWrap:"wrap",justifyContent:"center",width:"100%",maxWidth:1080}}>
 
-        <${MemberBox} title="Anti-Intervention Republicans" color="#a855f7"
+        <${MemberBox} title="Anti-Establishment Republicans" color=${COL.antiR}
           members=${sideR} challengers=${challR} racesData=${races}
           fecData=${fecData} polyData=${polyData}
           onSelect=${m=>setSelected(m.name===selected?null:m.name)}/>
@@ -1734,10 +1766,9 @@ function App() {
               <line x1=${cx} y1=${cy} x2=${cx} y2=${cy-(chamber==="senate"?164:228)-20} stroke="#1e2230" stroke-width="1" stroke-dasharray="3,3"/>
               <rect x=${cx-10} y=${cy-(chamber==="senate"?164:228)-29} width="20" height="11" rx="3" fill="#0e1016" stroke="#1e2230" stroke-width="0.5"/>
               <text x=${cx} y=${cy-(chamber==="senate"?164:228)-23} font-size="6" font-family="monospace" fill="#4b5563" text-anchor="middle" dominant-baseline="middle">${chamber==="senate"?"51":"218"}</text>
-              <text x=${cx-100} y="11" fill="#818cf8" font-size="6" font-family="monospace" text-anchor="middle" opacity=".8">Anti-D</text>
-              <text x=${cx-45}  y="11" fill="#1e40af" font-size="7" font-family="monospace" text-anchor="middle" opacity=".5">D</text>
-              <text x=${cx+45}  y="11" fill="#991b1b" font-size="7" font-family="monospace" text-anchor="middle" opacity=".5">R</text>
-              <text x=${cx+100} y="11" fill="#e879f9" font-size="6" font-family="monospace" text-anchor="middle" opacity=".8">Anti-R</text>
+              <text x=${cx-200} y="11" fill=${COL.estR} font-size="7" font-family="monospace" text-anchor="middle" opacity=".7">Establishment R</text>
+              <text x=${cx}     y="11" font-size="7" font-family="monospace" text-anchor="middle" opacity=".8"><tspan fill=${COL.antiR}>Anti-establishment</tspan><tspan fill=${COL.antiD}> R · D</tspan></text>
+              <text x=${cx+200} y="11" fill=${COL.estD} font-size="7" font-family="monospace" text-anchor="middle" opacity=".7">Establishment D</text>
               <ellipse cx=${cx} cy=${cy+6} rx="18" ry="6" fill="#0f1117"/>
               <rect x=${cx-3} y=${cy-7} width="6" height="13" fill="#0f1117" rx="2"/>
             </svg>
@@ -1769,7 +1800,7 @@ function App() {
           </div>
         </div>
 
-        <${MemberBox} title="Anti-Intervention Democrats" color="#7c3aed"
+        <${MemberBox} title="Anti-Establishment Democrats" color=${COL.antiD}
           members=${sideD} challengers=${challD} racesData=${races}
           fecData=${fecData} polyData=${polyData}
           onSelect=${m=>setSelected(m.name===selected?null:m.name)}/>
