@@ -147,7 +147,7 @@ def main():
     ie = fec.fetch_outside_spending(anti_fec)
 
     print("\n[4e] Reliable vs soft anti-establishment (AI over scraped dossiers)")
-    establishment.run(people, ie, fec_cands)
+    establishment.run(people, ie, fec_cands, fec_totals)
     # anyone the dossier newly marked anti needs outside-spending records too
     extra = [cid for p in people.values() if p.get("antiArms") for cid in p.get("fec_ids", []) if cid not in ie]
     if extra:

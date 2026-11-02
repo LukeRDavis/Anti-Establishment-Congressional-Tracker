@@ -38,9 +38,13 @@ from .config import (CYCLE, CURRENT_CONGRESS, FEC_API, FEC_KEY, FOCUS_RECIPIENTS
 from .net import (get_text, get_json, stream, load_cache, save_cache, now_iso, age_hours,
                   strip_html, qs, circuit_ok)
 
-JUDGE_VERSION = 1
+JUDGE_VERSION = 2
 TTL_H = float(os.environ.get("AECT_TIER_TTL_H", str(24 * 7)))
 BUDGET = int(os.environ.get("AECT_TIER_BUDGET", "40"))
+# breaking from one's own party toward the anti side this many times screens a member in
+DEFECTION_MIN = int(os.environ.get("AECT_DEFECTION_MIN", "3"))
+# an independent / third-party candidate who has raised this much is screened in as an outsider
+OUTSIDER_MIN_RAISED = float(os.environ.get("AECT_OUTSIDER_MIN_RAISED", "250000"))
 # money from the focus-issue lobby this large marks a member as funded by it
 LOBBY_LIMIT = float(os.environ.get("AECT_LOBBY_LIMIT", "10000"))
 # outside spenders that are the focus-issue lobby (regex over FEC committee names)
@@ -80,7 +84,10 @@ def facts(p, ie):
     sup, opp, spenders = _lobby_ie(p, ie)
     other = p.get("other_foreign_policy") or {}
     tr = p.get("tracker", {})
+    dfx = p.get("_defections", [])
     return {
+        "party_defections_to_anti": len(dfx),
+        "defection_examples": [f"{v['date']} {v['measure']}: {v['summary'][:110]}" for v in dfx[-6:]],
         "incumbent": bool(p.get("incumbent")),
         "focus_votes": len(focus), "anti_focus_votes": len(anti),
         "anti_congresses": congs, "first_anti_vote": anti[0]["date"] if anti else None,
@@ -100,7 +107,14 @@ def facts(p, ie):
 def rule_tier(f, p):
     """Conservative fallback when no AI is available: hard needs a record that has cost something."""
     if not p.get("antiArms"):
-        return "none", "not marked anti by votes or statements"
+        # screened in on broader signals: shown as soft (never counted) until an AI verdict says more
+        if f["party_defections_to_anti"] >= DEFECTION_MIN:
+            return "soft", f"broke from their own party toward the anti side on {f['party_defections_to_anti']} foreign-policy votes"
+        if f["rlc_endorsed"] or f["trackaipac_endorsed"]:
+            return "soft", "endorsed by an anti-establishment tracker; stance not yet corroborated"
+        if (p.get("position_research") or {}).get("anti_interventionist"):
+            return "soft", "cited anti-interventionist statements, not on the focus issue"
+        return "none", "no anti-establishment signal found yet"
     funded = f["lobby_money_trackaipac"] >= LOBBY_LIMIT or f["lobby_outside_support"] > 0
     if f["incumbent"] and f["focus_votes"]:
         sustained = f["anti_focus_votes"] >= 2 and len(f["anti_congresses"]) >= 2 and (f["anti_ratio"] or 0) >= 0.6
@@ -165,8 +179,19 @@ def _ballotpedia(p):
 
 
 def _news(p):
-    """News and opinion headlines on the person and the focus issue, from free search feeds."""
-    q = f'"{p["name"]}" ({" OR ".join(sorted(c.title() for c in FOCUS_RECIPIENTS) or ["Israel"])} OR Gaza OR AIPAC)'
+    """News and opinion headlines on the person — the focus issue, and anti-establishment / anti-war
+    stances generally — from free search feeds."""
+    focus = " OR ".join(sorted(c.title() for c in FOCUS_RECIPIENTS) or ["Israel"])
+    rows = []
+    for q in (f'"{p["name"]}" ({focus} OR Gaza OR AIPAC)',
+              f'"{p["name"]}" (war OR "foreign aid" OR Ukraine OR "America First" OR establishment OR "military aid" OR donors)'):
+        for link, line in _news_query(q):
+            if link not in {r[0] for r in rows}:
+                rows.append((link, line))
+    return rows[:14]
+
+
+def _news_query(q):
     feeds = [("https://news.google.com/rss/search?" + urllib.parse.urlencode(
                  {"q": q, "hl": "en-US", "gl": "US", "ceid": "US:en"}), "dossier_news_google"),
              ("https://www.bing.com/news/search?" + urllib.parse.urlencode(
@@ -175,7 +200,7 @@ def _news(p):
         xml = get_text(url, stream_name=sname, retries=1, headers={"Accept": "application/rss+xml"})
         items = re.findall(r"<item>(.*?)</item>", xml or "", re.S)
         rows = []
-        for it in items[:10]:
+        for it in items[:8]:
             g = lambda tag: (re.search(rf"<{tag}[^>]*>(.*?)</{tag}>", it, re.S) or [None, ""])[1]
             title = strip_html(re.sub(r"<!\[CDATA\[|\]\]>", "", g("title")))
             link = re.sub(r"<!\[CDATA\[|\]\]>", "", g("link")).strip()
@@ -234,17 +259,18 @@ def employers(p, fec_cands, cache):
 
 
 # ── Judge ────────────────────────────────────────────────────────────────────
-SYSTEM = f"""You decide whether a U.S. member of Congress or congressional candidate is a RELIABLE anti-interventionist / anti-establishment vote on U.S. military aid and arms to {_FOCUS} — someone who can be COUNTED ON in a blocking bloc against leadership — or only a SOFT one.
+SYSTEM = f"""You investigate whether a U.S. member of Congress or congressional candidate is ANTI-ESTABLISHMENT on foreign intervention — opposing U.S. military aid and arms to {_FOCUS} above all, and more broadly foreign wars, war-powers grabs, large foreign-aid packages and the foreign-policy lobby's money — and whether they can be COUNTED ON in a blocking bloc.
 
-HARD (reliable, counted): a sustained record that held when it cost something — anti positions across more than one Congress or several years, not just in 2026; consistent public statements; NOT funded by the {_FOCUS} lobby (TrackAIPAC lobby money, United Democracy Project / DMFI / AIPAC support). Being targeted by those groups, or endorsed by TrackAIPAC, supports HARD.
-SOFT (shown, NOT counted): anti votes or statements that look first-time, one-off or recent (e.g. a 2026 vote reacting to civilian deaths in Gaza, or positioning in the months before a primary), or that are contradicted by lobby money, pro-aid votes or establishment alignment. Many 2026 first-time anti voters are SOFT and likely still establishment.
-NONE: not actually anti-interventionist on this issue.
+Judge in three passes:
+1. OPTIMISTIC appraisal: actively look for every credible anti-establishment signal in the facts and sources — votes that break from their own party toward the anti side, opposition to war or foreign-aid packages (any country), refusing or being targeted by lobby money, tracker endorsements (TrackAIPAC, RLC), outsider campaigns, statements in news and opinion pieces. Do not dismiss someone because they have no anti vote on {_FOCUS} yet.
+2. REALISTIC boundaries: HARD (reliable, counted toward thresholds) needs a sustained record that has held when it cost something — anti positions across more than one Congress or several years, consistent statements, not funded by the {_FOCUS} lobby (TrackAIPAC lobby money, United Democracy Project / DMFI / AIPAC support) and plausibly willing to vote against arms to {_FOCUS}. SOFT (shown, never counted) is for real but partial or untested signals: first-time, one-off or recent anti votes (e.g. a 2026 vote reacting to civilian deaths in Gaza, or positioning in the months before a primary); broad anti-war / America-First / anti-foreign-aid stances that still back arms to {_FOCUS}; endorsements without a record; votes contradicted by lobby money. NONE only if there is no meaningful anti-establishment signal.
+3. PESSIMISTIC risk: assess how likely they are to fold — leadership and party pressure, primary threats, dependence on lobby or establishment donors, business and donor-employer ties, ambition for other office. High risk pushes HARD down to SOFT.
 
-Candidates who have NEVER served in Congress: if the sources show a state-level or local record (state legislature, council, mayor), judge that record the same way. If there is no such record, judge the INTEGRITY of their statements against their donors, business relationships and the trackers: HARD only if the statements are explicit and solid AND their relationships are clean or irrelevant (no {_FOCUS}-lobby money or support, no donor/business ties that contradict them). Otherwise SOFT.
+Candidates who have NEVER served in Congress: if the sources show a state-level or local record (state legislature, council, mayor), judge that record the same way. If there is no such record, judge the INTEGRITY of their statements against their donors, business relationships and the trackers: HARD only if the statements are explicit and solid AND their relationships are clean or irrelevant; otherwise SOFT.
 
-Use ONLY the facts and sources given. Do not use outside knowledge. Cite source URLs from the dossier for any claim from it.
+Use ONLY the facts and sources given; do not use outside knowledge. Cite dossier URLs for claims taken from it.
 Respond with JSON only:
-{{"tier": "hard"|"soft"|"none", "confidence": "high"|"medium"|"low", "prior_office": "congress"|"state_or_local"|"none"|"unknown", "reason": "one or two sentences", "evidence": [{{"claim": "...", "url": "..."}}]}}"""
+{{"tier": "hard"|"soft"|"none", "confidence": "high"|"medium"|"low", "scope": "focus"|"broad", "prior_office": "congress"|"state_or_local"|"none"|"unknown", "political_risk": "low"|"medium"|"high", "capital_risk": "low"|"medium"|"high", "reason": "one or two sentences", "risk_notes": "one sentence", "evidence": [{{"claim": "...", "url": "..."}}]}}"""
 
 
 def _prompt(p, f, text, emp):
@@ -252,6 +278,7 @@ def _prompt(p, f, text, emp):
     votes = [f"{v['date']} {v['measure']}: {v['position']} ({'anti' if v['anti'] else 'pro'}) — {v['summary'][:140]}"
              for v in sorted([v for v in p.get("vote_record", []) if v.get("focus")], key=lambda v: v["date"])]
     lines = [f"Person: {p['name']} ({p.get('party')}), {seat}, {'sitting member' if f['incumbent'] else 'candidate'}",
+             f"Why screened: {p.get('_screen') or 'marked anti on the focus issue'}",
              f"Primary date: {p.get('primary_date') or 'unknown'} · status: {p.get('ps') or ''}",
              "Facts: " + json.dumps(f, default=str),
              "Focus roll calls (oldest first):\n" + ("\n".join(votes) or "none cast"),
@@ -266,16 +293,100 @@ def _fingerprint(f, text):
     return hashlib.sha1((json.dumps(keep, sort_keys=True) + str(len(text) // 500)).encode()).hexdigest()[:12]
 
 
-def run(people, ie, fec_cands):
-    """Set antiTier / tier_source / tier_reason / tier_evidence on everyone marked anti (and on
-    tracker-endorsed candidates, whose dossier may show a stance the first pass missed)."""
+def _mark_defections(people):
+    """For every sitting member: the votes where they took the anti side while most of their own party didn't."""
+    tally = {}
+    for p in people.values():
+        if not p.get("incumbent"):
+            continue
+        pty = p.get("caucus") or p.get("party")
+        for v in p.get("vote_record", []):
+            if not (v.get("focus") or v.get("significance") == "major"):
+                continue
+            t = tally.setdefault((v.get("chamber"), v["congress"], v["roll"]), {}).setdefault(pty, [0, 0])
+            t[0] += bool(v["anti"])
+            t[1] += 1
+    for p in people.values():
+        pty = p.get("caucus") or p.get("party")
+        out = []
+        for v in p.get("vote_record", []) if p.get("incumbent") else []:
+            t = (tally.get((v.get("chamber"), v["congress"], v["roll"])) or {}).get(pty)
+            if v.get("anti") and t and t[1] >= 5 and t[0] / t[1] < 0.5:
+                out.append(v)
+        p["_defections"] = sorted(out, key=lambda v: v["date"])
+
+
+def _screen(p, fec_totals):
+    """Why this person deserves a look beyond the focus votes (None = not screened in)."""
+    if p.get("antiArms"):
+        return "marked anti on the focus issue by votes or statements"
+    if p.get("incumbent") and len(p.get("_defections", [])) >= DEFECTION_MIN:
+        return f"breaks from own party toward the anti side on {len(p['_defections'])} foreign-policy votes"
+    if not p.get("incumbent") and not p.get("on_ballot"):
+        return None
+    if "rlc_endorsed" in p.get("sources", []) or "trackaipac_endorsed" in p.get("sources", []):
+        return "endorsed by " + " and ".join(s.split("_")[0].upper().replace("TRACKAIPAC", "TrackAIPAC")
+                                            for s in p.get("sources", []) if s.endswith("_endorsed"))
+    if (p.get("position_research") or {}).get("anti_interventionist"):
+        return "cited anti-interventionist statements (not on the focus issue)"
+    if not p.get("incumbent") and (p.get("party") or "") not in ("D", "R", "DEM", "REP"):
+        raised = max([((fec_totals or {}).get(c) or {}).get("raised") or 0 for c in p.get("fec_ids", [])] or [0])
+        if raised >= OUTSIDER_MIN_RAISED:
+            return f"independent / third-party outsider campaign (raised ${raised:,.0f})"
+    return None
+
+
+_MARKERS = re.compile(r"america first|anti-?war|libertarian|aipac|foreign aid|israel|gaza|anti-?establishment|"
+                      r"populist|freedom caucus|justice democrats|\bdsa\b|democratic socialist|insurgent|"
+                      r"outsider|ceasefire|forever wars?|interventionis|military aid|rand paul|massie", re.I)
+HEADLINE_BUDGET = int(os.environ.get("AECT_HEADLINE_BUDGET", "120"))
+
+
+def _headline_screen(p, cache):
+    """No-AI first look for November nominees: do news headlines about them carry anti-establishment markers?"""
+    hit = cache.get(p["key"]) or {}
+    if age_hours(hit.get("at")) < 72:
+        return hit.get("why"), False
+    seat = STATE_NAMES.get(p.get("state", ""), "")
+    heads = [t for _, t in _news_query(f'"{p["name"]}" {seat} congress')]
+    marks = sorted({m.group(0).lower() for t in heads for m in _MARKERS.finditer(t)})
+    why = f"news headlines mention: {', '.join(marks[:5])}" if marks else None
+    cache[p["key"]] = {"at": now_iso(), "why": why, "n": len(heads)}
+    return why, True
+
+
+def run(people, ie, fec_cands, fec_totals=None):
+    """Investigate everyone with an anti-establishment signal and set antiTier / tier_source /
+    tier_reason / tier_evidence / tier_risk. Soft verdicts are shown, never counted."""
     cache = load_cache("establishment")
     emp_cache = load_cache("fec_employers")
-    keys = [k for k, p in people.items() if p.get("antiArms")]
-    keys += [k for k, p in people.items() if not p.get("antiArms") and not p.get("incumbent")
-             and p.get("on_ballot") and "trackaipac_endorsed" in p.get("sources", [])]
-    # sitting members first, then candidates with the strongest signals
-    keys.sort(key=lambda k: (not people[k].get("incumbent"), not people[k].get("antiArms")))
+    _mark_defections(people)
+    keys = []
+    for k, p in people.items():
+        why = _screen(p, fec_totals)
+        if why:
+            p["_screen"] = why
+            keys.append(k)
+    # November nominees with no signal yet: a cheap headline check decides who gets investigated
+    head_cache = load_cache("headline_screen")
+    looked = 0
+    for k, p in people.items():
+        if k in keys or p.get("incumbent") or not p.get("on_ballot") or p.get("primary_result") != "WON":
+            continue
+        if looked >= HEADLINE_BUDGET and age_hours((head_cache.get(k) or {}).get("at")) >= 72:
+            continue
+        why, fetched = _headline_screen({**p, "key": k}, head_cache)
+        looked += fetched
+        if why:
+            p["_screen"] = why
+            keys.append(k)
+    save_cache("headline_screen", head_cache)
+    # never-AI-judged first; then focus-marked members, candidates on the ballot, party defectors
+    def prio(k):
+        p, old = people[k], cache.get(k) or {}
+        judged_ai = old.get("v") == JUDGE_VERSION and old.get("source", "").startswith("ai")
+        return (judged_ai, not p.get("antiArms"), p.get("incumbent") and not p.get("antiArms"))
+    keys.sort(key=prio)
     judged = 0
     counts = {"hard": 0, "soft": 0, "none": 0}
     sources = {"ai": 0, "rule": 0}
@@ -298,7 +409,12 @@ def run(people, ie, fec_cands):
                 tier = res["tier"]
                 if tier == "hard" and not ev and not f["focus_votes"]:
                     tier = "soft"                    # a new candidate's HARD needs a citation
+                risk = {"political": res.get("political_risk"), "capital": res.get("capital_risk"),
+                        "notes": (res.get("risk_notes") or "")[:240]}
+                if tier == "hard" and "high" in (risk["political"], risk["capital"]):
+                    tier = "soft"                    # pessimistic risk check: likely to fold
                 verdict = {"tier": tier, "reason": (res.get("reason") or "")[:300], "evidence": ev,
+                           "risk": risk, "scope": res.get("scope"),
                            "confidence": res.get("confidence"), "prior_office": res.get("prior_office"),
                            "source": f"ai:{provider}", "at": now_iso(), "v": JUDGE_VERSION,
                            "facts_fp": _fingerprint(f, text), "text_len": len(text)}
@@ -311,17 +427,23 @@ def run(people, ie, fec_cands):
         if verdict is None:
             tier, why = rule_tier(f, p)
             verdict = {"tier": tier, "reason": why, "evidence": [], "source": "rule"}
-        p["antiTier"] = verdict["tier"] if (p.get("antiArms") or verdict["tier"] == "hard") else None
-        if verdict["tier"] == "hard" and not p.get("antiArms"):
-            # the dossier found a stance the first pass missed (tracker-endorsed candidate)
-            p["antiArms"], p["antiArmsLevel"], p["antiArmsBasis"] = True, "yes", "ai_dossier"
-            p["antiArmsEvidence"] = [f"{e['claim']} ({e['url']})" for e in verdict["evidence"][:2]]
+        p["antiTier"] = verdict["tier"] if (p.get("antiArms") or verdict["tier"] in ("hard", "soft")) else None
+        if verdict["tier"] in ("hard", "soft") and not p.get("antiArms"):
+            # screened in on broader signals (party defections, endorsements, outsider, news):
+            # shown on the tracker — soft is never counted, hard counts like any reliable member
+            p["antiArms"], p["antiArmsLevel"], p["antiArmsBasis"] = True, verdict["tier"], "anti_establishment"
+            p["antiArmsEvidence"] = ([f"{e['claim']} ({e['url']})" for e in verdict.get("evidence", [])[:2]]
+                                     or [verdict["reason"]])
+            if not p.get("note"):
+                p["note"] = verdict["reason"][:180]
         if p.get("antiArms") and verdict["tier"] == "none":
             p["antiTier"] = "soft"                   # marked by a vote/statement; judged not reliable
         p["tier_source"] = verdict["source"]
         p["tier_reason"] = verdict["reason"]
         p["tier_evidence"] = verdict.get("evidence", [])
         p["tier_facts"] = f
+        p["tier_risk"] = verdict.get("risk")
+        p["tier_screen"] = p.get("_screen")
         if p.get("antiTier"):
             counts[p["antiTier"]] += 1
             sources["ai" if verdict["source"].startswith("ai") else "rule"] += 1

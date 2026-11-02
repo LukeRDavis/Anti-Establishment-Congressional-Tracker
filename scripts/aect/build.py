@@ -309,7 +309,8 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
                 "endorsed_by": [s for s in p.get("sources", []) if s.endswith("endorsed")],
                 # hard = reliable, counted toward thresholds; soft = shown, not counted
                 "antiTier": p.get("antiTier"), "tier_source": p.get("tier_source"),
-                "tier_reason": p.get("tier_reason"), "tier_evidence": p.get("tier_evidence", [])}
+                "tier_reason": p.get("tier_reason"), "tier_evidence": p.get("tier_evidence", []),
+                "tier_risk": p.get("tier_risk"), "tier_screen": p.get("tier_screen")}
         if p.get("incumbent"):
             members.append({**base, "bioguide_id": p.get("bioguide_id", ""), "caucus": p.get("caucus", ""),
                             "lobby_total": p.get("lobby_total", 0), "pacs": p.get("pacs", []),

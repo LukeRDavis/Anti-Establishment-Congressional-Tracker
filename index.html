@@ -327,7 +327,13 @@ function ArmsBadge({member}) {
     fontSize:7, fontFamily:FM, padding:"1px 6px",
     borderRadius:3, background:color+"18", color,
     border:"1px solid "+color+"30", letterSpacing:"0.06em",
-  }} title=${(member.tier_reason||"") + (member.tier_source ? " · judged by " + (member.tier_source.startsWith("ai") ? "AI (" + member.tier_source.slice(3) + ")" : "rule") : "")}>
+  }} title=${[member.tier_reason,
+              member.tier_screen ? "Screened: " + member.tier_screen : "",
+              member.tier_risk && (member.tier_risk.political || member.tier_risk.capital)
+                ? "Risk — political: " + (member.tier_risk.political||"?") + ", capital: " + (member.tier_risk.capital||"?")
+                  + (member.tier_risk.notes ? " (" + member.tier_risk.notes + ")" : "") : "",
+              member.tier_source ? "Judged by " + (member.tier_source.startsWith("ai") ? "AI (" + member.tier_source.slice(3) + ")" : "rule") : ""
+             ].filter(Boolean).join("\n")}>
     ${isSoft(member) ? "◇ Soft anti · not counted" : member.antiTier === "hard" ? "◈ Reliable anti-intervention" : "◈ Anti-Intervention"}</span>`;
 }
 
@@ -413,22 +419,15 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
         ◈ Anti-Intervention Coalition · ${chamber==="senate"?"Senate":"House"}
       </div>
 
-      <div style=${{display:"flex",gap:8,marginBottom:7,flexWrap:"wrap",alignItems:"center",fontFamily:FM,fontSize:8}}>
-        <span style=${{display:"flex",alignItems:"center",gap:4}}>
-          <span style=${{width:9,height:9,borderRadius:2,background:"#818cf8",display:"inline-block"}}/>
-          <span style=${{color:"#818cf8",fontWeight:600}}>${current} reliable members</span>
-        </span>
-        ${softN>0 ? html`<span title="First-time, one-off or pre-primary anti votes/statements, or lobby-funded — shown, not counted"
-          style=${{color:"#6b7280"}}>(${softN} soft, not counted)</span>` : null}
-        ${challCount>0 ? html`
-          <span style=${{color:"#4b5563"}}>+</span>
-          <span style=${{color:"#a78bfa"}}>${challCount} candidates</span>` : null}
-        <span style=${{color:"#4b5563"}}>·</span>
-        <span style=${{color:"#374151"}}>Expected Nov ${CYCLE()}:
-          <span style=${{color:"#a5b4fc",fontWeight:600}}> μ=${mu.toFixed(1)}</span>
-          <span style=${{color:"#374151"}}> ± ${sigma.toFixed(1)}</span>
-        </span>
-        ${polyCount>0 ? html`<span style=${{color:"#4ade80",fontSize:7}}>◉ ${polyCount} live</span>` : null}
+      <!-- one legend for every bar -->
+      <div style=${{display:"flex",gap:10,marginBottom:10,flexWrap:"wrap",alignItems:"center",fontFamily:FM,fontSize:8,color:"#6b7280"}}>
+        ${[["#818cf8",1,"Reliable incumbents"],["#a5b4fc",.55,"New, likely to win (≥"+Math.round(HIGH_ODDS*100)+"% odds)"],
+           ["#c7d2fe",.25,"New, long shot / no market"]].map(([c,o,l])=>html`
+          <span key=${l} style=${{display:"inline-flex",alignItems:"center",gap:4}}>
+            <span style=${{width:10,height:6,borderRadius:2,background:c,opacity:o,display:"inline-block"}}/>${l}</span>`)}
+        ${softN>0 ? html`<span title="First-time, one-off or pre-primary anti votes/statements, or lobby-funded — shown on the chart, never counted"
+          style=${{color:"#4b5563"}}>· ${softN} soft not counted</span>` : null}
+        ${polyCount>0 ? html`<span style=${{color:"#4ade80"}}>· ◉ ${polyCount} live odds</span>` : null}
       </div>
 
       ${THRESHOLDS_FOR(chamber).map((th,i) => {
@@ -438,66 +437,43 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
         const newHi   = trials.filter(t => t.isChallenger && t.p >= HIGH_ODDS && inParty(t)).length;
         const newLo   = trials.filter(t => t.isChallenger && t.p < HIGH_ODDS && inParty(t)).length
                       + unpriced.filter(inParty).length;
-        const segW    = n => Math.min(100, (n / th.n) * 100);
+        const w       = n => Math.max(0, Math.min(100, (n / th.n) * 100));
         const thMu    = th.party ? trials.filter(t => t.party === th.party).reduce((s,t) => s+t.p, 0) : mu;
-        const pct     = Math.min(100, Math.round((cur/th.n)*100));
         const reached = cur >= th.n;
-        const prob    = pReach(th.n, th.party);
+        const prob    = reached ? 1 : pReach(th.n, th.party);
         const pc      = probColor(prob);
-        const pl      = probLabel(prob);
         const need    = Math.max(0, th.n-cur);
-        const muPct   = Math.min(99, Math.round((thMu/th.n)*100));
+        const pTxt    = reached ? "reached" : prob < 0.01 ? "<1% by Nov "+CYCLE() : Math.round(prob*100)+"% by Nov "+CYCLE();
+        const segs    = [[cur,"#818cf8",1,cur+" reliable incumbents"],
+                         [newHi,"#a5b4fc",.55,newHi+" new candidates likely to win"],
+                         [newLo,"#c7d2fe",.25,newLo+" new candidates, long shots"]];
 
         return html`
-          <div key=${i} style=${{marginBottom: i<THRESHOLDS_FOR(chamber).length-1?16:0}}>
-            <div style=${{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:3,flexWrap:"wrap",gap:3}}>
-              <span style=${{fontSize:10,color:reached?"#4ade80":th.color,fontWeight:600,fontFamily:FM}}>
-                ${th.label}<span style=${{fontSize:9,fontWeight:400,color:"#374151"}}> / ${th.n}</span>
+          <div key=${i} style=${{marginBottom: i<THRESHOLDS_FOR(chamber).length-1?14:0}}>
+            <div style=${{display:"flex",justifyContent:"space-between",alignItems:"baseline",marginBottom:4,gap:6}}>
+              <span style=${{fontSize:10,color:reached?"#4ade80":th.color,fontWeight:600,fontFamily:FM}}>${th.label}</span>
+              <span style=${{fontSize:9,fontFamily:FM,color:"#6b7280"}}>
+                <span style=${{color:"#c7d2fe"}}>${cur}</span>${newHi?html`<span style=${{color:"#a5b4fc"}}> +${newHi}</span>`:null}${newLo?html`<span style=${{color:"#6b7280"}}> +${newLo}</span>`:null}
+                <span> / ${th.n}</span>
+                <span style=${{color:pc,marginLeft:8}}>${pTxt}</span>
               </span>
-              <div style=${{display:"flex",gap:5,alignItems:"center"}}>
-                <span style=${{fontSize:9,fontFamily:FM,color:reached?"#4ade80":"#6b7280"}}>
-                  ${cur}/${th.n}${reached?" ✓":""}
-                </span>
-                <span style=${{fontSize:9,fontFamily:FM,fontWeight:700,
-                  padding:"1px 7px",borderRadius:4,
-                  background:pc+"18",color:pc,border:"1px solid "+pc+"40",
-                  minWidth:44,textAlign:"center"}}>
-                  ${reached?"100%":Math.round(prob*100)+"%"}
-                </span>
-              </div>
             </div>
-            <div style=${{height:7,borderRadius:4,background:"#1a1d27",overflow:"hidden",marginBottom:4,position:"relative"}}>
-              <div title=${newLo+" new candidates with low market odds (or no market)"} style=${{position:"absolute",left:0,top:0,height:"100%",
-                width:segW(cur+newHi+newLo)+"%",background:"#c7d2fe",opacity:0.28,borderRadius:4,transition:"width 0.8s ease"}}/>
-              <div title=${newHi+" new candidates with high market odds"} style=${{position:"absolute",left:0,top:0,height:"100%",
-                width:segW(cur+newHi)+"%",background:"#a5b4fc",opacity:0.6,borderRadius:4,transition:"width 0.8s ease"}}/>
-              <div title=${cur+" reliable incumbents"} style=${{position:"absolute",left:0,top:0,height:"100%",
-                width:pct+"%",background:reached?"#4ade80":"#818cf8",
-                borderRadius:4,transition:"width 0.8s ease"}}/>
-              ${!reached ? html`
-                <div style=${{position:"absolute",top:0,height:"100%",width:2,
-                  background:"#a5b4fc",opacity:0.5,left:muPct+"%"}}/>` : null}
+            <div style=${{display:"flex",height:8,borderRadius:4,background:"#1a1d27",overflow:"hidden"}}>
+              ${segs.filter(([n])=>n>0).map(([n,c,o,t])=>html`
+                <div key=${t} title=${t} style=${{width:w(n)+"%",background:reached&&c==="#818cf8"?"#4ade80":c,opacity:o,transition:"width 0.8s ease"}}/>`)}
             </div>
-            <div style=${{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:3}}>
-              <div style=${{fontSize:8,fontFamily:FM,color:"#6b7280",width:"100%"}}>
-                <span style=${{color:"#818cf8"}}>■ ${cur} reliable incumbents</span>
-                <span style=${{color:"#a5b4fc",opacity:.85}}> + ■ ${newHi} new, likely to win</span>
-                <span style=${{color:"#c7d2fe",opacity:.6}}> + ■ ${newLo} new, long shot</span>
-                ${cur+newHi+newLo>=th.n&&!reached?html`<span style=${{color:"#fbbf24"}}> · reachable only with new candidates</span>`:null}
-              </div>
-              <div style=${{fontSize:8,fontFamily:FM,color:pc,flex:1}}>
-                ${reached
-                  ? "✓ Threshold reached with current coalition"
-                  : pl+" by Nov "+CYCLE()+" — need "+need+" more (μ="+thMu.toFixed(1)+(th.party?"":", σ="+sigma.toFixed(1))+")"}
-              </div>
+            <div style=${{fontSize:8,fontFamily:FM,color:"#4b5563",marginTop:4,lineHeight:1.5}}>
+              ${reached ? html`<span style=${{color:"#4ade80"}}>✓ Reached with reliable incumbents alone. </span>`
+                : cur+newHi+newLo>=th.n ? html`<span style=${{color:"#fbbf24"}}>Reachable only if new candidates win. </span>`
+                : html`<span>Needs ${need} more reliable votes. </span>`}
+              ${th.desc}
             </div>
-            <div style=${{fontSize:9,color:"#374151",lineHeight:1.5,marginTop:2}}>${th.desc}</div>
           </div>`;
       })}
 
       <div style=${{marginTop:10,paddingTop:7,borderTop:"1px solid #1a1d27",
-        fontSize:7,color:"#1e2230",fontFamily:FM,lineHeight:1.7}}>
-        P(reach N) = Φ((μ−N+0.5)/σ). Prediction markets where available · incumbents without a market use the measured House retention rate${window._aectRetention!=null?` (${Math.round(window._aectRetention*100)}%)`:""} · ${unpriced.length} reliable candidates without a market are shown as long shots and left out of μ · soft members are never counted.
+        fontSize:7,color:"#374151",fontFamily:FM,lineHeight:1.7}}>
+        Expected reliable seats after Nov ${CYCLE()}: μ=${mu.toFixed(1)} ± ${sigma.toFixed(1)}. P(reach N) = Φ((μ−N+0.5)/σ). Prediction markets where available · incumbents without a market use the measured House retention rate${window._aectRetention!=null?` (${Math.round(window._aectRetention*100)}%)`:""} · ${unpriced.length} reliable candidates without a market are shown as long shots and left out of μ · soft members are never counted.
       </div>
     </div>`;
 }
@@ -607,8 +583,9 @@ function MemberBox({title, color, members, challengers, racesData, fecData, poly
         ${m.rlc_score?html`<span style=${{fontSize:8,fontFamily:FM,color:"#fbbf24",opacity:.7}}>RLC ${m.rlc_score}/100</span>`:null}
         ${fec?html`
           <div style=${{display:"flex",gap:8,flexWrap:"wrap"}}>
-            ${fec.raised!=null?html`<span style=${{fontSize:8,fontFamily:FM,color:"#4b5563"}}>↑${fmtM(fec.raised)}</span>`:null}
-            ${fec.ie_against>0?html`<span style=${{fontSize:8,fontFamily:FM,color:"#f87171"}}>⚡${fmtM(fec.ie_against)} vs</span>`:null}
+            ${fec.raised!=null?html`<span title="Campaign money raised this cycle (FEC)" style=${{fontSize:8,fontFamily:FM,color:"#4b5563"}}>Raised ${fmtM(fec.raised)}</span>`:null}
+            ${fec.ie_against>=1000?html`<span title=${"Outside groups (super PACs) spent this much against them this cycle (FEC independent expenditures)"+((fec.ie_spenders||[]).filter(x=>x.side==="oppose").length?": "+(fec.ie_spenders||[]).filter(x=>x.side==="oppose").map(x=>x.committee).slice(0,3).join(", "):"")} style=${{fontSize:8,fontFamily:FM,color:"#f87171"}}>Outside $ against ${fmtM(fec.ie_against)}</span>`:null}
+            ${fec.ie_support>=1000?html`<span title="Outside groups (super PACs) spent this much supporting them this cycle (FEC independent expenditures)" style=${{fontSize:8,fontFamily:FM,color:"#4ade80",opacity:.8}}>Outside $ for ${fmtM(fec.ie_support)}</span>`:null}
           </div>`:null}
       </div>`;
   };
@@ -742,8 +719,8 @@ function DetailPanel({member, fecData, polyData, bills, chamber, races}) {
           <div style=${{flex:"1 1 130px",borderRadius:7,border:"1px solid #1a1d27",overflow:"hidden"}}>
             <div style=${{padding:"3px 7px",background:"#090b0e",fontSize:8,color:"#fbbf24",fontFamily:FM}}>FEC ${CYCLE()}</div>
             ${[["Raised",fmtM(fec.raised)],["Spent",fmtM(fec.spent)],["Cash",fmtM(fec.cash)],
-               ...(fec.ie_against>0?[["vs IEs",fmtM(fec.ie_against)]]:[] ),
-               ...(fec.ie_support>0?[["for IEs",fmtM(fec.ie_support)]]:[] ),
+               ...(fec.ie_against>0?[["Outside $ against",fmtM(fec.ie_against)]]:[] ),
+               ...(fec.ie_support>0?[["Outside $ for",fmtM(fec.ie_support)]]:[] ),
             ].map(([k,v])=>html`
               <div key=${k} style=${{display:"flex",justifyContent:"space-between",padding:"3px 7px",borderTop:"1px solid #0e1016"}}>
                 <span style=${{fontSize:9,color:"#4b5563"}}>${k}</span>
@@ -1690,10 +1667,10 @@ function App() {
           {c:"#818cf8", bg:"rgba(129,140,248,.1)", l:"Reliable anti "+(chMem.some(m=>m.party==="I"&&isHard(m))?"D/I":"D"), n:chMem.filter(m=>isHard(m)&&side(m)==="D").length},
           {c:"#6b70b0", bg:"rgba(74,81,145,.12)",  l:"Soft anti (not counted)", n:chMem.filter(isSoft).length},
           {c:"#1e40af", bg:"rgba(30,64,175,.1)",   l:"Dem",           n:chMem.filter(m=>side(m)==="D"&&!m.antiArms).length},
-          {c:"#9ca3af", bg:"transparent", ring:true, l:"Leaving (hollow)", n:chMem.filter(m=>LEAVING.includes(m.ps)).length},
+          {c:"#9ca3af", bg:"transparent", faded:true, l:"Leaving (faded)", n:chMem.filter(m=>LEAVING.includes(m.ps)).length},
         ].map(b=>html`
           <span key=${b.l} style=${{display:"inline-flex",alignItems:"center",gap:4,background:b.bg,border:"1px solid "+b.c+"30",borderRadius:5,padding:"2px 7px",fontSize:9,fontFamily:FM,color:b.c}}>
-            <span style=${{width:5,height:5,borderRadius:"50%",background:b.ring?"transparent":b.c,border:b.ring?"1px solid "+b.c:"none",display:"inline-block"}}/>
+            <span style=${{width:5,height:5,borderRadius:"50%",background:b.c,opacity:b.faded?0.35:1,display:"inline-block"}}/>
             ${b.l+" "+b.n}
           </span>`)}
         <button onClick=${()=>setShowAnti(v=>!v)}
@@ -1736,11 +1713,10 @@ function App() {
                 const r      = isHov ? dotR+1.5 : dotR;
                 return html`<g key=${i}>
                   ${isSel?html`<circle cx=${pos._x} cy=${pos._y} r=${dotR+5} fill="none" stroke=${color} stroke-width="1.5" opacity=".4"/>`:null}
-                  ${isHard(pos)&&!dimDot?html`<circle cx=${pos._x} cy=${pos._y} r=${dotR+2.5} fill="none" stroke=${color} stroke-width=".8" opacity=".18"/>`:null}
-                  ${atRisk?html`<circle cx=${pos._x} cy=${pos._y} r=${dotR+3} fill="none" stroke="#fbbf24" stroke-width="1" opacity=".4" stroke-dasharray="2,2"/>`:null}
+
                   <circle cx=${pos._x} cy=${pos._y} r=${r}
-                    fill=${dimDot?"#111419":leaving?"#0f1117":color} opacity=${dimDot?0.12:1}
-                    stroke=${isSel?"#fff":leaving&&!dimDot?color:"none"} stroke-width=${leaving&&!isSel?1.2:1.5}
+                    fill=${dimDot?"#111419":color} opacity=${dimDot?0.12:leaving?0.35:1}
+                    stroke=${isSel?"#fff":"none"} stroke-width="1.5"
                     style=${{cursor:"pointer", transition:"r 0.1s"}}
                     onClick=${()=>{setSelected(selected===pos.name?null:pos.name);setHovered(pos.name);}}
                     onMouseEnter=${()=>setHovered(pos.name)}
