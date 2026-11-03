@@ -38,7 +38,7 @@ from .config import (CYCLE, CURRENT_CONGRESS, FEC_API, FEC_KEY, FOCUS_RECIPIENTS
 from .net import (get_text, get_json, stream, load_cache, save_cache, now_iso, age_hours,
                   strip_html, qs, circuit_ok)
 
-JUDGE_VERSION = 3
+JUDGE_VERSION = 4
 TTL_H = float(os.environ.get("AECT_TIER_TTL_H", str(24 * 7)))
 BUDGET = int(os.environ.get("AECT_TIER_BUDGET", "40"))
 # breaking from one's own party toward the anti side this many times screens a member in
@@ -108,6 +108,12 @@ def facts(p, ie):
         "rlc_score": p.get("rlc_score"), "rlc_endorsed": "rlc_endorsed" in p.get("sources", []),
         "other_foreign_policy_anti": f"{other.get('anti', 0)}/{other.get('votes', 0)}",
         "statement": (p.get("position_research") or {}).get("summary") or None,
+        "discharge_petitions_signed": [f"No. {d['no']} {d['measure']}: {d['about'][:120]} "
+                                       f"({d['signers']} signers, {d['own_party_signers']} from their own party)"
+                                       for d in p.get("_discharge", [])][:8],
+        # signed while their own party holds the House majority: going around their own Speaker
+        "discharge_petitions_against_own_leadership": sum(1 for _ in p.get("_discharge", []))
+            if p.get("_party_holds_house") else 0,
     }
 
 
@@ -275,19 +281,30 @@ def employers(p, fec_cands, cache):
 
 
 # ── Judge ────────────────────────────────────────────────────────────────────
-SYSTEM = f"""You investigate whether a U.S. member of Congress or congressional candidate is ANTI-ESTABLISHMENT on foreign intervention — opposing U.S. military aid and arms to {_FOCUS} above all, and more broadly foreign wars, war-powers grabs, large foreign-aid packages and the foreign-policy lobby's money — and whether they can be COUNTED ON in a blocking bloc.
+SYSTEM = f"""You are a realistic political operative working for a non-partisan anti-establishment coalition of progressives, constitutionalists and libertarians. Your job is to tell the coalition who it can actually COUNT ON when a vote gets hard. For now the coalition's line is anti-intervention: opposing U.S. military aid and arms to {_FOCUS} above all, and more broadly foreign wars, war-powers grabs, large foreign-aid packages and the foreign-policy lobby's money.
 
-Judge in three passes:
-1. OPTIMISTIC appraisal: actively look for every credible anti-establishment signal in the facts and sources — votes that break from their own party toward the anti side, opposition to war or foreign-aid packages (any country), refusing or being targeted by lobby money, tracker endorsements (TrackAIPAC, RLC), outsider campaigns, statements in news and opinion pieces. Do not dismiss someone because they have no anti vote on {_FOCUS} yet.
-2. REALISTIC boundaries: HARD (anti-establishment: shown in the center of the chart and counted toward thresholds) needs a sustained record that has held when it cost something — anti positions on {_FOCUS} across more than one Congress or several years AND still held in the latest Congress, consistent statements, not funded by the {_FOCUS} lobby (TrackAIPAC lobby money, United Democracy Project / DMFI / AIPAC support) and plausibly willing to vote against arms to {_FOCUS}. SOFT (treated as establishment, never counted) is for real but partial or untested signals: first-time, one-off or recent anti votes (e.g. a 2026 vote reacting to civilian deaths in Gaza, or positioning in the months before a primary); broad anti-war / America-First / anti-foreign-aid stances that still back arms to {_FOCUS}; endorsements without a record; votes contradicted by lobby money. NONE only if there is no meaningful anti-establishment signal.
-CALIBRATION: HARD is rare. By this standard nearly every member of Congress is establishment, including most self-described America First, Freedom Caucus, progressive or anti-war members. Party-line or procedural defections, votes against spending bills, rhetoric, caucus membership or a single vote do NOT make someone anti-establishment. A member who voted anti on {_FOCUS} once and then voted for arms to {_FOCUS} later has NOT held the line: at most SOFT. SOFT is treated as establishment on the tracker, so when in doubt choose SOFT or NONE.
-3. PESSIMISTIC risk: assess how likely they are to fold — leadership and party pressure, primary threats, dependence on lobby or establishment donors, business and donor-employer ties, ambition for other office. High risk pushes HARD down to SOFT.
+The one question you answer about every person: is this a RELIABLE anti-establishment ally, or are they playing political games?
 
-Candidates who have NEVER served in Congress: if the sources show a state-level or local record (state legislature, council, mayor), judge that record the same way. If there is no such record, judge the INTEGRITY of their statements against their donors, business relationships and the trackers: HARD only if the statements are explicit and solid AND their relationships are clean or irrelevant; otherwise SOFT.
+How to think:
+- Be pessimistic about where things stand: most of Congress is establishment, including many who campaign as outsiders, America First, progressive or anti-war. Be realistic about what counts, and stay open to real allies wherever they come from.
+- Separate principle from partisanship. Opposing the other party's leadership is cheap; it is what minority members do anyway. Breaking with one's OWN party and leadership is costly and is the strongest evidence of principle: votes against one's own party on arms, aid or war; signing discharge petitions that go around one's own party's Speaker and Rules Committee; sponsoring or cosponsoring measures one's leadership opposes. A member who only defects on spending or procedure is not anti-intervention.
+- Judge what the record shows, not what the person says about themselves. Recency and consistency matter: an anti vote followed by later votes for arms to {_FOCUS} is a record that did not hold. A first anti vote cast in the months before a primary, or in a single wave of reaction, is positioning until shown otherwise.
+- Follow the money. Money from the {_FOCUS} lobby (TrackAIPAC-tracked contributions, United Democracy Project, DMFI, AIPAC-aligned super PACs) and dependence on donors and businesses that profit from the status quo are reasons to doubt. Being targeted by that lobby's spending is a reason to believe.
 
-Use ONLY the facts and sources given; do not use outside knowledge. Cite dossier URLs for claims taken from it.
+Evidence, in order of weight:
+1. Sitting or former members of Congress: their roll-call votes first, then their own-party defections, discharge petitions and bills.
+2. Candidates who never served in Congress but held state or local office: that record, judged the same way.
+3. Candidates with no record: their donors and business relationships. If those are clean or lean neither way, judge their words: boilerplate or specific? consistent across statements, interviews and social media? do they stand and work alongside people who hold the same positions? Explicit, specific, consistent positions with clean relationships can count; vague or borrowed language cannot.
+
+Verdicts:
+- HARD = a reliable anti-establishment ally. Counted on the tracker and seated in the center of the chart.
+- SOFT = real signals that do not yet add up to reliability. Treated as establishment.
+- NONE = establishment, no meaningful anti-establishment signal.
+Most people are SOFT or NONE. When in doubt, do not count them.
+
+Use ONLY the facts and sources given; do not use outside knowledge. Cite dossier or roll-call URLs for claims.
 Respond with JSON only:
-{{"tier": "hard"|"soft"|"none", "confidence": "high"|"medium"|"low", "scope": "focus"|"broad", "prior_office": "congress"|"state_or_local"|"none"|"unknown", "political_risk": "low"|"medium"|"high", "capital_risk": "low"|"medium"|"high", "reason": "one or two sentences", "risk_notes": "one sentence", "evidence": [{{"claim": "...", "url": "..."}}]}}"""
+{{"tier": "hard"|"soft"|"none", "confidence": "high"|"medium"|"low", "scope": "focus"|"broad", "prior_office": "congress"|"state_or_local"|"none"|"unknown", "principle_vs_partisanship": "principled"|"mixed"|"partisan"|"unclear", "political_risk": "low"|"medium"|"high", "capital_risk": "low"|"medium"|"high", "bottom_line": "one sentence beginning 'Counts as anti-establishment because' or 'Does not count because'", "writeup": "a full write-up of 5-9 sentences for the public: who they are, what their record and words show on intervention, own-party defections and leadership defiance, money and donors, whether it is principle or partisanship, and how likely they are to hold under pressure", "reason": "one or two sentences", "risk_notes": "one sentence", "evidence": [{{"claim": "...", "url": "..."}}]}}"""
 
 
 def _prompt(p, f, text, emp):
@@ -305,8 +322,12 @@ def _prompt(p, f, text, emp):
 
 
 def _fingerprint(f, text):
+    # anything here changing means the record moved: the write-up is redone on the next pass
     keep = {k: f[k] for k in ("anti_focus_votes", "focus_votes", "lobby_money_trackaipac",
-                              "lobby_outside_support", "lobby_outside_oppose", "trackaipac_endorsed")}
+                              "lobby_outside_support", "lobby_outside_oppose", "trackaipac_endorsed",
+                              "discharge_petitions_against_own_leadership")}
+    keep["petitions"] = len(f.get("discharge_petitions_signed") or [])
+    keep["bills"] = len(f.get("bills_on_arms_aid_war") or [])
     return hashlib.sha1((json.dumps(keep, sort_keys=True) + str(len(text) // 500)).encode()).hexdigest()[:12]
 
 
@@ -471,11 +492,16 @@ def run(people, ie, fec_cands, fec_totals=None):
                         "notes": (res.get("risk_notes") or "")[:240]}
                 if tier == "hard" and "high" in (risk["political"], risk["capital"]):
                     tier = "soft"                    # pessimistic risk check: likely to fold
-                if tier == "hard" and f["incumbent"] and f["focus_votes"] and not _sustained(f):
-                    tier = "soft"                    # a sitting member's record must have held
+                if tier == "hard" and f["incumbent"] and f["focus_votes"] and not _sustained(f) and not (
+                        f["anti_focus_votes"] >= 1 and f["discharge_petitions_against_own_leadership"] >= 1):
+                    tier = "soft"                    # floor: a held record, or an anti vote plus defying own leadership
                 if tier == "hard" and not f["incumbent"] and res.get("confidence") != "high":
                     tier = "soft"                    # a newcomer needs a confident, cited verdict
                 verdict = {"tier": tier, "reason": (res.get("reason") or "")[:300], "evidence": ev,
+                           "writeup": (res.get("writeup") or "")[:2400],
+                           "bottom_line": (res.get("bottom_line") or "")[:240],
+                           "principle": res.get("principle_vs_partisanship"),
+                           "model": ai.LAST.get("model"), "judged_at": now_iso(),
                            "risk": risk, "scope": res.get("scope"),
                            "confidence": res.get("confidence"), "prior_office": res.get("prior_office"),
                            "source": f"ai:{provider}", "at": now_iso(), "v": JUDGE_VERSION,
@@ -506,6 +532,13 @@ def run(people, ie, fec_cands, fec_totals=None):
         p["tier_facts"] = f
         p["tier_risk"] = verdict.get("risk")
         p["tier_screen"] = p.get("_screen")
+        p["tier_writeup"] = verdict.get("writeup") or ""
+        p["tier_bottom_line"] = verdict.get("bottom_line") or ""
+        p["tier_principle"] = verdict.get("principle")
+        p["tier_model"] = verdict.get("model")
+        p["tier_judged_at"] = verdict.get("judged_at") or verdict.get("at")
+        p["discharge_petitions"] = [{k: d[k] for k in ("no", "measure", "about", "url", "signed")}
+                                    for d in p.get("_discharge", [])][:12]
         if p.get("antiTier"):
             counts[p["antiTier"]] += 1
             sources["ai" if verdict["source"].startswith("ai") else "rule"] += 1

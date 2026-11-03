@@ -12,6 +12,7 @@ from .config import GEMINI_KEY, XAI_KEY, OPENROUTER_KEY, GROQ_KEY, ai_time_left
 from .net import post_json, get_json, stream, circuit_ok, circuit_trip, LAST_HTTP_STATUS, LAST_ERROR_BODY
 
 _GEMINI_MODELS = None
+LAST = {"model": None}      # the exact model that produced the most recent answer
 
 
 def gemini_models():
@@ -157,6 +158,7 @@ def _gemini(system, prompt, search):
                 if web.get("uri"):
                     sources.append({"title": web.get("title", ""), "url": web["uri"]})
             CALLS["gemini"] += 1
+            LAST["model"] = model
             return parse_json_loose(text), sources
         except Exception as e:
             stream("ai_gemini", error=f"unexpected response shape: {e}")
@@ -185,6 +187,7 @@ def _xai(system, prompt, search):
                             if a.get("url"):
                                 sources.append({"title": a.get("title", ""), "url": a["url"]})
         CALLS["xai"] += 1
+        LAST["model"] = XAI_MODEL
         return parse_json_loose(text), sources
     payload = {"model": XAI_MODEL, "temperature": 0.1, "max_tokens": 2048,
                "messages": [{"role": "system", "content": system},
@@ -193,6 +196,7 @@ def _xai(system, prompt, search):
     if not resp:
         return None, None
     CALLS["xai"] += 1
+    LAST["model"] = XAI_MODEL
     return parse_json_loose(resp["choices"][0]["message"]["content"]), []
 
 
@@ -235,6 +239,7 @@ def _openai_compat(url, key, provider, system, prompt):
         try:
             out = parse_json_loose(resp["choices"][0]["message"]["content"])
             if out is not None:
+                LAST["model"] = model
                 return out, []
         except Exception:
             continue

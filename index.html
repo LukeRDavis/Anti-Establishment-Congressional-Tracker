@@ -636,6 +636,52 @@ function MemberBox({title, color, members, challengers, racesData, fecData, poly
       </div>
     </div>`;
 }
+const SECT = {fontSize:8,color:"#4b5563",fontFamily:FM,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:4};
+
+// One-line call shown on hover and at the top of the write-up.
+function bottomLine(m) {
+  if (m.bottom_line) return m.bottom_line;
+  const f = m.tier_facts || {};
+  if (m.antiArms) return "Counts as anti-establishment" + (f.anti_focus_votes ? ": anti on " + f.anti_focus_votes + " of " + f.focus_votes + " arms votes" + ((f.anti_congresses||[]).length ? " across " + f.anti_congresses.length + " Congresses" : "") : "") + ".";
+  if (m.tier_reason) return "Does not count: " + m.tier_reason + ".";
+  return "Establishment: no anti-establishment record found.";
+}
+
+// Plain-language summary of the facts, used until an AI write-up exists.
+function factsWriteup(m) {
+  const f = m.tier_facts || {}, out = [];
+  if (f.focus_votes) out.push("On " + f.focus_votes + " recorded votes on arms and aid to " + (((META().focus||{}).recipients)||["Israel"]).join(", ") + ", voted the anti side " + (f.anti_focus_votes||0) + " time" + (f.anti_focus_votes===1?"":"s") + (f.latest_congress_focus ? " (" + f.latest_congress_focus + ")" : "") + ".");
+  if (f.discharge_petitions_against_own_leadership) out.push("Signed " + f.discharge_petitions_against_own_leadership + " discharge petition" + (f.discharge_petitions_against_own_leadership>1?"s":"") + " going around their own party's House leadership.");
+  if (f.lobby_money_trackaipac) out.push("Received " + fmtM(f.lobby_money_trackaipac) + " in contributions tracked by TrackAIPAC.");
+  if (f.lobby_outside_support) out.push("Supported by " + fmtM(f.lobby_outside_support) + " in outside spending from the lobby's super PACs.");
+  if (f.lobby_outside_oppose) out.push("Targeted by " + fmtM(f.lobby_outside_oppose) + " in outside spending from the lobby's super PACs.");
+  if (m.description) out.push(m.description);
+  return out.join(" ");
+}
+
+function Verdict({member}) {
+  const anti = !!member.antiArms;
+  const col = anti ? (side(member)==="R" ? COL.antiR : COL.antiD) : "#9ca3af";
+  const text = member.writeup || factsWriteup(member);
+  const ai = (member.tier_source||"").startsWith("ai");
+  const when = member.judged_at ? new Date(member.judged_at).toLocaleString([], {dateStyle:"medium", timeStyle:"short"}) : null;
+  return html`<div style=${{marginBottom:10,padding:"9px 11px",borderRadius:8,background:anti?col+"12":"#0b0d12",border:"1px solid "+(anti?col+"40":"#1a1d27")}}>
+    <div style=${{fontSize:9,fontFamily:FM,letterSpacing:"0.08em",textTransform:"uppercase",color:col,fontWeight:700,marginBottom:4}}>
+      ${anti ? "◈ Anti-establishment" : "Establishment"}</div>
+    <div style=${{fontSize:11,color:"#e5e7eb",lineHeight:1.5,marginBottom:text?6:0}}>${bottomLine(member)}</div>
+    ${text ? html`<div style=${{fontSize:10.5,color:"#9ca3af",lineHeight:1.65}}>${text}</div>` : null}
+    ${(member.tier_evidence||[]).length ? html`<div style=${{marginTop:6}}>${member.tier_evidence.map((e,i)=>html`
+      <div key=${i} style=${{fontSize:9,fontFamily:FM,lineHeight:1.45}}>
+        <a href=${e.url} target="_blank" rel="noreferrer" style=${{color:"#6b7280",textDecoration:"none"}}>↗ ${(e.claim||e.url).slice(0,120)}</a></div>`)}</div>` : null}
+    ${member.tier_risk && (member.tier_risk.political || member.tier_risk.capital) ? html`<div style=${{fontSize:9,fontFamily:FM,color:"#6b7280",marginTop:6}}>
+      Risk of folding: political ${member.tier_risk.political||"?"}, money ${member.tier_risk.capital||"?"}${member.tier_risk.notes ? " · " + member.tier_risk.notes : ""}</div>` : null}
+    <div style=${{fontSize:8.5,fontFamily:FM,color:"#4b5563",marginTop:7,borderTop:"1px solid #1a1d27",paddingTop:5}}>
+      ${ai ? "Analysis by " + (member.judged_model || member.tier_source.slice(3)) + " (" + member.tier_source.slice(3) + ")" + (when ? " · " + when : "")
+           : "Rule-based call from the record; AI review pending" + (when ? " · " + when : "")}
+    </div>
+  </div>`;
+}
+
 function DetailPanel({member, fecData, polyData, bills, chamber, races}) {
   if (!member||member._filler) return html`
     <div style=${{color:"#1f2937",fontSize:11,textAlign:"center",paddingTop:20}}>
@@ -673,42 +719,37 @@ function DetailPanel({member, fecData, polyData, bills, chamber, races}) {
         <${StatusBadge} ps=${member.ps||"INCUMBENT"} prob=${poly?.prob}/>
       </div>
 
-      ${member.antiArms?html`
-        <div style=${{marginBottom:8,padding:"7px 10px",borderRadius:8,
-          background:"rgba(129,140,248,.07)",
-          border:"1px solid #818cf833"}}>
-          <div style=${{display:"flex",alignItems:"center",gap:6,marginBottom:3}}>
-            <${ArmsBadge} member=${member}/>
-          </div>
-          <div style=${{fontSize:9,color:"#4b5563",lineHeight:1.5}}>
-            "Opposes foreign interventionism — opposed arms sales or aid to foreign countries by vote or TrackAIPAC endorsement."
-          </div>
-          ${member.lobby_total>0?html`
-            <div style=${{fontSize:8,color:"#374151",fontFamily:FM,marginTop:3}}>
-              Israel lobby receipts: ${fmtM(member.lobby_total)}
-              ${member.pacs&&member.pacs.length>0?html` · ${member.pacs.slice(0,4).join(", ")}`:null}
-            </div>`:null}
+      <${Verdict} member=${member}/>
+
+      ${votes.length>0?html`
+        <div style=${{marginBottom:10}}>
+          <div style=${SECT}>Votes on arms, aid and war</div>
+          ${votes.map((v,i)=>html`
+            <div key=${i} style=${{fontSize:9,fontFamily:FM,marginBottom:4,lineHeight:1.45}}>
+              <span style=${{color:v.anti?"#4ade80":"#f87171",fontWeight:700,marginRight:5}}>${v.position||"?"} · ${v.anti?"anti":"pro"}</span>
+              <span style=${{color:"#6b7280"}}>${v.date||""} ${v.measure||""}</span>
+              ${v.summary?html`<div style=${{color:"#4b5563"}}>${v.summary.length>170?v.summary.slice(0,170)+"…":v.summary}</div>`:null}
+              ${v.url?html`<a href=${v.url} target="_blank" rel="noreferrer" style=${{color:"#374151",textDecoration:"none"}}>roll call ↗</a>`:null}
+            </div>`)}
         </div>`:null}
 
-      ${member.note?html`<div style=${{fontSize:10,color:"#4b5563",marginBottom:8,lineHeight:1.5}}>${member.note}</div>`:null}
+      ${(member.discharge_petitions||[]).length>0?html`
+        <div style=${{marginBottom:10}}>
+          <div style=${SECT}>Discharge petitions signed</div>
+          ${member.discharge_petitions.map((d,i)=>html`
+            <div key=${i} style=${{fontSize:9,fontFamily:FM,marginBottom:3,color:"#6b7280",lineHeight:1.45}}>
+              <a href=${d.url} target="_blank" rel="noreferrer" style=${{color:"#a78bfa",textDecoration:"none"}}>No. ${d.no} ${d.measure} ↗</a>
+              ${d.about?html`<span style=${{color:"#4b5563"}}> ${d.about.slice(0,140)}</span>`:null}
+            </div>`)}
+        </div>`:null}
 
       ${mBills.length>0?html`
         <div style=${{marginBottom:8}}>
-          <div style=${{fontSize:8,color:"#374151",fontFamily:FM,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:4}}>Co-sponsored legislation</div>
+          <div style=${SECT}>Co-sponsored legislation</div>
           ${mBills.map((b,i)=>html`
             <div key=${i} style=${{fontSize:9,fontFamily:FM,marginBottom:2}}>
               <a href=${b.url} target="_blank" rel="noreferrer" style=${{color:"#a78bfa",textDecoration:"none"}}>${b.type} ${b.number} ↗</a>
               <span style=${{color:"#4b5563",marginLeft:5}}>${(b.title||"").slice(0,55)}${(b.title||"").length>55?"…":""}</span>
-            </div>`)}
-        </div>`:null}
-
-      ${votes.length>0?html`
-        <div style=${{marginBottom:8}}>
-          <div style=${{fontSize:8,color:"#374151",fontFamily:FM,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:4}}>On-record votes</div>
-          ${votes.map((v,i)=>html`
-            <div key=${i} style=${{fontSize:9,fontFamily:FM,marginBottom:2}}>
-              <span style=${{color:v.vote==="No"?"#f87171":"#4ade80",marginRight:4}}>${v.vote}</span>
-              <span style=${{color:"#4b5563"}}>${v.bill} — ${(v.desc||"").slice(0,50)}</span>
             </div>`)}
         </div>`:null}
 
@@ -1823,12 +1864,19 @@ function App() {
                     onMouseLeave=${()=>setHovered(null)}
                     onTouchStart=${(e)=>{e.preventDefault();setHovered(pos.name);setSelected(selected===pos.name?null:pos.name);}}
                     onTouchEnd=${()=>setTimeout(()=>setHovered(null),1200)}/>
-                  ${isHov?html`<g pointer-events='none'>
-                    <rect x=${pos._x+7} y=${pos._y-10} width=${Math.min(pos.name.length*4.6+10,130)} height='13' rx='3'
-                      fill='#0a0c10' opacity='0.94' stroke='#1e2230' stroke-width='0.5'/>
-                    <text x=${pos._x+11} y=${pos._y-3.5} font-size='7' font-family='monospace'
+                  ${isHov?(()=>{
+                    const bl = bottomLine(pos), line = bl.length > 64 ? bl.slice(0,63) + "…" : bl;
+                    const w = Math.max(pos.name.length*4.6+10, line.length*3.55+10);
+                    const tx = pos._x + 7 + w > svgW - 4 ? pos._x - 7 - w : pos._x + 7;
+                    const ty = Math.max(2, pos._y - 22);
+                    return html`<g pointer-events='none'>
+                    <rect x=${tx} y=${ty} width=${w} height='22' rx='3'
+                      fill='#0a0c10' opacity='0.96' stroke='#1e2230' stroke-width='0.5'/>
+                    <text x=${tx+4} y=${ty+7} font-size='7' font-family='monospace'
                       fill='#e5e7eb' dominant-baseline='middle'>${pos.name}</text>
-                  </g>`:null}
+                    <text x=${tx+4} y=${ty+16} font-size='5.6' font-family='monospace'
+                      fill=${pos.antiArms ? dotColor(pos) : '#9ca3af'} dominant-baseline='middle'>${line}</text>
+                  </g>`;})():null}
                 </g>`;
               })}
               <line x1=${cx} y1=${cy} x2=${cx} y2=${cy-(chamber==="senate"?164:228)-20} stroke="#1e2230" stroke-width="1" stroke-dasharray="3,3"/>

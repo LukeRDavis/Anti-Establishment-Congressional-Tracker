@@ -310,7 +310,14 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
                 # hard = reliable, counted toward thresholds; soft = shown, not counted
                 "antiTier": p.get("antiTier"), "tier_source": p.get("tier_source"),
                 "tier_reason": p.get("tier_reason"), "tier_evidence": p.get("tier_evidence", []),
-                "tier_risk": p.get("tier_risk"), "tier_screen": p.get("tier_screen")}
+                "tier_risk": p.get("tier_risk"), "tier_screen": p.get("tier_screen"),
+                "writeup": p.get("tier_writeup", ""), "bottom_line": p.get("tier_bottom_line", ""),
+                "principle": p.get("tier_principle"), "judged_model": p.get("tier_model"),
+                "judged_at": p.get("tier_judged_at"), "discharge_petitions": p.get("discharge_petitions", []),
+                "tier_facts": {k: (p.get("tier_facts") or {}).get(k) for k in (
+                    "focus_votes", "anti_focus_votes", "anti_congresses", "latest_congress_focus",
+                    "lobby_money_trackaipac", "lobby_outside_support", "lobby_outside_oppose",
+                    "discharge_petitions_against_own_leadership", "party_defections_to_anti")}}
         if p.get("incumbent"):
             members.append({**base, "bioguide_id": p.get("bioguide_id", ""), "caucus": p.get("caucus", ""),
                             "lobby_total": p.get("lobby_total", 0), "pacs": p.get("pacs", []),
@@ -337,6 +344,22 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
                 "antiTier": p.get("antiTier"),
             })
 
+    # everyone still running this cycle (members and challengers, every party), for search
+    # and the address lookup: who they are and the judge's call on them
+    field = []
+    for k, p in people.items():
+        if p.get("incumbent") or not p.get("on_ballot") or p.get("primary_result") in ("LOST", "WITHDREW"):
+            continue
+        field.append({"id": k, "name": p["name"], "party": p.get("party") or "?", "state": p.get("state", ""),
+                      "chamber": (p.get("seeking") or {}).get("chamber", p.get("chamber", "house")),
+                      "district": (p.get("seeking") or {}).get("district", p.get("district")),
+                      "anti": bool(p.get("antiArms") and p.get("antiTier") in (None, "hard")),
+                      "primary_result": p.get("primary_result"), "general_result": p.get("general_result"),
+                      "primary_date": p.get("primary_date"),
+                      "bottom_line": p.get("tier_bottom_line") or p.get("tier_reason") or "",
+                      "writeup": p.get("tier_writeup", ""), "judged_model": p.get("tier_model"),
+                      "judged_at": p.get("tier_judged_at"), "tier_source": p.get("tier_source"),
+                      "description": (p.get("description") or "")[:300]})
     anti_members = [m for m in members if m["antiArms"]]
     return {
         "meta": {
@@ -379,6 +402,7 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
         },
         "members": members,
         "candidates": candidates,
+        "field": field,
         "trackaipac_endorsed": [], "rlc_endorsed": [],
         "races_2026": races, "races": races,
         "poly": poly, "fec": fec, "descriptions": descriptions,

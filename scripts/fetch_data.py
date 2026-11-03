@@ -27,7 +27,7 @@ import json, os, sys, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from aect import night, establishment, ai, roster, fec, trackers, votes, enrich, positions, markets, build, results
+from aect import discharge, night, establishment, ai, roster, fec, trackers, votes, enrich, positions, markets, build, results
 from aect.config import KEYS, CYCLE, CURRENT_CONGRESS, TODAY, GEMINI_PAUSED, XAI_ENABLED
 from aect.net import STREAMS, stream, now_iso, clean_url
 
@@ -145,6 +145,17 @@ def main():
     print("\n[4d] Outside spending")
     anti_fec = [cid for p in people.values() if p["antiArms"] for cid in p.get("fec_ids", [])]
     ie = fec.fetch_outside_spending(anti_fec)
+
+    print("\n[4e'] House discharge petitions (signers, from the Clerk)")
+    petitions = discharge.fetch()
+    house = [p for p in people.values() if p.get("incumbent") and p.get("chamber") == "house"]
+    parties = {}
+    for p in house:
+        parties[p.get("caucus") or p.get("party")] = parties.get(p.get("caucus") or p.get("party"), 0) + 1
+    majority = max(parties, key=parties.get) if parties else None
+    for p in house:
+        p["_discharge"] = petitions.get(p.get("bioguide_id"), [])
+        p["_party_holds_house"] = (p.get("caucus") or p.get("party")) == majority
 
     print("\n[4e] Reliable vs soft anti-establishment (AI over scraped dossiers)")
     establishment.run(people, ie, fec_cands, fec_totals)
