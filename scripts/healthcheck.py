@@ -67,14 +67,20 @@ if k:
               if "generateContent" in (m.get("supportedGenerationMethods") or []) and "flash" in m["name"]
               and not any(x in m["name"] for x in ("image", "tts", "audio", "live", "lite"))]
     report("Gemini models", code == 200, code, s, f"{len(models)} flash models" if code == 200 else d.get("_error"))
-    if models:
-        m = sorted(models)[-1]
+    import re as _re
+    def _v(n):
+        nums = _re.findall(r"\d+(?:\.\d+)?", n)
+        return (float(nums[0]) if nums else 0, "preview" not in n, -len(n))
+    ranked = sorted([m for m in models if not _re.search(r"omni|robotics|computer|thinking|exp|8b", m)], key=_v, reverse=True)[:6]
+    for m in ranked:                       # same order the tracker uses; first that answers wins
         code, d, s = call(f"https://generativelanguage.googleapis.com/v1beta/models/{m}:generateContent?key={k}",
                           {"contents": [{"parts": [{"text": "Reply with the word OK."}]}],
                            "generationConfig": {"maxOutputTokens": 5}})
         txt = "".join(p.get("text", "") for p in ((d.get("candidates") or [{}])[0].get("content") or {}).get("parts", [])) \
-            if code == 200 else d.get("_error", "")
-        report("Gemini chat", code == 200, code, s, f"{m}: {txt.strip()[:80]!r}")
+            if code == 200 else d.get("_error", "")[:90]
+        report("Gemini chat", code == 200, code, s, f"{m}: {txt.strip()!r}")
+        if code == 200:
+            break
 else:
     report("Gemini", None, "-", 0, "no key")
 
@@ -93,6 +99,9 @@ for name, models_url, chat_url, names in [
     pick = next((i for i in ids if any(x in i for x in ("gpt-oss-120b", "mistral-small", "llama-3.3", "qwen"))), ids[0] if ids else None)
     if pick:
         chat(name, chat_url, k, pick)
+        if rows[-1][2] == 429:               # a burst limit (another job may be using it): one retry
+            time.sleep(5)
+            chat(name, chat_url, k, pick)
 
 # OpenRouter: key status shows whether the $10 tier (1,000 free requests/day) is active
 k = key("OPENROUTER_API_KEY", "OPENROUTER_KEY")
@@ -105,9 +114,11 @@ if k:
     code, d, s = call("https://openrouter.ai/api/v1/models")
     free = [m["id"] for m in d.get("data", []) if m.get("id", "").endswith(":free")]
     report("OpenRouter models", code == 200, code, s, f"{len(free)} free models")
-    if free:
-        chat("OpenRouter", "https://openrouter.ai/api/v1/chat/completions", k, free[0],
+    for m in free[:4]:
+        chat("OpenRouter", "https://openrouter.ai/api/v1/chat/completions", k, m,
              {"HTTP-Referer": "https://lukerdavis.github.io/anti-establishment-congressional-tracker/", "X-Title": "AECT"})
+        if rows[-1][1]:
+            break
 else:
     report("OpenRouter", None, "-", 0, "no key")
 

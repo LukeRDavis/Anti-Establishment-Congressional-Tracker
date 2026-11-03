@@ -35,7 +35,7 @@ def gemini_models():
         n = m.get("name", "").split("/")[-1]
         if "generateContent" not in (m.get("supportedGenerationMethods") or []):
             continue
-        if "flash" not in n or re.search(r"lite|image|tts|audio|live|embed|thinking|exp|8b", n):
+        if "flash" not in n or re.search(r"lite|image|tts|audio|live|embed|thinking|exp|8b|omni|robotics|computer", n):
             continue
         names.append(n)
 
@@ -43,7 +43,9 @@ def gemini_models():
         nums = re.findall(r"\d+(?:\.\d+)?", n)
         return (float(nums[0]) if nums else 0, "preview" not in n, -len(n))
     names.sort(key=version, reverse=True)
-    _GEMINI_MODELS = names[:3]
+    # several, newest first: a free-tier project may have no quota on the newest models,
+    # and a model that answers 429 is skipped for the rest of the run
+    _GEMINI_MODELS = names[:6]
     stream("ai_gemini", note=f"models available: {', '.join(_GEMINI_MODELS) or 'none found'}")
     return _GEMINI_MODELS
 XAI_MODEL        = os.environ.get("AECT_XAI_MODEL", "grok-4-1-fast")
