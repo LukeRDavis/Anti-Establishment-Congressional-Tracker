@@ -54,8 +54,11 @@ def main():
         if not close or now < datetime.fromisoformat(close):
             continue                          # nothing is called before that state's polls close
         r = results.result_for(p, cache)
-        if r["general"]:
+        if r["general"] and p.get("primary_result") != "LOST":
             p["general_result"], p["general_result_source"] = r["general"], r["source"]
+        else:
+            p.pop("general_result", None)     # no posted winner (or an earlier misread): not called
+            p.pop("general_result_source", None)
 
     mk = markets.match_people({k: people[k] for k in race_ids if k in people})
     night.apply(data, mk, people, old_data=_load("data.json", {}), now=now)

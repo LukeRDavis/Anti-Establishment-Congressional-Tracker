@@ -151,7 +151,9 @@ def apply(data, mk, people, old_data=None, now=None):
         r["opponents"] = [{"name": people[k]["name"], "party": people[k].get("party"),
                            "anti": bool(people[k].get("antiArms") and people[k].get("antiTier") == "hard")}
                           for k in rivals][:4]
-        if p.get("general_result"):
+        if cdt and now < cdt or p.get("primary_result") == "LOST":
+            r.pop("general_result", None)     # polls still open / not on the November ballot
+        elif p.get("general_result"):
             r["general_result"] = p["general_result"]
             r["general_result_source"] = p.get("general_result_source")
             called += 1

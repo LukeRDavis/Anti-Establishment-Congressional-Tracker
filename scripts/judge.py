@@ -101,6 +101,10 @@ def main():
 
     print(f"Judging (free tiers first; budget {establishment.BUDGET}, ~{os.environ['AECT_AI_DEADLINE_MIN']} min)")
     establishment.run(people, ie, fec_cands, fec_totals)
+    # patch the newest committed data.json, not the copy this job started from (it may be an
+    # hour old and would erase the election-night job's odds and results)
+    from aect.gitsync import latest_json
+    data = latest_json("data.json", data)
     n = patch(data, people)
     _write("data.json", data)
     _write("candidates.json", {**_load("candidates.json", {}), "people": people})

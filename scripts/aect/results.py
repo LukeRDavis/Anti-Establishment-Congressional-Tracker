@@ -24,7 +24,7 @@ from .net import get_json, stream, load_cache, save_cache, now_iso, age_hours
 
 API = "https://en.wikipedia.org/w/api.php"
 TTL_H = 6
-PARSE_VERSION = 4          # bump when the parser changes so cached pages are re-read
+PARSE_VERSION = 5          # bump when the parser changes so cached pages are re-read
 
 
 def _norm(s):
@@ -73,7 +73,9 @@ def _boxes(text):
                           "pct": _num(_param(m.group(2), "percentage")),
                           "winner": m.group(1).lower().startswith("winning")})
         t = title.lower()
-        kind = "runoff" if "runoff" in t else "primary" if re.search(r"primar|nonpartisan|top[- ]two|jungle", t) else "general"
+        kind = ("convention" if re.search(r"convention|caucus|delegate|endorse|straw poll|assembly vote", t)
+                else "runoff" if "runoff" in t
+                else "primary" if re.search(r"primar|nonpartisan|top[- ]two|jungle", t) else "general")
         out.append({"title": title, "kind": kind, "candidates": cands, "special": "special" in t,
                     "counted": any((c["votes"] or 0) > 0 for c in cands)})
     return out

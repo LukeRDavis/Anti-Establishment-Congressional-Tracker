@@ -176,7 +176,8 @@ def main():
                                and (p["antiArms"] or p.get("incumbent"))})
 
     history = votes.congress_history(relevant)
-    old = _load("data.json", {})
+    from aect.gitsync import latest_json
+    old = latest_json("data.json", {})                  # newest copy: keeps frozen odds and fresh verdicts
     data = build.frontend_data(people, mk, fec_totals, ie, history, relevant, {}, {
         "fetched_at": now_iso(), "vacancies": vacancies,
         "ai_calls": ai.CALLS, "runtime_s": None,

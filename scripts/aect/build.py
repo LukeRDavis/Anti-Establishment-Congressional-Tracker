@@ -27,6 +27,21 @@ def _last(name):
     return parts[-1] if parts else ""
 
 
+def _polls_closed(p):
+    """A general result counts only once that state's polls have closed (election day itself
+    is not enough: Wikipedia pages can carry winner marks from other contests)."""
+    from datetime import datetime, timezone
+    from . import night
+    gd = p.get("general_date")
+    if not gd:
+        return False
+    close = (night.poll_closes(gd) or {}).get(p.get("state"))
+    now = datetime.now(timezone.utc)
+    if close:
+        return now >= datetime.fromisoformat(close)
+    return date.fromisoformat(gd) < now.date()
+
+
 def _past(iso):
     try:
         return date.fromisoformat(iso) <= TODAY
@@ -162,7 +177,7 @@ def apply_status(people, enrichment, calendar, fec_cands, results=None):
             if r["primary"] and not p.get("primary_result") and p["primary_date"] and _past(p["primary_date"]):
                 p["primary_result"] = r["primary"]
                 p["primary_result_source"] = r["source"]
-            if r["general"] and _past(p["general_date"]):
+            if r["general"] and _polls_closed(p) and p.get("primary_result") != "LOST":
                 p["general_result"] = r["general"]
                 p["general_result_source"] = r["source"]
 
