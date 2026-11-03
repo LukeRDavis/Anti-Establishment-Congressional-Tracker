@@ -18,7 +18,12 @@ No person, race, vote or bill is typed into the code. `scripts/fetch_data.py` re
    * **Statements.** Candidates without a voting record are researched by AI with web search. A position counts only if it comes with a cited source.
    * **Trackers.** TrackAIPAC and RLC data set research priority and serve as corroboration. They are never the only evidence.
    * **Money.** FEC totals and outside spending for and against each candidate.
-5. **Prediction markets**: Polymarket, Kalshi and PredictIt, matched by name and race.
+   * **Leadership defiance.** House discharge petitions and their signers, from the Clerk. Signing one while your own party holds the majority means going around your own Speaker.
+   * **The judge.** Free-tier AI models act as a realistic operative for the coalition and ask one question about every member and running candidate: a reliable anti-establishment ally, or playing political games? Each verdict comes with a bottom line and a public write-up naming the exact model and the time it ran. A conservative rule decides until the AI reaches someone.
+5. **Prediction markets**: Polymarket, Kalshi (including its who-wins series for every House and Senate race) and PredictIt, matched by name and race or by party nominee. Each race's odds are the average over the sources that have a price.
+6. **Committee rosters**: chairs, ranking members and members of the committees tracked for each plank, from the congress-legislators project.
+
+**Election night.** `scripts/election_night.py` runs every 15 minutes, but only in the window from 36 hours before to 96 hours after a general election. It refreshes the odds and the Wikipedia result boxes, freezes each race's odds one minute before its state's polls close (poll-closing times from The Green Papers), and marks races won or lost.
 
 Each run writes `pipeline_report.json`, also shown as a table in the Actions job summary, listing which data streams arrived and why any failed.
 
