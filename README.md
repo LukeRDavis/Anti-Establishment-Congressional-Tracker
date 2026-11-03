@@ -26,7 +26,17 @@ Each run writes `pipeline_report.json`, also shown as a table in the Actions job
 
 Phase 2 of AECT will involve the following:
 
-**Fiscal Responsibility or Anti-Cantillon Deficit Inflationism** Track members who oppose deficit spending and inflationary policies, with options to filter for those prioritizing welfare-focused or zero-inflation approaches.
+**Fiscal Responsibility or Anti-Cantillon Deficit Inflationism:** Track members who oppose deficit spending and inflationary policies, with options to filter for those prioritizing welfare-focused or zero-inflation approaches.
+
+* **Who counts as anti-establishment on this plank.** A member or candidate counts when they are anti-deficit AND/OR:
+  * **support zero or near-zero monetary inflation**, meaning caps on money-supply (M2) growth tied to real productivity and innovation rather than to credit expansion; AND/OR
+  * **fight loose monetary policy and its link to big banks and debt-fueled corporate expansion**: cheap money passed through bank substructures (interest on reserve balances (IORB), prime-rate corporate lending) that funds expansion corporations have not earned, buybacks propped up by debt, and the price inflation that follows.
+* **Who is establishment.** Members who back loose monetary policy and the debt-fueled corporate expansion it funds represent the corporatocratic, pro-big-bank side of monetary inflation, whatever their stated position on deficits.
+* **Framework.** The plank draws on two documents by the author. The *Greed Premium* working paper finds that corporations funding expansion with new debt (about $799B a year, bridging an 18.4-point gap between actual and self-funding margins) inject demand without matching production, which shows up as price inflation. The *Inflation Control Amendment* draft caps annual monetary inflation at 2% and at a credit-adjusted innovation rate (about 0.5% a year).
+* **How it is judged.** As with anti-arms, AI contextualizers decide from the record using general criteria, never names:
+  * votes and sponsorships on Federal Reserve policy, IORB, bank regulation, bailouts, debt ceilings and deficit spending;
+  * donors from the finance sector;
+  * how specific and consistent the candidate's statements are.
 
 **Labor & Corporate Accountability or Pro-Good Labor:** Identify legislators supporting fair labor practices, anti-monopoly policies, and opposing exploitative foreign labor models (e.g., corporate global labor arbitrage).
 
