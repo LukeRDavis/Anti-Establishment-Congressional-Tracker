@@ -8,7 +8,7 @@ themselves still come from the primary sources.
 """
 import json, os, re
 
-from .config import GEMINI_KEY, XAI_KEY, OPENROUTER_KEY, GROQ_KEY, ai_time_left
+from .config import GEMINI_KEY, XAI_KEY, OPENROUTER_KEY, GROQ_KEY, MISTRAL_KEY, CEREBRAS_KEY, ai_time_left
 from .net import post_json, get_json, stream, circuit_ok, circuit_trip, LAST_HTTP_STATUS, LAST_ERROR_BODY
 
 _GEMINI_MODELS = None
@@ -48,6 +48,13 @@ def gemini_models():
     return _GEMINI_MODELS
 XAI_MODEL        = os.environ.get("AECT_XAI_MODEL", "grok-4-1-fast")
 _COMPAT_MODELS = {}
+# OpenAI-compatible providers with free tiers: (models URL, chat URL, key)
+COMPAT = {
+    "groq":       ("https://api.groq.com/openai/v1/models", "https://api.groq.com/openai/v1/chat/completions", GROQ_KEY),
+    "cerebras":   ("https://api.cerebras.ai/v1/models", "https://api.cerebras.ai/v1/chat/completions", CEREBRAS_KEY),
+    "mistral":    ("https://api.mistral.ai/v1/models", "https://api.mistral.ai/v1/chat/completions", MISTRAL_KEY),
+    "openrouter": ("https://openrouter.ai/api/v1/models", "https://openrouter.ai/api/v1/chat/completions", OPENROUTER_KEY),
+}
 
 
 def _rank_chat_models(ids):
@@ -72,10 +79,11 @@ def compat_models(provider):
         _COMPAT_MODELS[provider] = [m for m in env.split(",") if m]
         return _COMPAT_MODELS[provider]
     ids = []
-    if provider == "groq" and GROQ_KEY:
-        d = get_json("https://api.groq.com/openai/v1/models", stream_name="ai_groq",
-                     headers={"Authorization": f"Bearer {GROQ_KEY}"})
-        ids = [m.get("id", "") for m in (d or {}).get("data", []) if m.get("active", True)]
+    models_url, _, key = COMPAT.get(provider, ("", "", ""))
+    if provider in ("groq", "cerebras", "mistral") and key:
+        d = get_json(models_url, stream_name=f"ai_{provider}", headers={"Authorization": f"Bearer {key}"})
+        ids = [m.get("id", "") for m in (d or {}).get("data", []) if m.get("active", True)
+               and not (m.get("capabilities") or {}).get("completion_chat") is False]
     elif provider == "openrouter" and OPENROUTER_KEY:
         d = get_json("https://openrouter.ai/api/v1/models", stream_name="ai_openrouter")
         for m in (d or {}).get("data", []):
@@ -88,7 +96,7 @@ def compat_models(provider):
     stream(f"ai_{provider}", note=f"models available: {', '.join(_COMPAT_MODELS[provider]) or 'none'}")
     return _COMPAT_MODELS[provider]
 
-CALLS = {"gemini": 0, "xai": 0, "openrouter": 0, "groq": 0, "failed": 0}
+CALLS = {"gemini": 0, "xai": 0, "openrouter": 0, "groq": 0, "cerebras": 0, "mistral": 0, "failed": 0}
 _DEAD_MODELS = {}   # {search_flag: {model, ...}} models that hit quota or were retired this run
 
 
@@ -98,7 +106,7 @@ def available(search=False):
     if search:
         return bool(GEMINI_KEY and circuit_ok("ai_gemini")) or bool(XAI_KEY and circuit_ok("ai_xai"))
     return any([GEMINI_KEY and circuit_ok("ai_gemini"), XAI_KEY and circuit_ok("ai_xai"),
-                OPENROUTER_KEY and circuit_ok("ai_openrouter"), GROQ_KEY and circuit_ok("ai_groq")])
+                *[k and circuit_ok(f"ai_{n}") for n, (_, _, k) in COMPAT.items()]])
 
 
 def parse_json_loose(text):
@@ -143,7 +151,7 @@ def _gemini(system, prompt, search):
         if _GEMINI_SENT >= _GEMINI_MAX:
             break
         _GEMINI_SENT += 1
-        resp = post_json(url, payload, stream_name="ai_gemini", trip_on=(401, 403))
+        resp = post_json(url, payload, stream_name="ai_gemini", trip_on=(401, 402, 403))
         if not resp:
             if LAST_HTTP_STATUS.get("ai_gemini") in (404, 429):
                 _DEAD_MODELS.setdefault(search, set()).add(model)   # quota/retired: skip it this run
@@ -203,6 +211,8 @@ def _xai(system, prompt, search):
 _LAST_CALL = {}
 # Free tiers meter tokens per minute; spacing calls avoids burning retries on 429s.
 _MIN_INTERVAL = {"groq": float(os.environ.get("AECT_GROQ_MIN_INTERVAL", "9")),
+                 "cerebras": float(os.environ.get("AECT_CEREBRAS_MIN_INTERVAL", "3")),
+                 "mistral": float(os.environ.get("AECT_MISTRAL_MIN_INTERVAL", "1.5")),
                  "openrouter": float(os.environ.get("AECT_OPENROUTER_MIN_INTERVAL", "4"))}
 
 
@@ -212,6 +222,17 @@ def _pace(provider):
     if gap > 0:
         time.sleep(gap)
     _LAST_CALL[provider] = time.time()
+
+
+def _short_wait(code, body):
+    """Seconds to wait when a 429 is a per-minute limit that clears soon (None otherwise)."""
+    if code != 429 or re.search(r"per[- ]day|daily|\bRPD\b|\bTPD\b|credits|billing", body or "", re.I):
+        return None
+    m = re.search(r"(?:try again|retry)[^0-9]{0,20}(\d+(?:\.\d+)?)\s*(ms|s\b|sec|seconds)?", body or "", re.I)
+    if m:
+        secs = float(m.group(1)) / (1000 if (m.group(2) or "").lower() == "ms" else 1)
+        return min(secs + 1, 45) if secs <= 45 else None
+    return 20 if re.search(r"per[- ]minute|\bTPM\b|\bRPM\b|rate[- ]limit", body or "", re.I) else None
 
 
 def _openai_compat(url, key, provider, system, prompt):
@@ -230,6 +251,14 @@ def _openai_compat(url, key, provider, system, prompt):
                                 {"role": "user", "content": prompt}]}
         _pace(provider)
         resp = post_json(url, payload, headers, stream_name=stream_name)
+        if not resp:
+            code, body = LAST_HTTP_STATUS.get(stream_name), LAST_ERROR_BODY.get(stream_name, "")
+            wait = _short_wait(code, body)
+            if wait:                         # a per-minute limit: wait it out once and retry this model
+                import time
+                time.sleep(wait)
+                _LAST_CALL[provider] = time.time()
+                resp = post_json(url, payload, headers, stream_name=stream_name)
         if not resp:
             code, body = LAST_HTTP_STATUS.get(stream_name), LAST_ERROR_BODY.get(stream_name, "")
             if code == 404 or (code == 400 and "tool_use_failed" not in body) or \
@@ -259,21 +288,20 @@ def ask_json(system, prompt, *, search=False, allow_ungrounded=False):
     and allow_ungrounded=True (only used when the prompt already carries the
     primary-source text the model needs), the non-search providers are tried.
     """
-    order = [("gemini", lambda: _gemini(system, prompt, search)),
-             ("xai",    lambda: _xai(system, prompt, search))]
-    if search and allow_ungrounded:
-        order += [("gemini", lambda: _gemini(system, prompt, False)),
-                  ("xai",    lambda: _xai(system, prompt, False))]
-    if not search or allow_ungrounded:
-        order += [("groq", lambda: _openai_compat(
-                      "https://api.groq.com/openai/v1/chat/completions", GROQ_KEY, "groq", system, prompt)),
-                  ("openrouter", lambda: _openai_compat(
-                      "https://openrouter.ai/api/v1/chat/completions", OPENROUTER_KEY, "openrouter",
-                      system, prompt))]
+    free = [(n, (lambda n=n, u=u, k=k: _openai_compat(u, k, n, system, prompt)))
+            for n, (_, u, k) in COMPAT.items()]
+    paid = [("gemini", lambda: _gemini(system, prompt, False)), ("xai", lambda: _xai(system, prompt, False))]
+    if search:
+        # only Gemini and xAI can search the web; free models answer only when the prompt carries the text
+        order = [("gemini", lambda: _gemini(system, prompt, True)), ("xai", lambda: _xai(system, prompt, True))]
+        if allow_ungrounded:
+            order += free + paid
+    else:
+        order = free + paid                  # free tiers first; prepaid Gemini only when they are all spent
     for name, fn in order:
         result, sources = fn()
         if result is not None:
-            if name in ("openrouter", "groq"):
+            if name in COMPAT:
                 CALLS[name] += 1
             return result, (sources or []), name
     if GEMINI_KEY and gemini_models() and all(

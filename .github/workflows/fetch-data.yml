@@ -47,9 +47,11 @@ jobs:
           XAI_API_KEY:        ${{ secrets.XAI_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           GROQ_API_KEY:       ${{ secrets.GROQ_API_KEY }}
-          # Gemini is paused until a spending cap is set. To resume, add a repository
-          # variable AECT_GEMINI_PAUSED = false (Settings → Secrets and variables → Actions → Variables).
-          AECT_GEMINI_PAUSED: ${{ vars.AECT_GEMINI_PAUSED || 'true' }}
+          MISTRAL_API_KEY:    ${{ secrets.MISTRAL_API_KEY }}
+          CEREBRAS_API_KEY:   ${{ secrets.CEREBRAS_API_KEY }}
+          # Gemini runs on prepaid credit and is used only after the free tiers are spent.
+          # To pause it, add a repository variable AECT_GEMINI_PAUSED = true.
+          AECT_GEMINI_PAUSED: ${{ vars.AECT_GEMINI_PAUSED || 'false' }}
           # Most Gemini requests a single run may send (runs are every 4h → at most 6× this per day).
           AECT_GEMINI_MAX_CALLS: ${{ vars.AECT_GEMINI_MAX_CALLS || '60' }}
           # xAI has no free tier, so it stays off unless this repository variable is set to true.
@@ -83,6 +85,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch -q origin "${GITHUB_REF_NAME}" && python scripts/merge_caches.py "origin/${GITHUB_REF_NAME}" || true
           for f in data.json candidates.json markets.json challengers.json history.json pipeline_report.json pipeline_log.txt data/cache; do
             [ -e "$f" ] && git add "$f"
           done

@@ -1,0 +1,53 @@
+name: Judge (hourly)
+
+# Spends the free AI tiers on anti-establishment reviews every hour, between the
+# 4-hourly full refreshes, and writes the verdicts into data.json.
+on:
+  schedule:
+    - cron: "30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: judge
+  cancel-in-progress: false
+
+jobs:
+  judge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Judge
+        env:
+          CONGRESS_KEY:       ${{ secrets.CONGRESS_KEY }}
+          FEC_KEY:            ${{ secrets.FEC_KEY }}
+          GEMINI_KEY:         ${{ secrets.GEMINI_KEY }}
+          GEMINI_API_KEY:     ${{ secrets.GEMINI_API_KEY }}
+          GOOGLE_API_KEY:     ${{ secrets.GOOGLE_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GROQ_API_KEY:       ${{ secrets.GROQ_API_KEY }}
+          MISTRAL_API_KEY:    ${{ secrets.MISTRAL_API_KEY }}
+          CEREBRAS_API_KEY:   ${{ secrets.CEREBRAS_API_KEY }}
+          AECT_GEMINI_PAUSED: ${{ vars.AECT_GEMINI_PAUSED || 'false' }}
+          AECT_GEMINI_MAX_CALLS: ${{ vars.AECT_GEMINI_MAX_CALLS || '60' }}
+        run: python -u scripts/judge.py
+      - name: Commit
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch -q origin "${GITHUB_REF_NAME}" && python scripts/merge_caches.py "origin/${GITHUB_REF_NAME}" || true
+          for f in data.json candidates.json data/cache; do [ -e "$f" ] && git add "$f"; done
+          git diff --cached --quiet && exit 0
+          git commit -m "chore: judge verdicts [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push && exit 0
+            sleep 5
+          done
+          exit 1
