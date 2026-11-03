@@ -211,7 +211,11 @@ def _same_person(p, cand_name):
     if not last or last[-1] not in c:
         return False
     firsts = {n[0], _norm(p["name"]).split()[0]}
-    return c[0] in firsts or any(f[:1] == c[0][:1] for f in firsts if f)
+    if c[0] in firsts or any(f[:1] == c[0][:1] for f in firsts if f):
+        return True
+    # goes by a middle name or its short form ("Warren Kenneth Paxton" on the ballot as "Ken Paxton")
+    middles = [m for m in n[1:-1] if len(m) >= 3]
+    return len(c[0]) >= 3 and any(m.startswith(c[0]) or c[0].startswith(m) for m in middles)
 
 
 def result_for(p, cache):

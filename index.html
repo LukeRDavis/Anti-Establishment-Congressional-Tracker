@@ -31,7 +31,8 @@
     @media (max-width: 700px) {
       .three-col { flex-direction: column !important; align-items: stretch !important; }
       .side-box  { width: 100% !important; }
-      .ctr-col   { width: 100% !important; }
+      .ctr-col   { width: 100% !important; order: -1; }
+      .desk-only { display: none !important; }
       svg.hemi   { width: 100% !important; height: auto !important; }
     }
   </style>
@@ -53,7 +54,7 @@ window.onunhandledrejection = function(e) {
 </script>
 <script>
 const { h, render, Fragment } = preact;
-const { useState, useEffect, useMemo } = preactHooks;
+const { useState, useEffect, useMemo, useRef } = preactHooks;
 const html = htm.bind(h);
 
 const DATA_URL        = "./data.json";
@@ -701,7 +702,7 @@ function factsWriteup(m) {
   if (f.lobby_money_trackaipac) out.push("Received " + fmtM(f.lobby_money_trackaipac) + " in contributions tracked by TrackAIPAC.");
   if (f.lobby_outside_support) out.push("Supported by " + fmtM(f.lobby_outside_support) + " in outside spending from the lobby's super PACs.");
   if (f.lobby_outside_oppose) out.push("Targeted by " + fmtM(f.lobby_outside_oppose) + " in outside spending from the lobby's super PACs.");
-  if (m.description) out.push(m.description);
+  if (m.description && !/suggest edit|sign in|⌘k/i.test(m.description)) out.push(m.description);
   return out.join(" ");
 }
 
@@ -848,16 +849,18 @@ function DetailPanel({member, fecData, polyData, bills, chamber, races}) {
     </div>`;
 }
 function HistoryTimeline({history}) {
+  // Only two kinds of change are logged: someone becomes anti-establishment (a member's
+  // record crosses the bar, or an anti-establishment candidate wins) or stops being one.
+  const BECOMES = ["pro_to_anti","elected"], STOPS = ["anti_to_pro","defeated"];
   const [filter, setFilter] = useState("all");
-  const events = (history.events||[]).filter(e =>
-    filter==="all" ? true :
-    filter==="flips" ? (e.change==="pro_to_anti"||e.change==="anti_to_pro") :
-    filter==="departures" ? e.change==="departed" : true
-  );
+  const events = (history.events||[]).filter(e => BECOMES.includes(e.change) || STOPS.includes(e.change))
+    .filter(e => filter==="all" ? true : filter==="becomes" ? BECOMES.includes(e.change) : STOPS.includes(e.change))
+    .slice().sort((a,b) => (b.detected_at||b.date||"").localeCompare(a.detected_at||a.date||""));
   const STYLE = {
-    pro_to_anti: {color:"#a78bfa",bg:"rgba(124,58,237,.13)",icon:"✦",label:"Pro → Anti-Intervention"},
-    anti_to_pro: {color:"#f87171",bg:"rgba(239,68,68,.13)", icon:"✗",label:"Anti → Pro-Arms"},
-    departed:    {color:"#9ca3af",bg:"rgba(156,163,175,.1)",icon:"○",label:"Departed"},
+    pro_to_anti: {color:"#4ade80",bg:"rgba(74,222,128,.1)",icon:"↑",label:"Became anti-establishment"},
+    elected:     {color:"#4ade80",bg:"rgba(74,222,128,.1)",icon:"★",label:"Elected · becomes anti-establishment member"},
+    anti_to_pro: {color:"#f87171",bg:"rgba(239,68,68,.12)",icon:"↓",label:"Stopped being anti-establishment"},
+    defeated:    {color:"#f87171",bg:"rgba(239,68,68,.12)",icon:"✗",label:"Defeated · leaves Congress"},
   };
   const fmtDate = iso => {
     try { return new Date(iso).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}); }
@@ -865,7 +868,7 @@ function HistoryTimeline({history}) {
   };
   if (!history.events||history.events.length===0) return html`
     <div style=${{background:"#0f1117",border:"1px solid #1e2230",borderRadius:12,padding:"16px",width:"100%",boxSizing:"border-box",textAlign:"center",color:"#374151",fontSize:10,fontFamily:FM}}>
-      ◈ Status History — populates automatically as members flip positions or depart
+      ◈ Status History — logs when someone becomes or stops being anti-establishment
     </div>`;
   return html`
     <div style=${{background:"#0f1117",border:"1px solid #1e2230",borderRadius:12,overflow:"hidden",width:"100%",boxSizing:"border-box"}}>
@@ -873,12 +876,12 @@ function HistoryTimeline({history}) {
         <div>
           <div style=${{fontSize:9,color:"#a78bfa",fontFamily:FM,letterSpacing:"0.14em",textTransform:"uppercase"}}>◈ Member Status History</div>
           <div style=${_SM}>
-            Auto-detected every 4h · ${history.events.length} events recorded
+            Logged when someone becomes or stops being anti-establishment · ${events.length} events
             ${history.last_updated?html` · ${fmtDate(history.last_updated)}`:""}
           </div>
         </div>
         <div style=${{display:"flex",gap:2,background:"#0a0c10",borderRadius:6,padding:2,border:"1px solid #1e2230"}}>
-          ${[["all","All"],["flips","Flips"],["departures","Departures"]].map(([k,l])=>html`
+          ${[["all","All"],["becomes","Becomes"],["stops","Stops"]].map(([k,l])=>html`
             <button key=${k} onClick=${()=>setFilter(k)}
               style=${{padding:"3px 8px",borderRadius:4,border:"none",cursor:"pointer",fontFamily:FM,fontSize:8,
                 background:filter===k?"#161920":"transparent",color:filter===k?"#a78bfa":"#374151"}}>
@@ -945,67 +948,141 @@ function censusLookup(address) {
     document.head.appendChild(sc);
   });
 }
-function FindMyRep({members, onHighlight}) {
-  const [addr,setAddr]=useState(""), [reps,setReps]=useState(null), [loading,setLoad]=useState(false),
-        [err,setErr]=useState(null), [where,setWhere]=useState(null);
-  const states = [...new Set(members.map(m => m.state).filter(Boolean))].sort();
-  const show = (state, district) => {
-    const out = members.map((m, i) => ({m, i})).filter(({m}) =>
-      m.state === state && (m.chamber === "senate" || district == null || (m.district || 0) === district));
-    setReps(out);
-    out.forEach(({i}) => onHighlight(i));
+function censusByPoint(lon, lat) {
+  // same Census geocoder, by coordinates (from the OpenStreetMap suggestion the visitor picked)
+  return new Promise((resolve, reject) => {
+    const cb = "_aectPt" + Date.now();
+    const sc = document.createElement("script");
+    const done = () => { delete window[cb]; sc.remove(); };
+    const t = setTimeout(() => { done(); reject(new Error("timeout")); }, 15000);
+    window[cb] = d => {
+      clearTimeout(t); done();
+      const g = (d && d.result && d.result.geographies) || {};
+      const cdKey = Object.keys(g).find(k => /Congressional District/i.test(k));
+      const cd = cdKey && g[cdKey][0];
+      const st = (g["States"] || [])[0] || {};
+      if (!st.STUSAB) return reject(new Error("no match"));
+      let dist = null;
+      if (cd) {
+        const code = Object.keys(cd).find(k => /^CD\d+$/.test(k));
+        dist = parseInt(code ? cd[code] : (cd.BASENAME || ""), 10);
+        if (isNaN(dist) || dist === 98) dist = 0;
+      }
+      resolve({state: st.STUSAB, district: dist});
+    };
+    sc.onerror = () => { clearTimeout(t); done(); reject(new Error("network")); };
+    sc.src = "https://geocoding.geo.census.gov/geocoder/geographies/coordinates?x=" + lon + "&y=" + lat
+      + "&benchmark=Public_AR_Current&vintage=Current_Current&layers=all&format=jsonp&callback=" + cb;
+    document.head.appendChild(sc);
+  });
+}
+// OpenStreetMap address suggestions (Photon, which permits type-ahead), US only
+async function osmSuggest(q) {
+  const r = await fetch("https://photon.komoot.io/api/?limit=6&lang=en&q=" + encodeURIComponent(q));
+  const d = await r.json();
+  return (d.features || []).filter(f => (f.properties || {}).countrycode === "US").map(f => {
+    const p = f.properties;
+    const line = [p.housenumber && p.street ? p.housenumber + " " + p.street : (p.name || p.street),
+                  p.city || p.town || p.village || p.county, p.state, p.postcode].filter(Boolean).join(", ");
+    return {label: line, lon: f.geometry.coordinates[0], lat: f.geometry.coordinates[1]};
+  });
+}
+
+// Everyone on this seat's ballot: the general election on top once primaries are over,
+// the primary results below a divider. Each person carries the tracker's call on them.
+function BallotFor({state, district, members, onSelect}) {
+  const field = window._aectField || [];
+  const seatMembers = members.filter(m => m.state === state && (m.chamber === "senate" || (m.district || 0) === (district || 0)));
+  const running = m => !["RETIRING","RETIRED","RESIGNED","DEFEATED"].includes(m.ps) && !m.not_up_this_cycle;
+  const races = [{key:"house", title: state + "-" + (district || "AL") + " · House", ch:"house"},
+                 {key:"senate", title: state + " · Senate", ch:"senate"}];
+  const Person = ({p, note}) => {
+    const col = p.antiArms ? (p.party === "R" ? COL.antiR : COL.antiD) : (p.party === "R" ? COL.estR : p.party === "D" ? COL.estD : "#9ca3af");
+    return html`<div onClick=${() => onSelect && onSelect(p)} style=${{flex:"1 1 220px",background:"#12151c",borderRadius:8,border:"1px solid "+col+"40",padding:"7px 9px",cursor:"pointer"}}>
+      <div style=${{display:"flex",justifyContent:"space-between",gap:6}}>
+        <span style=${{fontSize:11,fontWeight:700,color:"#f0ebe0"}}>${p.name} <span style=${{fontSize:8,color:"#6b7280",fontFamily:FM,fontWeight:400}}>${p.party}${p._candidate ? "" : " · incumbent"}</span></span>
+        <span style=${{fontSize:8,fontFamily:FM,color:p.antiArms?col:"#6b7280",whiteSpace:"nowrap"}}>${p.antiArms ? "◈ anti-establishment" : "establishment"}</span>
+      </div>
+      ${note ? html`<div style=${{fontSize:8,fontFamily:FM,color:"#9ca3af",marginTop:2}}>${note}</div>` : null}
+      <div style=${{fontSize:9,color:"#6b7280",lineHeight:1.45,marginTop:3}}>${(bottomLine(p) || "").slice(0,170)}</div>
+    </div>`;
+  };
+  return html`<div style=${{marginTop:9}}>
+    ${seatMembers.length ? html`<div style=${{fontSize:8,fontFamily:FM,color:"#6b7280",marginBottom:4,textTransform:"uppercase",letterSpacing:"0.1em"}}>Representing you now</div>
+      <div style=${{display:"flex",flexWrap:"wrap",gap:7,marginBottom:10}}>${seatMembers.map((m,i) => html`<${Person} key=${i} p=${m}/>`)}</div>` : null}
+    ${races.map(r => {
+      const inSeat = c => c.state === state && c.chamber === r.ch && (r.ch === "senate" || (c.district || 0) === (district || 0));
+      const incs = seatMembers.filter(m => m.chamber === r.ch && running(m));
+      const cands = field.filter(inSeat);
+      const general = [...incs.filter(m => m.primary_result !== "LOST"), ...cands.filter(c => c.primary_result === "WON")];
+      const primary = cands.filter(c => c.primary_result === "WON" || c.primary_result === "LOST");
+      const upcoming = cands.filter(c => !c.primary_result);
+      if (!general.length && !primary.length && !upcoming.length) return null;
+      const genPhase = general.length > 0;
+      return html`<div key=${r.key} style=${{marginBottom:10}}>
+        <div style=${{fontSize:10,fontWeight:700,color:"#f0ebe0",marginBottom:5}}>${r.title}</div>
+        ${genPhase ? html`
+          <div style=${{fontSize:8,fontFamily:FM,color:"#fbbf24",marginBottom:4,textTransform:"uppercase",letterSpacing:"0.1em"}}>General election · ${GENERAL_DATE()}</div>
+          <div style=${{display:"flex",flexWrap:"wrap",gap:7}}>${general.map((p,i) => html`<${Person} key=${i} p=${p}
+            note=${p.general_result ? (p.general_result === "WON" ? "WON the general" : "LOST the general") : ""}/>`)}</div>
+          ${general.length && general.every(p => !p.antiArms) ? html`<div style=${{fontSize:9,color:"#6b7280",marginTop:4}}>No anti-establishment candidate in this race. Read each write-up to decide.</div>` : null}` :
+          html`<div style=${{fontSize:8,fontFamily:FM,color:"#a78bfa",marginBottom:4,textTransform:"uppercase",letterSpacing:"0.1em"}}>Primary</div>
+          <div style=${{display:"flex",flexWrap:"wrap",gap:7}}>${upcoming.map((p,i) => html`<${Person} key=${i} p=${p} note=${p.primary_date ? "primary " + p.primary_date : ""}/>`)}</div>`}
+        ${genPhase && primary.length ? html`
+          <div style=${{borderTop:"1px dashed #1e2230",margin:"9px 0 6px"}}/>
+          <div style=${{fontSize:8,fontFamily:FM,color:"#6b7280",marginBottom:4,textTransform:"uppercase",letterSpacing:"0.1em"}}>Primary results</div>
+          <div style=${{display:"flex",flexWrap:"wrap",gap:7}}>${primary.map((p,i) => html`<${Person} key=${i} p=${p}
+            note=${p.primary_result === "WON" ? "Won the primary" : "Lost the primary"}/>`)}</div>` : null}
+      </div>`;
+    })}
+  </div>`;
+}
+
+function FindMyRep({members, onSelect}) {
+  const [addr,setAddr]=useState(""), [sugs,setSugs]=useState([]), [loading,setLoad]=useState(false),
+        [err,setErr]=useState(null), [seat,setSeat]=useState(null);
+  const timer = useRef(null);
+  const onType = v => {
+    setAddr(v);
+    clearTimeout(timer.current);
+    if (v.trim().length < 4 || /^[A-Za-z]{2}$/.test(v.trim())) { setSugs([]); return; }
+    timer.current = setTimeout(() => osmSuggest(v.trim()).then(setSugs).catch(() => setSugs([])), 300);
+  };
+  const pick = async sg => {
+    setAddr(sg.label); setSugs([]); setLoad(true); setErr(null);
+    try { const g = await censusByPoint(sg.lon, sg.lat); setSeat({...g, label: sg.label}); }
+    catch { setErr("Couldn't place that address in a congressional district."); }
+    setLoad(false);
   };
   const lookup = async () => {
     const q = addr.trim();
     if (!q) return;
-    setLoad(true); setErr(null); setReps(null); setWhere(null);
-    if (/^[A-Za-z]{2}$/.test(q)) {                      // a bare state code
-      setWhere(q.toUpperCase()); show(q.toUpperCase(), null); setLoad(false); return;
-    }
-    try {
-      const g = await censusLookup(q);
-      setWhere(g.state + (g.district != null ? "-" + (g.district || "AL") : "") + " · " + g.matched);
-      show(g.state, g.district);
-    } catch { setErr("Address not found. Try a full US street address, or pick a state below."); }
+    setLoad(true); setErr(null); setSugs([]);
+    if (/^[A-Za-z]{2}$/.test(q)) { setSeat({state: q.toUpperCase(), district: null, label: q.toUpperCase()}); setLoad(false); return; }
+    try { const g = await censusLookup(q); setSeat({state: g.state, district: g.district, label: g.matched}); }
+    catch { setErr("Address not found. Pick a suggestion, or try a full US street address."); }
     setLoad(false);
   };
-  const pc = p=>p==="D"?"#1e40af":p==="R"?"#991b1b":"#9ca3af";
   return html`
     <div style=${{background:"#0f1117",border:"1px solid #1e2230",borderRadius:12,padding:"11px 13px",width:"100%",boxSizing:"border-box"}}>
-      <div style=${{fontSize:9,color:"#fbbf24",fontFamily:FM,letterSpacing:"0.12em",marginBottom:6,textTransform:"uppercase"}}>⊙ Find My Representatives · US Census geocoder</div>
-      <div style=${{display:"flex",gap:5,flexWrap:"wrap"}}>
-        <input value=${addr} onInput=${e=>setAddr(e.target.value)} onKeyDown=${e=>e.key==="Enter"&&lookup()}
-          placeholder="Street address, or a state code…"
-          style=${{flex:"1 1 180px",minWidth:0,background:"#090b0e",border:"1px solid #1e2230",borderRadius:7,padding:"5px 9px",color:"#e8e4dc",fontSize:11,fontFamily:FM,outline:"none"}}/>
-        <select onChange=${e=>{ if(e.target.value){ setErr(null); setWhere(e.target.value); show(e.target.value,null);} }}
-          style=${{background:"#090b0e",border:"1px solid #1e2230",borderRadius:7,color:"#e8e4dc",fontSize:11,fontFamily:FM}}>
-          <option value="">State…</option>
-          ${states.map(st=>html`<option key=${st} value=${st}>${st}</option>`)}
-        </select>
+      <div style=${{fontSize:9,color:"#fbbf24",fontFamily:FM,letterSpacing:"0.12em",marginBottom:6,textTransform:"uppercase"}}>⊙ Who's on my ballot? · your members and candidates</div>
+      <div style=${{position:"relative",display:"flex",gap:5}}>
+        <input value=${addr} onInput=${e=>onType(e.target.value)} onKeyDown=${e=>e.key==="Enter"&&lookup()}
+          placeholder="Start typing your address…" autocomplete="off"
+          style=${{flex:1,minWidth:0,background:"#090b0e",border:"1px solid #1e2230",borderRadius:7,padding:"7px 9px",color:"#e8e4dc",fontSize:12,fontFamily:FM,outline:"none"}}/>
         <button onClick=${lookup} disabled=${loading}
           style=${{padding:"5px 12px",borderRadius:7,border:"none",cursor:"pointer",background:loading?"#1a1d27":"#fbbf24",color:"#0a0c10",fontFamily:FM,fontSize:11,fontWeight:700}}>
           ${loading?"…":"Look up"}
         </button>
+        ${sugs.length ? html`<div style=${{position:"absolute",top:"100%",left:0,right:70,zIndex:20,background:"#0b0d12",border:"1px solid #1e2230",borderRadius:7,marginTop:3,overflow:"hidden"}}>
+          ${sugs.map((sg,i) => html`<div key=${i} onClick=${() => pick(sg)}
+            style=${{padding:"7px 9px",fontSize:11,color:"#d1d5db",cursor:"pointer",borderTop:i?"1px solid #1a1d27":"none"}}>${sg.label}</div>`)}
+          <div style=${{padding:"3px 9px",fontSize:7,color:"#4b5563",fontFamily:FM}}>Suggestions © OpenStreetMap contributors</div>
+        </div>` : null}
       </div>
       ${err?html`<div style=${{fontSize:9,color:"#f87171",marginTop:4,fontFamily:FM}}>${err}</div>`:null}
-      ${where?html`<div style=${{fontSize:8,color:"#4b5563",marginTop:4,fontFamily:FM}}>${where}</div>`:null}
-      ${reps&&reps.length===0?html`<div style=${{fontSize:9,color:"#6b7280",marginTop:4,fontFamily:FM}}>No sitting member in this chamber for that location (the seat may be vacant).</div>`:null}
-      ${reps&&reps.length?html`
-        <div style=${{marginTop:8,display:"flex",flexWrap:"wrap",gap:7}}>
-          ${reps.map(({m},i)=>html`
-            <div key=${i} style=${{flex:"1 1 170px",background:"#12151c",borderRadius:8,border:"1px solid "+pc(m.party)+"22",padding:"7px 9px"}}>
-              <div style=${{fontSize:11,fontWeight:700,color:"#f0ebe0",lineHeight:1.2}}>${m.name}</div>
-              <div style=${{fontSize:8,color:"#374151",fontFamily:FM,marginBottom:3}}>
-                ${m.chamber==="senate"?"Senator, "+m.state:"Representative, "+m.state+"-"+(m.district||"AL")}</div>
-              <div style=${{display:"flex",gap:5,flexWrap:"wrap"}}>
-                <span style=${{fontSize:8,padding:"1px 5px",borderRadius:3,background:pc(m.party)+"18",color:pc(m.party),fontFamily:FM}}>${m.party}</span>
-                <span style=${{fontSize:8,padding:"1px 5px",borderRadius:3,fontFamily:FM,
-                  background:m.antiArms?"#4ade8018":"#1a1d27",color:m.antiArms?"#4ade80":"#6b7280"}}>
-                  ${m.antiArms?"anti-interventionist":"not anti-interventionist"}</span>
-                ${m.website?html`<a href=${m.website} target="_blank" rel="noreferrer" style=${{fontSize:8,color:"#4b9cd3",fontFamily:FM,textDecoration:"none"}}>↗ Web</a>`:null}
-              </div>
-            </div>`)}
-        </div>`:null}
+      ${seat?html`<div style=${{fontSize:8,color:"#4b5563",marginTop:4,fontFamily:FM}}>${seat.state}${seat.district!=null?"-"+(seat.district||"AL"):""} · ${seat.label}</div>`:null}
+      ${seat?html`<${BallotFor} state=${seat.state} district=${seat.district} members=${members} onSelect=${onSelect}/>`:null}
     </div>`;
 }
 const _SP={width:"100%",maxWidth:610};
@@ -1213,6 +1290,10 @@ function useData() {
 
         window._aectMeta = d.meta || {};
         window._aectCommittees = d.committees || [];
+        // every candidate still running (all parties), for search and the ballot lookup
+        window._aectField = (d.field || []).map(c => ({...c, antiArms: !!c.anti, _candidate: true,
+          ps: c.general_result === "WON" ? "ELECTED" : c.general_result === "LOST" ? "DEFEATED"
+            : c.primary_result === "WON" ? "WON" : "UPCOMING"}));
         let memberList = d.members || [];
         // The pipeline decides (official roll calls, FEC, trackers, AI review of sources).
         // Only its "hard" verdict is anti-establishment; everything else is establishment.
@@ -1731,6 +1812,91 @@ function CandidateTimeline({allMembers, challengers, racesData, polyData, descri
     </div>`;
 }
 
+// ── Search over sitting members and every running candidate ─────────────────
+function SearchBox({members, onPick, inline}) {
+  const [q, setQ] = useState(""), [open, setOpen] = useState(false);
+  const field = window._aectField || [];
+  const norm = x => (x || "").normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const nq = norm(q.trim());
+  const hits = nq.length < 2 ? [] : [
+    ...members.filter(m => norm(m.name).includes(nq)).map(m => ({...m, _kind: "member"})),
+    ...field.filter(c => norm(c.name).includes(nq)).map(c => ({...c, _kind: "candidate"})),
+  ].slice(0, 9);
+  const seat = p => p.chamber === "senate" ? p.state + " Sen." : p.state + "-" + (p.district || "AL");
+  return html`<div style=${inline ? {position:"relative",zIndex:15,margin:"6px 6px 0"} : {position:"absolute",top:6,right:6,zIndex:15,width:"min(230px, 60%)"}}>
+    <input value=${q} placeholder="Search members & candidates…" onInput=${e => { setQ(e.target.value); setOpen(true); }}
+      onFocus=${() => setOpen(true)} onBlur=${() => setTimeout(() => setOpen(false), 180)}
+      style=${{width:"100%",boxSizing:"border-box",background:"#090b0eee",border:"1px solid #252830",borderRadius:7,padding:"5px 8px",color:"#e8e4dc",fontSize:10,fontFamily:FM,outline:"none"}}/>
+    ${open && hits.length ? html`<div style=${{position:inline?"absolute":"static",left:0,right:0,marginTop:3,background:"#0b0d12",border:"1px solid #1e2230",borderRadius:7,overflow:"hidden"}}>
+      ${hits.map((h,i) => html`<div key=${i} onMouseDown=${() => { onPick(h); setQ(""); setOpen(false); }}
+        style=${{padding:"6px 8px",cursor:"pointer",borderTop:i?"1px solid #1a1d27":"none",display:"flex",justifyContent:"space-between",gap:6}}>
+        <span style=${{fontSize:10,color:"#e5e7eb"}}>${h.name} <span style=${{fontSize:8,color:"#6b7280",fontFamily:FM}}>${h.party} · ${seat(h)}</span></span>
+        <span style=${{fontSize:8,fontFamily:FM,color:h.antiArms?(h.party==="R"?COL.antiR:COL.antiD):"#4b5563",whiteSpace:"nowrap"}}>
+          ${h._kind === "member" ? "member" : h.primary_result === "LOST" ? "lost primary" : "candidate"}${h.antiArms ? " ◈" : ""}</span>
+      </div>`)}
+    </div>` : null}
+  </div>`;
+}
+
+// ── Pinch to zoom (and drag when zoomed) on the hemicycle, by changing the SVG viewBox ──
+function usePinchZoom(w, h) {
+  const [vb, setVb] = useState([0, 0, w, h]);
+  const pts = useRef(new Map()), start = useRef(null);
+  useEffect(() => setVb([0, 0, w, h]), [w, h]);
+  const toSvg = (el, x, y, box) => {
+    const r = el.getBoundingClientRect();
+    return [box[0] + (x - r.left) / r.width * box[2], box[1] + (y - r.top) / r.height * box[3]];
+  };
+  const clamp = b => {
+    const bw = Math.min(w, Math.max(w / 5, b[2])), bh = bw * h / w;
+    return [Math.max(0, Math.min(w - bw, b[0])), Math.max(0, Math.min(h - bh, b[1])), bw, bh];
+  };
+  const handlers = {
+    onPointerDown: e => {
+      pts.current.set(e.pointerId, [e.clientX, e.clientY]);
+      start.current = {box: vb, pts: new Map(pts.current), moved: false};
+    },
+    onPointerMove: e => {
+      if (!pts.current.has(e.pointerId)) return;
+      pts.current.set(e.pointerId, [e.clientX, e.clientY]);
+      const st = start.current, el = e.currentTarget;
+      if (!st) return;
+      const now = [...pts.current.values()], was = [...st.pts.values()];
+      if (now.length >= 2 && was.length >= 2) {
+        const d = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]);
+        const k = d(was[0], was[1]) / Math.max(1, d(now[0], now[1]));
+        const mid = [(was[0][0] + was[1][0]) / 2, (was[0][1] + was[1][1]) / 2];
+        const c = toSvg(el, mid[0], mid[1], st.box);
+        const bw = st.box[2] * k, bh = st.box[3] * k;
+        setVb(clamp([c[0] - (c[0] - st.box[0]) * k, c[1] - (c[1] - st.box[1]) * k, bw, bh]));
+        st.moved = true;
+      } else if (now.length === 1 && st.box[2] < w - 0.5) {
+        const r = el.getBoundingClientRect();
+        const dx = (now[0][0] - was[0][0]) / r.width * st.box[2], dy = (now[0][1] - was[0][1]) / r.height * st.box[3];
+        if (Math.abs(dx) + Math.abs(dy) > 2) { setVb(clamp([st.box[0] - dx, st.box[1] - dy, st.box[2], st.box[3]])); st.moved = true; }
+      }
+    },
+    onPointerUp: e => {
+      if (start.current && start.current.moved) { window._aectDragged = true; setTimeout(() => { window._aectDragged = false; }, 80); }
+      pts.current.delete(e.pointerId); start.current = pts.current.size ? {box: vb, pts: new Map(pts.current)} : null; },
+    onPointerCancel: e => { pts.current.delete(e.pointerId); start.current = null; },
+    onWheel: e => {
+      if (!e.ctrlKey && !e.metaKey) return;          // trackpad pinch / ctrl+wheel
+      e.preventDefault();
+      const c = toSvg(e.currentTarget, e.clientX, e.clientY, vb), k = Math.exp(e.deltaY * 0.01);
+      setVb(clamp([c[0] - (c[0] - vb[0]) * k, c[1] - (c[1] - vb[1]) * k, vb[2] * k, vb[3] * k]));
+    },
+  };
+  return {vb, zoomed: vb[2] < w - 0.5, reset: () => setVb([0, 0, w, h]), handlers};
+}
+
+function useIsPhone() {
+  const q = "(max-width: 700px)";
+  const [m, setM] = useState(() => typeof window !== "undefined" && window.matchMedia(q).matches);
+  useEffect(() => { const mq = window.matchMedia(q), f = () => setM(mq.matches); mq.addEventListener("change", f); return () => mq.removeEventListener("change", f); }, []);
+  return m;
+}
+
 function App() {
   const [chamber,  setChamber]  = useState("house");
   const [selected, setSelected] = useState(null);
@@ -1757,13 +1923,20 @@ function App() {
   }, [selected, chamber]);
 
   const svgW=610, svgH=300, cx=svgW/2, cy=svgH-14;
+  const zoom = usePinchZoom(svgW, svgH);
+  const phone = useIsPhone();
+  const pickSearch = p => {
+    if (p._kind === "member" && p.chamber && p.chamber !== chamber) setChamber(p.chamber);
+    setShowTimeline(false); setShowAbout(false); setSelected(p.name);
+  };
   const positions = useMemo(()=>computeHemicycle(allMembers,chamber,cx,cy),
     [allMembers, chamber, cx, cy]);
 
   const dotR      = chamber==="house" ? 4 : 6;
   const ch        = chamber==="house" ? "house" : "senate";
   const chMem     = allMembers.filter(m => m.chamber === ch);
-  const selMember = selected ? allMembers.find(m => m.name === selected) : null;
+  const selMember = selected ? (allMembers.find(m => m.name === selected)
+                               || (window._aectField || []).find(c => c.name === selected) || null) : null;
   const sideR     = allMembers.filter(m=>m.antiArms&&side(m)==="R"&&m.chamber===ch);
   const sideD     = allMembers.filter(m=>m.antiArms&&side(m)==="D"&&m.chamber===ch);
   const challR    = challengers.filter(c=>c.party==="R"&&c.chamber===ch);
@@ -1884,8 +2057,11 @@ function App() {
         <div class="ctr-col" style=${{display:"flex",flexDirection:"column",gap:7,alignItems:"center",flex:1,minWidth:0}}>
 
           <!-- Hemicycle SVG -->
-          <div style=${{background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,overflow:"hidden",width:"100%",maxWidth:610}}>
-            <svg class="hemi" width=${svgW} height=${svgH} viewBox=${"0 0 "+svgW+" "+svgH} style=${{display:"block",width:"100%",height:"auto"}}>
+          <div style=${{position:"relative",background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,overflow:"visible",width:"100%",maxWidth:610}}>
+            <${SearchBox} members=${allMembers} onPick=${pickSearch} inline=${phone}/>
+            ${zoom.zoomed ? html`<button onClick=${zoom.reset} style=${{position:"absolute",left:6,top:6,zIndex:15,padding:"3px 8px",borderRadius:6,border:"1px solid #252830",background:"#090b0eee",color:"#9ca3af",fontFamily:FM,fontSize:9,cursor:"pointer"}}>⤢ reset zoom</button>` : null}
+            <svg class="hemi" width=${svgW} height=${svgH} viewBox=${zoom.vb.join(" ")} ...${zoom.handlers}
+              style=${{display:"block",width:"100%",height:"auto",borderRadius:13,touchAction:zoom.zoomed?"none":"pan-y"}}>
               ${Array.from({length:chamber==="senate"?4:9},(_,i)=>(chamber==="senate"?80:52)+i*(chamber==="senate"?28:22)).map((r,i)=>
                 html`<path key=${i} d=${"M "+(cx-r)+" "+cy+" A "+r+" "+r+" 0 0 1 "+(cx+r)+" "+cy} fill="none" stroke="#111419" stroke-width="1"/>`
               )}
@@ -1906,11 +2082,10 @@ function App() {
                     fill=${dimDot?"#111419":color} opacity=${dimDot?0.12:leaving?0.35:1}
                     stroke=${isSel?"#fff":"none"} stroke-width="1.5"
                     style=${{cursor:"pointer", transition:"r 0.1s"}}
-                    onClick=${()=>{setSelected(selected===pos.name?null:pos.name);setHovered(pos.name);}}
+                    onClick=${()=>{ if (window._aectDragged) return; setSelected(selected===pos.name?null:pos.name);setHovered(pos.name);}}
                     onMouseEnter=${()=>setHovered(pos.name)}
                     onMouseLeave=${()=>setHovered(null)}
-                    onTouchStart=${(e)=>{e.preventDefault();setHovered(pos.name);setSelected(selected===pos.name?null:pos.name);}}
-                    onTouchEnd=${()=>setTimeout(()=>setHovered(null),1200)}/>
+                    />
                   ${isHov?(()=>{
                     const bl = bottomLine(pos), line = bl.length > 64 ? bl.slice(0,63) + "…" : bl;
                     const w = Math.max(pos.name.length*4.6+10, line.length*3.55+10);
@@ -1937,10 +2112,15 @@ function App() {
             </svg>
           </div>
 
-          <!-- Detail panel -->
-          <div style=${{width:"100%",maxWidth:610,background:"#0f1117",border:"1px solid #1a1d27",borderRadius:11,padding:"10px 13px",minHeight:70}}>
+          <!-- Detail panel: beside the chart on a computer, full screen on a phone -->
+          ${phone ? (selMember ? html`<div style=${{position:"fixed",inset:0,zIndex:100,background:"#0a0c10",overflowY:"auto",padding:"46px 14px 30px"}}>
+              <button onClick=${() => setSelected(null)} aria-label="Close"
+                style=${{position:"fixed",top:10,right:12,zIndex:101,width:34,height:34,borderRadius:17,border:"1px solid #252830",background:"#12151c",color:"#e5e7eb",fontSize:18,cursor:"pointer"}}>×</button>
+              <${DetailPanel} member=${selMember} fecData=${fecData} polyData=${polyData} bills=${bills} chamber=${chamber} races=${races}/>
+            </div>` : null)
+          : html`<div style=${{width:"100%",maxWidth:610,background:"#0f1117",border:"1px solid #1a1d27",borderRadius:11,padding:"10px 13px",minHeight:70}}>
             <${DetailPanel} member=${selMember} fecData=${fecData} polyData=${polyData} bills=${bills} chamber=${chamber} races=${races}/>
-          </div>
+          </div>`}
 
           <!-- Progress bars -->
           <div style=${_SP}>
@@ -1959,7 +2139,7 @@ function App() {
 
           <!-- Find My Rep -->
           <div style=${_SP}>
-            <${FindMyRep} members=${chMem} onHighlight=${setSelected}/>
+            <${FindMyRep} members=${allMembers} onSelect=${p => { setSelected(p.name); window.scrollTo({top:0,behavior:"smooth"}); }}/>
           </div>
         </div>
 

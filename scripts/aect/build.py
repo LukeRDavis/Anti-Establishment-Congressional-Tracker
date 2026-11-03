@@ -268,10 +268,15 @@ def _shown_votes(rec, n=12):
     return (focus + other)[:n]
 
 
+def _clean_desc(d):
+    from .enrich import NAV_JUNK
+    return "" if not d or NAV_JUNK.search(d) else d
+
+
 def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, streams, meta_extra):
     members, candidates, races, poly, fec, descriptions = [], [], [], {}, {}, {}
     for k, p in people.items():
-        if p.get("description"):
+        if _clean_desc(p.get("description")):
             descriptions[p["name"]] = p["description"]
         bm = _best_market(p, markets.get(k))
         if bm:
@@ -348,18 +353,18 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
     # and the address lookup: who they are and the judge's call on them
     field = []
     for k, p in people.items():
-        if p.get("incumbent") or not p.get("on_ballot") or p.get("primary_result") in ("LOST", "WITHDREW"):
-            continue
+        if p.get("incumbent") or not p.get("on_ballot") or p.get("primary_result") == "WITHDREW":
+            continue                          # primary losers stay: the lookup shows primary results
         field.append({"id": k, "name": p["name"], "party": p.get("party") or "?", "state": p.get("state", ""),
                       "chamber": (p.get("seeking") or {}).get("chamber", p.get("chamber", "house")),
                       "district": (p.get("seeking") or {}).get("district", p.get("district")),
                       "anti": bool(p.get("antiArms") and p.get("antiTier") in (None, "hard")),
                       "primary_result": p.get("primary_result"), "general_result": p.get("general_result"),
                       "primary_date": p.get("primary_date"),
-                      "bottom_line": p.get("tier_bottom_line") or p.get("tier_reason") or "",
+                      "bottom_line": p.get("tier_bottom_line") or "", "tier_reason": p.get("tier_reason") or "",
                       "writeup": p.get("tier_writeup", ""), "judged_model": p.get("tier_model"),
                       "judged_at": p.get("tier_judged_at"), "tier_source": p.get("tier_source"),
-                      "description": (p.get("description") or "")[:300]})
+                      "description": _clean_desc(p.get("description"))[:300]})
     anti_members = [m for m in members if m["antiArms"]]
     return {
         "meta": {

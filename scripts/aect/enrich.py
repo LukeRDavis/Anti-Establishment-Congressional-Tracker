@@ -225,13 +225,17 @@ def ballotpedia(name, state, chamber):
     return {}
 
 
+# page chrome that sometimes lands inside a <p> (menus, table of contents)
+NAV_JUNK = re.compile(r"suggest edit|sign in|⌘k|\bcontents\b.{0,40}\b(?:early life|career|biography)", re.I)
+
+
 def grokipedia(name):
     html = get_text(GROKIPEDIA.format(slug=urllib.parse.quote(_slug(name))), stream_name="grokipedia",
                     retries=1, headers={"Accept": "text/html"})
     if not html:
         return {}
     paras = [strip_html(p) for p in re.findall(r"<p[^>]*>(.*?)</p>", html, re.S | re.I)]
-    paras = [p for p in paras if len(p) > 80 and "cookie" not in p.lower()]
+    paras = [p for p in paras if len(p) > 80 and "cookie" not in p.lower() and not NAV_JUNK.search(p)]
     return {"grokipedia_description": " ".join(paras[:2])[:600]} if paras else {}
 
 

@@ -54,18 +54,24 @@ def _load(name, default):
 
 def history_events(old_members, new_members):
     hist = _load("history.json", {"events": []})
+    if hist.get("schema") != 2:
+        # events logged before 'counted anti-establishment' replaced soft/hard tiers used a
+        # different definition; keep them on file, out of the becomes/stops log
+        hist["archived_events"] = hist.get("archived_events", []) + hist.get("events", [])
+        hist["events"], hist["schema"] = [], 2
     events = hist.get("events", [])
     old = {m["name"]: m for m in old_members}
     today = TODAY.isoformat()
     added = 0
     for m in new_members:
         o = old.get(m["name"])
-        if o is None or bool(o.get("antiArms")) == bool(m.get("antiArms")):
+        counted = lambda x: bool(x.get("antiArms")) and x.get("antiTier") in (None, "hard")
+        if o is None or counted(o) == counted(m):
             continue
         events.append({"date": today, "detected_at": now_iso(), "member": m["name"],
                        "party": m["party"], "state": m["state"], "chamber": m["chamber"],
-                       "change": "pro_to_anti" if m["antiArms"] else "anti_to_pro",
-                       "trigger": (m.get("evidence") or ["status changed"])[0][:200],
+                       "change": "pro_to_anti" if counted(m) else "anti_to_pro",
+                       "trigger": (m.get("bottom_line") or m.get("tier_reason") or "status changed")[:200],
                        "source": m.get("antiArmsBasis") or "pipeline"})
         added += 1
     hist["events"] = events[-3000:]
