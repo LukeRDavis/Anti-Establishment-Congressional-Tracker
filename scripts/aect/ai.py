@@ -98,6 +98,10 @@ def compat_models(provider):
             if free and (m.get("context_length") or 0) >= 16000:
                 ids.append(m["id"])
     _COMPAT_MODELS[provider] = _rank_chat_models(ids)[:4]
+    if provider == "openrouter" and _COMPAT_MODELS[provider]:
+        # OpenRouter's free router: when the strongest free models are busy, it picks any free
+        # model able to handle the request (no charge); the response names the model it chose
+        _COMPAT_MODELS[provider].append("openrouter/free")
     stream(f"ai_{provider}", note=f"models available: {', '.join(_COMPAT_MODELS[provider]) or 'none'}")
     return _COMPAT_MODELS[provider]
 
@@ -278,7 +282,7 @@ def _openai_compat(url, key, provider, system, prompt):
         try:
             out = parse_json_loose(resp["choices"][0]["message"]["content"])
             if out is not None:
-                LAST["model"] = model
+                LAST["model"] = resp.get("model") or model   # a router reports the model it actually used
                 return out, []
         except Exception:
             continue
