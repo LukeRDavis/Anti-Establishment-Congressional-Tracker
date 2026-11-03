@@ -1,15 +1,15 @@
 {
- "run_at": "2026-11-03T09:25:40.300378+00:00",
- "runtime_s": 1889,
+ "run_at": "2026-11-03T12:16:04.866856+00:00",
+ "runtime_s": 1698,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
   "gemini": 0,
   "xai": 0,
   "openrouter": 0,
-  "groq": 1,
+  "groq": 2,
   "cerebras": 0,
-  "mistral": 39,
+  "mistral": 38,
   "failed": 1
  },
  "streams": {
@@ -217,13 +217,13 @@
     "circuit opened: only empty responses (blocked for this host)"
    ],
    "notes": [
-    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Tina_Shah | 200 0B '' https://ballotpedia.org/Bale_Dalton | 200 0B '' https://ballotpedia.org/Daniel_Keenan | 200 0B '' https://ballotpedia.org/Shannon_Bird | 200 0B '' https://ballotpedia.org/Ralph_Alvarado | 200 0B '' https://ballotpedia.org/James_Kingston"
+    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Katy_Tyndell | 200 0B '' https://ballotpedia.org/Jerrod_Sessler | 200 0B '' https://ballotpedia.org/Joseph_Cooney | 200 0B '' https://ballotpedia.org/John_Vincent | 200 0B '' https://ballotpedia.org/Carleigh_Beriont | 200 0B '' https://ballotpedia.org/Thomas_Willis"
    ]
   },
   "wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 512,
+   "requests": 594,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -231,7 +231,7 @@
   "grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 131,
+   "requests": 172,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -249,11 +249,11 @@
   "wikipedia_results": {
    "ok": true,
    "count": 85,
-   "requests": 71,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "85 state election pages (39 refreshed) \u00b7 1251 result boxes"
+    "85 state election pages (0 refreshed) \u00b7 1251 result boxes"
    ]
   },
   "fec_websites": {
@@ -270,7 +270,7 @@
    "ok": null,
    "count": 0,
    "requests": 73,
-   "failures": 44,
+   "failures": 35,
    "errors": [
     "HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA",
     "URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/",
@@ -328,26 +328,10 @@
     "cached"
    ]
   },
-  "dossier_news_google": {
-   "ok": null,
-   "count": 0,
-   "requests": 174,
-   "failures": 0,
-   "errors": [],
-   "notes": []
-  },
-  "dossier_news_bing": {
-   "ok": null,
-   "count": 0,
-   "requests": 1,
-   "failures": 0,
-   "errors": [],
-   "notes": []
-  },
   "dossier_wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 35,
+   "requests": 32,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -360,26 +344,34 @@
    "errors": [],
    "notes": []
   },
+  "dossier_news_google": {
+   "ok": null,
+   "count": 0,
+   "requests": 80,
+   "failures": 0,
+   "errors": [],
+   "notes": []
+  },
   "ai_groq": {
    "ok": null,
    "count": 0,
-   "requests": 7,
+   "requests": 8,
    "failures": 5,
    "errors": [
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 5110, Requested 5685. Please try again in 20.9625s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Used 1865, Requested 5837. Please try again in 6.017142857s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"The model `canopylabs/orpheus-v1-english` requires terms acceptance. Please have the org admin accept the terms at https://console.groq.com/playground?model=canopylabs%2Forpheus-v1-english\",\"type\":\"invalid_request_error\",\"code\":\"model_terms_required\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 1067, Requested 6941. Please try again in 60ms. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 5438, Requested 5583. Please try again in 22.6575s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Used 4620, Requested 5429. Please try again in 26.134285714s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"The model `canopylabs/orpheus-arabic-saudi` requires terms acceptance. Please have the org admin accept the terms at https://console.groq.com/playground?model=canopylabs%2Forpheus-arabic-saudi\",\"type\":\"invalid_request_error\",\"code\":\"model_terms_required\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 2747, Requested 6939. Please try again in 12.645s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
     "circuit opened: every available model failed or is over quota"
    ],
    "notes": [
-    "models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, canopylabs/orpheus-v1-english"
+    "models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, canopylabs/orpheus-arabic-saudi"
    ]
   },
   "ai_mistral": {
    "ok": null,
    "count": 0,
-   "requests": 40,
+   "requests": 41,
    "failures": 0,
    "errors": [],
    "notes": [
@@ -388,12 +380,12 @@
   },
   "establishment_tiers": {
    "ok": true,
-   "count": 107,
+   "count": 100,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "107 hard \u00b7 40 soft \u00b7 judged 40 with AI this run \u00b7 verdicts from AI 27, rule 120 \u00b7 AI has reviewed 43 of 3135 members and running candidates (668 with signals)"
+    "100 hard \u00b7 47 soft \u00b7 judged 40 with AI this run \u00b7 verdicts from AI 51, rule 96 \u00b7 AI has reviewed 57 of 3135 members and running candidates (668 with signals)"
    ]
   },
   "market_polymarket": {
@@ -436,12 +428,12 @@
   },
   "market_predictit": {
    "ok": true,
-   "count": 774,
+   "count": 775,
    "requests": 1,
    "failures": 0,
    "errors": [],
    "notes": [
-    "774 live contracts"
+    "775 live contracts"
    ]
   },
   "markets": {
@@ -451,7 +443,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "28146 market outcomes loaded \u00b7 396 tracked people matched"
+    "28147 market outcomes loaded \u00b7 396 tracked people matched"
    ]
   },
   "poll_closes": {
@@ -496,6 +488,6 @@
   "anti_candidates": 8,
   "relevant_votes": 126,
   "odds": 396,
-  "history_events_added": 10
+  "history_events_added": 7
  }
 }
