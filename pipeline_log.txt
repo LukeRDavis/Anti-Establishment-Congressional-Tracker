@@ -20,14 +20,10 @@ AECT pipeline v10 — 2026-11-03 · 119th Congress · 2026 cycle
   [congress_gov] 539 current members
 
 [2] FEC candidates and finance
-  [fec_candidates] 4353 active 2026 House+Senate filers
-  [fec_finance] totals for 3773 filers
+  [fec_candidates] cache fresh
+  [fec_finance] cache fresh
 
 [4c] Trackers
-  [trackaipac] /congress: 1 members, 1 approved
-  [trackaipac] /endorsements: 0 endorsed candidates
-  [rlc] Liberty Index cache fresh
-  [rlc] endorsements: 9 candidates
 
   People universe: 4464 (533 members, 3931 candidates)
 
@@ -40,12 +36,13 @@ AECT pipeline v10 — 2026-11-03 · 119th Congress · 2026 cycle
   [primary_calendar] cache fresh
   ⚡ ballotpedia: circuit opened (only empty responses (blocked for this host)) — skipping its remaining calls
   [enrichment] refreshed 250/250 this run · 1524/4464 people have a bio
-  [ballotpedia] outcomes {'no_page': 16} · probes: 200 0B '' https://ballotpedia.org/Chris_Espinosa | 200 0B '' https://ballotpedia.org/Bajun_Mavalwalla | 200 0B '' https://ballotpedia.org/Pete_Barlow | 200 0B '' https://ballotpedia.org/Courtney_McClain | 200 0B '' https://ballotpedia.org/Brenton_Awa | 200 0B '' https://ballotpedia.org/Lauren_Pena
-  [wikipedia_results] 85 state election pages (0 refreshed) · 1251 result boxes
+  [ballotpedia] outcomes {'no_page': 17} · probes: 200 0B '' https://ballotpedia.org/Marcye_Scott | 200 0B '' https://ballotpedia.org/Adam_Murphy | 200 0B '' https://ballotpedia.org/Michael_Johnson | 200 0B '' https://ballotpedia.org/Victor_McInnis | 200 0B '' https://ballotpedia.org/Charles_Wallis | 200 0B '' https://ballotpedia.org/Dixon_McMakin
+    results: no page "2026 Connecticut's 2nd congressional district election"
+    results: no page "2026 Connecticut's 3rd congressional district election"
+  [wikipedia_results] 85 state election pages (87 refreshed) · 1251 result boxes
 
 [4b] Candidate positions (AI research)
   [fec_websites] looked up 0 committees · 680 campaign websites known
-    HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
   [ai_gemini] models available: gemini-3.8-flash, gemini-3.7-flash, gemini-3.6-flash, gemini-3.5-flash, gemini-3-flash-preview, gemini-2.5-flash
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc
@@ -54,12 +51,13 @@ AECT pipeline v10 — 2026-11-03 · 119th Congress · 2026 cycle
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateCon :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc
     HTTP 404 https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?k :: {   "error": {     "code": 404,     "message": "This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://ai.google.dev/gemini-api/docs/get-started).",     "status": "NOT_FOUND"   } } 
   ⚡ ai_gemini: circuit opened (every available model is over quota or retired) — skipping its remaining calls
+    HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/
     HTTP 403 https://www.rajaforil.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.natemorris.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www,shawnforgeorgia.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.hallieforarkansas.com/
-    URLError: <urlopen error [Errno 104] Connection reset by peer> :: https://marklambforcongress.com/
+    URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)> :: https://marklambforcongress.com/
     URLError: <urlopen error [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1016)> :: https://www.danforusa.com/
     RemoteDisconnected: Remote end closed connection without response :: https://amyroma.com/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://www.alanpardee.com/
@@ -76,13 +74,13 @@ AECT pipeline v10 — 2026-11-03 · 119th Congress · 2026 cycle
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1016)> :: https://www.alexhawkinsforcongress.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.raymondesmithjr.com/
     URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://rickjakious.com/
-    URLError: <urlopen error [Errno 104] Connection reset by peer> :: https://joelforkentucky.com/
+    URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)> :: https://joelforkentucky.com/
     HTTP 520 https://rondakennedy.com/ :: error code: 520 
     RemoteDisconnected: Remote end closed connection without response :: https://votegeorgeforcongress.com/
     RemoteDisconnected: Remote end closed connection without response :: https://vincentmatriscianoforcongress.com/
     URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://voteanna4congress.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.tonyguyforcongress.com/
-    URLError: <urlopen error [Errno 104] Connection reset by peer> :: https://joshcowenmi.com/
+    URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)> :: https://joshcowenmi.com/
     URLError: <urlopen error [Errno 104] Connection reset by peer> :: https://blau4congress.com/
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)> :: https://www.katherinealeman.com/
     RemoteDisconnected: Remote end closed connection without response :: https://bradmeyer.org/
@@ -97,32 +95,32 @@ AECT pipeline v10 — 2026-11-03 · 119th Congress · 2026 cycle
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1016)> :: https://moedavis.com/
     HTTP 403 https://adeleforcongress.com/ :: <!DOCTYPE html> <html>     <iframe src="https://cloudways-static-content.s3.us-east-1.amazonaws.com/error_page/maintenance-domain-mapping.html" frameborder="0" 
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/
-  [ai_positions] researched 0 this run (no_source: 1998) · 2685 total · 22 with cited anti-interventionist positions
+  [ai_positions] researched 0 this run (no_source: 2002) · 2685 total · 22 with cited anti-interventionist positions
 
 [4d] Outside spending
-  [fec_outside_spending] refreshed 108, 457 candidates with outside-spending records
+  [fec_outside_spending] refreshed 0, 457 candidates with outside-spending records
 
 [4e'] House discharge petitions (signers, from the Clerk)
   [discharge_petitions] cached
 
 [4e] Reliable vs soft anti-establishment (AI over scraped dossiers)
   [ai_groq] models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, canopylabs/orpheus-arabic-saudi
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 4556, Requested 5128. Please try again in 12.629999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Requested 2048. The request's expected output tokens exceed the enforced limit; reduce max_tokens (or the request's expected output) and try again. Need more tokens? Upgrade to Dev Tier today at https://console
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 5095, Requested 5210. Please try again in 17.2875s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 5631, Requested 7356. Please try again in 37.4025s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Used 4809, Requested 5531. Please try again in 28.628571428s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"The model `canopylabs/orpheus-arabic-saudi` requires terms acceptance. Please have the org admin accept the terms at https://console.groq.com/playground?model=canopylabs%2Forpheus-arabic-saudi","type":"invalid_request_error","code":"model_terms_required"}} 
-  ⚡ ai_groq: circuit opened (every available model failed or is over quota) — skipping its remaining calls
   [ai_mistral] models available: ministral-14b-2512, ministral-14b-latest, mistral-large-4, mistral-large-4-0
-  [establishment_tiers] 55 hard · 92 soft · judged 40 with AI this run · verdicts from AI 145, rule 2 · AI has reviewed 239 of 3135 members and running candidates (668 with signals)
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 4104, Requested 5538. Please try again in 12.315s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+  ⚡ ai_groq: circuit opened (every available model failed or is over quota) — skipping its remaining calls
+  [establishment_tiers] 55 hard · 92 soft · judged 40 with AI this run · verdicts from AI 147, rule 0 · AI has reviewed 364 of 3139 members and running candidates (669 with signals)
 
 [5] Prediction markets
   [market_polymarket] 800 catalog pages scanned · 1027 open congressional markets
   [market_kalshi_races] 415 House/Senate race events
   [market_kalshi] 40 pages · 25487 political markets
-  [market_predictit] 779 live contracts
-  [markets] 28133 market outcomes loaded · 396 tracked people matched
+  [market_predictit] 773 live contracts
+  [markets] 28127 market outcomes loaded · 395 tracked people matched
   [poll_closes] cached
-  [election_night] 2 races frozen at poll close · 3 called
+  [election_night] 2 races frozen at poll close · 0 called
 
 [6] Committee rosters
   [committees] cached
@@ -133,7 +131,7 @@ STREAM                       STATUS     COUNT  NOTES / ERRORS
 ai_gemini                    —              0  HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "er
 ai_groq                      —              0  HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model 
 ai_mistral                   —              0  models available: ministral-14b-2512, ministral-14b-latest, mistral-large-4, mistral-large-4-0
-ai_positions                 OK          2685  researched 0 this run (no_source: 1998) · 2685 total · 22 with cited anti-interventionist positions
+ai_positions                 OK          2685  researched 0 this run (no_source: 2002) · 2685 total · 22 with cited anti-interventionist positions
 ballotpedia                  FAIL           0  circuit opened: only empty responses (blocked for this host)
 campaign_sites               —              0  HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</ti
 committees                   OK            10  cached
@@ -142,32 +140,32 @@ discharge_petitions          OK            54  cached
 dossier_grokipedia           —              0  
 dossier_news_google          —              0  
 dossier_wikipedia            —              0  
-election_night               OK           110  2 races frozen at poll close · 3 called
+election_night               OK           110  2 races frozen at poll close · 0 called
 enrichment                   OK          1524  refreshed 250/250 this run · 1524/4464 people have a bio
-establishment_tiers          OK            55  55 hard · 92 soft · judged 40 with AI this run · verdicts from AI 145, rule 2 · AI has reviewed 239 of 3135 me
-fec_candidates               OK          4353  4353 active 2026 House+Senate filers
-fec_finance                  OK          3773  totals for 3773 filers
-fec_outside_spending         OK           457  refreshed 108, 457 candidates with outside-spending records
+establishment_tiers          OK            55  55 hard · 92 soft · judged 40 with AI this run · verdicts from AI 147, rule 0 · AI has reviewed 364 of 3139 me
+fec_candidates               OK          4353  cache fresh
+fec_finance                  OK          3773  cache fresh
+fec_outside_spending         OK           457  refreshed 0, 457 candidates with outside-spending records
 fec_websites                 OK           680  looked up 0 committees · 680 campaign websites known
 grokipedia                   —              0  
 market_kalshi                OK         25487  40 pages · 25487 political markets
 market_kalshi_races          OK           840  415 House/Senate race events
 market_kalshi_senate         —              0  
 market_polymarket            OK          1027  800 catalog pages scanned · 1027 open congressional markets
-market_predictit             OK           779  779 live contracts
-markets                      OK           396  28133 market outcomes loaded · 396 tracked people matched
+market_predictit             OK           773  773 live contracts
+markets                      OK           395  28127 market outcomes loaded · 395 tracked people matched
 poll_closes                  OK            51  cached
 primary_calendar             OK            50  cache fresh
-rlc                          OK           283  endorsements: 9 candidates
+rlc                          OK           283  
 roster_house                 OK           433  433 Representatives + 6 delegates, 2 vacancies (published October 1, 2026)
 roster_senate                OK           100  100 senators (file last updated 2026-10-08T14:47-05:00)
-trackaipac                   OK             1  /endorsements: 0 endorsed candidates
+trackaipac                   OK             0  
 votes_ai_relevance           OK           126  904 topical roll calls · 126 judged relevant · 0 awaiting AI judgment
 votes_house_xml              OK          2915  2026 roll 315: no <vote-metadata> (root <xml>)
 votes_senate_voteview        OK          2555  2555 Senate roll calls indexed from Voteview (+0 topical this run)
 votes_senate_xml             —              0  HTTP 403 https://www.senate.gov/legislative/LIS/roll_call_lists/vote_menu_119_2.xml :: <!DOCTYPE HTML PUBLIC "
 wikipedia                    —              0  
-wikipedia_results            OK            85  85 state election pages (0 refreshed) · 1251 result boxes
+wikipedia_results            OK            85  85 state election pages (87 refreshed) · 1251 result boxes
 ════════════════════════════════════════════════════════════════════════
 {
  "members": 533,
@@ -179,6 +177,6 @@ wikipedia_results            OK            85  85 state election pages (0 refres
  },
  "anti_candidates": 8,
  "relevant_votes": 126,
- "odds": 396,
- "history_events_added": 5
+ "odds": 395,
+ "history_events_added": 1
 }
