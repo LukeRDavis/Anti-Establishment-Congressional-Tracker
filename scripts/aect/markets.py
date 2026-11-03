@@ -19,13 +19,44 @@ from .net import get_json, stream, now_iso
 OTHER_OFFICE = re.compile(
     r"\b(president|presidential|white house|governor|gubernatorial|mayor|attorney general|"
     r"secretary of state|lieutenant governor|speaker|majority leader|minority leader|running mate|"
-    r"vice president|cabinet|ambassador|resign|expelled|censure|impeach|indicted|tweet|say\b|mention)",
+    r"vice president|cabinet|ambassador|resign|expelled|censure|impeach|indicted|tweet|say\b|mention|"
+    r"secretary|nominat(?:ed|ion) (?:for|to)|confirm|next .{0,20}(?:secretary|director|chair|justice)|"
+    # side bets on a race that are not "who wins": margins, vote shares, turnout
+    r"margin|\bpts?\b|points|vote share|percent|turnout|by more than|recount|concede)",
     re.I)
 WRONG_YEAR = re.compile(r"\b20(?:1\d|2[0-4]|2[7-9]|3\d)\b")
 
 
 def _words(s):
     return set(re.findall(r"[a-z]+", (s or "").lower()))
+
+
+def _last_token(person):
+    toks = re.findall(r"[a-z]+", (person.get("last_name") or person["name"].split()[-1]).lower())
+    return toks[-1] if toks else ""
+
+
+_PARTY = {"D": re.compile(r"\bdemocrat", re.I), "R": re.compile(r"\brepublican", re.I)}
+
+
+def party_seat_match(text, person):
+    """A market on which PARTY wins this person's seat ("Will the Democratic Party win the CA-17
+    House seat?") prices this person once they are that party's nominee."""
+    if person.get("primary_result") != "WON" or person.get("party") not in _PARTY:
+        return False
+    t = text or ""
+    if OTHER_OFFICE.search(t) or not _PARTY[person["party"]].search(t):
+        return False
+    other = "R" if person["party"] == "D" else "D"
+    if _PARTY[other].search(t):
+        return False
+    state = person.get("state", "")
+    ch = (person.get("seeking") or {}).get("chamber", person.get("chamber"))
+    if ch == "house":
+        d = (person.get("seeking") or {}).get("district", person.get("district"))
+        return bool(re.search(rf"\b{state}-0?{int(d or 0) or 'AL'}\b", t)) and "house" in t.lower()
+    full = STATE_NAMES.get(state, "")
+    return bool(full) and full.lower() in t.lower() and "senate" in t.lower()
 
 
 def matches(text, person):
@@ -40,7 +71,7 @@ def matches(text, person):
     if not names:
         return False
     first = names[0].lower()
-    last = ((person.get("last_name") or names[-1]).lower().split() or [names[-1].lower()])[-1]
+    last = _last_token(person)
     if last not in w:
         return False
     if first in w:
@@ -159,13 +190,52 @@ def load_kalshi(max_pages=40):
     return out
 
 
+def load_kalshi_races():
+    """Kalshi's who-wins markets for every House seat (series KXHOUSERACE) and each state's
+    Senate race (series SENATE{ST}); each outcome names the candidate."""
+    out, n_ev = [], 0
+
+    def take(ev):
+        nonlocal n_ev
+        n_ev += 1
+        for m in ev.get("markets", []) or []:
+            try:
+                price = float(m.get("last_price_dollars") or m.get("yes_ask_dollars") or 0)
+            except (TypeError, ValueError):
+                continue
+            if not 0 < price <= 1 or not m.get("yes_sub_title"):
+                continue
+            out.append({"src": "kalshi", "market": f"{ev.get('title','')} {ev.get('sub_title','')}".strip(),
+                        "outcome": m["yes_sub_title"], "prob": round(price, 4), "ticker": m.get("ticker"),
+                        "url": f"https://kalshi.com/markets/{(ev.get('series_ticker') or '').lower()}"})
+    cursor, pages = "", 0
+    while pages < 10:
+        d = get_json(f"{KALSHI_API}/events?series_ticker=KXHOUSERACE&status=open&with_nested_markets=true&limit=200"
+                     + (f"&cursor={cursor}" if cursor else ""), stream_name="market_kalshi_races")
+        if not d:
+            break
+        for ev in d.get("events", []) or []:
+            take(ev)
+        cursor, pages = d.get("cursor") or "", pages + 1
+        if not cursor:
+            break
+    for st in sorted(STATE_NAMES):
+        d = get_json(f"{KALSHI_API}/events?series_ticker=SENATE{st}&status=open&with_nested_markets=true",
+                     stream_name="market_kalshi_senate", retries=0)
+        for ev in (d or {}).get("events", []) or []:
+            take(ev)
+        time.sleep(0.05)
+    stream("market_kalshi_races", ok=bool(out), count=len(out), note=f"{n_ev} House/Senate race events")
+    return out
+
+
 # ── Matching ──────────────────────────────────────────────────────────────────
 PRIORITY = {"polymarket_live": 0, "kalshi": 1, "predictit_contract": 2}
 
 
 def match_people(people):
     """people: {key: person}. Returns {key: {"markets": [...], "best": {...}}}."""
-    catalog = load_polymarket() + load_kalshi() + load_predictit()
+    catalog = load_polymarket() + load_kalshi_races() + load_kalshi() + load_predictit()
     out = {}
     for key, p in people.items():
         hits = []
@@ -175,19 +245,27 @@ def match_people(people):
             text = f"{c['market']} {c['outcome']}" if c["outcome"] not in ("Yes", "") else c["market"]
             if c["src"] != "polymarket_live" and not matches(c["outcome"] + " " + c["market"], p):
                 continue
+            by_party = False
             if c["src"] == "polymarket_live" and not matches(text, p):
-                continue
+                if not party_seat_match(c["market"], p):
+                    continue
+                by_party = True
             # for outcome-style markets the outcome itself must be this person
             if c["src"] != "polymarket_live":
                 ow = _words(c["outcome"])
-                last = ((p.get("last_name") or p["name"]).lower().split() or [""])[-1]
+                last = _last_token(p)
                 if not last or last not in ow:
                     continue
-            hits.append({**c, "stage": stage(c["market"]), "question": f"{c['market']} → {c['outcome']}"
+            hits.append({**c, "by_party": by_party, "stage": stage(c["market"]), "question": f"{c['market']} → {c['outcome']}"
                          if c["outcome"] not in ("Yes", "") else c["market"], "fetched_at": now_iso()})
         if hits:
             hits.sort(key=lambda h: (PRIORITY.get(h["src"], 9), h["stage"] != "general"))
-            out[key] = {"markets": hits[:6], "best": hits[0]}
+            keep, per = [], {}
+            for h in hits:                    # up to 2 per source, so every source can be averaged
+                if per.get(h["src"], 0) < 2:
+                    keep.append(h)
+                    per[h["src"]] = per.get(h["src"], 0) + 1
+            out[key] = {"markets": keep, "best": hits[0]}
     stream("markets", ok=bool(catalog), count=len(out),
            note=f"{len(catalog)} market outcomes loaded · {len(out)} tracked people matched")
     return out

@@ -1246,6 +1246,72 @@ function About({members}) {
   </div>`;
 }
 
+// ── General-election night view ─────────────────────────────────────────────
+// Only anti-establishment candidates, closest races first. Odds are the pipeline's
+// average over every market source with a number; each race's odds freeze one minute
+// before its state's first polls close, and the race shows WON / LOST once called.
+function inGeneralPhase(races) {
+  const t = Date.now();
+  const live = (races||[]).filter(r => !["defeated"].includes(r.status));
+  if (!live.length) return false;
+  return live.every(r => !r.primary_date || new Date(r.primary_date + "T23:59:59").getTime() < t || r.primary_result);
+}
+function ElectionTimeline({races, onSelect}) {
+  const now = Date.now();
+  const rows = (races||[])
+    .filter(r => r.antiTier === "hard" || !r.antiTier)
+    .filter(r => r.primary_result === "WON" || r.status === "pending_general" || r.general_result)
+    .map(r => {
+      const close = r.poll_close ? new Date(r.poll_close) : null;
+      const frozen = (r.odds && r.odds.frozen) || (close && now >= close.getTime() - 60000);
+      const p = r.odds ? r.odds.avg : r.win_prob;
+      return {...r, _p: p, _close: close, _frozen: frozen};
+    })
+    .sort((a,b) => {
+      const ca = a._p == null ? 9 : Math.abs(a._p - 0.5), cb = b._p == null ? 9 : Math.abs(b._p - 0.5);
+      return ca - cb || a.name.localeCompare(b.name);
+    });
+  const fmtClose = d => d ? d.toLocaleTimeString([], {hour:"numeric", minute:"2-digit", timeZoneName:"short"}) : "—";
+  const seat = r => r.chamber === "senate" ? r.state + " Senate" : r.state + "-" + (r.district || "AL");
+  const pc = p => p === "R" ? COL.antiR : COL.antiD;
+  const won = rows.filter(r => r.general_result === "WON").length, lost = rows.filter(r => r.general_result === "LOST").length;
+  const en = (META().election_night || {});
+  return html`<div style=${{width:"100%",maxWidth:860,background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,padding:"14px 16px"}}>
+    <div style=${{display:"flex",justifyContent:"space-between",alignItems:"baseline",flexWrap:"wrap",gap:6}}>
+      <div style=${{fontSize:13,fontWeight:700,color:"#f0ebe0"}}>General election · anti-establishment candidates</div>
+      <div style=${{fontSize:9,fontFamily:FM,color:"#6b7280"}}>${rows.length} races · ${won} won · ${lost} lost${en.updated_at ? " · updated " + new Date(en.updated_at).toLocaleTimeString([], {hour:"numeric",minute:"2-digit"}) : ""}</div>
+    </div>
+    <div style=${{fontSize:9,fontFamily:FM,color:"#4b5563",margin:"4px 0 10px",lineHeight:1.5}}>
+      Closest races first. Odds are the average of every prediction market with a price (Polymarket, Kalshi, PredictIt); each race's odds freeze one minute before its polls close.
+    </div>
+    ${rows.length === 0 ? html`<div style=${{fontSize:11,color:"#6b7280",padding:"12px 0"}}>No anti-establishment candidates on a general-election ballot yet.</div>` : null}
+    ${rows.map(r => html`<div key=${r.id} onClick=${() => onSelect && onSelect(r)}
+        style=${{display:"flex",alignItems:"center",gap:10,padding:"9px 4px",borderTop:"1px solid #1a1d27",cursor:"pointer"}}>
+      <div style=${{width:8,height:8,borderRadius:"50%",background:pc(r.party),flexShrink:0}}/>
+      <div style=${{flex:1,minWidth:0}}>
+        <div style=${{fontSize:12,fontWeight:700,color:"#f0ebe0"}}>${r.name}
+          <span style=${{fontSize:9,fontFamily:FM,color:"#6b7280",fontWeight:400}}> ${r.party} · ${seat(r)} · ${r.type === "incumbent" ? "incumbent" : "challenger"}</span></div>
+        ${r.opponents && r.opponents.length ? html`<div style=${{fontSize:9,color:"#6b7280",fontFamily:FM,marginTop:2}}>
+          vs ${r.opponents.map(o => o.name + " (" + o.party + ")" + (o.anti ? " ◈" : "")).join(", ")}</div>` : null}
+        <div style=${{fontSize:9,color:"#4b5563",fontFamily:FM,marginTop:2}}>
+          Polls close ${fmtClose(r._close)}
+          ${r.odds && r.odds.sources ? " · " + r.odds.sources.map(s => s.src + " " + Math.round(s.prob*100) + "%").join(" · ") : ""}
+        </div>
+      </div>
+      <div style=${{textAlign:"right",minWidth:78}}>
+        ${r.general_result
+          ? html`<span style=${{fontSize:10,fontWeight:700,fontFamily:FM,padding:"3px 8px",borderRadius:4,
+                  background:r.general_result==="WON"?"#14532d":"#450a0a",color:r.general_result==="WON"?"#4ade80":"#f87171"}}>${r.general_result}</span>`
+          : r._p != null
+            ? html`<div style=${{fontSize:16,fontWeight:700,fontFamily:FM,color:r._p>=0.6?"#4ade80":r._p>=0.4?"#fbbf24":"#f87171"}}>${Math.round(r._p*100)}%</div>`
+            : html`<div style=${{fontSize:10,fontFamily:FM,color:"#4b5563"}}>no market</div>`}
+        ${!r.general_result && r._frozen ? html`<div style=${{fontSize:8,fontFamily:FM,color:"#93c5fd"}}>❄ frozen at poll close</div>` : null}
+        ${!r.general_result && r.odds && !r._frozen ? html`<div style=${{fontSize:8,fontFamily:FM,color:"#4b5563"}}>${r.odds.n} source${r.odds.n>1?"s":""}</div>` : null}
+      </div>
+    </div>`)}
+  </div>`;
+}
+
 function CandidateTimeline({allMembers, challengers, racesData, polyData, descriptions}) {
   descriptions = (descriptions && typeof descriptions === 'object') ? descriptions : {};
   const [filter, setFilter] = useState("all");
@@ -1715,7 +1781,9 @@ function App() {
       <!-- Three columns / Timeline toggle -->
       ${showAbout ? html`<${About} members=${allMembers}/>` : showTimeline ? html`
         <div style=${{width:"100%",maxWidth:860,display:"flex",flexDirection:"column",alignItems:"center",gap:10}}>
-          <${CandidateTimeline} allMembers=${allMembers} challengers=${challengers} polyData=${polyData} racesData=${races} descriptions=${descriptions || {}}/>
+          ${inGeneralPhase(races)
+            ? html`<${ElectionTimeline} races=${races} onSelect=${r => setSelected(r.name)}/>`
+            : html`<${CandidateTimeline} allMembers=${allMembers} challengers=${challengers} polyData=${polyData} racesData=${races} descriptions=${descriptions || {}}/>`}
         </div>`
       : html`
       <div class="three-col" style=${{display:"flex",gap:10,alignItems:"flex-start",flexWrap:"wrap",justifyContent:"center",width:"100%",maxWidth:1080}}>
