@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: judge
@@ -51,3 +52,10 @@ jobs:
             sleep 5
           done
           exit 1
+      # GitHub runs the hourly schedule late or not at all when busy: start the next review
+      # pass straight away so the free AI tiers keep working through the queue
+      - name: Start the next pass
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run judge.yml --ref "${GITHUB_REF_NAME}" || true

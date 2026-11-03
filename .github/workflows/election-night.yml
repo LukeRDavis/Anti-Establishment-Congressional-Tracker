@@ -1,7 +1,9 @@
 name: Election Night
 
-# Every 15 minutes; the script exits at once unless a general election is
-# within 36 hours before / 96 hours after (date read from data.json).
+# GitHub runs scheduled workflows late or skips them when it is busy, so this job does
+# not rely on the schedule: once started (by the schedule or by hand) it refreshes every
+# 10 minutes for up to ~5.4 hours, then starts itself again while the election window is
+# open. The script exits at once outside 36 h before / 96 h after a general election.
 on:
   schedule:
     - cron: "*/15 * * * *"
@@ -9,6 +11,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: election-night
@@ -17,23 +20,32 @@ concurrency:
 jobs:
   night:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 350
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Refresh odds, freeze at poll close, results
-        run: python -u scripts/election_night.py
-      - name: Commit
+      - name: Refresh every 10 minutes (odds, poll-close freeze, results)
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          for f in data.json candidates.json history.json data/cache; do [ -e "$f" ] && git add "$f"; done
-          git diff --cached --quiet && exit 0
-          git commit -m "chore: election-night refresh [skip ci]"
-          for i in 1 2 3; do
-            git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push && exit 0
-            sleep 5
+          start=$(date +%s)
+          while :; do
+            git pull -q --rebase -X theirs origin "${GITHUB_REF_NAME}" || git rebase --abort || true
+            out=$(python -u scripts/election_night.py 2>&1); echo "$out" | tail -n 25
+            if echo "$out" | grep -q "Not election night"; then exit 0; fi
+            for f in data.json candidates.json history.json data/cache; do [ -e "$f" ] && git add "$f"; done
+            if ! git diff --cached --quiet; then
+              git commit -q -m "chore: election-night refresh [skip ci]"
+              for i in 1 2 3; do git pull -q --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push -q && break; sleep 5; done
+            fi
+            # hand over to a fresh run well before this job's time limit
+            if [ $(( $(date +%s) - start )) -gt 19500 ]; then
+              gh workflow run election-night.yml --ref "${GITHUB_REF_NAME}" || true
+              exit 0
+            fi
+            sleep 600
           done
-          exit 1
