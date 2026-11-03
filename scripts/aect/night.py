@@ -112,6 +112,9 @@ def apply(data, mk, people, old_data=None, now=None):
     gd = (data.get("meta") or {}).get("general_date")
     closes = poll_closes(gd) if gd else {}
     old_races = {r.get("id"): r for r in (old_data or {}).get("races", [])}
+    # last pre-close odds per race, kept in their own file so no other job's copy of
+    # data.json can overwrite them
+    snaps = load_cache("odds_snapshots") or {}
     # everyone still in each general race, so a visitor sees who the tracked candidate faces
     seats = {}
     for k, p in people.items():
@@ -131,6 +134,9 @@ def apply(data, mk, people, old_data=None, now=None):
         fresh = odds_summary(mk.get(r["id"]), stage,
                              same_party_rival=any(people[k].get("party") == r.get("party") for k in rivals))
         old = (old_races.get(r["id"]) or {}).get("odds")
+        snap = snaps.get(r["id"])
+        if snap and (not old or (old.get("at") or "") < (snap.get("at") or "")):
+            old = snap                       # the snapshot file survives a stale data.json
         cdt = _parse_dt(close) if close else None
         if stage == "general" and cdt and now >= cdt - FREEZE_BEFORE:
             # polls are about to close or closed: keep the last pre-close snapshot
@@ -143,6 +149,8 @@ def apply(data, mk, people, old_data=None, now=None):
             frozen += 1
         else:
             r["odds"] = fresh
+            if fresh and stage == "general":
+                snaps[r["id"]] = fresh       # latest pre-close price for this race
         if r.get("odds"):
             r["win_prob"] = r["odds"]["avg"]
             r["win_prob_src"] = "+".join(s["src"] for s in r["odds"]["sources"])
@@ -157,6 +165,7 @@ def apply(data, mk, people, old_data=None, now=None):
             r["general_result"] = p["general_result"]
             r["general_result_source"] = p.get("general_result_source")
             called += 1
+    save_cache("odds_snapshots", snaps)
     meta = data.setdefault("meta", {})
     meta["poll_closes"] = closes
     meta["election_night"] = {"updated_at": now_iso(), "frozen": frozen, "called": called,

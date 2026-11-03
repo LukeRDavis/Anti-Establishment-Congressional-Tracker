@@ -11,7 +11,7 @@ Usage: python scripts/merge_caches.py <ref>   (e.g. origin/main, after git fetch
 import json, os, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CACHES = ["establishment", "fec_employers", "member_bills", "headline_screen"]
+CACHES = ["establishment", "fec_employers", "member_bills", "headline_screen", "odds_snapshots"]
 
 
 def _stamp(v):
