@@ -1,0 +1,28 @@
+name: API health check
+
+# Run by hand (Actions -> API health check -> Run workflow): one tiny request to each API.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Ping every API
+        env:
+          CONGRESS_KEY:       ${{ secrets.CONGRESS_KEY }}
+          FEC_KEY:            ${{ secrets.FEC_KEY }}
+          GEMINI_API_KEY:     ${{ secrets.GEMINI_API_KEY }}
+          GROQ_API_KEY:       ${{ secrets.GROQ_API_KEY }}
+          MISTRAL_API_KEY:    ${{ secrets.MISTRAL_API_KEY }}
+          CEREBRAS_API_KEY:   ${{ secrets.CEREBRAS_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        run: python -u scripts/healthcheck.py
