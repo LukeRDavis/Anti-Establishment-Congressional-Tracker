@@ -66,9 +66,12 @@ def _rank_chat_models(ids):
 
     def score(i):
         il = i.lower()
+        # total parameters: "550b-a55b" -> 550; mixture-of-experts names list the total first
         size = max([float(x) for x in re.findall(r"(\d+(?:\.\d+)?)b\b", il)] or [0])
-        pref = 2 if re.search(r"gpt-oss|llama-4|llama-3\.3|qwen3|deepseek|kimi|gemini|mistral-large", il) else 0
-        return (pref, min(size, 500))
+        small = bool(re.search(r"nano|mini\b|-mini|small|tiny|omni|lite|\b[1-9]b\b", il))
+        known = bool(re.search(r"gpt-oss|llama-4|llama-3\.3|qwen3|deepseek|kimi|gemini|mistral-large|nemotron", il))
+        # strongest first: not a small variant, then size, then a known strong family
+        return (not small, size, known)
     return sorted(keep, key=score, reverse=True)
 
 
@@ -127,6 +130,8 @@ def parse_json_loose(text):
 
 # Spend guard: at most this many Gemini requests per pipeline run (AECT_GEMINI_MAX_CALLS).
 _GEMINI_MAX = int(os.environ.get("AECT_GEMINI_MAX_CALLS", "60"))
+# Gemini key is on a free-tier project (cannot be charged): use it first for judging
+GEMINI_FIRST = os.environ.get("AECT_GEMINI_FIRST", "true").strip().lower() in ("1", "true", "yes", "on")
 _GEMINI_SENT = 0
 
 
@@ -301,8 +306,11 @@ def ask_json(system, prompt, *, search=False, allow_ungrounded=False):
         order = [("gemini", lambda: _gemini(system, prompt, True)), ("xai", lambda: _xai(system, prompt, True))]
         if allow_ungrounded:
             order += free + paid
+    elif GEMINI_FIRST:
+        # the strongest model first while its (free-tier) daily quota lasts; a 429/402 drops it for the run
+        order = [paid[0]] + free + paid[1:]
     else:
-        order = free + paid                  # free tiers first; prepaid Gemini only when they are all spent
+        order = free + paid                  # free tiers first; Gemini only when they are all spent
     for name, fn in order:
         result, sources = fn()
         if result is not None:
