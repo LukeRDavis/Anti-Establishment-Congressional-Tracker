@@ -39,7 +39,8 @@ def chat(name, url, k, model, extra_headers=None):
     code, d, s = call(url, {"model": model, "max_tokens": 5, "temperature": 0,
                             "messages": [{"role": "user", "content": "Reply with the word OK."}]},
                       {"Authorization": f"Bearer {k}", **(extra_headers or {})})
-    txt = ((d.get("choices") or [{}])[0].get("message") or {}).get("content", "") if code == 200 else d.get("_error", "")
+    # a model can answer with null content (e.g. it spent the tiny token budget on reasoning)
+    txt = (((d.get("choices") or [{}])[0].get("message") or {}).get("content") or "") if code == 200 else (d.get("_error") or "")
     report(f"{name} chat", code == 200, code, s, f"{model}: {txt.strip()[:80]!r}")
 
 
