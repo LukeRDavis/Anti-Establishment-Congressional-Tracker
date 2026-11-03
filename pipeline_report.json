@@ -1,15 +1,15 @@
 {
- "run_at": "2026-11-03T19:49:36.180993+00:00",
- "runtime_s": 1580,
+ "run_at": "2026-11-03T22:46:06.441414+00:00",
+ "runtime_s": 1628,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
   "gemini": 0,
   "xai": 0,
   "openrouter": 0,
-  "groq": 2,
+  "groq": 3,
   "cerebras": 0,
-  "mistral": 38,
+  "mistral": 37,
   "failed": 1
  },
  "streams": {
@@ -145,38 +145,44 @@
   "fec_candidates": {
    "ok": true,
    "count": 4353,
-   "requests": 0,
+   "requests": 44,
    "failures": 0,
    "errors": [],
    "notes": [
-    "cache fresh"
+    "4353 active 2026 House+Senate filers"
    ]
   },
   "fec_finance": {
    "ok": true,
-   "count": 3971,
-   "requests": 0,
+   "count": 4045,
+   "requests": 46,
    "failures": 0,
    "errors": [],
    "notes": [
-    "cache fresh"
+    "totals for 4045 filers"
    ]
   },
   "trackaipac": {
    "ok": true,
-   "count": 0,
-   "requests": 0,
+   "count": 1,
+   "requests": 2,
    "failures": 0,
    "errors": [],
-   "notes": []
+   "notes": [
+    "/congress: 1 members, 1 approved",
+    "/endorsements: 0 endorsed candidates"
+   ]
   },
   "rlc": {
    "ok": true,
    "count": 283,
-   "requests": 0,
+   "requests": 4,
    "failures": 0,
    "errors": [],
-   "notes": []
+   "notes": [
+    "Liberty Index cache fresh",
+    "endorsements: 9 candidates"
+   ]
   },
   "votes_senate_voteview": {
    "ok": true,
@@ -217,13 +223,13 @@
     "circuit opened: only empty responses (blocked for this host)"
    ],
    "notes": [
-    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Caroline_Shinkle | 200 0B '' https://ballotpedia.org/Madison_Sheahan | 200 0B '' https://ballotpedia.org/Ammie_Akin | 200 0B '' https://ballotpedia.org/Sarah_Zabel | 200 0B '' https://ballotpedia.org/Nick_Pyati | 200 0B '' https://ballotpedia.org/Matthew_Rains"
+    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Pete_Barlow | 200 0B '' https://ballotpedia.org/Lauren_Pena | 200 0B '' https://ballotpedia.org/Chris_Espinosa | 200 0B '' https://ballotpedia.org/Bajun_Mavalwalla | 200 0B '' https://ballotpedia.org/Brenton_Awa | 200 0B '' https://ballotpedia.org/Courtney_McClain"
    ]
   },
   "wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 664,
+   "requests": 674,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -231,7 +237,7 @@
   "grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 207,
+   "requests": 212,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -249,11 +255,11 @@
   "wikipedia_results": {
    "ok": true,
    "count": 85,
-   "requests": 71,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "85 state election pages (39 refreshed) \u00b7 1251 result boxes"
+    "85 state election pages (0 refreshed) \u00b7 1251 result boxes"
    ]
   },
   "fec_websites": {
@@ -311,11 +317,11 @@
   "fec_outside_spending": {
    "ok": true,
    "count": 457,
-   "requests": 0,
+   "requests": 108,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 0, 457 candidates with outside-spending records"
+    "refreshed 108, 457 candidates with outside-spending records"
    ]
   },
   "discharge_petitions": {
@@ -331,7 +337,7 @@
   "dossier_wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 32,
+   "requests": 33,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -355,13 +361,13 @@
   "ai_groq": {
    "ok": null,
    "count": 0,
-   "requests": 8,
+   "requests": 9,
    "failures": 5,
    "errors": [
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 5496, Requested 5845. Please try again in 25.0575s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Used 4062, Requested 5649. Please try again in 23.237142857s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 6755, Requested 5586. Please try again in 32.5575s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Used 4787, Requested 4971. Please try again in 23.64s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
     "HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"The model `canopylabs/orpheus-arabic-saudi` requires terms acceptance. Please have the org admin accept the terms at https://console.groq.com/playground?model=canopylabs%2Forpheus-arabic-saudi\",\"type\":\"invalid_request_error\",\"code\":\"model_terms_required\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 2979, Requested 7519. Please try again in 18.735s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 3522, Requested 5622. Please try again in 8.58s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
     "circuit opened: every available model failed or is over quota"
    ],
    "notes": [
@@ -371,7 +377,7 @@
   "ai_mistral": {
    "ok": null,
    "count": 0,
-   "requests": 39,
+   "requests": 38,
    "failures": 0,
    "errors": [],
    "notes": [
@@ -380,12 +386,12 @@
   },
   "establishment_tiers": {
    "ok": true,
-   "count": 84,
+   "count": 57,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "84 hard \u00b7 63 soft \u00b7 judged 40 with AI this run \u00b7 verdicts from AI 92, rule 55 \u00b7 AI has reviewed 92 of 3135 members and running candidates (668 with signals)"
+    "57 hard \u00b7 90 soft \u00b7 judged 40 with AI this run \u00b7 verdicts from AI 143, rule 4 \u00b7 AI has reviewed 239 of 3135 members and running candidates (668 with signals)"
    ]
   },
   "market_polymarket": {
@@ -418,12 +424,12 @@
   },
   "market_kalshi": {
    "ok": true,
-   "count": 25484,
+   "count": 25487,
    "requests": 40,
    "failures": 0,
    "errors": [],
    "notes": [
-    "40 pages \u00b7 25484 political markets"
+    "40 pages \u00b7 25487 political markets"
    ]
   },
   "market_predictit": {
@@ -443,7 +449,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "28130 market outcomes loaded \u00b7 396 tracked people matched"
+    "28133 market outcomes loaded \u00b7 396 tracked people matched"
    ]
   },
   "poll_closes": {
@@ -469,11 +475,11 @@
   "committees": {
    "ok": true,
    "count": 10,
-   "requests": 2,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "10 committees for planks power, anti_arms"
+    "cached"
    ]
   }
  },
@@ -488,6 +494,6 @@
   "anti_candidates": 8,
   "relevant_votes": 126,
   "odds": 396,
-  "history_events_added": 8
+  "history_events_added": 3
  }
 }
