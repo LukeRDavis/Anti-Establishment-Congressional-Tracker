@@ -43,7 +43,9 @@ def fetch():
         text = strip_html(html)
         no = int(pid[-2:])
         m = re.search(r"congress\.gov/bill/(\d+)/(\w+)/(\d+)", html, re.I)
-        measure = f"{m.group(2).upper().replace('HRES', 'H.Res.').replace('HR', 'H.R.')} {m.group(3)}" if m else ""
+        kinds = {"HR": "H.R.", "HRES": "H.Res.", "HJRES": "H.J.Res.", "HCONRES": "H.Con.Res.",
+                 "S": "S.", "SRES": "S.Res.", "SJRES": "S.J.Res.", "SCONRES": "S.Con.Res."}
+        measure = f"{kinds.get(m.group(2).upper(), m.group(2).upper())} {m.group(3)}" if m else ""
         about = ""
         a = re.search(r"(Providing for (?:the )?consideration of (?:the )?[\w ]{0,20}\([^)]{3,40}\)[^.]{0,220})", text) \
             or re.search(r"(Providing for (?:the )?consideration of [^.]{10,300})", text)
