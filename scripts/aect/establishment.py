@@ -38,7 +38,7 @@ from .config import (CYCLE, CURRENT_CONGRESS, FEC_API, FEC_KEY, FOCUS_RECIPIENTS
 from .net import (get_text, get_json, stream, load_cache, save_cache, now_iso, age_hours,
                   strip_html, qs, circuit_ok)
 
-JUDGE_VERSION = 4
+JUDGE_VERSION = 5
 TTL_H = float(os.environ.get("AECT_TIER_TTL_H", str(24 * 7)))
 BUDGET = int(os.environ.get("AECT_TIER_BUDGET", "40"))
 # breaking from one's own party toward the anti side this many times screens a member in
@@ -302,7 +302,7 @@ Verdicts:
 - NONE = establishment, no meaningful anti-establishment signal.
 Most people are SOFT or NONE. When in doubt, do not count them.
 
-Use ONLY the facts and sources given; do not use outside knowledge. Cite dossier or roll-call URLs for claims.
+Use ONLY the facts and sources given; do not use outside knowledge. Never state a number, date, vote or event that is not in the facts or sources below; if something is unknown, say it is unknown. Cite dossier or roll-call URLs for claims. Make the bottom line agree with the tier you give.
 Respond with JSON only:
 {{"tier": "hard"|"soft"|"none", "confidence": "high"|"medium"|"low", "scope": "focus"|"broad", "prior_office": "congress"|"state_or_local"|"none"|"unknown", "principle_vs_partisanship": "principled"|"mixed"|"partisan"|"unclear", "political_risk": "low"|"medium"|"high", "capital_risk": "low"|"medium"|"high", "bottom_line": "one sentence beginning 'Counts as anti-establishment because' or 'Does not count because'", "writeup": "a full write-up of 5-9 sentences for the public: who they are, what their record and words show on intervention, own-party defections and leadership defiance, money and donors, whether it is principle or partisanship, and how likely they are to hold under pressure", "reason": "one or two sentences", "risk_notes": "one sentence", "evidence": [{{"claim": "...", "url": "..."}}]}}"""
 
@@ -490,16 +490,24 @@ def run(people, ie, fec_cands, fec_totals=None):
                     tier = "soft"                    # a new candidate's HARD needs a citation
                 risk = {"political": res.get("political_risk"), "capital": res.get("capital_risk"),
                         "notes": (res.get("risk_notes") or "")[:240]}
-                if tier == "hard" and "high" in (risk["political"], risk["capital"]):
-                    tier = "soft"                    # pessimistic risk check: likely to fold
+                # The judge already weighs folding risk into its verdict. The tracker's own limits
+                # below can only lower it; when one does, the bottom line says so, so the page
+                # never shows "counts" next to a member who is not counted.
+                overruled = None
+                if tier == "hard" and risk["capital"] == "high":
+                    tier, overruled = "soft", "the judge rated their dependence on lobby or establishment money high"
                 if tier == "hard" and f["incumbent"] and f["focus_votes"] and not _sustained(f) and not (
                         f["anti_focus_votes"] >= 1 and f["discharge_petitions_against_own_leadership"] >= 1):
-                    tier = "soft"                    # floor: a held record, or an anti vote plus defying own leadership
+                    tier, overruled = "soft", ("their record has not held across Congresses, and they have no "
+                                               "anti-arms vote paired with defying their own leadership")
                 if tier == "hard" and not f["incumbent"] and res.get("confidence") != "high":
-                    tier = "soft"                    # a newcomer needs a confident, cited verdict
+                    tier, overruled = "soft", "a new candidate needs a high-confidence, cited verdict"
+                bl = (res.get("bottom_line") or "")[:240]
+                if overruled:
+                    bl = f"Does not count: {overruled}. (The judge leaned toward counting them; see the write-up.)"
                 verdict = {"tier": tier, "reason": (res.get("reason") or "")[:300], "evidence": ev,
                            "writeup": (res.get("writeup") or "")[:2400],
-                           "bottom_line": (res.get("bottom_line") or "")[:240],
+                           "bottom_line": bl, "overruled": overruled,
                            "principle": res.get("principle_vs_partisanship"),
                            "model": ai.LAST.get("model"), "judged_at": now_iso(),
                            "risk": risk, "scope": res.get("scope"),
