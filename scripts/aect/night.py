@@ -146,6 +146,8 @@ def apply(data, mk, people, old_data=None, now=None):
         if r.get("odds"):
             r["win_prob"] = r["odds"]["avg"]
             r["win_prob_src"] = "+".join(s["src"] for s in r["odds"]["sources"])
+        else:
+            r["win_prob"], r["win_prob_src"] = None, ""   # no who-wins market: don't show a stale side bet
         r["opponents"] = [{"name": people[k]["name"], "party": people[k].get("party"),
                            "anti": bool(people[k].get("antiArms") and people[k].get("antiTier") == "hard")}
                           for k in rivals][:4]

@@ -1436,7 +1436,7 @@ function ElectionTimeline({races, onSelect}) {
     .map(r => {
       const close = r.poll_close ? new Date(r.poll_close) : null;
       const frozen = (r.odds && r.odds.frozen) || (close && now >= close.getTime() - 60000);
-      const p = r.odds ? r.odds.avg : r.win_prob;
+      const p = r.odds ? r.odds.avg : null;
       return {...r, _p: p, _close: close, _frozen: frozen};
     })
     .sort((a,b) => {
