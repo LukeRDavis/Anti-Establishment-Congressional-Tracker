@@ -27,7 +27,7 @@ import json, os, sys, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from aect import discharge, night, establishment, ai, roster, fec, trackers, votes, enrich, positions, markets, build, results
+from aect import committees, discharge, night, establishment, ai, roster, fec, trackers, votes, enrich, positions, markets, build, results
 from aect.config import KEYS, CYCLE, CURRENT_CONGRESS, TODAY, GEMINI_PAUSED, XAI_ENABLED
 from aect.net import STREAMS, stream, now_iso, clean_url
 
@@ -176,6 +176,8 @@ def main():
         "ai_calls": ai.CALLS, "runtime_s": None,
         "incumbent_retention": votes.incumbent_retention()})
     night.apply(data, mk, people, old_data=old)         # averaged odds, poll-close freeze, results
+    print("\n[6] Committee rosters")
+    data["committees"] = committees.fetch()
     hist, n_events = history_events(old.get("members", []), data["members"])
     n_events += night.history(hist, data)
 

@@ -131,3 +131,16 @@ VOTING_STATES = {k for k in STATE_NAMES if k not in ("DC","PR","GU","VI","AS","M
 FOCUS_CATEGORY   = os.environ.get("AECT_FOCUS_CATEGORY", "arms_aid")
 FOCUS_RECIPIENTS = {c.strip().lower() for c in
                     os.environ.get("AECT_FOCUS_RECIPIENTS", "Israel").split(",") if c.strip()}
+
+
+# ── Committees tracked for each plank (tracker definition, not data) ──────────
+# Official committee codes (THOMAS ids). Membership, chairs and ranking members
+# are read live each run. "power" is procedure and money: shown with every plank.
+PLANK_COMMITTEES = {
+    "power":       {"house": ["HSRU", "HSAP", "HSWM", "HSJU"], "senate": ["SSRA", "SSAP"]},
+    "anti_arms":   {"house": ["HSFA", "HSAS"],                 "senate": ["SSFR", "SSAS"]},
+    "fiscal":      {"house": ["HSBU", "HSBA"],                 "senate": ["SSFI", "SSBU", "SSBK"]},
+    "labor":       {"house": ["HSED"],                         "senate": ["SSHR", "SSJU"]},
+    "environment": {"house": ["HSAG", "HSII"],                 "senate": ["SSAF", "SSEV"]},
+}
+ACTIVE_PLANKS = [p.strip() for p in os.environ.get("AECT_ACTIVE_PLANKS", "power,anti_arms").split(",") if p.strip()]

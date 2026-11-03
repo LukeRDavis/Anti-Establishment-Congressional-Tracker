@@ -76,12 +76,10 @@ function THRESHOLDS_FOR(chamber) {
   if (chamber === "senate") {
     const block = seats - Math.ceil(seats * 3 / 5) + 1;
     return [
-      { n:block, label:"Filibuster Bloc", color:"#a78bfa",
-        desc: block+" senators can sustain a filibuster, keeping an arms package from reaching a final vote." },
-      { n:maj, label:"Majority Control", color:"#7c3aed",
-        desc: maj+" senators can pass a Joint Resolution of Disapproval blocking a specific arms sale." },
-      { n:twoThirds, label:"Veto-Proof", color:"#6d28d9",
-        desc: twoThirds+" senators can override a presidential veto of arms restrictions." },
+      { n:block, label:"Floor Block · Filibuster", color:"#a78bfa",
+        desc: block+" senators of any party can sustain a filibuster, keeping a bill from a final vote and tying up the calendar." },
+      { n:maj, label:"Majority", color:"#7c3aed",
+        desc: maj+" senators pass or defeat anything that reaches the floor, including a Joint Resolution of Disapproval of an arms sale." },
     ];
   }
   return [
@@ -91,13 +89,11 @@ function THRESHOLDS_FOR(chamber) {
       const seated = (pc.R || 0) + (pc.D || 0) + (pc.I || 0);
       const [code, mp, ms] = (pc.R || 0) >= (pc.D || 0) ? ["R", "Republican", pc.R || 0] : ["D", "Democratic", pc.D || 0];
       const sink = seated ? ms - (Math.floor(seated / 2) + 1) + 1 : 0;
-      return sink > 0 ? [{ n:sink, party:code, label:"Rule-Vote Bloc", color:"#a78bfa",
-        desc: sink+" "+mp+" defections sink a party-line rule vote ("+ms+" of "+seated+" seated), stalling arms bills before debate." }] : [];
+      return sink > 0 ? [{ n:sink, party:code, label:"Floor Block · Rule Votes", color:"#a78bfa",
+        desc: sink+" "+mp+" defections sink a party-line rule vote ("+ms+" of "+seated+" seated), so a bill never reaches debate; any member can also force delays with quorum calls, motions to adjourn and recorded votes. Minority-party allies already vote against party-line rules, so they are shown but do not change this count." }] : [];
     })(),
-    { n:maj, label:"Majority Control", color:"#7c3aed",
-      desc: maj+" votes pass arms restrictions and defeat arms supplemental appropriations." },
-    { n:twoThirds, label:"Veto-Proof", color:"#6d28d9",
-      desc: twoThirds+" members can override a presidential veto of arms restrictions." },
+    { n:maj, label:"Majority", color:"#7c3aed",
+      desc: maj+" votes pass arms restrictions and defeat arms appropriations on the floor." },
   ];
 }
 
@@ -338,6 +334,52 @@ function ArmsBadge({member}) {
     ◈ Anti-establishment</span>`;
 }
 
+// ── Committees: can anti-establishment members stall bills, or control the committee? ──
+// Rosters come from data.json (live each run). The chair being anti-establishment is
+// significant control on its own; an anti-establishment ranking member counts as two.
+const PLANK_LABEL = {power:"procedure & money", anti_arms:"anti-arms", fiscal:"fiscal", labor:"labor", environment:"environment"};
+function CommitteeBars({chamber, members}) {
+  const list = (window._aectCommittees || []).filter(c => c.chamber === chamber);
+  if (!list.length) return null;
+  const byBg = {};
+  (members || []).forEach(m => { if (m.bioguide_id) byBg[m.bioguide_id] = m; });
+  return html`<div style=${{marginBottom:14}}>
+    <div style=${{fontSize:10,color:"#a78bfa",fontWeight:600,fontFamily:FM,marginBottom:2}}>Committee Stall</div>
+    <div style=${{fontSize:8,fontFamily:FM,color:"#4b5563",marginBottom:7,lineHeight:1.5}}>
+      Stall line (amber): the number of majority-party defections that sinks a party-line markup. Anti-establishment members of both parties are counted against it; minority members usually vote no anyway, so the majority party's anti members are the ones who tip it. Control line (white): a majority of the committee. An anti-establishment chair is significant control by itself; an anti-establishment ranking member counts as two.</div>
+    ${list.map(c => {
+      const seats = c.members.map(x => ({...x, m: byBg[x.bg]}));
+      const anti = seats.filter(x => x.m && x.m.antiArms);
+      const chair = seats.find(x => /^chair/i.test(x.title));
+      const rank = seats.find(x => /ranking/i.test(x.title));
+      const chairAnti = !!(chair && chair.m && chair.m.antiArms);
+      const score = anti.length + (rank && rank.m && rank.m.antiArms ? 1 : 0);
+      const stall = Math.max(1, c.majority - Math.floor(c.size / 2));
+      const control = Math.floor(c.size / 2) + 1;
+      const pct = n => Math.min(100, n / c.size * 100);
+      const state = chairAnti ? ["Chair is anti-establishment: significant control", "#4ade80"]
+        : score >= control ? ["Controls the committee", "#4ade80"]
+        : score >= stall ? ["Can stall bills", "#fbbf24"]
+        : [score + " of " + stall + " needed to stall", "#6b7280"];
+      return html`<div key=${c.id} style=${{marginBottom:8}}>
+        <div style=${{display:"flex",justifyContent:"space-between",gap:6,fontSize:9,fontFamily:FM,marginBottom:3}}>
+          <span style=${{color:"#d1d5db"}}>${c.name} <span style=${{color:"#4b5563"}}>· ${PLANK_LABEL[c.plank] || c.plank}</span></span>
+          <span style=${{color:state[1]}}>${state[0]}</span>
+        </div>
+        <div style=${{position:"relative",height:7,borderRadius:3,background:"#1a1d27"}}>
+          <div style=${{position:"absolute",left:0,top:0,bottom:0,width:pct(score)+"%",borderRadius:3,background:chairAnti||score>=stall?"#4ade80":"#818cf8"}}/>
+          <div title=${"Stall: " + stall} style=${{position:"absolute",left:pct(stall)+"%",top:-2,bottom:-2,width:1.5,background:"#fbbf24"}}/>
+          <div title=${"Control: " + control} style=${{position:"absolute",left:pct(control)+"%",top:-2,bottom:-2,width:1.5,background:"#f0ebe0"}}/>
+        </div>
+        <div style=${{fontSize:8,fontFamily:FM,color:"#4b5563",marginTop:2}}>
+          ${anti.length ? anti.map(x => x.m.name + (x === rank ? " (ranking ×2)" : x === chair ? " (chair)" : "")).join(", ") : "no anti-establishment members"} · ${c.size} seats, stall ${stall}, control ${control}
+          ${chair ? html` · chair ${chair.name}` : null}
+        </div>
+      </div>`;
+    })}
+  </div>`;
+}
+
 function ProgressBars({chamber, members, allMembers, challengers, racesData, polyData}) {
   // anti-establishment incumbents who will still hold the seat
   const current = members.filter(m => isHard(m) && !LEAVING.includes(m.ps)).length;
@@ -428,6 +470,8 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
         ${polyCount>0 ? html`<span style=${{color:"#4ade80"}}>· ◉ ${polyCount} live odds</span>` : null}
       </div>
 
+      <${CommitteeBars} chamber=${chamber} members=${allMembers || members}/>
+
       ${THRESHOLDS_FOR(chamber).map((th,i) => {
         // party-scoped thresholds (rule-vote bloc) count only that party's members
         const inParty = x => !th.party || (x.caucus||x.party) === th.party;
@@ -441,6 +485,7 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
         const prob    = reached ? 1 : pReach(th.n, th.party);
         const pc      = probColor(prob);
         const need    = Math.max(0, th.n-cur);
+        const allies  = th.party ? members.filter(m => isHard(m) && !LEAVING.includes(m.ps) && !inParty(m)).length : 0;
         const pTxt    = reached ? "reached" : prob < 0.01 ? "<1% by Nov "+CYCLE() : Math.round(prob*100)+"% by Nov "+CYCLE();
         const segs    = [[cur,"#818cf8",1,cur+" anti-establishment incumbents"],
                          [newHi,"#a5b4fc",.55,newHi+" new candidates likely to win"],
@@ -465,6 +510,7 @@ function ProgressBars({chamber, members, allMembers, challengers, racesData, pol
                 : cur+newHi+newLo>=th.n ? html`<span style=${{color:"#fbbf24"}}>Reachable only if new candidates win. </span>`
                 : html`<span>Needs ${need} more anti-establishment votes. </span>`}
               ${th.desc}
+              ${allies ? html`<span style=${{color:"#6b7280"}}> · ${allies} minority-party anti-establishment allies.</span>` : null}
             </div>
           </div>`;
       })}
@@ -1166,6 +1212,7 @@ function useData() {
         const d = await r.json();
 
         window._aectMeta = d.meta || {};
+        window._aectCommittees = d.committees || [];
         let memberList = d.members || [];
         // The pipeline decides (official roll calls, FEC, trackers, AI review of sources).
         // Only its "hard" verdict is anti-establishment; everything else is establishment.
