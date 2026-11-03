@@ -261,6 +261,9 @@ def _openai_compat(url, key, provider, system, prompt):
                 time.sleep(wait)
                 _LAST_CALL[provider] = time.time()
                 resp = post_json(url, payload, headers, stream_name=stream_name)
+                if not resp and LAST_HTTP_STATUS.get(stream_name) == 429:
+                    dead.add(model)          # still limited after waiting: not a per-minute blip
+                    continue
         if not resp:
             code, body = LAST_HTTP_STATUS.get(stream_name), LAST_ERROR_BODY.get(stream_name, "")
             if code == 404 or (code == 400 and "tool_use_failed" not in body) or \
