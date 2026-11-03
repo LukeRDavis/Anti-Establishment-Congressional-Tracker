@@ -221,10 +221,10 @@ def load_kalshi_races():
             break
     for st in sorted(STATE_NAMES):
         d = get_json(f"{KALSHI_API}/events?series_ticker=SENATE{st}&status=open&with_nested_markets=true",
-                     stream_name="market_kalshi_senate", retries=0)
+                     stream_name="market_kalshi_senate", retries=2)
         for ev in (d or {}).get("events", []) or []:
             take(ev)
-        time.sleep(0.05)
+        time.sleep(0.7)                       # Kalshi rate-limits bursts of requests
     stream("market_kalshi_races", ok=bool(out), count=len(out), note=f"{n_ev} House/Senate race events")
     return out
 

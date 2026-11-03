@@ -24,7 +24,7 @@ from .net import get_text, strip_html, stream, load_cache, save_cache, now_iso, 
 
 _MONTH_RE = ("(?:January|February|March|April|May|June|July|August|September|"
              "October|November|December)")
-POLL_HOURS = "https://www.thegreenpapers.com/G{yy}/PollingHours.phtml?format=p"
+POLL_HOURS = "https://www.thegreenpapers.com/G{yy}/PollingHours.phtml?format=g"
 FREEZE_BEFORE = timedelta(minutes=1)
 _MONTHS = {m: i for i, m in enumerate(["january", "february", "march", "april", "may", "june", "july",
                                          "august", "september", "october", "november", "december"], 1)}
@@ -70,7 +70,7 @@ def poll_closes(general_date):
             if "general" not in body.lower()[:80]:
                 continue
             closes = []
-            for o, c in re.findall(r"\((\d{4})\s*-\s*(\d{4})\s*UTC\)", body):
+            for o, c in re.findall(r"\((\d{4})\s*[-–—]\s*(\d{4})\s*UTC\)", body):
                 oh, ch = int(o[:2]) * 60 + int(o[2:]), int(c[:2]) * 60 + int(c[2:])
                 day = gd + timedelta(days=1) if ch <= oh else gd
                 closes.append(datetime(day.year, day.month, day.day, ch // 60, ch % 60, tzinfo=timezone.utc))
