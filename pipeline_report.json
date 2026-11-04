@@ -1,15 +1,15 @@
 {
- "run_at": "2026-11-04T12:25:38.556888+00:00",
- "runtime_s": 1607,
+ "run_at": "2026-11-04T20:13:08.514800+00:00",
+ "runtime_s": 1922,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
   "gemini": 0,
   "xai": 0,
   "openrouter": 0,
-  "groq": 9,
+  "groq": 8,
   "cerebras": 0,
-  "mistral": 37,
+  "mistral": 35,
   "failed": 1
  },
  "streams": {
@@ -94,7 +94,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "433 Representatives + 6 delegates, 2 vacancies (published October 1, 2026)"
+    "433 Representatives + 6 delegates, 2 vacancies (published November 3, 2026)"
    ]
   },
   "roster_senate": {
@@ -145,44 +145,38 @@
   "fec_candidates": {
    "ok": true,
    "count": 4353,
-   "requests": 44,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "4353 active 2026 House+Senate filers"
+    "cache fresh"
    ]
   },
   "fec_finance": {
    "ok": true,
    "count": 4120,
-   "requests": 46,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "totals for 4120 filers"
+    "cache fresh"
    ]
   },
   "trackaipac": {
    "ok": true,
-   "count": 1,
-   "requests": 2,
+   "count": 0,
+   "requests": 0,
    "failures": 0,
    "errors": [],
-   "notes": [
-    "/congress: 1 members, 0 approved",
-    "/endorsements: 0 endorsed candidates"
-   ]
+   "notes": []
   },
   "rlc": {
    "ok": true,
    "count": 283,
-   "requests": 4,
+   "requests": 0,
    "failures": 0,
    "errors": [],
-   "notes": [
-    "Liberty Index cache fresh",
-    "endorsements: 9 candidates"
-   ]
+   "notes": []
   },
   "votes_senate_voteview": {
    "ok": true,
@@ -223,13 +217,13 @@
     "circuit opened: only empty responses (blocked for this host)"
    ],
    "notes": [
-    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Isaiah_Martin | 200 0B '' ttps://ballotpedia.org/Alexander_Nicholi | 200 0B '' https://ballotpedia.org/Houston_Brignano | 200 0B '' https://ballotpedia.org/Bill_Brough | 200 0B '' https://ballotpedia.org/Joshua_Ferguson | 200 0B '' https://ballotpedia.org/John_Wick"
+    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Adonis_Hooslyn | 200 0B '' https://ballotpedia.org/Stephanie_Vargas | 200 0B '' https://ballotpedia.org/Rashida_Francis | 200 0B '' https://ballotpedia.org/Luz_Bueno | 200 0B '' https://ballotpedia.org/Javi_Andrade | 200 0B '' https://ballotpedia.org/April_Verlato"
    ]
   },
   "wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 708,
+   "requests": 704,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -237,19 +231,19 @@
   "grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 229,
+   "requests": 227,
    "failures": 0,
    "errors": [],
    "notes": []
   },
   "enrichment": {
    "ok": true,
-   "count": 1527,
+   "count": 1528,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 250/250 this run \u00b7 1527/4464 people have a bio"
+    "refreshed 250/250 this run \u00b7 1528/4464 people have a bio"
    ]
   },
   "wikipedia_results": {
@@ -309,24 +303,33 @@
     "cached",
     "cached",
     "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
     "cached"
    ]
   },
   "fec_websites": {
    "ok": true,
-   "count": 687,
-   "requests": 11,
+   "count": 690,
+   "requests": 3,
    "failures": 0,
    "errors": [],
    "notes": [
-    "looked up 11 committees \u00b7 687 campaign websites known"
+    "looked up 3 committees \u00b7 690 campaign websites known"
    ]
   },
   "campaign_sites": {
    "ok": null,
    "count": 0,
-   "requests": 85,
-   "failures": 48,
+   "requests": 83,
+   "failures": 49,
    "errors": [
     "HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA",
     "URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/",
@@ -357,13 +360,13 @@
   "ai_groq": {
    "ok": null,
    "count": 0,
-   "requests": 15,
+   "requests": 13,
    "failures": 5,
    "errors": [
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 196271, Requested 5292. Please try again in 11m15.216s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Used 834, Requested 983. Please try again in 49.019999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 3253, Requested 5039. Please try again in 2.19s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Used 3897, Requested 4202. Please try again in 9.42s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 3611, Requested 5291. Please try again in 6.765s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
     "HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"The model `canopylabs/orpheus-v1-english` requires terms acceptance. Please have the org admin accept the terms at https://console.groq.com/playground?model=canopylabs%2Forpheus-v1-english\",\"type\":\"invalid_request_error\",\"code\":\"model_terms_required\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 6454, Requested 6460. Please try again in 36.855s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
     "circuit opened: every available model failed or is over quota"
    ],
    "notes": [
@@ -377,18 +380,17 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "researched 6 this run (no_source: 1973, campaign_site_text: 5, wikipedia_text: 1) \u00b7 2685 total \u00b7 23 with cited anti-interventionist positions"
+    "researched 3 this run (no_source: 1968, campaign_site_text: 2, wikipedia_text: 1) \u00b7 2685 total \u00b7 23 with cited anti-interventionist positions"
    ]
   },
   "fec_outside_spending": {
    "ok": true,
    "count": 458,
-   "requests": 109,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 108, 457 candidates with outside-spending records",
-    "refreshed 1, 458 candidates with outside-spending records"
+    "refreshed 0, 458 candidates with outside-spending records"
    ]
   },
   "discharge_petitions": {
@@ -420,7 +422,15 @@
   "fec_employers": {
    "ok": null,
    "count": 0,
-   "requests": 36,
+   "requests": 22,
+   "failures": 0,
+   "errors": [],
+   "notes": []
+  },
+  "dossier_news_bing": {
+   "ok": null,
+   "count": 0,
+   "requests": 27,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -428,7 +438,7 @@
   "dossier_wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 6,
+   "requests": 7,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -436,20 +446,12 @@
   "ai_mistral": {
    "ok": null,
    "count": 0,
-   "requests": 38,
+   "requests": 36,
    "failures": 0,
    "errors": [],
    "notes": [
     "models available: ministral-14b-2512, ministral-14b-latest, mistral-large-4, mistral-large-4-0"
    ]
-  },
-  "dossier_news_bing": {
-   "ok": null,
-   "count": 0,
-   "requests": 11,
-   "failures": 0,
-   "errors": [],
-   "notes": []
   },
   "establishment_tiers": {
    "ok": true,
@@ -458,17 +460,17 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "56 hard \u00b7 92 soft \u00b7 judged 40 with AI this run \u00b7 verdicts from AI 148, rule 0 \u00b7 AI has reviewed 2569 of 3111 members and running candidates (661 with signals)"
+    "56 hard \u00b7 92 soft \u00b7 judged 40 with AI this run \u00b7 verdicts from AI 148, rule 0 \u00b7 AI has reviewed 2905 of 3105 members and running candidates (661 with signals)"
    ]
   },
   "market_polymarket": {
    "ok": true,
-   "count": 219,
+   "count": 201,
    "requests": 800,
    "failures": 0,
    "errors": [],
    "notes": [
-    "800 catalog pages scanned \u00b7 219 open congressional markets"
+    "800 catalog pages scanned \u00b7 201 open congressional markets"
    ]
   },
   "market_kalshi_races": {
@@ -491,32 +493,32 @@
   },
   "market_kalshi": {
    "ok": true,
-   "count": 25320,
+   "count": 25174,
    "requests": 40,
    "failures": 0,
    "errors": [],
    "notes": [
-    "40 pages \u00b7 25320 political markets"
+    "40 pages \u00b7 25174 political markets"
    ]
   },
   "market_predictit": {
    "ok": true,
-   "count": 772,
+   "count": 595,
    "requests": 1,
    "failures": 0,
    "errors": [],
    "notes": [
-    "772 live contracts"
+    "595 live contracts"
    ]
   },
   "markets": {
    "ok": true,
-   "count": 81,
+   "count": 63,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "26473 market outcomes loaded \u00b7 81 tracked people matched"
+    "26132 market outcomes loaded \u00b7 63 tracked people matched"
    ]
   },
   "election_night": {
@@ -532,11 +534,11 @@
   "committees": {
    "ok": true,
    "count": 10,
-   "requests": 2,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "10 committees for planks power, anti_arms"
+    "cached"
    ]
   }
  },
@@ -550,7 +552,7 @@
   },
   "anti_candidates": 9,
   "relevant_votes": 126,
-  "odds": 81,
+  "odds": 63,
   "history_events_added": 0
  }
 }
