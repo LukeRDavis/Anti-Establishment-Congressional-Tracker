@@ -36,6 +36,11 @@ def main(ref):
             continue
         merged, taken = dict(mine), 0
         for k, v in theirs.items():
+            # an odds snapshot taken at or after its race's poll close is never a valid freeze
+            close = (v.get("close") if isinstance(v, dict) else None) or \
+                ((merged.get(k) or {}).get("close") if isinstance(merged.get(k), dict) else None)
+            if close and _stamp(v) >= close:
+                continue
             if k not in merged or _stamp(v) > _stamp(merged.get(k)):
                 merged[k] = v
                 taken += 1

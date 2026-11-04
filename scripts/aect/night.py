@@ -134,23 +134,20 @@ def apply(data, mk, people, old_data=None, now=None):
         fresh = odds_summary(mk.get(r["id"]), stage,
                              same_party_rival=any(people[k].get("party") == r.get("party") for k in rivals))
         old = (old_races.get(r["id"]) or {}).get("odds")
-        snap = snaps.get(r["id"])
-        if snap and (not old or (old.get("at") or "") < (snap.get("at") or "")):
-            old = snap                       # the snapshot file survives a stale data.json
         cdt = _parse_dt(close) if close else None
         if stage == "general" and cdt and now >= cdt - FREEZE_BEFORE:
-            # polls are about to close or closed: keep the last pre-close snapshot
-            if old and (_parse_dt(old.get("at")) or now) < cdt:
-                r["odds"] = {**old, "frozen": True}
-            elif fresh and (old is None):
-                r["odds"] = None              # first seen after close: not a pre-close price
-            else:
-                r["odds"] = old
+            # polls are about to close or closed: the latest snapshot taken BEFORE the close,
+            # from the snapshot file or the previous data.json; a later price never qualifies
+            valid = [o for o in (snaps.get(r["id"]), old)
+                     if o and o.get("at") and _parse_dt(o["at"]) and _parse_dt(o["at"]) < cdt]
+            best = max(valid, key=lambda o: o["at"]) if valid else None
+            r["odds"] = {**{k: v for k, v in best.items() if k != "close"}, "frozen": True} if best else None
             frozen += 1
         else:
             r["odds"] = fresh
             if fresh and stage == "general":
-                snaps[r["id"]] = fresh       # latest pre-close price for this race
+                # latest pre-close price; the close time lets the cache merge reject later ones
+                snaps[r["id"]] = {**fresh, "close": close}
         if r.get("odds"):
             r["win_prob"] = r["odds"]["avg"]
             r["win_prob_src"] = "+".join(s["src"] for s in r["odds"]["sources"])
