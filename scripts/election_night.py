@@ -61,7 +61,7 @@ def main():
             p.pop("general_result_source", None)
 
     mk = markets.match_people({k: people[k] for k in race_ids if k in people})
-    night.apply(data, mk, people, old_data=_load("data.json", {}), now=now)
+    night.apply(data, mk, people, old_data=_load("data.json", {}))   # clock read after markets load
 
     by_name = {p["name"]: p for p in people.values() if p.get("incumbent")}
     for m in data.get("members", []):
