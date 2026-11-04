@@ -1,13 +1,13 @@
 {
- "run_at": "2026-11-04T01:21:17.671653+00:00",
- "runtime_s": 1419,
+ "run_at": "2026-11-04T02:07:13.673281+00:00",
+ "runtime_s": 1416,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
   "gemini": 0,
   "xai": 0,
   "openrouter": 0,
-  "groq": 2,
+  "groq": 9,
   "cerebras": 0,
   "mistral": 37,
   "failed": 1
@@ -209,21 +209,19 @@
    ]
   },
   "ballotpedia": {
-   "ok": false,
-   "count": 0,
-   "requests": 17,
-   "failures": 1,
-   "errors": [
-    "circuit opened: only empty responses (blocked for this host)"
-   ],
+   "ok": true,
+   "count": 37,
+   "requests": 676,
+   "failures": 0,
+   "errors": [],
    "notes": [
-    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Billy_Mawhiney | 200 0B '' https://ballotpedia.org/Troy_Green | 200 0B '' https://ballotpedia.org/Sean_Pond | 200 0B '' https://ballotpedia.org/Leah_Toomim | 200 0B '' https://ballotpedia.org/Zurit_Horowitz | 200 0B '' //ballotpedia.org/Galvin_Deleon_Guerrero"
+    "outcomes {'matched': 37, 'no_page': 639} \u00b7 probes: 200 136313B 'Ericka Kopp - Ballotpedia' https://ballotpedia.org/Ericka_Kopp | 200 166902B 'Damon Galdo - Ballotpedia' https://ballotpedia.org/Damon_Galdo | 404 https://ballotpedia.org/Mario_Morales | 200 53581B 'Eric Cunningham - Ballotpedia' https://ballotpedia.org/Eric_Cunningham | 200 169557B 'Terry Jackson - Ballotpedia' https://ballotpedia.org/Terry_Jackson | 200 146634B 'Ernie Rivera - Ballotpedia' https://ballotpedia.org/Ernest_Rivera"
    ]
   },
   "wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 706,
+   "requests": 708,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -231,19 +229,19 @@
   "grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 228,
+   "requests": 229,
    "failures": 0,
    "errors": [],
    "notes": []
   },
   "enrichment": {
    "ok": true,
-   "count": 1525,
+   "count": 1526,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 250/250 this run \u00b7 1525/4464 people have a bio"
+    "refreshed 250/250 this run \u00b7 1526/4464 people have a bio"
    ]
   },
   "wikipedia_results": {
@@ -269,8 +267,8 @@
   "campaign_sites": {
    "ok": null,
    "count": 0,
-   "requests": 73,
-   "failures": 45,
+   "requests": 83,
+   "failures": 47,
    "errors": [
     "HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA",
     "URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/",
@@ -301,13 +299,13 @@
   "ai_groq": {
    "ok": null,
    "count": 0,
-   "requests": 9,
+   "requests": 14,
    "failures": 5,
    "errors": [
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 4724, Requested 6805. Please try again in 26.4675s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Used 3389, Requested 5058. Please try again in 12.402857142s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 4905, Requested 4380. Please try again in 9.6375s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Used 2630, Requested 4681. Please try again in 2.665714285s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 3740, Requested 4808. Please try again in 4.11s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
     "HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"The model `canopylabs/orpheus-v1-english` requires terms acceptance. Please have the org admin accept the terms at https://console.groq.com/playground?model=canopylabs%2Forpheus-v1-english\",\"type\":\"invalid_request_error\",\"code\":\"model_terms_required\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 3858, Requested 7051. Please try again in 21.8175s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
     "circuit opened: every available model failed or is over quota"
    ],
    "notes": [
@@ -321,7 +319,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "researched 1 this run (no_source: 2001, wikipedia_text: 1) \u00b7 2685 total \u00b7 22 with cited anti-interventionist positions"
+    "researched 6 this run (no_source: 1995, campaign_site_text: 5, wikipedia_text: 1) \u00b7 2685 total \u00b7 23 with cited anti-interventionist positions"
    ]
   },
   "fec_outside_spending": {
@@ -347,7 +345,7 @@
   "dossier_wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 16,
+   "requests": 6,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -368,28 +366,36 @@
    "errors": [],
    "notes": []
   },
+  "fec_employers": {
+   "ok": null,
+   "count": 0,
+   "requests": 36,
+   "failures": 0,
+   "errors": [],
+   "notes": []
+  },
+  "dossier_ballotpedia": {
+   "ok": null,
+   "count": 0,
+   "requests": 1,
+   "failures": 0,
+   "errors": [],
+   "notes": []
+  },
   "ai_mistral": {
    "ok": null,
    "count": 0,
-   "requests": 40,
+   "requests": 39,
    "failures": 0,
    "errors": [],
    "notes": [
     "models available: ministral-14b-2512, ministral-14b-latest, mistral-large-4, mistral-large-4-0"
    ]
   },
-  "fec_employers": {
-   "ok": null,
-   "count": 0,
-   "requests": 28,
-   "failures": 0,
-   "errors": [],
-   "notes": []
-  },
   "dossier_news_bing": {
    "ok": null,
    "count": 0,
-   "requests": 4,
+   "requests": 17,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -401,7 +407,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "55 hard \u00b7 92 soft \u00b7 judged 40 with AI this run \u00b7 verdicts from AI 147, rule 0 \u00b7 AI has reviewed 602 of 3139 members and running candidates (669 with signals)"
+    "55 hard \u00b7 92 soft \u00b7 judged 40 with AI this run \u00b7 verdicts from AI 147, rule 0 \u00b7 AI has reviewed 901 of 3139 members and running candidates (670 with signals)"
    ]
   },
   "market_polymarket": {
@@ -416,12 +422,12 @@
   },
   "market_kalshi_races": {
    "ok": true,
-   "count": 776,
+   "count": 698,
    "requests": 2,
    "failures": 0,
    "errors": [],
    "notes": [
-    "383 House/Senate race events"
+    "344 House/Senate race events"
    ]
   },
   "market_kalshi_senate": {
@@ -434,12 +440,12 @@
   },
   "market_kalshi": {
    "ok": true,
-   "count": 25487,
+   "count": 25505,
    "requests": 40,
    "failures": 0,
    "errors": [],
    "notes": [
-    "40 pages \u00b7 25487 political markets"
+    "40 pages \u00b7 25505 political markets"
    ]
   },
   "market_predictit": {
@@ -454,12 +460,12 @@
   },
   "markets": {
    "ok": true,
-   "count": 393,
+   "count": 390,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "28063 market outcomes loaded \u00b7 393 tracked people matched"
+    "28003 market outcomes loaded \u00b7 390 tracked people matched"
    ]
   },
   "poll_closes": {
@@ -479,7 +485,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "45 races frozen at poll close \u00b7 0 called"
+    "64 races frozen at poll close \u00b7 0 called"
    ]
   },
   "committees": {
@@ -503,7 +509,7 @@
   },
   "anti_candidates": 8,
   "relevant_votes": 126,
-  "odds": 393,
+  "odds": 390,
   "history_events_added": 0
  }
 }
