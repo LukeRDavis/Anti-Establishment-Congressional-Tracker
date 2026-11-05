@@ -100,7 +100,7 @@ def facts(p, ie):
         "party_defections_to_anti": len(dfx),
         "bills_on_arms_aid_war": p.get("_bills", []),
         "defection_examples": [f"{v['date']} {v['measure']}: {v['summary'][:110]}" for v in dfx[-6:]],
-        "incumbent": bool(p.get("incumbent")),
+        "incumbent": bool(p.get("incumbent")), "chamber": p.get("chamber"),
         "focus_votes": len(focus), "anti_focus_votes": len(anti),
         "party_line_anti_votes_not_counted": len(anti_all) - len(anti),
         "anti_congresses": congs, "first_anti_vote": anti[0]["date"] if anti else None,
@@ -166,32 +166,48 @@ def _sustained(f):
             and (f["anti_ratio"] or 0) >= 0.6 and f["record_held_in_latest_congress"])
 
 
+def meets_floor(f):
+    """The coalition's stated minimum for a sitting member to be considered at all: at least one
+    anti-arms vote that broke from their own party, plus a recorded act of going around their own
+    leadership (a discharge petition; in the Senate, which has none, a second such vote).
+    Meeting it makes a member eligible; whether they count is the judge's call."""
+    defied = f["discharge_petitions_against_own_leadership"] >= 1 or (
+        f.get("chamber") == "senate" and f["anti_focus_votes"] >= 2)
+    return f["anti_focus_votes"] >= 1 and defied
+
+
 def rule_tier(f, p):
-    """Conservative fallback when no AI is available: hard needs a record that has cost something."""
-    if not p.get("antiArms"):
-        # screened in on broader signals: shown as soft (never counted) until an AI verdict says more
-        if f["party_defections_to_anti"] >= DEFECTION_MIN:
-            return "soft", f"broke from their own party toward the anti side on {f['party_defections_to_anti']} foreign-policy votes"
-        if f["rlc_endorsed"] or f["trackaipac_endorsed"]:
-            return "soft", "endorsed by an anti-establishment tracker; stance not yet corroborated"
-        if (p.get("position_research") or {}).get("anti_interventionist"):
-            return "soft", "cited anti-interventionist statements, not on the focus issue"
-        return "none", "no anti-establishment signal found yet"
+    """Conservative fallback until the AI has reviewed someone: counts only a sustained record.
+    The reason always says, in plain words, what the record shows and why it does or doesn't count."""
     funded = f["lobby_money_trackaipac"] >= LOBBY_LIMIT or f["lobby_outside_support"] > 0
     if f["incumbent"] and f["focus_votes"]:
-        sustained = _sustained(f)
-        if sustained and not funded and not f["all_anti_within_year_before_primary"]:
-            return "hard", "anti on the focus votes across more than one Congress and still holding, without focus-lobby money"
-        why = ("lobby-funded" if funded
-               else "anti votes not kept up in the latest Congress" if f["anti_focus_votes"] >= 2 and not f["record_held_in_latest_congress"]
-               else "anti record is recent or one-off" if not sustained
-               else "anti votes only in the year before a primary")
-        return "soft", why
+        a, n = f["anti_focus_votes"], f["focus_votes"]
+        record = (f"anti on {a} of {n} arms-aid votes that broke from their own party"
+                  + (f" ({f['latest_congress_focus']})" if f.get("latest_congress_focus") else ""))
+        if _sustained(f) and not funded and not f["all_anti_within_year_before_primary"]:
+            return "hard", record + ", held across Congresses, with no focus-lobby money"
+        why = ("they take focus-lobby money" if funded
+               else "the anti record did not hold in the latest Congress" if a >= 1 and not f["record_held_in_latest_congress"]
+               else "the anti votes came only in the year before a primary" if a and f["all_anti_within_year_before_primary"]
+               else "the anti record is one-off or limited to one Congress" if a
+               else "no anti vote on arms aid that broke from their own party")
+        floor = " Meets the coalition's minimum (an anti vote plus a discharge petition), so it awaits the AI judge's call." \
+            if meets_floor(f) else ""
+        return ("soft" if a or p.get("antiArms") else "none"), f"{record}; not counted because {why}.{floor}"
+    if not p.get("antiArms"):
+        if f["party_defections_to_anti"] >= DEFECTION_MIN:
+            return "soft", (f"broke from their party on {f['party_defections_to_anti']} foreign-policy votes, but has no "
+                            "arms-aid record yet; awaiting the AI judge")
+        if f["rlc_endorsed"] or f["trackaipac_endorsed"]:
+            return "soft", "endorsed by an anti-establishment tracker, but not yet corroborated by a record, donors or statements"
+        if (p.get("position_research") or {}).get("anti_interventionist"):
+            return "soft", "has cited anti-interventionist statements, but none on arms aid to the focus recipients"
+        return "none", "no anti-establishment signal found yet"
     # never served in Congress (or no focus votes cast): need corroboration beyond their own words
     targeted = f["lobby_outside_oppose"] > 0 or f["trackaipac_endorsed"]
     if targeted and not funded and (p.get("position_research") or {}).get("strength") == "strong":
         return "hard", "strong cited statements, endorsed by or targeted over the issue, no lobby money"
-    return "soft", "statements not yet corroborated by record, donors or trackers"
+    return "soft", "statements not yet corroborated by a record, donors or trackers"
 
 
 # ── Dossier (free sources) ───────────────────────────────────────────────────
@@ -513,7 +529,8 @@ def run(people, ie, fec_cands, fec_totals=None):
         was_hard = old.get("tier") == "hard"
         if judged_ai:                        # already reviewed: the oldest verdict is next in line
             return (True, old.get("judged_at") or old.get("at") or "")
-        return (False, "", not was_hard, not p.get("antiArms"), not p.get("_signal"), not p.get("incumbent"))
+        floor = p.get("incumbent") and meets_floor(facts(p, ie))
+        return (False, "", not floor, not was_hard, not p.get("antiArms"), not p.get("_signal"), not p.get("incumbent"))
     keys.sort(key=prio)
     judged = 0
     counts = {"hard": 0, "soft": 0, "none": 0}
@@ -552,12 +569,9 @@ def run(people, ie, fec_cands, fec_totals=None):
                 # floor for a sitting member: a held record across Congresses, or an anti vote plus
                 # a recorded act of defying their own leadership (House: discharge petitions;
                 # Senate, which has none: breaking with their own party on two or more arms votes)
-                defied = f["discharge_petitions_against_own_leadership"] >= 1 or (
-                    p.get("chamber") == "senate" and f["anti_focus_votes"] >= 2)
-                if tier == "hard" and f["incumbent"] and f["focus_votes"] and not _sustained(f) and not (
-                        f["anti_focus_votes"] >= 1 and defied and f["record_held_in_latest_congress"]):
+                if tier == "hard" and f["incumbent"] and f["focus_votes"] and not _sustained(f) and not meets_floor(f):
                     tier, overruled = "soft", ("their record has not held across Congresses, and they have no "
-                                               "anti-arms vote paired with defying their own leadership")
+                                               "anti-arms vote paired with going around their own leadership")
                 if tier == "hard" and not f["incumbent"] and res.get("confidence") != "high":
                     tier, overruled = "soft", "a new candidate needs a high-confidence, cited verdict"
                 bl = (res.get("bottom_line") or "")[:240]
