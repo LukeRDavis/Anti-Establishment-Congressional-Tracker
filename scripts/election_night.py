@@ -84,6 +84,9 @@ def main():
     n = night.history(hist, data)
     hist["updated_at"] = now_iso()
 
+    from aect.net import load_cache
+    if (load_cache("reform") or {}).get("items"):
+        data["reform"] = load_cache("reform")   # keep the electoral-reform data on the page
     data["meta"]["streams_night"] = {k: {"ok": v["ok"], "count": v["count"]} for k, v in STREAMS.items()}
     _write("data.json", data)
     _write("candidates.json", {**_load("candidates.json", {}), "people": people})

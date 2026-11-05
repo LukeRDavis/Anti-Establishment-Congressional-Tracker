@@ -10,7 +10,7 @@ Sources, read fresh each week:
 The free AI models turn those texts into structured entries; every entry must cite one
 of the source URLs it was given. Nothing about any state or measure is written here.
 """
-import json, re, urllib.parse
+import hashlib, json, re, urllib.parse
 
 from . import ai
 from .establishment import _news_query
@@ -56,7 +56,9 @@ def _extract(title):
 
 def fetch():
     cache = load_cache("reform")
-    if age_hours(cache.get("at")) < TTL_H and cache.get("items"):
+    # a complete set is kept for a week; a partial one (the free AI quota ran out partway)
+    # is completed on the next pass, keeping what was already extracted
+    if age_hours(cache.get("at")) < (0.5 if cache.get("partial") else TTL_H) and cache.get("items"):
         stream("reform", ok=True, count=len(cache["items"]), note="cached")
         return cache
     chunks = []
@@ -77,10 +79,19 @@ def fetch():
                 rows.append((link, line))
         chunks.append(("news", [l for l, _ in rows[:40]],
                        "\n".join(f"{line} — {link}" for link, line in rows[:40])))
-    items = []
+    done = set(cache.get("done_chunks", [])) if cache.get("partial") else set()
+    items = list(cache.get("items", [])) if cache.get("partial") else []
+    failed = 0
     for title, urls, text in chunks:
+        cid = f"{title}|{hashlib.sha1(text.encode()).hexdigest()[:12]}"
+        if cid in done:
+            continue
         prompt = f"Source: {title}\nURLs you may cite: {', '.join(urls)}\n\nText:\n{text}"
         res, _, provider = ai.ask_json(SYSTEM, prompt)
+        if not isinstance(res, dict):
+            failed += 1
+            continue
+        done.add(cid)
         for it in (res or {}).get("items", []) if isinstance(res, dict) else []:
             if not isinstance(it, dict) or not it.get("state") or not it.get("system"):
                 continue
@@ -100,8 +111,9 @@ def fetch():
             best[key] = it
     items = sorted(best.values(), key=lambda x: (x["state"], x["status"], x["system"]))
     if items:
-        cache = {"at": now_iso(), "items": items, "sources": [u for _, us, _ in chunks for u in us][:60]}
+        cache = {"at": now_iso(), "items": items, "sources": [u for _, us, _ in chunks for u in us][:60],
+                 "partial": failed > 0, "done_chunks": sorted(done)}
         save_cache("reform", cache)
     stream("reform", ok=bool(items), count=len(items),
-           note=f"{len(items)} items from {len(chunks)} source texts")
+           note=f"{len(items)} items from {len(chunks)} source texts" + (f" · {failed} still to read" if failed else ""))
     return cache if cache.get("items") else {"items": []}
