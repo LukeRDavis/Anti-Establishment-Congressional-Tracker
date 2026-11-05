@@ -1,0 +1,19 @@
+{
+ "updated_at": "2026-11-05T12:21:51.496978+00:00",
+ "first": 107,
+ "current": 119,
+ "congresses": [
+  {
+   "congress": 107,
+   "years": [
+    2001,
+    2002
+   ],
+   "anti": {
+    "house": 0,
+    "senate": 0
+   }
+  }
+ ],
+ "remaining": 11
+}
