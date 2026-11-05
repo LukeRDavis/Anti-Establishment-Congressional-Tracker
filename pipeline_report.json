@@ -1,16 +1,16 @@
 {
- "run_at": "2026-11-05T11:45:40.308364+00:00",
- "runtime_s": 3129,
+ "run_at": "2026-11-05T12:52:03.014727+00:00",
+ "runtime_s": 3840,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
   "gemini": 0,
   "xai": 0,
-  "openrouter": 1,
-  "groq": 5,
+  "openrouter": 0,
+  "groq": 4,
   "cerebras": 0,
   "mistral": 0,
-  "failed": 28
+  "failed": 47
  },
  "streams": {
   "key:CONGRESS_KEY": {
@@ -217,7 +217,7 @@
     "circuit opened: only empty responses (blocked for this host)"
    ],
    "notes": [
-    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Josh_McConkey | 200 0B '' https://ballotpedia.org/Siddhanth_Sharma | 200 0B '' https://ballotpedia.org/Ralph_Scott | 200 0B '' https://ballotpedia.org/Eugene_Douglass | 200 0B '' https://ballotpedia.org/Steven_Welzer | 200 0B '' https://ballotpedia.org/Guy_Meilleur"
+    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Steven_Welzer | 200 0B '' https://ballotpedia.org/Josh_McConkey | 200 0B '' https://ballotpedia.org/Guy_Meilleur | 200 0B '' https://ballotpedia.org/Eugene_Douglass | 200 0B '' https://ballotpedia.org/Ralph_Scott | 200 0B '' https://ballotpedia.org/Siddhanth_Sharma"
    ]
   },
   "wikipedia": {
@@ -263,6 +263,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
+    "cached",
     "cached",
     "cached",
     "cached",
@@ -374,13 +375,13 @@
   "ai_groq": {
    "ok": null,
    "count": 0,
-   "requests": 14,
+   "requests": 10,
    "failures": 5,
    "errors": [
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 5504, Requested 5566. Please try again in 23.025s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Used 560, Requested 907. Please try again in 28.02s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"The model `canopylabs/orpheus-arabic-saudi` requires terms acceptance. Please have the org admin accept the terms at https://console.groq.com/playground?model=canopylabs%2Forpheus-arabic-saudi\",\"type\":\"invalid_request_error\",\"code\":\"model_terms_required\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 5233, Requested 5526. Please try again in 20.6925s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 197206, Requested 5469. Please try again in 19m15.6s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Used 4608, Requested 6019. Please try again in 31.088571428s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"The model `canopylabs/orpheus-v1-english` requires terms acceptance. Please have the org admin accept the terms at https://console.groq.com/playground?model=canopylabs%2Forpheus-v1-english\",\"type\":\"invalid_request_error\",\"code\":\"model_terms_required\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 5178, Requested 5617. Please try again in 20.9625s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
     "circuit opened: every available model failed or is over quota"
    ],
    "notes": [
@@ -420,7 +421,7 @@
   "dossier_wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 26,
+   "requests": 28,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -428,7 +429,7 @@
   "dossier_grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 31,
+   "requests": 35,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -436,7 +437,7 @@
   "dossier_news_google": {
    "ok": null,
    "count": 0,
-   "requests": 62,
+   "requests": 77,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -444,8 +445,8 @@
   "ai_mistral": {
    "ok": null,
    "count": 0,
-   "requests": 74,
-   "failures": 17,
+   "requests": 116,
+   "failures": 23,
    "errors": [
     "HTTP 429 https://api.mistral.ai/v1/chat/completions :: {\"object\":\"error\",\"message\":\"Rate limit exceeded\",\"type\":\"rate_limited\",\"param\":null,\"code\":\"1300\",\"raw_status_code\":429}"
    ],
@@ -456,7 +457,7 @@
   "ai_openrouter": {
    "ok": null,
    "count": 0,
-   "requests": 4,
+   "requests": 3,
    "failures": 2,
    "errors": [
     "HTTP 403 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/6619b713cb913fe695150853ca187fb336606604e7f0c0e23d73ccdec7fe03ae $0.00 of $0.00 used; does not reset.\",\"code\":403,\"metadata\":{\"limit_source\":\"openrouter_key_limit\",\"remedy_hint\":\"Raise or remove this API key's usage limit at https://openrouter.ai/settings/keys, or use a key without ",
@@ -468,12 +469,12 @@
   },
   "establishment_tiers": {
    "ok": true,
-   "count": 121,
+   "count": 122,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "121 hard \u00b7 26 soft \u00b7 judged 31 with AI this run \u00b7 verdicts from AI 4, rule 143 \u00b7 AI has reviewed 3097 of 3097 members and running candidates (658 with signals)"
+    "122 hard \u00b7 25 soft \u00b7 judged 35 with AI this run \u00b7 verdicts from AI 2, rule 145 \u00b7 AI has reviewed 3097 of 3097 members and running candidates (658 with signals)"
    ]
   },
   "market_polymarket": {
@@ -534,6 +535,36 @@
     "26061 market outcomes loaded \u00b7 51 tracked people matched"
    ]
   },
+  "market_kalshi_settled": {
+   "ok": true,
+   "count": 697,
+   "requests": 115,
+   "failures": 0,
+   "errors": [],
+   "notes": [
+    "697 settled race outcomes"
+   ]
+  },
+  "market_settlements": {
+   "ok": true,
+   "count": 839,
+   "requests": 0,
+   "failures": 0,
+   "errors": [],
+   "notes": [
+    "787 candidates called by settled markets, 52 with markets disagreeing"
+   ]
+  },
+  "results_cross_check": {
+   "ok": true,
+   "count": 776,
+   "requests": 0,
+   "failures": 0,
+   "errors": [],
+   "notes": [
+    "called by both 32 \u00b7 Wikipedia only 29 \u00b7 markets only 715 \u00b7 conflicting 0"
+   ]
+  },
   "election_night": {
    "ok": true,
    "count": 110,
@@ -541,7 +572,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "87 races frozen at poll close \u00b7 2 called"
+    "87 races frozen at poll close \u00b7 83 called"
    ]
   },
   "committees": {
@@ -552,6 +583,24 @@
    "errors": [],
    "notes": [
     "cached"
+   ]
+  },
+  "reform_wikipedia": {
+   "ok": null,
+   "count": 0,
+   "requests": 5,
+   "failures": 0,
+   "errors": [],
+   "notes": []
+  },
+  "reform": {
+   "ok": false,
+   "count": 0,
+   "requests": 0,
+   "failures": 0,
+   "errors": [],
+   "notes": [
+    "0 items from 13 source texts"
    ]
   }
  },
@@ -566,6 +615,6 @@
   "anti_candidates": 8,
   "relevant_votes": 126,
   "odds": 51,
-  "history_events_added": 82
+  "history_events_added": 86
  }
 }

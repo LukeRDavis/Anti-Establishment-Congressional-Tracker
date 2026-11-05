@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-05T11:45:41.489371+00:00",
+ "generated_at": "2026-11-05T12:52:04.157740+00:00",
  "challengers": [
   {
    "name": "Mai Vang",
@@ -23,6 +23,8 @@
    "primary_result": "WON",
    "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_California",
    "general_result": null,
+   "general_result_by": null,
+   "result_conflict": null,
    "endorsed_by": [
     "trackaipac_endorsed"
    ],
@@ -37,6 +39,7 @@
    "principle": null,
    "judged_model": null,
    "judged_at": null,
+   "confidence": null,
    "discharge_petitions": [],
    "tier_facts": {
     "focus_votes": 0,
@@ -72,7 +75,9 @@
    "primaryDate": "2026-06-30",
    "primary_result": "WON",
    "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Colorado",
-   "general_result": null,
+   "general_result": "WON",
+   "general_result_by": "market",
+   "result_conflict": null,
    "endorsed_by": [
     "trackaipac_endorsed"
    ],
@@ -87,6 +92,7 @@
    "principle": null,
    "judged_model": null,
    "judged_at": null,
+   "confidence": null,
    "discharge_petitions": [],
    "tier_facts": {
     "focus_votes": 0,
@@ -122,7 +128,9 @@
    "primaryDate": "2026-08-18",
    "primary_result": "WON",
    "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Florida",
-   "general_result": null,
+   "general_result": "LOST",
+   "general_result_by": "market",
+   "result_conflict": null,
    "endorsed_by": [
     "trackaipac_endorsed"
    ],
@@ -137,6 +145,7 @@
    "principle": null,
    "judged_model": null,
    "judged_at": null,
+   "confidence": null,
    "discharge_petitions": [],
    "tier_facts": {
     "focus_votes": 0,
@@ -172,7 +181,9 @@
    "primaryDate": "2026-08-04",
    "primary_result": "WON",
    "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Michigan",
-   "general_result": null,
+   "general_result": "WON",
+   "general_result_by": "market",
+   "result_conflict": null,
    "endorsed_by": [
     "trackaipac_endorsed"
    ],
@@ -187,6 +198,7 @@
    "principle": null,
    "judged_model": null,
    "judged_at": null,
+   "confidence": null,
    "discharge_petitions": [],
    "tier_facts": {
     "focus_votes": 0,
@@ -223,6 +235,8 @@
    "primary_result": "WON",
    "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_New_York",
    "general_result": null,
+   "general_result_by": null,
+   "result_conflict": null,
    "endorsed_by": [
     "trackaipac_endorsed"
    ],
@@ -237,6 +251,7 @@
    "principle": null,
    "judged_model": null,
    "judged_at": null,
+   "confidence": null,
    "discharge_petitions": [],
    "tier_facts": {
     "focus_votes": 0,
@@ -272,7 +287,9 @@
    "primaryDate": "2026-06-09",
    "primary_result": "WON",
    "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_South_Carolina",
-   "general_result": null,
+   "general_result": "LOST",
+   "general_result_by": "market",
+   "result_conflict": null,
    "endorsed_by": [],
    "antiTier": "soft",
    "tier_source": "rule",
@@ -285,6 +302,7 @@
    "principle": null,
    "judged_model": null,
    "judged_at": null,
+   "confidence": null,
    "discharge_petitions": [],
    "tier_facts": {
     "focus_votes": 0,
@@ -321,6 +339,8 @@
    "primary_result": "WON",
    "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_California",
    "general_result": null,
+   "general_result_by": null,
+   "result_conflict": null,
    "endorsed_by": [
     "trackaipac_endorsed"
    ],
@@ -335,6 +355,7 @@
    "principle": null,
    "judged_model": null,
    "judged_at": null,
+   "confidence": null,
    "discharge_petitions": [],
    "tier_facts": {
     "focus_votes": 0,
@@ -371,6 +392,8 @@
    "primary_result": "WON",
    "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_Massachusetts",
    "general_result": null,
+   "general_result_by": null,
+   "result_conflict": null,
    "endorsed_by": [],
    "antiTier": "soft",
    "tier_source": "rule",
@@ -383,6 +406,7 @@
    "principle": null,
    "judged_model": null,
    "judged_at": null,
+   "confidence": null,
    "discharge_petitions": [],
    "tier_facts": {
     "focus_votes": 0,
