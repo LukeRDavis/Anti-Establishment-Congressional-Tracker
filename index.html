@@ -732,6 +732,17 @@ function factsWriteup(m) {
   return out.join(" ");
 }
 
+// Who called a race: Wikipedia's posted result, settled prediction markets, or both
+const CALLED_BY = {both: "confirmed by Wikipedia and settled markets", wikipedia: "per Wikipedia's results",
+                   market: "called by settled prediction markets; awaiting Wikipedia"};
+function ResultLine({m}) {
+  if (m.result_conflict) return html`<div style=${{fontSize:9,fontFamily:FM,color:"#fbbf24",marginBottom:8}}>⚠ Not called: ${m.result_conflict}</div>`;
+  if (!m.general_result) return null;
+  const won = m.general_result === "WON";
+  return html`<div style=${{fontSize:9.5,fontFamily:FM,color:won?"#4ade80":"#f87171",marginBottom:8}}>
+    ${won ? "Won" : "Lost"} the ${GENERAL_DATE().slice(0,4)} general election${m.general_result_by ? " · " + CALLED_BY[m.general_result_by] : ""}</div>`;
+}
+
 function Verdict({member}) {
   const anti = !!member.antiArms;
   const col = anti ? (side(member)==="R" ? COL.antiR : COL.antiD) : "#9ca3af";
@@ -798,6 +809,7 @@ function DetailPanel({member, fecData, polyData, bills, chamber, races}) {
         <${StatusBadge} ps=${member.ps||"INCUMBENT"} prob=${poly?.prob}/>
       </div>
 
+      <${ResultLine} m=${member}/>
       <${Verdict} member=${member}/>
 
       ${votes.length>0?html`
@@ -1587,7 +1599,9 @@ function Candidates({members, races, onSelect}) {
               ${p.confidence != null ? html`<span style=${{fontFamily:FM,fontSize:8.5,color:"#4b5563"}}> · confidence ${p.confidence}</span>` : null}</div>
           </div>
           <div style=${{textAlign:"right",minWidth:62}}>
-            ${p._gres ? html`<span style=${{fontSize:10,fontWeight:700,fontFamily:FM,padding:"2px 7px",borderRadius:4,background:p._gres==="WON"?"#14532d":"#450a0a",color:p._gres==="WON"?"#4ade80":"#f87171"}}>${p._gres}</span>`
+            ${p._gres ? html`<span title=${CALLED_BY[p.general_result_by || p._race.general_result_by] || ""} style=${{fontSize:10,fontWeight:700,fontFamily:FM,padding:"2px 7px",borderRadius:4,background:p._gres==="WON"?"#14532d":"#450a0a",color:p._gres==="WON"?"#4ade80":"#f87171"}}>${p._gres}</span>
+              ${(p.general_result_by || p._race.general_result_by) === "market" ? html`<div style=${{fontSize:7.5,fontFamily:FM,color:"#6b7280",marginTop:2}}>market call</div>` : null}`
+              : p.result_conflict ? html`<span style=${{fontSize:8.5,fontFamily:FM,color:"#fbbf24"}}>sources disagree</span>`
               : o ? html`<div style=${{fontSize:14,fontWeight:700,fontFamily:FM,color:o.avg>=0.6?"#4ade80":o.avg>=0.4?"#fbbf24":"#f87171"}}>${Math.round(o.avg*100)}%</div>
                   <div style=${{fontSize:8,fontFamily:FM,color:"#4b5563"}}>${o.frozen ? "at poll close" : o.n + " market" + (o.n>1?"s":"")}</div>` : null}
           </div>

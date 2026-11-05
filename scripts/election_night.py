@@ -55,23 +55,29 @@ def main():
             continue                          # nothing is called before that state's polls close
         r = results.result_for(p, cache)
         if r["general"] and p.get("primary_result") != "LOST":
-            p["general_result"], p["general_result_source"] = r["general"], r["source"]
+            p["wiki_result"], p["general_result_source"] = r["general"], r["source"]
         else:
-            p.pop("general_result", None)     # no posted winner (or an earlier misread): not called
-            p.pop("general_result_source", None)
+            p.pop("wiki_result", None)        # no posted winner (or an earlier misread)
 
-    mk = markets.match_people({k: people[k] for k in race_ids if k in people})
+
+    markets.SETTLED.clear()
+    mk = markets.match_people({k: people[k] for k in race_ids if k in people})   # also collects settled Polymarket markets
+    # second source for results: settled who-wins markets, cross-checked against Wikipedia
+    markets.load_kalshi_settled()
+    night.cross_check(people, markets.settlements(subset), closes)
     night.apply(data, mk, people, old_data=_load("data.json", {}))   # clock read after markets load
 
     for c in data.get("field", []):           # candidates' results, for the Next Congress view
         p = people.get(c.get("id"))
         if p is not None:
             c["general_result"] = p.get("general_result")
+            c["general_result_by"], c["result_conflict"] = p.get("general_result_by"), p.get("result_conflict")
     by_name = {p["name"]: p for p in people.values() if p.get("incumbent")}
     for m in data.get("members", []):
         p = by_name.get(m["name"])
         if p:
             m["general_result"] = p.get("general_result")
+            m["general_result_by"], m["result_conflict"] = p.get("general_result_by"), p.get("result_conflict")
             if p.get("general_result") == "LOST":
                 m["ps"] = "DEFEATED"
     hist = _load("history.json", {"events": []})

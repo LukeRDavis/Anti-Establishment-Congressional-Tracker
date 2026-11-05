@@ -182,6 +182,10 @@ def main():
     mk = markets.match_people({k: p for k, p in people.items() if p.get("on_ballot")
                                and (p["antiArms"] or p.get("incumbent"))})
 
+    # results: Wikipedia (already applied) cross-checked against settled who-wins markets
+    markets.load_kalshi_settled()
+    night.cross_check(people, markets.settlements(people),
+                      night.poll_closes(str(build.general_election_day(CYCLE))))
     history = votes.congress_history(relevant)
     from aect.gitsync import latest_json
     old = latest_json("data.json", {})                  # newest copy: keeps frozen odds and fresh verdicts

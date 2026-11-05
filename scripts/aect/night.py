@@ -161,6 +161,7 @@ def apply(data, mk, people, old_data=None, now=None):
         elif p.get("general_result"):
             r["general_result"] = p["general_result"]
             r["general_result_source"] = p.get("general_result_source")
+            r["general_result_by"] = p.get("general_result_by")
             called += 1
     save_cache("odds_snapshots", snaps)
     meta = data.setdefault("meta", {})
@@ -209,3 +210,49 @@ def history(hist, data):
                        "source": r.get("general_result_source") or "wikipedia"})
         added += 1
     return added
+
+
+def cross_check(people, settled, closes, now=None):
+    """Combine Wikipedia's result (already in p['general_result']) with settled markets.
+      both agree        -> called, confirmed by both
+      only one has it   -> called by that source (a market call is marked unconfirmed)
+      they disagree     -> not called; flagged for review
+    Nothing counts before the state's polls close or for someone who lost their primary."""
+    now = now or datetime.now(timezone.utc)
+    stats = {"both": 0, "wikipedia": 0, "market": 0, "conflict": 0}
+    for k, p in people.items():
+        if p.get("primary_result") == "LOST" or not p.get("on_ballot"):
+            continue
+        close = closes.get(p.get("state"))
+        if not close or now < datetime.fromisoformat(close):
+            continue
+        wiki = p.get("wiki_result")
+        m = settled.get(k) or {}
+        mkt = m.get("result")
+        if m.get("conflict"):
+            mkt = None
+        if wiki and mkt and wiki != mkt:
+            p.pop("general_result", None)
+            p["general_result_by"], p["result_conflict"] = None, f"Wikipedia says {wiki}, settled markets say {mkt}"
+            stats["conflict"] += 1
+            continue
+        p.pop("result_conflict", None)
+        if wiki and mkt:
+            p["general_result"], p["general_result_by"] = wiki, "both"
+            stats["both"] += 1
+        elif wiki:
+            p["general_result"], p["general_result_by"] = wiki, "wikipedia"
+            stats["wikipedia"] += 1
+        elif mkt:
+            p["general_result"], p["general_result_by"] = mkt, "market"
+            p["general_result_source"] = (m.get("sources") or [{}])[0].get("url")
+            stats["market"] += 1
+        else:
+            p.pop("general_result", None)
+            p["general_result_by"] = None
+        p["market_settlement"] = m.get("sources")
+    stream("results_cross_check", ok=True, count=sum(stats.values()),
+           note=f"called by both {stats['both']} · Wikipedia only {stats['wikipedia']} · "
+                f"markets only {stats['market']} · conflicting {stats['conflict']}")
+    return stats
+

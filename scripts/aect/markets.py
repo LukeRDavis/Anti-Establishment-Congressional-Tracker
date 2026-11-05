@@ -125,11 +125,20 @@ def load_polymarket(max_pages=800):
         if not d:
             break
         for m in d.get("data", []) or []:
-            if m.get("closed") or not m.get("active", True):
-                continue
             q = m.get("question", "")
             if "congress" not in q.lower() and "house" not in q.lower() and "senate" not in q.lower() \
                and "primary" not in q.lower() and "district" not in q.lower():
+                continue
+            if m.get("closed"):
+                # a settled market: the token marked winner says how the race was called
+                won = next((t for t in m.get("tokens", []) or [] if t.get("winner")), None)
+                if won and (won.get("outcome") or "").lower() in ("yes", "no") and str(CYCLE) in (
+                        m.get("end_date_iso") or m.get("game_start_time") or q + str(CYCLE)):
+                    SETTLED.append({"src": "polymarket", "market": q, "outcome": "Yes",
+                                    "yes_won": won["outcome"].lower() == "yes",
+                                    "url": f"https://polymarket.com/event/{m.get('market_slug','')}"})
+                continue
+            if not m.get("active", True):
                 continue
             yes = next((t for t in m.get("tokens", []) or [] if (t.get("outcome") or "").lower() == "yes"), None)
             if not yes:
@@ -187,6 +196,84 @@ def load_kalshi(max_pages=40):
             break
         time.sleep(0.1)
     stream("market_kalshi", ok=pages > 0, count=len(out), note=f"{pages} pages · {len(out)} political markets")
+    return out
+
+
+# settled who-wins markets (filled by the loaders): how a race was called by the markets
+SETTLED = []
+
+
+def load_kalshi_settled():
+    """Settled Kalshi House/Senate who-wins markets for this cycle: result 'yes' = that candidate won."""
+    n = 0
+
+    def take(ev):
+        nonlocal n
+        if str(CYCLE)[2:] not in (ev.get("event_ticker") or "") and str(CYCLE) not in (ev.get("sub_title") or ""):
+            return
+        for m in ev.get("markets", []) or []:
+            res = (m.get("result") or "").lower()
+            if res in ("yes", "no") and m.get("yes_sub_title"):
+                SETTLED.append({"src": "kalshi", "market": f"{ev.get('title','')} {ev.get('sub_title','')}".strip(),
+                                "outcome": m["yes_sub_title"], "yes_won": res == "yes",
+                                "url": f"https://kalshi.com/markets/{(ev.get('series_ticker') or '').lower()}"})
+                n += 1
+    for status in ("settled", "closed"):
+        cursor, pages = "", 0
+        while pages < 10:
+            d = get_json(f"{KALSHI_API}/events?series_ticker=KXHOUSERACE&status={status}&with_nested_markets=true&limit=200"
+                         + (f"&cursor={cursor}" if cursor else ""), stream_name="market_kalshi_settled")
+            if not d:
+                break
+            for ev in d.get("events", []) or []:
+                take(ev)
+            cursor, pages = d.get("cursor") or "", pages + 1
+            if not cursor:
+                break
+        for st in sorted(STATE_NAMES):
+            d = get_json(f"{KALSHI_API}/events?series_ticker=SENATE{st}&status={status}&with_nested_markets=true",
+                         stream_name="market_kalshi_settled", retries=2)
+            for ev in (d or {}).get("events", []) or []:
+                take(ev)
+            time.sleep(0.7)
+    stream("market_kalshi_settled", ok=True, count=n, note=f"{n} settled race outcomes")
+
+
+def settlements(people):
+    """{key: {"result": "WON"|"LOST", "sources": [...], "conflict": bool}} from settled markets.
+    Only who-wins markets for this person's general-election race count."""
+    if not SETTLED:
+        return {}
+    by_last = {}
+    for c in SETTLED:
+        for tok in _words(c["outcome"] if c["src"] == "kalshi" else c["market"]):
+            by_last.setdefault(tok, []).append(c)
+    out = {}
+    for key, p in people.items():
+        if not p.get("on_ballot") or p.get("primary_result") == "LOST":
+            continue
+        votes = []
+        for c in by_last.get(_last_token(p), []):
+            if stage(c["market"]) != "general":
+                continue
+            if c["src"] == "kalshi":
+                if not matches(c["outcome"] + " " + c["market"], p) or _last_token(p) not in _words(c["outcome"]):
+                    continue
+            elif not matches(c["market"], p):
+                continue
+            votes.append(("WON" if c["yes_won"] else "LOST", c))
+        for c in SETTLED:                   # Polymarket party-seat markets name no candidate
+            if c["src"] == "polymarket" and party_seat_match(c["market"], p):
+                votes.append(("WON" if c["yes_won"] else "LOST", c))
+        if not votes:
+            continue
+        results = {v for v, _ in votes}
+        out[key] = {"result": votes[0][0] if len(results) == 1 else None, "conflict": len(results) > 1,
+                    "sources": [{"src": c["src"], "market": c["market"][:140], "url": c["url"], "said": v}
+                                for v, c in votes][:4]}
+    stream("market_settlements", ok=True, count=len(out),
+           note=f"{sum(1 for v in out.values() if v['result'])} candidates called by settled markets, "
+                f"{sum(1 for v in out.values() if v['conflict'])} with markets disagreeing")
     return out
 
 

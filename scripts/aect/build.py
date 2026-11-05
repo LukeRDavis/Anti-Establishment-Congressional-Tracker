@@ -178,6 +178,7 @@ def apply_status(people, enrichment, calendar, fec_cands, results=None):
                 p["primary_result"] = r["primary"]
                 p["primary_result_source"] = r["source"]
             if r["general"] and _polls_closed(p) and p.get("primary_result") != "LOST":
+                p["wiki_result"] = r["general"]
                 p["general_result"] = r["general"]
                 p["general_result_source"] = r["source"]
 
@@ -325,7 +326,8 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
                 "website": p.get("website", ""), "fec_ids": p.get("fec_ids", []),
                 "primaryDate": p.get("primary_date"), "primary_result": p.get("primary_result"),
                 "primary_result_source": p.get("primary_result_source"),
-                "general_result": p.get("general_result"),
+                "general_result": p.get("general_result"), "general_result_by": p.get("general_result_by"),
+                "result_conflict": p.get("result_conflict"),
                 "endorsed_by": [s for s in p.get("sources", []) if s.endswith("endorsed")],
                 # hard = reliable, counted toward thresholds; soft = shown, not counted
                 "antiTier": p.get("antiTier"), "tier_source": p.get("tier_source"),
@@ -376,6 +378,7 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
                       "district": (p.get("seeking") or {}).get("district", p.get("district")),
                       "anti": bool(p.get("antiArms") and p.get("antiTier") in (None, "hard")),
                       "primary_result": p.get("primary_result"), "general_result": p.get("general_result"),
+                      "general_result_by": p.get("general_result_by"), "result_conflict": p.get("result_conflict"),
                       "primary_date": p.get("primary_date"),
                       "bottom_line": p.get("tier_bottom_line") or "", "tier_reason": p.get("tier_reason") or "",
                       "writeup": p.get("tier_writeup", ""), "judged_model": p.get("tier_model"),
