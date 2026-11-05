@@ -1,23 +1,23 @@
 {
- "generated_at": "2026-11-04T20:13:09.766487+00:00",
+ "generated_at": "2026-11-05T01:07:33.879002+00:00",
  "challengers": [
   {
-   "name": "Mai Vang",
+   "name": "Angelica Duenas",
    "party": "D",
    "state": "CA",
-   "district": 7,
+   "district": 29,
    "chamber": "house",
    "antiArms": true,
    "antiArmsLevel": "yes",
    "antiArmsBasis": "statements",
    "evidence": [
-    "She'll push to ban the sale of weapons used to carry out genocide. (https://www.maiforus.com/)"
+    "I will never vote to send U.S. weapons or military aid to Israel. (https://angelica4congress.com/)"
    ],
    "ps": "WON",
-   "note": "She'll push to ban the sale of weapons used to carry out genocide. (https://www.maiforus.com/)",
-   "website": "https://www.maiforus.com/",
+   "note": "I will never vote to send U.S. weapons or military aid to Israel. (https://angelica4congress.com/)",
+   "website": "https://angelica4congress.com/",
    "fec_ids": [
-    "H6CA07175"
+    "H8CA29100"
    ],
    "primaryDate": "2026-06-02",
    "primary_result": "WON",
@@ -28,19 +28,28 @@
    ],
    "antiTier": "soft",
    "tier_source": "ai:mistral",
-   "tier_reason": "No roll-call votes, bills, or leadership defiance on intervention; endorsed by AIPAC-aligned groups in a competitive race; rhetoric untested by action.",
-   "tier_evidence": [],
+   "tier_reason": "No legislative record, no defiance of party leadership, and TrackAIPAC endorsement despite a single campaign statement.",
+   "tier_evidence": [
+    {
+     "claim": "Candidate explicitly states she will not support U.S. military aid to Israel.",
+     "url": "https://angelica4congress.com/"
+    },
+    {
+     "claim": "TrackAIPAC endorsed the candidate.",
+     "url": "https://angelica4congress.com/"
+    }
+   ],
    "tier_risk": {
-    "capital": "low",
-    "notes": "High political risk in a district where foreign policy is a defining issue, but no evidence of principled defiance yet.",
-    "political": "medium"
+    "capital": "medium",
+    "notes": "High political risk due to lack of proven anti-establishment action; medium capital risk due to no clear ties to interventionist donors.",
+    "political": "high"
    },
    "tier_screen": "marked anti on the focus issue by votes or statements",
-   "writeup": "Mai Vang is a Sacramento City Council member running for Congress in California\u2019s 7th District, where she has positioned herself as an anti-war candidate opposing arms sales used in genocide and rejecting AIPAC money. While her rhetoric aligns with the coalition\u2019s focus issue, her record lacks any concrete votes or legislative actions on foreign policy, arms sales, or military aid\u2014critical markers of reliability. Her endorsement by AIPAC-aligned groups (despite not being TrackAIPAC-approved) and the presence of pro-Israel spending targeting her opponent suggest she is not immune to establishment pressures. Vang\u2019s local record is progressive on social issues, but her foreign policy stance remains unproven in a congressional setting. Without a history of defying her party\u2019s leadership or sponsoring anti-intervention measures, she cannot yet be counted as a reliable ally. Her donors are largely local and non-controversial, but the absence of a track record on interventionism leaves her untested under pressure.",
-   "bottom_line": "Does not count because her anti-intervention statements are untested by votes or leadership defiance, and she is endorsed by AIPAC-aligned groups in a high-stakes race.",
+   "writeup": "Angelica Duenas is a Democratic congressional candidate from California\u2019s 29th district who has explicitly stated she will not support U.S. military aid to Israel. While this stance aligns with the coalition\u2019s anti-intervention priorities, it is a single campaign pledge without any legislative record, party defections, or leadership defiance to back it up. Her endorsement by TrackAIPAC\u2014despite the stated position\u2014undercuts credibility, as it suggests either a lack of consistency or a willingness to compromise under pressure. Additionally, her donor list includes no overtly pro-intervention or military-industrial complex contributors, but the absence of anti-establishment signals (such as co-sponsorships, discharge petitions, or votes against foreign aid) leaves her position untested. Without a track record of breaking with party leadership or opposing arms transfers in practice, her stance remains unproven. Until she demonstrates a willingness to risk her political career on principle\u2014such as voting against party-backed foreign aid or defying her own leadership\u2014she cannot be counted as a reliable ally.",
+   "bottom_line": "Does not count because she has no legislative record, no defiance of party leadership, and is endorsed by TrackAIPAC despite a single campaign statement opposing military aid to Israel.",
    "principle": "unclear",
    "judged_model": "ministral-14b-2512",
-   "judged_at": "2026-11-03T21:26:29.881009+00:00",
+   "judged_at": "2026-11-03T21:27:37.634977+00:00",
    "discharge_petitions": [],
    "tier_facts": {
     "focus_votes": 0,
@@ -95,65 +104,6 @@
    "principle": "principled",
    "judged_model": "ministral-14b-2512",
    "judged_at": "2026-11-03T21:26:46.639075+00:00",
-   "discharge_petitions": [],
-   "tier_facts": {
-    "focus_votes": 0,
-    "anti_focus_votes": 0,
-    "anti_congresses": [],
-    "latest_congress_focus": null,
-    "lobby_money_trackaipac": 0,
-    "lobby_outside_support": 0,
-    "lobby_outside_oppose": 0,
-    "discharge_petitions_against_own_leadership": 0,
-    "party_defections_to_anti": 0
-   },
-   "source": "fec+trackaipac_endorsed"
-  },
-  {
-   "name": "Robert People",
-   "party": "D",
-   "state": "FL",
-   "district": 15,
-   "chamber": "house",
-   "antiArms": true,
-   "antiArmsLevel": "yes",
-   "antiArmsBasis": "statements",
-   "evidence": [
-    "No AIPAC No arms shipments to Israel (https://www.peopleforcongress.com/)"
-   ],
-   "ps": "WON",
-   "note": "No AIPAC No arms shipments to Israel (https://www.peopleforcongress.com/)",
-   "website": "https://www.peopleforcongress.com/",
-   "fec_ids": [
-    "H6FL15168"
-   ],
-   "primaryDate": "2026-08-18",
-   "primary_result": "WON",
-   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Florida",
-   "general_result": null,
-   "endorsed_by": [
-    "trackaipac_endorsed"
-   ],
-   "antiTier": "soft",
-   "tier_source": "ai:mistral",
-   "tier_reason": "No roll-call votes, no leadership defiance, and a **TrackAIPAC endorsement** despite anti-Israel arms statements. Principle unproven; establishment ties confirmed.",
-   "tier_evidence": [
-    {
-     "claim": "Candidate explicitly states 'no arms shipments to Israel' and 'no AIPAC money' on campaign website.",
-     "url": "https://www.peopleforcongress.com/"
-    }
-   ],
-   "tier_risk": {
-    "capital": "high",
-    "notes": "Primary victory does not equal legislative reliability\u2014TrackAIPAC endorsement is a red flag for future votes.",
-    "political": "high"
-   },
-   "tier_screen": "marked anti on the focus issue by votes or statements",
-   "writeup": "Robert People is a Democratic candidate for Florida\u2019s 15th Congressional District who has explicitly stated opposition to arms shipments to Israel and AIPAC money. However, this is the only evidence of anti-intervention principle, and it is contradicted by his **TrackAIPAC endorsement**\u2014a clear signal of alignment with the foreign-policy establishment. Without a legislative record, defiance of party leadership, or consistent opposition to foreign-aid or war-powers grabs, his stance remains untested. His top donors include **Verizon** and **Victory Oil**, industries that benefit from the status quo, and his lack of prior elected office means no track record of breaking with party orthodoxy. The **TrackAIPAC endorsement** alone disqualifies him as a reliable anti-establishment ally, regardless of campaign rhetoric. Until he votes against arms to Israel or foreign-aid packages in Congress\u2014and defies his own party to do so\u2014his position is performative at best.",
-   "bottom_line": "Does not count because there is no legislative record or defiance of leadership to confirm anti-intervention principle, and the candidate is endorsed by TrackAIPAC despite explicit statements.",
-   "principle": "unclear",
-   "judged_model": "ministral-14b-2512",
-   "judged_at": "2026-11-03T21:26:56.683369+00:00",
    "discharge_petitions": [],
    "tier_facts": {
     "focus_votes": 0,
@@ -239,7 +189,7 @@
    "evidence": [
     "Little\u2019s campaign platform includes overturning *Citizens United*, banning congressional stock trading, and creating a publicly financed campaign system\u2014aligning with anti-establishment priorities. (https://en.wikipedia.org/wiki/Matt_Little)"
    ],
-   "ps": "WON",
+   "ps": "ELECTED",
    "note": "Little\u2019s **explicit, consistent opposition to U.S. aid to Israel**, rejection of AIPAC/lobby funding, and principled stance on corporate money in politics\u2014combined with his primary",
    "website": "",
    "fec_ids": [
@@ -248,7 +198,7 @@
    "primaryDate": "2026-08-11",
    "primary_result": "WON",
    "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Minnesota",
-   "general_result": null,
+   "general_result": "WON",
    "endorsed_by": [],
    "antiTier": "hard",
    "tier_source": "ai:mistral",
@@ -344,6 +294,119 @@
    "source": "fec+trackaipac_endorsed"
   },
   {
+   "name": "Robert People",
+   "party": "D",
+   "state": "FL",
+   "district": 15,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "yes",
+   "antiArmsBasis": "statements",
+   "evidence": [
+    "No AIPAC No arms shipments to Israel (https://www.peopleforcongress.com/)"
+   ],
+   "ps": "WON",
+   "note": "No AIPAC No arms shipments to Israel (https://www.peopleforcongress.com/)",
+   "website": "https://www.peopleforcongress.com/",
+   "fec_ids": [
+    "H6FL15168"
+   ],
+   "primaryDate": "2026-08-18",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Florida",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "ai:mistral",
+   "tier_reason": "No roll-call votes, no leadership defiance, and a **TrackAIPAC endorsement** despite anti-Israel arms statements. Principle unproven; establishment ties confirmed.",
+   "tier_evidence": [
+    {
+     "claim": "Candidate explicitly states 'no arms shipments to Israel' and 'no AIPAC money' on campaign website.",
+     "url": "https://www.peopleforcongress.com/"
+    }
+   ],
+   "tier_risk": {
+    "capital": "high",
+    "notes": "Primary victory does not equal legislative reliability\u2014TrackAIPAC endorsement is a red flag for future votes.",
+    "political": "high"
+   },
+   "tier_screen": "marked anti on the focus issue by votes or statements",
+   "writeup": "Robert People is a Democratic candidate for Florida\u2019s 15th Congressional District who has explicitly stated opposition to arms shipments to Israel and AIPAC money. However, this is the only evidence of anti-intervention principle, and it is contradicted by his **TrackAIPAC endorsement**\u2014a clear signal of alignment with the foreign-policy establishment. Without a legislative record, defiance of party leadership, or consistent opposition to foreign-aid or war-powers grabs, his stance remains untested. His top donors include **Verizon** and **Victory Oil**, industries that benefit from the status quo, and his lack of prior elected office means no track record of breaking with party orthodoxy. The **TrackAIPAC endorsement** alone disqualifies him as a reliable anti-establishment ally, regardless of campaign rhetoric. Until he votes against arms to Israel or foreign-aid packages in Congress\u2014and defies his own party to do so\u2014his position is performative at best.",
+   "bottom_line": "Does not count because there is no legislative record or defiance of leadership to confirm anti-intervention principle, and the candidate is endorsed by TrackAIPAC despite explicit statements.",
+   "principle": "unclear",
+   "judged_model": "ministral-14b-2512",
+   "judged_at": "2026-11-03T21:26:56.683369+00:00",
+   "discharge_petitions": [],
+   "tier_facts": {
+    "focus_votes": 0,
+    "anti_focus_votes": 0,
+    "anti_congresses": [],
+    "latest_congress_focus": null,
+    "lobby_money_trackaipac": 0,
+    "lobby_outside_support": 0,
+    "lobby_outside_oppose": 0,
+    "discharge_petitions_against_own_leadership": 0,
+    "party_defections_to_anti": 0
+   },
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Mai Vang",
+   "party": "D",
+   "state": "CA",
+   "district": 7,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "yes",
+   "antiArmsBasis": "statements",
+   "evidence": [
+    "She'll push to ban the sale of weapons used to carry out genocide. (https://www.maiforus.com/)"
+   ],
+   "ps": "WON",
+   "note": "She'll push to ban the sale of weapons used to carry out genocide. (https://www.maiforus.com/)",
+   "website": "https://www.maiforus.com/",
+   "fec_ids": [
+    "H6CA07175"
+   ],
+   "primaryDate": "2026-06-02",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_California",
+   "general_result": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "ai:mistral",
+   "tier_reason": "No roll-call votes, bills, or leadership defiance on intervention; endorsed by AIPAC-aligned groups in a competitive race; rhetoric untested by action.",
+   "tier_evidence": [],
+   "tier_risk": {
+    "capital": "low",
+    "notes": "High political risk in a district where foreign policy is a defining issue, but no evidence of principled defiance yet.",
+    "political": "medium"
+   },
+   "tier_screen": "marked anti on the focus issue by votes or statements",
+   "writeup": "Mai Vang is a Sacramento City Council member running for Congress in California\u2019s 7th District, where she has positioned herself as an anti-war candidate opposing arms sales used in genocide and rejecting AIPAC money. While her rhetoric aligns with the coalition\u2019s focus issue, her record lacks any concrete votes or legislative actions on foreign policy, arms sales, or military aid\u2014critical markers of reliability. Her endorsement by AIPAC-aligned groups (despite not being TrackAIPAC-approved) and the presence of pro-Israel spending targeting her opponent suggest she is not immune to establishment pressures. Vang\u2019s local record is progressive on social issues, but her foreign policy stance remains unproven in a congressional setting. Without a history of defying her party\u2019s leadership or sponsoring anti-intervention measures, she cannot yet be counted as a reliable ally. Her donors are largely local and non-controversial, but the absence of a track record on interventionism leaves her untested under pressure.",
+   "bottom_line": "Does not count because her anti-intervention statements are untested by votes or leadership defiance, and she is endorsed by AIPAC-aligned groups in a high-stakes race.",
+   "principle": "unclear",
+   "judged_model": "ministral-14b-2512",
+   "judged_at": "2026-11-03T21:26:29.881009+00:00",
+   "discharge_petitions": [],
+   "tier_facts": {
+    "focus_votes": 0,
+    "anti_focus_votes": 0,
+    "anti_congresses": [],
+    "latest_congress_focus": null,
+    "lobby_money_trackaipac": 0,
+    "lobby_outside_support": 0,
+    "lobby_outside_oppose": 0,
+    "discharge_petitions_against_own_leadership": 0,
+    "party_defections_to_anti": 0
+   },
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
    "name": "John Vincent",
    "party": "D",
    "state": "SC",
@@ -394,69 +457,6 @@
     "party_defections_to_anti": 0
    },
    "source": "fec"
-  },
-  {
-   "name": "Angelica Duenas",
-   "party": "D",
-   "state": "CA",
-   "district": 29,
-   "chamber": "house",
-   "antiArms": true,
-   "antiArmsLevel": "yes",
-   "antiArmsBasis": "statements",
-   "evidence": [
-    "I will never vote to send U.S. weapons or military aid to Israel. (https://angelica4congress.com/)"
-   ],
-   "ps": "WON",
-   "note": "I will never vote to send U.S. weapons or military aid to Israel. (https://angelica4congress.com/)",
-   "website": "https://angelica4congress.com/",
-   "fec_ids": [
-    "H8CA29100"
-   ],
-   "primaryDate": "2026-06-02",
-   "primary_result": "WON",
-   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_California",
-   "general_result": null,
-   "endorsed_by": [
-    "trackaipac_endorsed"
-   ],
-   "antiTier": "soft",
-   "tier_source": "ai:mistral",
-   "tier_reason": "No legislative record, no defiance of party leadership, and TrackAIPAC endorsement despite a single campaign statement.",
-   "tier_evidence": [
-    {
-     "claim": "Candidate explicitly states she will not support U.S. military aid to Israel.",
-     "url": "https://angelica4congress.com/"
-    },
-    {
-     "claim": "TrackAIPAC endorsed the candidate.",
-     "url": "https://angelica4congress.com/"
-    }
-   ],
-   "tier_risk": {
-    "capital": "medium",
-    "notes": "High political risk due to lack of proven anti-establishment action; medium capital risk due to no clear ties to interventionist donors.",
-    "political": "high"
-   },
-   "tier_screen": "marked anti on the focus issue by votes or statements",
-   "writeup": "Angelica Duenas is a Democratic congressional candidate from California\u2019s 29th district who has explicitly stated she will not support U.S. military aid to Israel. While this stance aligns with the coalition\u2019s anti-intervention priorities, it is a single campaign pledge without any legislative record, party defections, or leadership defiance to back it up. Her endorsement by TrackAIPAC\u2014despite the stated position\u2014undercuts credibility, as it suggests either a lack of consistency or a willingness to compromise under pressure. Additionally, her donor list includes no overtly pro-intervention or military-industrial complex contributors, but the absence of anti-establishment signals (such as co-sponsorships, discharge petitions, or votes against foreign aid) leaves her position untested. Without a track record of breaking with party leadership or opposing arms transfers in practice, her stance remains unproven. Until she demonstrates a willingness to risk her political career on principle\u2014such as voting against party-backed foreign aid or defying her own leadership\u2014she cannot be counted as a reliable ally.",
-   "bottom_line": "Does not count because she has no legislative record, no defiance of party leadership, and is endorsed by TrackAIPAC despite a single campaign statement opposing military aid to Israel.",
-   "principle": "unclear",
-   "judged_model": "ministral-14b-2512",
-   "judged_at": "2026-11-03T21:27:37.634977+00:00",
-   "discharge_petitions": [],
-   "tier_facts": {
-    "focus_votes": 0,
-    "anti_focus_votes": 0,
-    "anti_congresses": [],
-    "latest_congress_focus": null,
-    "lobby_money_trackaipac": 0,
-    "lobby_outside_support": 0,
-    "lobby_outside_oppose": 0,
-    "discharge_petitions_against_own_leadership": 0,
-    "party_defections_to_anti": 0
-   },
-   "source": "fec+trackaipac_endorsed"
   },
   {
    "name": "Joseph Tache",
