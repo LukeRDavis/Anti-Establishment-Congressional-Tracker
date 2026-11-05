@@ -13,7 +13,7 @@ import json, os, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 os.environ.setdefault("AECT_AI_DEADLINE_MIN", "40")
-os.environ.setdefault("AECT_TIER_BUDGET", "150")
+os.environ.setdefault("AECT_TIER_BUDGET", "400")
 os.environ.setdefault("AECT_BILLS_BUDGET", "60")
 os.environ.setdefault("AECT_HEADLINE_BUDGET", "60")
 
@@ -46,6 +46,7 @@ def verdict_fields(p):
         "tier_screen": p.get("tier_screen"), "writeup": p.get("tier_writeup", ""),
         "bottom_line": p.get("tier_bottom_line", ""), "principle": p.get("tier_principle"),
         "judged_model": p.get("tier_model"), "judged_at": p.get("tier_judged_at"),
+        "confidence": p.get("tier_confidence"),
     }
 
 
@@ -65,7 +66,7 @@ def patch(data, people):
         if not p:
             continue
         counted, f = verdict_fields(p)
-        c.update({k: f[k] for k in ("writeup", "bottom_line", "judged_model", "judged_at", "tier_source")})
+        c.update({k: f[k] for k in ("writeup", "bottom_line", "judged_model", "judged_at", "tier_source", "confidence")})
         c["tier_reason"], c["anti"] = f["tier_reason"], counted
     for r in data.get("races", []):
         p = people.get(r.get("id"))

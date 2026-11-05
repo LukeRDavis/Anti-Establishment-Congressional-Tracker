@@ -41,6 +41,8 @@ from .net import (get_text, get_json, stream, load_cache, save_cache, now_iso, a
 JUDGE_VERSION = 6
 TTL_H = float(os.environ.get("AECT_TIER_TTL_H", str(24 * 7)))
 BUDGET = int(os.environ.get("AECT_TIER_BUDGET", "40"))
+# once everyone due has been reviewed, verdicts at least this old are re-reviewed with spare capacity
+REREVIEW_H = float(os.environ.get("AECT_REREVIEW_H", "6"))
 # breaking from one's own party toward the anti side this many times screens a member in
 DEFECTION_MIN = int(os.environ.get("AECT_DEFECTION_MIN", "3"))
 # an independent / third-party candidate who has raised this much is screened in as an outsider
@@ -144,6 +146,17 @@ def mark_party_line(people, relevant, chamber_party):
             share = min(100, round(100 * anti / size))
             v["own_party_share"] = share
             v["party_line"] = share > 50
+
+
+def _conf_index(res):
+    """0-100 confidence in a verdict: the judge's number, or its high/medium/low word."""
+    try:
+        v = int(float(res.get("confidence_index")))
+        if 0 <= v <= 100:
+            return v
+    except (TypeError, ValueError):
+        pass
+    return {"high": 85, "medium": 60, "low": 35}.get(str(res.get("confidence") or "").lower())
 
 
 def _sustained(f):
@@ -331,12 +344,13 @@ Verdicts:
 - NONE = establishment, no meaningful anti-establishment signal.
 Most people are SOFT or NONE. When in doubt, do not count them.
 
-Use ONLY the facts and sources given; do not use outside knowledge. Never state a number, date, vote or event that is not in the facts or sources below; if something is unknown, say it is unknown. Cite dossier or roll-call URLs for claims. Make the bottom line agree with the tier you give.
+Use ONLY the facts and sources given; do not use outside knowledge. Never state a number, date, vote or event that is not in the facts or sources below; if something is unknown, say it is unknown. Cite dossier or roll-call URLs for claims. Make the bottom line agree with the tier you give. Write plain text: no Markdown, asterisks or other formatting marks.
+If a previous verdict is given, re-examine the record from scratch: keep it if the record still supports it, change it if not, and say in the write-up what changed.
 Respond with JSON only:
-{{"tier": "hard"|"soft"|"none", "confidence": "high"|"medium"|"low", "scope": "focus"|"broad", "prior_office": "congress"|"state_or_local"|"none"|"unknown", "principle_vs_partisanship": "principled"|"mixed"|"partisan"|"unclear", "political_risk": "low"|"medium"|"high", "capital_risk": "low"|"medium"|"high", "bottom_line": "one sentence beginning 'Counts as anti-establishment because' or 'Does not count because'", "writeup": "a full write-up of 5-9 sentences for the public: who they are, what their record and words show on intervention, own-party defections and leadership defiance, money and donors, whether it is principle or partisanship, and how likely they are to hold under pressure", "reason": "one or two sentences", "risk_notes": "one sentence", "evidence": [{{"claim": "...", "url": "..."}}]}}"""
+{{"tier": "hard"|"soft"|"none", "confidence": "high"|"medium"|"low", "confidence_index": 0-100 (how sure you are of THIS verdict given how complete and consistent the record is: 90+ only for a long, unambiguous record), "scope": "focus"|"broad", "prior_office": "congress"|"state_or_local"|"none"|"unknown", "principle_vs_partisanship": "principled"|"mixed"|"partisan"|"unclear", "political_risk": "low"|"medium"|"high", "capital_risk": "low"|"medium"|"high", "bottom_line": "one sentence beginning 'Counts as anti-establishment because' or 'Does not count because'", "writeup": "a full write-up of 5-9 sentences for the public: who they are, what their record and words show on intervention, own-party defections and leadership defiance, money and donors, whether it is principle or partisanship, and how likely they are to hold under pressure", "reason": "one or two sentences", "risk_notes": "one sentence", "evidence": [{{"claim": "...", "url": "..."}}]}}"""
 
 
-def _prompt(p, f, text, emp):
+def _prompt(p, f, text, emp, prev=None):
     seat = f"{p.get('state')}-{p.get('district')}" if p.get("chamber") == "house" else f"{p.get('state')} Senate"
     votes = [f"{v['date']} {v['measure']}: {v['position']} ({'anti' if v['anti'] else 'pro'}"
              f"{'; PARTY-LINE: ' + str(v.get('own_party_share')) + '% of their own party voted the same way, not counted as principle' if v.get('party_line') else ''}"
@@ -349,6 +363,9 @@ def _prompt(p, f, text, emp):
              "Focus roll calls (oldest first):\n" + ("\n".join(votes) or "none cast"),
              "Top donor employers this cycle: " + ("; ".join(emp) or "not available"),
              "Dossier:\n" + (text or "(no sources found)")]
+    if prev and prev.get("source", "").startswith("ai"):
+        lines.append(f"Previous verdict ({(prev.get('judged_at') or prev.get('at') or '')[:10]}, "
+                     f"{prev.get('model') or prev.get('source')}): {prev.get('tier')} — {prev.get('bottom_line') or prev.get('reason')}")
     return "\n\n".join(lines)
 
 
@@ -494,7 +511,9 @@ def run(people, ie, fec_cands, fec_totals=None):
         p, old = people[k], cache.get(k) or {}
         judged_ai = old.get("v") == JUDGE_VERSION and old.get("source", "").startswith("ai")
         was_hard = old.get("tier") == "hard"
-        return (judged_ai, not was_hard, not p.get("antiArms"), not p.get("_signal"), not p.get("incumbent"))
+        if judged_ai:                        # already reviewed: the oldest verdict is next in line
+            return (True, old.get("judged_at") or old.get("at") or "")
+        return (False, "", not was_hard, not p.get("antiArms"), not p.get("_signal"), not p.get("incumbent"))
     keys.sort(key=prio)
     judged = 0
     counts = {"hard": 0, "soft": 0, "none": 0}
@@ -506,11 +525,13 @@ def run(people, ie, fec_cands, fec_totals=None):
         old = cache.get(k) or {}
         ttl = TTL_H * (2 if old.get("tier") == "none" else 1)
         fresh = old.get("v") == JUDGE_VERSION and age_hours(old.get("at")) < ttl and old.get("source", "").startswith("ai")
+        if fresh and can_ai and judged < BUDGET and ai_time_left() > 120 and age_hours(old.get("at")) >= REREVIEW_H:
+            fresh = False                    # spare free capacity: re-examine the oldest verdicts again
         verdict = old if fresh and old.get("facts_fp") == _fingerprint(f, "x" * old.get("text_len", 0)) else None
         if verdict is None and can_ai and judged < BUDGET and ai_time_left() > 120:
             text, urls = dossier(p)
             emp = [] if f["incumbent"] else employers(p, fec_cands, emp_cache)
-            res, _, provider = ai.ask_json(SYSTEM, _prompt(p, f, text, emp))
+            res, _, provider = ai.ask_json(SYSTEM, _prompt(p, f, text, emp, old))
             judged += 1
             if isinstance(res, dict) and res.get("tier") in ("hard", "soft", "none"):
                 ok_urls = set(urls) | {v.get("url") for v in p.get("vote_record", [])}
@@ -549,6 +570,7 @@ def run(people, ie, fec_cands, fec_totals=None):
                            "model": ai.LAST.get("model"), "judged_at": now_iso(),
                            "risk": risk, "scope": res.get("scope"),
                            "confidence": res.get("confidence"), "prior_office": res.get("prior_office"),
+                           "confidence_index": _conf_index(res),
                            "source": f"ai:{provider}", "at": now_iso(), "v": JUDGE_VERSION,
                            "facts_fp": _fingerprint(f, text), "text_len": len(text)}
                 cache[k] = verdict
@@ -582,6 +604,7 @@ def run(people, ie, fec_cands, fec_totals=None):
         p["tier_principle"] = verdict.get("principle")
         p["tier_model"] = verdict.get("model")
         p["tier_judged_at"] = verdict.get("judged_at") or verdict.get("at")
+        p["tier_confidence"] = verdict.get("confidence_index")
         p["discharge_petitions"] = [{k: d[k] for k in ("no", "measure", "about", "url", "signed")}
                                     for d in p.get("_discharge", [])][:12]
         if p.get("antiTier"):

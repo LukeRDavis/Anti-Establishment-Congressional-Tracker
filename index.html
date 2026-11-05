@@ -649,6 +649,26 @@ function MemberBox({title, color, members, challengers, racesData, fecData, poly
 }
 const SECT = {fontSize:8,color:"#4b5563",fontFamily:FM,letterSpacing:"0.1em",textTransform:"uppercase",marginBottom:4};
 
+// Light Markdown from the AI models: **bold**, *italic* / _italic_, `code`. Rendered as
+// elements (never as raw HTML), so a write-up can't inject markup into the page.
+function md(text) {
+  if (!text) return text;
+  const out = [];
+  const re = /(\*\*[^*]+\*\*|__[^_]+__|\*[^*\s][^*]*\*|_[^_\s][^_]*_|`[^`]+`)/g;
+  let last = 0, m;
+  while ((m = re.exec(text))) {
+    if (m.index > last) out.push(text.slice(last, m.index));
+    const t = m[0];
+    if (t.startsWith("**") || t.startsWith("__")) out.push(html`<strong style=${{color:"#e5e7eb"}}>${t.slice(2, -2)}</strong>`);
+    else if (t.startsWith("`")) out.push(html`<code>${t.slice(1, -1)}</code>`);
+    else out.push(html`<em>${t.slice(1, -1)}</em>`);
+    last = m.index + t.length;
+  }
+  if (last < text.length) out.push(text.slice(last));
+  return out;
+}
+const plain = t => (t || "").replace(/\*\*|__|`/g, "").replace(/(^|\s)[*_]([^*_]+)[*_]/g, "$1$2");
+
 // One-line call shown on hover and at the top of the write-up.
 function bottomLine(m) {
   if (m.bottom_line) return m.bottom_line;
@@ -679,13 +699,19 @@ function Verdict({member}) {
   return html`<div style=${{marginBottom:10,padding:"9px 11px",borderRadius:8,background:anti?col+"12":"#0b0d12",border:"1px solid "+(anti?col+"40":"#1a1d27")}}>
     <div style=${{fontSize:9,fontFamily:FM,letterSpacing:"0.08em",textTransform:"uppercase",color:col,fontWeight:700,marginBottom:4}}>
       ${anti ? "◈ Anti-establishment" : "Establishment"}</div>
-    <div style=${{fontSize:11,color:"#e5e7eb",lineHeight:1.5,marginBottom:text?6:0}}>${bottomLine(member)}</div>
-    ${text ? html`<div style=${{fontSize:10.5,color:"#9ca3af",lineHeight:1.65}}>${text}</div>` : null}
+    <div style=${{fontSize:11,color:"#e5e7eb",lineHeight:1.5,marginBottom:text?6:0}}>${md(bottomLine(member))}</div>
+    ${member.confidence != null ? html`<div style=${{display:"flex",alignItems:"center",gap:7,margin:"2px 0 7px"}}
+        title="How sure the judge is of this call, given how complete and consistent the record is">
+      <span style=${{fontSize:8.5,fontFamily:FM,color:"#6b7280",whiteSpace:"nowrap"}}>Confidence ${member.confidence}/100</span>
+      <div style=${{flex:1,maxWidth:160,height:4,borderRadius:2,background:"#1a1d27"}}>
+        <div style=${{width:member.confidence+"%",height:"100%",borderRadius:2,background:member.confidence>=75?"#4ade80":member.confidence>=50?"#fbbf24":"#f87171"}}/></div>
+    </div>` : null}
+    ${text ? html`<div style=${{fontSize:10.5,color:"#9ca3af",lineHeight:1.65}}>${md(text)}</div>` : null}
     ${(member.tier_evidence||[]).length ? html`<div style=${{marginTop:6}}>${member.tier_evidence.map((e,i)=>html`
       <div key=${i} style=${{fontSize:9,fontFamily:FM,lineHeight:1.45}}>
         <a href=${e.url} target="_blank" rel="noreferrer" style=${{color:"#6b7280",textDecoration:"none"}}>↗ ${(e.claim||e.url).slice(0,120)}</a></div>`)}</div>` : null}
     ${member.tier_risk && (member.tier_risk.political || member.tier_risk.capital) ? html`<div style=${{fontSize:9,fontFamily:FM,color:"#6b7280",marginTop:6}}>
-      Risk of folding: political ${member.tier_risk.political||"?"}, money ${member.tier_risk.capital||"?"}${member.tier_risk.notes ? " · " + member.tier_risk.notes : ""}</div>` : null}
+      Risk of folding: political ${member.tier_risk.political||"?"}, money ${member.tier_risk.capital||"?"}${member.tier_risk.notes ? " · " : ""}${md(member.tier_risk.notes)}</div>` : null}
     <div style=${{fontSize:8.5,fontFamily:FM,color:"#4b5563",marginTop:7,borderTop:"1px solid #1a1d27",paddingTop:5}}>
       ${ai ? "Analysis by " + (member.judged_model || member.tier_source.slice(3)) + " (" + member.tier_source.slice(3) + ")" + (when ? " · " + when : "")
            : "Rule-based call from the record; AI review pending" + (when ? " · " + when : "")}
@@ -968,7 +994,7 @@ function BallotFor({state, district, members, onSelect}) {
         <span style=${{fontSize:8,fontFamily:FM,color:p.antiArms?col:"#6b7280",whiteSpace:"nowrap"}}>${p.antiArms ? "◈ anti-establishment" : "establishment"}</span>
       </div>
       ${note ? html`<div style=${{fontSize:8,fontFamily:FM,color:"#9ca3af",marginTop:2}}>${note}</div>` : null}
-      <div style=${{fontSize:9,color:"#6b7280",lineHeight:1.45,marginTop:3}}>${(bottomLine(p) || "").slice(0,170)}</div>
+      <div style=${{fontSize:9,color:"#6b7280",lineHeight:1.45,marginTop:3}}>${plain(bottomLine(p) || "").slice(0,170)}</div>
     </div>`;
   };
   return html`<div style=${{marginTop:9}}>
@@ -1474,7 +1500,8 @@ function Candidates({members, races, onSelect}) {
               ${RCV_STATES[p.state] ? html`<span title=${RCV_STATES[p.state]} style=${{fontSize:8,fontFamily:FM,color:"#c4b5fd",border:"1px solid #c4b5fd55",borderRadius:3,padding:"0 4px",marginLeft:6}}>ranked choice</span>` : null}</div>
             <div style=${{fontSize:9,fontFamily:FM,color:"#9ca3af",marginTop:2}}>${p._status}${p._stage === "general" && p._when ? " · " + p._when : ""}
               ${p._race.opponents && p._race.opponents.length ? " · vs " + p._race.opponents.map(x => x.name + " (" + x.party + ")").join(", ") : ""}</div>
-            <div style=${{fontSize:10,color:"#6b7280",lineHeight:1.5,marginTop:3}}>${bottomLine(p).slice(0,220)}</div>
+            <div style=${{fontSize:10,color:"#6b7280",lineHeight:1.5,marginTop:3}}>${md(plain(bottomLine(p)).slice(0,220))}
+              ${p.confidence != null ? html`<span style=${{fontFamily:FM,fontSize:8.5,color:"#4b5563"}}> · confidence ${p.confidence}</span>` : null}</div>
           </div>
           <div style=${{textAlign:"right",minWidth:62}}>
             ${p._gres ? html`<span style=${{fontSize:10,fontWeight:700,fontFamily:FM,padding:"2px 7px",borderRadius:4,background:p._gres==="WON"?"#14532d":"#450a0a",color:p._gres==="WON"?"#4ade80":"#f87171"}}>${p._gres}</span>`
@@ -1758,7 +1785,7 @@ function App() {
                     onMouseLeave=${()=>setHovered(null)}
                     />
                   ${isHov?(()=>{
-                    const bl = bottomLine(pos), line = bl.length > 64 ? bl.slice(0,63) + "…" : bl;
+                    const bl = plain(bottomLine(pos)), line = bl.length > 64 ? bl.slice(0,63) + "…" : bl;
                     const w = Math.max(pos.name.length*4.6+10, line.length*3.55+10);
                     const tx = pos._x + 7 + w > svgW - 4 ? pos._x - 7 - w : pos._x + 7;
                     const ty = Math.max(2, pos._y - 22);
