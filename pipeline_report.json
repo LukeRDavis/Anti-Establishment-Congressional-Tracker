@@ -1,16 +1,16 @@
 {
- "run_at": "2026-11-05T01:07:33.024663+00:00",
- "runtime_s": 1095,
+ "run_at": "2026-11-05T11:45:40.308364+00:00",
+ "runtime_s": 3129,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
   "gemini": 0,
   "xai": 0,
-  "openrouter": 0,
-  "groq": 2,
+  "openrouter": 1,
+  "groq": 5,
   "cerebras": 0,
   "mistral": 0,
-  "failed": 1
+  "failed": 28
  },
  "streams": {
   "key:CONGRESS_KEY": {
@@ -145,44 +145,38 @@
   "fec_candidates": {
    "ok": true,
    "count": 4353,
-   "requests": 44,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "4353 active 2026 House+Senate filers"
+    "cache fresh"
    ]
   },
   "fec_finance": {
    "ok": true,
    "count": 3935,
-   "requests": 46,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "totals for 3935 filers"
+    "cache fresh"
    ]
   },
   "trackaipac": {
    "ok": true,
-   "count": 1,
-   "requests": 2,
+   "count": 0,
+   "requests": 0,
    "failures": 0,
    "errors": [],
-   "notes": [
-    "/congress: 1 members, 0 approved",
-    "/endorsements: 0 endorsed candidates"
-   ]
+   "notes": []
   },
   "rlc": {
    "ok": true,
    "count": 283,
-   "requests": 4,
+   "requests": 0,
    "failures": 0,
    "errors": [],
-   "notes": [
-    "Liberty Index cache fresh",
-    "endorsements: 9 candidates"
-   ]
+   "notes": []
   },
   "votes_senate_voteview": {
    "ok": true,
@@ -223,13 +217,13 @@
     "circuit opened: only empty responses (blocked for this host)"
    ],
    "notes": [
-    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' ttps://ballotpedia.org/Christopher_Adams | 200 0B '' https://ballotpedia.org/Rock_Aboujaoude | 200 0B '' https://ballotpedia.org/David_Abrevaya | 200 0B '' https://ballotpedia.org/Abdi_Abdulle | 200 0B '' ps://ballotpedia.org/Ana_Acevedo-Cabrera | 200 0B '' https://ballotpedia.org/Richard_Aaron"
+    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Josh_McConkey | 200 0B '' https://ballotpedia.org/Siddhanth_Sharma | 200 0B '' https://ballotpedia.org/Ralph_Scott | 200 0B '' https://ballotpedia.org/Eugene_Douglass | 200 0B '' https://ballotpedia.org/Steven_Welzer | 200 0B '' https://ballotpedia.org/Guy_Meilleur"
    ]
   },
   "wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 710,
+   "requests": 702,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -237,7 +231,7 @@
   "grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 230,
+   "requests": 226,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -259,7 +253,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "85 state election pages (39 refreshed) \u00b7 1256 result boxes"
+    "85 state election pages (39 refreshed) \u00b7 1259 result boxes"
    ]
   },
   "poll_closes": {
@@ -327,24 +321,29 @@
     "cached",
     "cached",
     "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
     "cached"
    ]
   },
   "fec_websites": {
    "ok": true,
-   "count": 692,
-   "requests": 2,
+   "count": 695,
+   "requests": 3,
    "failures": 0,
    "errors": [],
    "notes": [
-    "looked up 2 committees \u00b7 692 campaign websites known"
+    "looked up 3 committees \u00b7 695 campaign websites known"
    ]
   },
   "campaign_sites": {
    "ok": null,
    "count": 0,
-   "requests": 82,
-   "failures": 49,
+   "requests": 84,
+   "failures": 50,
    "errors": [
     "HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA",
     "URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/",
@@ -375,11 +374,17 @@
   "ai_groq": {
    "ok": null,
    "count": 0,
-   "requests": 3,
-   "failures": 0,
-   "errors": [],
+   "requests": 14,
+   "failures": 5,
+   "errors": [
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 5504, Requested 5566. Please try again in 23.025s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Used 560, Requested 907. Please try again in 28.02s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"The model `canopylabs/orpheus-arabic-saudi` requires terms acceptance. Please have the org admin accept the terms at https://console.groq.com/playground?model=canopylabs%2Forpheus-arabic-saudi\",\"type\":\"invalid_request_error\",\"code\":\"model_terms_required\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 5233, Requested 5526. Please try again in 20.6925s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "circuit opened: every available model failed or is over quota"
+   ],
    "notes": [
-    "models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, canopylabs/orpheus-v1-english"
+    "models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, canopylabs/orpheus-arabic-saudi"
    ]
   },
   "ai_positions": {
@@ -389,17 +394,17 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "researched 2 this run (no_source: 1962, campaign_site_text: 1, wikipedia_text: 1) \u00b7 2685 total \u00b7 23 with cited anti-interventionist positions"
+    "researched 2 this run (no_source: 1959, campaign_site_text: 2) \u00b7 2685 total \u00b7 23 with cited anti-interventionist positions"
    ]
   },
   "fec_outside_spending": {
    "ok": true,
    "count": 458,
-   "requests": 108,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 108, 458 candidates with outside-spending records"
+    "refreshed 0, 458 candidates with outside-spending records"
    ]
   },
   "discharge_petitions": {
@@ -412,34 +417,83 @@
     "cached"
    ]
   },
+  "dossier_wikipedia": {
+   "ok": null,
+   "count": 0,
+   "requests": 26,
+   "failures": 0,
+   "errors": [],
+   "notes": []
+  },
+  "dossier_grokipedia": {
+   "ok": null,
+   "count": 0,
+   "requests": 31,
+   "failures": 0,
+   "errors": [],
+   "notes": []
+  },
+  "dossier_news_google": {
+   "ok": null,
+   "count": 0,
+   "requests": 62,
+   "failures": 0,
+   "errors": [],
+   "notes": []
+  },
+  "ai_mistral": {
+   "ok": null,
+   "count": 0,
+   "requests": 74,
+   "failures": 17,
+   "errors": [
+    "HTTP 429 https://api.mistral.ai/v1/chat/completions :: {\"object\":\"error\",\"message\":\"Rate limit exceeded\",\"type\":\"rate_limited\",\"param\":null,\"code\":\"1300\",\"raw_status_code\":429}"
+   ],
+   "notes": [
+    "models available: mistral-large-4, mistral-large-4-0, mistral-medium-latest, mistral-medium"
+   ]
+  },
+  "ai_openrouter": {
+   "ok": null,
+   "count": 0,
+   "requests": 4,
+   "failures": 2,
+   "errors": [
+    "HTTP 403 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/6619b713cb913fe695150853ca187fb336606604e7f0c0e23d73ccdec7fe03ae $0.00 of $0.00 used; does not reset.\",\"code\":403,\"metadata\":{\"limit_source\":\"openrouter_key_limit\",\"remedy_hint\":\"Raise or remove this API key's usage limit at https://openrouter.ai/settings/keys, or use a key without ",
+    "circuit opened: HTTP 403"
+   ],
+   "notes": [
+    "models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/lyria-3-pro-preview, google/gemma-4-31b-it:free, xingchen-agi/xing4.0-29b-a4b:free, openrouter/free"
+   ]
+  },
   "establishment_tiers": {
    "ok": true,
-   "count": 56,
+   "count": 121,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "56 hard \u00b7 92 soft \u00b7 judged 0 with AI this run \u00b7 verdicts from AI 148, rule 0 \u00b7 AI has reviewed 3100 of 3100 members and running candidates (661 with signals)"
+    "121 hard \u00b7 26 soft \u00b7 judged 31 with AI this run \u00b7 verdicts from AI 4, rule 143 \u00b7 AI has reviewed 3097 of 3097 members and running candidates (658 with signals)"
    ]
   },
   "market_polymarket": {
    "ok": true,
-   "count": 181,
+   "count": 159,
    "requests": 800,
    "failures": 0,
    "errors": [],
    "notes": [
-    "800 catalog pages scanned \u00b7 181 open congressional markets"
+    "800 catalog pages scanned \u00b7 159 open congressional markets"
    ]
   },
   "market_kalshi_races": {
    "ok": true,
-   "count": 147,
+   "count": 143,
    "requests": 1,
    "failures": 0,
    "errors": [],
    "notes": [
-    "73 House/Senate race events"
+    "71 House/Senate race events"
    ]
   },
   "market_kalshi_senate": {
@@ -452,12 +506,12 @@
   },
   "market_kalshi": {
    "ok": true,
-   "count": 25107,
+   "count": 25164,
    "requests": 40,
    "failures": 0,
    "errors": [],
    "notes": [
-    "40 pages \u00b7 25107 political markets"
+    "40 pages \u00b7 25164 political markets"
    ]
   },
   "market_predictit": {
@@ -472,32 +526,32 @@
   },
   "markets": {
    "ok": true,
-   "count": 55,
+   "count": 51,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "26030 market outcomes loaded \u00b7 55 tracked people matched"
+    "26061 market outcomes loaded \u00b7 51 tracked people matched"
    ]
   },
   "election_night": {
    "ok": true,
-   "count": 111,
+   "count": 110,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "88 races frozen at poll close \u00b7 3 called"
+    "87 races frozen at poll close \u00b7 2 called"
    ]
   },
   "committees": {
    "ok": true,
    "count": 10,
-   "requests": 2,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "10 committees for planks power, anti_arms"
+    "cached"
    ]
   }
  },
@@ -509,9 +563,9 @@
    "D": 136,
    "I": 2
   },
-  "anti_candidates": 9,
+  "anti_candidates": 8,
   "relevant_votes": 126,
-  "odds": 55,
-  "history_events_added": 1
+  "odds": 51,
+  "history_events_added": 82
  }
 }
