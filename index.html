@@ -170,6 +170,7 @@ const COL = {estR:"#dc2626", estD:"#2563eb", antiR:"#fca5a5", antiD:"#93c5fd"};
 
 function dotColor(m) {
   if (m._filler) return "#1e2230";
+  if (m._uncalled) return "#4b5563";
   if (m.antiArms) return side(m) === "R" ? COL.antiR : COL.antiD;
   return side(m) === "R" ? COL.estR : COL.estD;
 }
@@ -184,6 +185,43 @@ function antiArmsTagColor(m) {
   return side(m) === "R" ? COL.antiR : COL.antiD;
 }
 
+// ── The next Congress as called so far ───────────────────────────────────────
+// Each seat shows its winner once the race is called (incumbent re-elected or member-elect);
+// seats not yet called are gray; senators not up this cycle keep their seats.
+function nextCongress(members) {
+  const field = window._aectField || [];
+  const out = [];
+  const winners = (ch, st, d) => [
+    ...members.filter(m => m.chamber === ch && m.state === st && (ch === "senate" || (m.district || 0) === (d || 0))
+                           && m.general_result === "WON").map(m => ({...m, ps: "RE-ELECTED"})),
+    ...field.filter(c => c.chamber === ch && c.state === st && (ch === "senate" || (c.district || 0) === (d || 0))
+                         && c.general_result === "WON").map(c => ({...c, ps: "ELECTED", _elect: true})),
+  ];
+  // House: one seat per district held now
+  const seen = new Set();
+  members.filter(m => m.chamber === "house").forEach(m => {
+    const key = m.state + "-" + (m.district || 0);
+    if (seen.has(key)) return;
+    seen.add(key);
+    const w = winners("house", m.state, m.district)[0];
+    out.push(w ? {...w, chamber: "house"} : {name: "Not yet called: " + m.state + "-" + (m.district || "AL"), _uncalled: true,
+      chamber: "house", state: m.state, district: m.district, party: ""});
+  });
+  // Senate: seats not up keep their senator; each state's contested seat(s) take their winners
+  const byState = {};
+  members.filter(m => m.chamber === "senate").forEach(m => (byState[m.state] = byState[m.state] || []).push(m));
+  Object.entries(byState).forEach(([st, sens]) => {
+    const stay = sens.filter(m => m.not_up_this_cycle);
+    stay.forEach(m => out.push(m));
+    const up = sens.length - stay.length;
+    const w = winners("senate", st).slice(0, up);
+    w.forEach(x => out.push({...x, chamber: "senate"}));
+    for (let i = w.length; i < up; i++)
+      out.push({name: "Not yet called: " + st + " Senate", _uncalled: true, chamber: "senate", state: st, party: ""});
+  });
+  return out;
+}
+
 function computeHemicycle(allMembers, chamber, cx, cy) {
   const ch = chamber === "senate" ? "senate" : "house";
 
@@ -193,10 +231,12 @@ function computeHemicycle(allMembers, chamber, cx, cy) {
 
   // establishment Republicans from the left, establishment Democrats from the right,
   // anti-establishment members of both parties crowd the center
-  const antiR    = active.filter(m =>  m.antiArms && side(m) === "R");
-  const antiD    = active.filter(m =>  m.antiArms && side(m) === "D");
-  const restR    = active.filter(m => !m.antiArms && side(m) === "R");
-  const restD    = active.filter(m => !m.antiArms && side(m) === "D");
+  const pending  = active.filter(m => m._uncalled);      // next-Congress view: race not called yet
+  const seated   = active.filter(m => !m._uncalled);
+  const antiR    = seated.filter(m =>  m.antiArms && side(m) === "R");
+  const antiD    = seated.filter(m =>  m.antiArms && side(m) === "D");
+  const restR    = seated.filter(m => !m.antiArms && side(m) === "R");
+  const restD    = seated.filter(m => !m.antiArms && side(m) === "D");
   const restOther= [];
   const antiCount= antiR.length + antiD.length;
   const filler   = {_filler:true, antiArms:false, party:"", name:""};
@@ -245,9 +285,10 @@ function computeHemicycle(allMembers, chamber, cx, cy) {
   }
   seats.sort((a, b) => a.angle - b.angle || a.ri - b.ri);
   const people = [...restR, ...antiR, ...antiD, ...restD, ...restOther];
-  const vacant = Math.max(0, seats.length - people.length);
-  const lead = Math.floor(vacant / 2);
-  const order = [...Array(lead).fill(filler), ...people, ...Array(vacant - lead).fill(filler)];
+  const vacant = Math.max(0, seats.length - people.length - pending.length);
+  const edge = [...pending, ...Array(vacant).fill(filler)];        // uncalled + empty seats at the ends
+  const lead = Math.floor(edge.length / 2);
+  const order = [...edge.slice(0, lead), ...people, ...edge.slice(lead)];
   const result = seats.map((st, k) => ({...(order[k] || filler), _x: st.x, _y: st.y}));
   return result;
 }
@@ -671,6 +712,7 @@ const plain = t => (t || "").replace(/\*\*|__|`/g, "").replace(/(^|\s)[*_]([^*_]
 
 // One-line call shown on hover and at the top of the write-up.
 function bottomLine(m) {
+  if (m._uncalled) return "Race not called yet.";
   if (m.bottom_line) return m.bottom_line;
   const f = m.tier_facts || {};
   if (m.antiArms) return "Counts as anti-establishment" + (f.anti_focus_votes ? ": anti on " + f.anti_focus_votes + " of " + f.focus_votes + " arms votes" + ((f.anti_congresses||[]).length ? " across " + f.anti_congresses.length + " Congresses" : "") : "") + ".";
@@ -1671,13 +1713,18 @@ function App() {
     if (p._kind === "member" && p.chamber && p.chamber !== chamber) setChamber(p.chamber);
     setShowTimeline(false); setShowAbout(false); setSelected(p.name);
   };
-  const positions = useMemo(()=>computeHemicycle(allMembers,chamber,cx,cy),
-    [allMembers, chamber, cx, cy]);
+  const [view, setView] = useState("now");          // "now" | "next"
+  const nextMembers = useMemo(() => nextCongress(allMembers), [allMembers]);
+  const seatMembers = view === "next" ? nextMembers : allMembers;
+  const positions = useMemo(()=>computeHemicycle(seatMembers,chamber,cx,cy),
+    [seatMembers, chamber, cx, cy]);
 
   const dotR      = chamber==="house" ? 4 : 6;
   const ch        = chamber==="house" ? "house" : "senate";
-  const chMem     = allMembers.filter(m => m.chamber === ch);
-  const selMember = selected ? (allMembers.find(m => m.name === selected)
+  const chMem     = seatMembers.filter(m => m.chamber === ch && !m._uncalled);
+  const nUncalled = seatMembers.filter(m => m.chamber === ch && m._uncalled).length;
+  const nextNo    = (META().congress || 119) + 1;
+  const selMember = selected ? (seatMembers.find(m => m.name === selected && !m._uncalled) || allMembers.find(m => m.name === selected)
                                || (window._aectField || []).find(c => c.name === selected) || null) : null;
   const sideR     = allMembers.filter(m=>m.antiArms&&side(m)==="R"&&m.chamber===ch);
   const sideD     = allMembers.filter(m=>m.antiArms&&side(m)==="D"&&m.chamber===ch);
@@ -1761,6 +1808,17 @@ function App() {
         </button>
       </div>
 
+      <!-- Current Congress / next Congress as called -->
+      <div style=${{display:"flex",gap:0,marginBottom:8,border:"1px solid #fbbf24",borderRadius:9,overflow:"hidden",boxShadow:"0 0 14px rgba(251,191,36,.18)"}}>
+        ${[["now", "Current Congress"], ["next", "Next Congress · called so far"]].map(([k, l]) => html`
+          <button key=${k} onClick=${() => { setView(k); setSelected(null); setShowTimeline(false); setShowAbout(false); }}
+            style=${{padding:"7px 14px",border:"none",cursor:"pointer",fontFamily:FM,fontSize:10.5,fontWeight:700,letterSpacing:"0.04em",
+              background:view===k?"#fbbf24":"transparent",color:view===k?"#0a0c10":"#fcd34d"}}>
+            ${k === "next" ? "★ " : ""}${l}</button>`)}
+      </div>
+      ${view === "next" ? html`<div style=${{fontSize:9,fontFamily:FM,color:"#9ca3af",marginBottom:6,textAlign:"center"}}>
+        ${nextNo}th Congress: winners as races are called (incumbents re-elected and members-elect) · ${nUncalled} ${ch === "senate" ? "Senate" : "House"} seat${nUncalled===1?"":"s"} not yet called (gray)</div>` : null}
+
       <!-- Legend + stat pills -->
       <div style=${{display:"flex",gap:5,flexWrap:"wrap",justifyContent:"center",marginBottom:7}}>
         ${[
@@ -1768,6 +1826,7 @@ function App() {
           {c:COL.antiR, bg:"rgba(252,165,165,.1)", l:"Anti-E R",        n:chMem.filter(m=>isHard(m)&&side(m)==="R").length},
           {c:COL.antiD, bg:"rgba(147,197,253,.1)", l:"Anti-E "+(chMem.some(m=>m.party==="I"&&isHard(m))?"D/I":"D"), n:chMem.filter(m=>isHard(m)&&side(m)==="D").length},
           {c:COL.estD,  bg:"rgba(37,99,235,.1)",   l:"Establishment D", n:chMem.filter(m=>side(m)==="D"&&!m.antiArms).length},
+          ...(view === "next" ? [{c:"#6b7280", bg:"transparent", l:"Not yet called", n:nUncalled}] : []),
         ].map(b=>html`
           <span key=${b.l} style=${{display:"inline-flex",alignItems:"center",gap:4,background:b.bg,border:"1px solid "+b.c+"30",borderRadius:5,padding:"2px 7px",fontSize:9,fontFamily:FM,color:b.c}}>
             <span style=${{width:5,height:5,borderRadius:"50%",background:b.c,opacity:b.faded?0.35:1,display:"inline-block"}}/>

@@ -79,6 +79,7 @@ def main():
     _write("candidates.json", {**_load("candidates.json", {}), "people": people})
     _write("history.json", hist)
     print(f"Election night: {data['meta']['election_night']} · {n} history events")
+    print(f"NEXT_REFRESH_SECONDS={night.refresh_every(gd)}")
     return 0
 
 

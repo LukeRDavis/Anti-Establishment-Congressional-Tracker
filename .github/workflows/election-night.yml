@@ -3,7 +3,8 @@ name: Election Night
 # GitHub runs scheduled workflows late or skips them when it is busy, so this job does
 # not rely on the schedule: once started (by the schedule or by hand) it refreshes every
 # 10 minutes for up to ~5.4 hours, then starts itself again while the election window is
-# open. The script exits at once outside 36 h before / 96 h after a general election.
+# open. The script exits at once outside 36 h before / 3 weeks after a general election;
+# it refreshes every 10 minutes for the first 3 days after, then hourly.
 on:
   schedule:
     - cron: "*/15 * * * *"
@@ -47,5 +48,5 @@ jobs:
               gh workflow run election-night.yml --ref "${GITHUB_REF_NAME}" || true
               exit 0
             fi
-            sleep 600
+            wait=$(echo "$out" | sed -n 's/^NEXT_REFRESH_SECONDS=//p' | tail -1); sleep "${wait:-600}"
           done

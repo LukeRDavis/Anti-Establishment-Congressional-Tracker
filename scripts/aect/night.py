@@ -172,12 +172,20 @@ def apply(data, mk, people, old_data=None, now=None):
     return data
 
 
-def in_window(general_date, now=None, before_h=36, after_h=96):
+def in_window(general_date, now=None, before_h=36, after_h=24 * 21):
     if not general_date:
         return False
     now = now or datetime.now(timezone.utc)
     gd = datetime.fromisoformat(general_date).replace(tzinfo=timezone.utc)
     return gd - timedelta(hours=before_h) <= now <= gd + timedelta(hours=after_h)
+
+
+def refresh_every(general_date, now=None):
+    """Seconds between election-night refreshes: every 10 minutes until three days after the
+    election, then hourly while late counts and calls trickle in."""
+    now = now or datetime.now(timezone.utc)
+    gd = datetime.fromisoformat(general_date).replace(tzinfo=timezone.utc)
+    return 600 if now <= gd + timedelta(hours=72) else 3600
 
 
 def history(hist, data):
