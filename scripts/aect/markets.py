@@ -248,6 +248,16 @@ def settlements(people):
     for c in SETTLED:
         for tok in _words(c["outcome"] if c["src"] == "kalshi" else c["market"]):
             by_last.setdefault(tok, []).append(c)
+    # nominees per (chamber, state, district, party): a party-level market ("will the
+    # Democrats win this seat") can only call the race for a party's SOLE nominee there
+    def seat(p):
+        ch = (p.get("seeking") or {}).get("chamber", p.get("chamber"))
+        d = (p.get("seeking") or {}).get("district", p.get("district")) if ch == "house" else None
+        return (ch, p.get("state"), d)
+    nominees = {}
+    for p in people.values():
+        if p.get("on_ballot") and p.get("primary_result") == "WON":
+            nominees.setdefault(seat(p) + (p.get("party"),), []).append(p)
     out = {}
     for key, p in people.items():
         if not p.get("on_ballot") or p.get("primary_result") == "LOST":
@@ -262,9 +272,13 @@ def settlements(people):
             elif not matches(c["market"], p):
                 continue
             votes.append(("WON" if c["yes_won"] else "LOST", c))
-        for c in SETTLED:                   # Polymarket party-seat markets name no candidate
-            if c["src"] == "polymarket" and party_seat_match(c["market"], p):
-                votes.append(("WON" if c["yes_won"] else "LOST", c))
+        named = bool(votes)
+        sole = len(nominees.get(seat(p) + (p.get("party"),), [])) == 1
+        rival_same_party = sum(len(v) for k, v in nominees.items() if k[:3] == seat(p) and k[3] == p.get("party")) > 1
+        if not named and sole and not rival_same_party and p.get("primary_result") == "WON":
+            for c in SETTLED:               # Polymarket party-seat markets name no candidate
+                if c["src"] == "polymarket" and party_seat_match(c["market"], p):
+                    votes.append(("WON" if c["yes_won"] else "LOST", c))
         if not votes:
             continue
         results = {v for v, _ in votes}

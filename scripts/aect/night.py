@@ -251,6 +251,27 @@ def cross_check(people, settled, closes, now=None):
             p.pop("general_result", None)
             p["general_result_by"] = None
         p["market_settlement"] = m.get("sources")
+    # a seat can't have more winners than it has seats: market-only calls that would break that
+    # are withdrawn and flagged (House: 1 per district; Senate: up to 2 when a special is held)
+    seats = {}
+    for k, p in people.items():
+        if p.get("general_result") == "WON":
+            ch = (p.get("seeking") or {}).get("chamber", p.get("chamber"))
+            d = (p.get("seeking") or {}).get("district", p.get("district")) if ch == "house" else None
+            seats.setdefault((ch, p.get("state"), d), []).append(p)
+    up = {}                                   # Senate seats on this year's ballot, per state
+    for p in people.values():
+        if p.get("incumbent") and p.get("chamber") == "senate" and not p.get("not_up_this_cycle"):
+            up[p.get("state")] = up.get(p.get("state"), 0) + 1
+    for (ch, st, d), ws in seats.items():
+        if len(ws) > (1 if ch == "house" else max(1, up.get(st, 1))):
+            for p in ws:
+                if p.get("general_result_by") == "market":
+                    p.pop("general_result", None)
+                    p["general_result_by"] = None
+                    p["result_conflict"] = "settled markets named more winners than this seat has"
+                    stats["market"] -= 1
+                    stats["conflict"] += 1
     stream("results_cross_check", ok=True, count=sum(stats.values()),
            note=f"called by both {stats['both']} · Wikipedia only {stats['wikipedia']} · "
                 f"markets only {stats['market']} · conflicting {stats['conflict']}")
