@@ -21,7 +21,7 @@ AECT pipeline v10 — 2026-11-05 · 119th Congress · 2026 cycle
 
 [2] FEC candidates and finance
   [fec_candidates] 4353 active 2026 House+Senate filers
-  [fec_finance] totals for 3957 filers
+  [fec_finance] totals for 4013 filers
 
 [4c] Trackers
   [trackaipac] /congress: 1 members, 1 approved
@@ -40,7 +40,7 @@ AECT pipeline v10 — 2026-11-05 · 119th Congress · 2026 cycle
   [primary_calendar] cache fresh
   ⚡ ballotpedia: circuit opened (only empty responses (blocked for this host)) — skipping its remaining calls
   [enrichment] refreshed 250/250 this run · 1529/4464 people have a bio
-  [ballotpedia] outcomes {'no_page': 17} · probes: 200 0B '' https://ballotpedia.org/Jim_Duffie | 200 0B '' https://ballotpedia.org/Allen_Downer | 200 0B '' https://ballotpedia.org/Jacques_Dubose | 200 0B '' https://ballotpedia.org/Jason_Dunn | 200 0B '' https://ballotpedia.org/Mark_Douglas | 200 0B '' https://ballotpedia.org/Thomas_Doyle
+  [ballotpedia] outcomes {'no_page': 17} · probes: 200 0B '' https://ballotpedia.org/Jacques_Dubose | 200 0B '' https://ballotpedia.org/Allen_Downer | 200 0B '' https://ballotpedia.org/Jason_Dunn | 200 0B '' https://ballotpedia.org/Jim_Duffie | 200 0B '' https://ballotpedia.org/Thomas_Doyle | 200 0B '' https://ballotpedia.org/Mark_Douglas | 200 0B '' s://ballotpedia.org/Jacques_Dubose_Texas
   [wikipedia_results] 85 state election pages (0 refreshed) · 1259 result boxes
   [poll_closes] cached
   [poll_closes] cached
@@ -122,21 +122,21 @@ AECT pipeline v10 — 2026-11-05 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.natemorris.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www,shawnforgeorgia.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.hallieforarkansas.com/
-    URLError: <urlopen error [Errno 104] Connection reset by peer> :: https://marklambforcongress.com/
-    URLError: <urlopen error [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1018)> :: https://www.danforusa.com/
+    URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)> :: https://marklambforcongress.com/
+    URLError: <urlopen error [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1016)> :: https://www.danforusa.com/
     RemoteDisconnected: Remote end closed connection without response :: https://amyroma.com/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://www.alanpardee.com/
-    URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1018)> :: https://www.gillfornj.com/
+    URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)> :: https://www.gillfornj.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.mandelforcongress.us/
     HTTP 520 https://www.jenkinsforfl.com/ :: error code: 520 
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.erbeckforohio.com/
     HTTP 403 https://www.drkumar4congress.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
     HTTP 502 https://www.aaronforny23.com/ :: <html> <head><title>502 Bad Gateway</title></head> <body> <center><h1>502 Bad Gateway</h1></center> <hr><center>nginx</center> </body> </html> 
     RemoteDisconnected: Remote end closed connection without response :: https://micahqjones.com/
-    URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'www.meganorourkeforcongress.com'. (_ssl.c:1018)> :: https://www.meganorourkeforcongress.com/
+    URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'www.meganorourkeforcongress.com'. (_ssl.c:1016)> :: https://www.meganorourkeforcongress.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.danformaine.com/
-    URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1018)> :: https://ehrforcongress.us/
-    URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1018)> :: https://www.alexhawkinsforcongress.com/
+    URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)> :: https://ehrforcongress.us/
+    URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1016)> :: https://www.alexhawkinsforcongress.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.raymondesmithjr.com/
     URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://rickjakious.com/
     URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)> :: https://joelforkentucky.com/
@@ -148,7 +148,7 @@ AECT pipeline v10 — 2026-11-05 · 119th Congress · 2026 cycle
     URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)> :: https://joshcowenmi.com/
     URLError: <urlopen error [Errno 111] Connection refused> :: https://blau4congress.com/
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1016)> :: https://www.katherinealeman.com/
-    URLError: <urlopen error [Errno 111] Connection refused> :: https://bradmeyer.org/
+    RemoteDisconnected: Remote end closed connection without response :: https://bradmeyer.org/
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1016)> :: https://timmyersforcongress.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://vivioforcongress.com/
     URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://dalourny.nyc/
@@ -158,7 +158,7 @@ AECT pipeline v10 — 2026-11-05 · 119th Congress · 2026 cycle
     HTTP 502 https://www.mariajukicforcongress.com/ :: <html> <head><title>502 Bad Gateway</title></head> <body> <center><h1>502 Bad Gateway</h1></center> <hr><center>nginx</center> </body> </html> 
     HTTP 301 https://maryjoforcongress.com/ :: <!DOCTYPE html> <html style="height:100%"> <head> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <title> 301 Moved Perma
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.carlosmooref4ga.com/
-    URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1018)> :: https://moedavis.com/
+    URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1016)> :: https://moedavis.com/
     HTTP 403 https://adeleforcongress.com/ :: <!DOCTYPE html> <html>     <iframe src="https://cloudways-static-content.s3.us-east-1.amazonaws.com/error_page/maintenance-domain-mapping.html" frameborder="0" 
     HTTP 520 https://larrymarker.com/ :: error code: 520 
     URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1016)> :: https://colecarter2026.com/
@@ -177,9 +177,9 @@ AECT pipeline v10 — 2026-11-05 · 119th Congress · 2026 cycle
 
 [4e] Reliable vs soft anti-establishment (AI over scraped dossiers)
   [ai_groq] models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 197232, Requested 5200. Please try again in 17m30.624s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 196230, Requested 5563. Please try again in 12m54.576s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 197574, Requested 5282. Please try again in 20m33.792s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 196593, Requested 5183. Please try again in 12m47.232s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 196863, Requested 6201. Please try again in 22m3.648s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 196452, Requested 5257. Please try again in 12m18.288s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Please reduce the length of the messages or completion.","type":"invalid_request_error","param":"messages","code":"context_length_exceeded"}} 
   ⚡ ai_groq: circuit opened (every available model failed or is over quota) — skipping its remaining calls
   [ai_mistral] models available: mistral-large-4, mistral-large-4-0, mistral-medium-latest, mistral-medium
@@ -187,26 +187,16 @@ AECT pipeline v10 — 2026-11-05 · 119th Congress · 2026 cycle
     HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
     HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
     HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-    HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-    HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-  [ai_openrouter] models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/lyria-3-pro-preview, google/gemma-4-31b-it:free, xingchen-agi/xing4.0-29b-a4b:free, openrouter/free
-    HTTP 403 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/6619b713cb913fe695150853ca187fb336606604e7f0c0e23d73ccdec7fe03ae $0.00 of $0.00 used; does not reset.","code":403,"metadata":{"limit_source":"openrouter_key_limit","remedy_hint":"Raise or remove this API key's usage limit at https://openrouter.ai/settings/keys, or use a key without 
-  ⚡ ai_openrouter: circuit opened (HTTP 403) — skipping its remaining calls
-    HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-    HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-    HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-    HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-    HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-    HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-    HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-    HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-    HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-    HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-    HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-    HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-    HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-    HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-  [establishment_tiers] 120 hard · 27 soft · judged 31 with AI this run · verdicts from AI 6, rule 141 · AI has reviewed 3097 of 3097 members and running candidates (658 with signals)
+  [ai_openrouter] models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/gemma-4-31b-it:free, xingchen-agi/xing4.0-29b-a4b:free, google/gemma-4-26b-a4b-it:free, openrouter/free
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy_hin
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy_hin
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own 
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-26b-a4b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-26b-a4b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own 
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own 
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"xingchen-agi/xing4.0-29b-a4b:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Phala","is_byok":false,"limit_source":"upstream_provider_shared_pool","remedy_hint":"Retry shortly, add your own 
+  [establishment_tiers] 121 hard · 26 soft · judged 14 with AI this run · verdicts from AI 9, rule 138 · AI has reviewed 3097 of 3097 members and running candidates (658 with signals)
 
 [5] Prediction markets
   [market_polymarket] 800 catalog pages scanned · 158 open congressional markets
@@ -227,19 +217,13 @@ AECT pipeline v10 — 2026-11-05 · 119th Congress · 2026 cycle
 [7] Electoral reform (alternative voting systems)
   [reform] cached
 
-[7] Electoral reform (alternative voting systems)
-    HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-    HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-    HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type":"rate_limited","param":null,"code":"1300","raw_status_code":429}
-  [reform] 0 items from 13 source texts
-
 ════════════════════════════════════════════════════════════════════════
 STREAM                       STATUS     COUNT  NOTES / ERRORS
 ────────────────────────────────────────────────────────────────────────
 ai_gemini                    —              0  HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "er
 ai_groq                      —              0  HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model 
 ai_mistral                   —              0  HTTP 429 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"Rate limit exceeded","type
-ai_openrouter                —              0  HTTP 403 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Key limit exceeded (total limit
+ai_openrouter                —              0  HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code"
 ai_positions                 OK          2685  researched 0 this run (no_source: 1959) · 2685 total · 23 with cited anti-interventionist positions
 ballotpedia                  FAIL           0  circuit opened: only empty responses (blocked for this host)
 campaign_sites               —              0  HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</ti
@@ -251,9 +235,9 @@ dossier_news_google          —              0
 dossier_wikipedia            —              0  
 election_night               OK           110  87 races frozen at poll close · 84 called
 enrichment                   OK          1529  refreshed 250/250 this run · 1529/4464 people have a bio
-establishment_tiers          OK           120  120 hard · 27 soft · judged 31 with AI this run · verdicts from AI 6, rule 141 · AI has reviewed 3097 of 3097 
+establishment_tiers          OK           121  121 hard · 26 soft · judged 14 with AI this run · verdicts from AI 9, rule 138 · AI has reviewed 3097 of 3097 
 fec_candidates               OK          4353  4353 active 2026 House+Senate filers
-fec_finance                  OK          3957  totals for 3957 filers
+fec_finance                  OK          4013  totals for 4013 filers
 fec_outside_spending         OK           458  refreshed 108, 458 candidates with outside-spending records
 fec_websites                 OK           695  looked up 0 committees · 695 campaign websites known
 grokipedia                   —              0  
@@ -291,5 +275,5 @@ wikipedia_results            OK            85  85 state election pages (0 refres
  "anti_candidates": 8,
  "relevant_votes": 126,
  "odds": 51,
- "history_events_added": 81
+ "history_events_added": 78
 }
