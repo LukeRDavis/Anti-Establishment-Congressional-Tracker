@@ -1378,408 +1378,115 @@ function About({members}) {
     ${H("Thresholds")}
     ${P("Committee rows show whether anti-establishment members can stall bills in the committees that control procedure and money (Rules, Appropriations, Ways and Means, Judiciary) and the anti-arms committees. An anti-establishment chair is significant control by itself, and an anti-establishment ranking member counts as two. The floor bar shows whether they can sink a party-line rule vote (House) or sustain a filibuster (Senate). The majority bar shows how close they are to a majority. New candidates are added in lighter shades by their betting-market odds: lighter means likely winners (≥" + Math.round(HIGH_ODDS*100) + "%), lightest means long shots or no market.")}
     ${H("Election night")}
-    ${P("After the primaries, the Timeline lists the anti-establishment candidates on general-election ballots, closest races first. Their odds are the average of every prediction market with a price. Each race's odds freeze one minute before its state's polls close, and the race shows WON or LOST once a winner is posted.")}
+    ${P("The Candidates tab lists every anti-establishment candidate on a ballot, in primaries and the general election, across all parties. Odds are the average of every prediction market with a price. On election night each race's odds freeze just before its state's polls close, and the race shows WON or LOST once a winner is posted.")}
   </div>`;
 }
 
-// ── General-election night view ─────────────────────────────────────────────
-// Only anti-establishment candidates, closest races first. Odds are the pipeline's
-// average over every market source with a number; each race's odds freeze one minute
-// before its state's first polls close, and the race shows WON / LOST once called.
-function inGeneralPhase(races) {
-  const t = Date.now();
-  const live = (races||[]).filter(r => !["defeated"].includes(r.status));
-  if (!live.length) return false;
-  return live.every(r => !r.primary_date || new Date(r.primary_date + "T23:59:59").getTime() < t || r.primary_result);
-}
-function ElectionTimeline({races, onSelect}) {
+// ── Candidates: non-partisan support dashboard ──────────────────────────────
+// Everyone the tracker counts as anti-establishment who is on a ballot this cycle (sitting
+// members running again and challengers of every party), with the contest they are in,
+// odds where markets exist, and results once posted.
+const RCV_STATES = {
+  AK: "Alaska uses a top-four open primary and a ranked-choice general election. A 2026 ballot measure to repeal it was trailing narrowly in early returns with many votes uncounted, so check the current rules before the next election.",
+  ME: "Maine uses ranked-choice voting in its party primaries and in general elections for Congress.",
+};
+const PARTY_NAME = {R:"Republican", D:"Democrat", I:"Independent", L:"Libertarian", G:"Green"};
+const partyLabel = p => PARTY_NAME[p] || "Other / third party";
+const partyGroup = p => p === "R" ? "R" : p === "D" ? "D" : p === "I" ? "I" : "O";
+
+function Candidates({members, races, onSelect}) {
+  const [party, setParty] = useState("all"), [stage, setStage] = useState("all"),
+        [ch, setCh] = useState("all"), [st, setSt] = useState(""), [q, setQ] = useState("");
+  const raceById = {};
+  (races || []).forEach(r => { raceById[r.id] = r; });
   const now = Date.now();
-  const rows = (races||[])
-    .filter(r => r.antiTier === "hard" || !r.antiTier)
-    .filter(r => r.primary_result === "WON" || r.status === "pending_general" || r.general_result)
-    .map(r => {
-      const close = r.poll_close ? new Date(r.poll_close) : null;
-      const frozen = (r.odds && r.odds.frozen) || (close && now >= close.getTime() - 60000);
-      const p = r.odds ? r.odds.avg : null;
-      return {...r, _p: p, _close: close, _frozen: frozen};
-    })
-    .sort((a,b) => {
-      const ca = a._p == null ? 9 : Math.abs(a._p - 0.5), cb = b._p == null ? 9 : Math.abs(b._p - 0.5);
-      return ca - cb || a.name.localeCompare(b.name);
-    });
-  const fmtClose = d => d ? d.toLocaleTimeString([], {hour:"numeric", minute:"2-digit", timeZoneName:"short"}) : "—";
-  const seat = r => r.chamber === "senate" ? r.state + " Senate" : r.state + "-" + (r.district || "AL");
-  const pc = p => p === "R" ? COL.antiR : COL.antiD;
-  const won = rows.filter(r => r.general_result === "WON").length, lost = rows.filter(r => r.general_result === "LOST").length;
-  const en = (META().election_night || {});
-  return html`<div style=${{width:"100%",maxWidth:860,background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,padding:"14px 16px"}}>
-    <div style=${{display:"flex",justifyContent:"space-between",alignItems:"baseline",flexWrap:"wrap",gap:6}}>
-      <div style=${{fontSize:13,fontWeight:700,color:"#f0ebe0"}}>General election · anti-establishment candidates</div>
-      <div style=${{fontSize:9,fontFamily:FM,color:"#6b7280"}}>${rows.length} races · ${won} won · ${lost} lost${en.updated_at ? " · updated " + new Date(en.updated_at).toLocaleTimeString([], {hour:"numeric",minute:"2-digit"}) : ""}</div>
-    </div>
-    <div style=${{fontSize:9,fontFamily:FM,color:"#4b5563",margin:"4px 0 10px",lineHeight:1.5}}>
-      Closest races first. Odds are the average of every prediction market with a price (Polymarket, Kalshi, PredictIt); each race's odds freeze one minute before its polls close.
-    </div>
-    ${rows.length === 0 ? html`<div style=${{fontSize:11,color:"#6b7280",padding:"12px 0"}}>No anti-establishment candidates on a general-election ballot yet.</div>` : null}
-    ${rows.map(r => html`<div key=${r.id} onClick=${() => onSelect && onSelect(r)}
-        style=${{display:"flex",alignItems:"center",gap:10,padding:"9px 4px",borderTop:"1px solid #1a1d27",cursor:"pointer"}}>
-      <div style=${{width:8,height:8,borderRadius:"50%",background:pc(r.party),flexShrink:0}}/>
-      <div style=${{flex:1,minWidth:0}}>
-        <div style=${{fontSize:12,fontWeight:700,color:"#f0ebe0"}}>${r.name}
-          <span style=${{fontSize:9,fontFamily:FM,color:"#6b7280",fontWeight:400}}> ${r.party} · ${seat(r)} · ${r.type === "incumbent" ? "incumbent" : "challenger"}</span></div>
-        ${r.opponents && r.opponents.length ? html`<div style=${{fontSize:9,color:"#6b7280",fontFamily:FM,marginTop:2}}>
-          vs ${r.opponents.map(o => o.name + " (" + o.party + ")" + (o.anti ? " ◈" : "")).join(", ")}</div>` : null}
-        <div style=${{fontSize:9,color:"#4b5563",fontFamily:FM,marginTop:2}}>
-          Polls close ${fmtClose(r._close)}
-          ${r.odds && r.odds.sources ? " · " + r.odds.sources.map(s => s.src + " " + Math.round(s.prob*100) + "%").join(" · ") : ""}
-        </div>
+  const running = m => !["RETIRING","RETIRED","RESIGNED"].includes(m.ps) && !m.not_up_this_cycle;
+  const people = [
+    ...members.filter(m => m.antiArms && running(m)).map(m => ({...m, _id: "BG:" + m.bioguide_id, _inc: true})),
+    ...(window._aectField || []).filter(c => c.antiArms).map(c => ({...c, _id: c.id, _inc: false})),
+  ].map(p => {
+    const r = raceById[p._id] || {};
+    const pd = p.primary_date || r.primary_date || p.primaryDate || "";
+    const gd = r.general_date || GENERAL_DATE();
+    const gres = p.general_result || r.general_result || "";
+    const pres = p.primary_result || r.primary_result || "";
+    let stg, when, status;
+    if (pres === "LOST" || p.ps === "DEFEATED" && !gres) { stg = "out"; when = pd; status = "Lost the primary"; }
+    else if (pres === "WON" || p._inc && pd && new Date(pd + "T23:59:59").getTime() < now) {
+      stg = "general"; when = gd; status = gres === "WON" ? "Won the general" : gres === "LOST" ? "Lost the general" : "On the general-election ballot";
+    } else { stg = "primary"; when = pd; status = pd ? "Primary " + pd : "Primary date not set"; }
+    return {...p, _race: r, _stage: stg, _when: when, _status: status, _gres: gres};
+  }).filter(p => p._stage !== "out");
+  const states = [...new Set(people.map(p => p.state).filter(Boolean))].sort();
+  const shown = people.filter(p =>
+    (party === "all" || partyGroup(p.party) === party) && (stage === "all" || p._stage === stage) &&
+    (ch === "all" || p.chamber === ch) && (!st || p.state === st) &&
+    (!q || p.name.toLowerCase().includes(q.toLowerCase())))
+    .sort((a, b) => (a._stage === b._stage ? 0 : a._stage === "primary" ? -1 : 1)
+      || String(a._when).localeCompare(String(b._when)) || a.state.localeCompare(b.state));
+  const counts = g => people.filter(p => partyGroup(p.party) === g).length;
+  const Chip = ({on, onClick, children}) => html`<button onClick=${onClick}
+    style=${{padding:"4px 10px",borderRadius:14,border:"1px solid "+(on?"#a78bfa":"#252830"),background:on?"#1a0a2e":"transparent",
+      color:on?"#c4b5fd":"#9ca3af",fontFamily:FM,fontSize:10,cursor:"pointer"}}>${children}</button>`;
+  const seat = p => p.chamber === "senate" ? p.state + " · Senate" : p.state + "-" + (p.district || "AL") + " · House";
+  const col = p => p.party === "R" ? COL.antiR : p.party === "D" ? COL.antiD : "#d8b4fe";
+  const sel = {background:"#090b0e",border:"1px solid #252830",borderRadius:7,color:"#e8e4dc",fontSize:10,fontFamily:FM,padding:"4px 6px"};
+  return html`<div style=${{width:"100%",maxWidth:900,display:"flex",flexDirection:"column",gap:10}}>
+    <div style=${{background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,padding:"14px 16px"}}>
+      <div style=${{fontSize:14,fontWeight:700,color:"#f0ebe0"}}>Anti-establishment candidates to support</div>
+      <div style=${{fontSize:10.5,color:"#9ca3af",lineHeight:1.6,marginTop:4}}>
+        Every Republican, Democrat, independent and third-party candidate the tracker counts as anti-establishment, in primaries and general elections. Party is shown for information only; the bar is the same for everyone. Click a name for the full write-up.</div>
+      <div style=${{display:"flex",gap:6,flexWrap:"wrap",marginTop:10}}>
+        <${Chip} on=${party==="all"} onClick=${()=>setParty("all")}>All ${people.length}<//>
+        <${Chip} on=${party==="R"} onClick=${()=>setParty("R")}>Republican ${counts("R")}<//>
+        <${Chip} on=${party==="D"} onClick=${()=>setParty("D")}>Democrat ${counts("D")}<//>
+        <${Chip} on=${party==="I"} onClick=${()=>setParty("I")}>Independent ${counts("I")}<//>
+        <${Chip} on=${party==="O"} onClick=${()=>setParty("O")}>Third party ${counts("O")}<//>
       </div>
-      <div style=${{textAlign:"right",minWidth:78}}>
-        ${r.general_result
-          ? html`<span style=${{fontSize:10,fontWeight:700,fontFamily:FM,padding:"3px 8px",borderRadius:4,
-                  background:r.general_result==="WON"?"#14532d":"#450a0a",color:r.general_result==="WON"?"#4ade80":"#f87171"}}>${r.general_result}</span>`
-          : r._p != null
-            ? html`<div style=${{fontSize:16,fontWeight:700,fontFamily:FM,color:r._p>=0.6?"#4ade80":r._p>=0.4?"#fbbf24":"#f87171"}}>${Math.round(r._p*100)}%</div>`
-            : html`<div style=${{fontSize:10,fontFamily:FM,color:"#4b5563"}}>no market</div>`}
-        ${!r.general_result && r._frozen ? html`<div style=${{fontSize:8,fontFamily:FM,color:"#93c5fd"}}>❄ frozen at poll close</div>` : null}
-        ${!r.general_result && r.odds && !r._frozen ? html`<div style=${{fontSize:8,fontFamily:FM,color:"#4b5563"}}>${r.odds.n} source${r.odds.n>1?"s":""}</div>` : null}
+      <div style=${{display:"flex",gap:6,flexWrap:"wrap",marginTop:7,alignItems:"center"}}>
+        <select value=${stage} onChange=${e=>setStage(e.target.value)} style=${sel}>
+          <option value="all">Primaries and general</option><option value="primary">Primaries</option><option value="general">General election</option></select>
+        <select value=${ch} onChange=${e=>setCh(e.target.value)} style=${sel}>
+          <option value="all">House and Senate</option><option value="house">House</option><option value="senate">Senate</option></select>
+        <select value=${st} onChange=${e=>setSt(e.target.value)} style=${sel}>
+          <option value="">All states</option>${states.map(x=>html`<option key=${x} value=${x}>${x}</option>`)}</select>
+        <input value=${q} onInput=${e=>setQ(e.target.value)} placeholder="Name…" style=${{...sel,flex:"1 1 120px",minWidth:0}}/>
       </div>
-    </div>`)}
+    </div>
+
+    <div style=${{background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,padding:"12px 16px"}}>
+      <div style=${{fontSize:10,fontWeight:700,color:"#fbbf24",fontFamily:FM,letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:5}}>A note on strategic voting</div>
+      <div style=${{fontSize:10.5,color:"#9ca3af",lineHeight:1.65}}>
+        In most states the candidate with the most votes wins outright, even without a majority. In a race with three or more serious candidates, a vote for a long shot can help elect the candidate you like least, so some voters weigh each candidate's chances alongside their record. The odds shown here come from prediction markets and are only one input. In a party primary, backing an anti-establishment candidate carries no spoiler risk in November. In ranked-choice states you can rank an anti-establishment candidate first and still rank others below them, so a first-choice vote is never wasted.</div>
+      ${Object.entries(RCV_STATES).map(([k,v]) => html`<div key=${k} style=${{fontSize:10,color:"#c4b5fd",lineHeight:1.55,marginTop:5}}>◆ ${v}</div>`)}
+    </div>
+
+    <div style=${{background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,padding:"6px 14px"}}>
+      ${shown.length === 0 ? html`<div style=${{fontSize:11,color:"#6b7280",padding:"14px 0"}}>No candidates match these filters yet. The AI judge is still working through candidates; more are added as each one is reviewed.</div>` : null}
+      ${shown.map(p => {
+        const o = p._race.odds;
+        return html`<div key=${p._id} onClick=${() => onSelect && onSelect(p)}
+          style=${{display:"flex",gap:10,padding:"10px 2px",borderTop:"1px solid #1a1d27",cursor:"pointer",alignItems:"flex-start"}}>
+          <div style=${{width:9,height:9,borderRadius:"50%",background:col(p),marginTop:4,flexShrink:0}}/>
+          <div style=${{flex:1,minWidth:0}}>
+            <div style=${{fontSize:12,fontWeight:700,color:"#f0ebe0"}}>${p.name}
+              <span style=${{fontSize:9,fontFamily:FM,color:"#6b7280",fontWeight:400}}> ${partyLabel(p.party)} · ${seat(p)} · ${p._inc ? "incumbent" : "challenger"}</span>
+              ${RCV_STATES[p.state] ? html`<span title=${RCV_STATES[p.state]} style=${{fontSize:8,fontFamily:FM,color:"#c4b5fd",border:"1px solid #c4b5fd55",borderRadius:3,padding:"0 4px",marginLeft:6}}>ranked choice</span>` : null}</div>
+            <div style=${{fontSize:9,fontFamily:FM,color:"#9ca3af",marginTop:2}}>${p._status}${p._stage === "general" && p._when ? " · " + p._when : ""}
+              ${p._race.opponents && p._race.opponents.length ? " · vs " + p._race.opponents.map(x => x.name + " (" + x.party + ")").join(", ") : ""}</div>
+            <div style=${{fontSize:10,color:"#6b7280",lineHeight:1.5,marginTop:3}}>${bottomLine(p).slice(0,220)}</div>
+          </div>
+          <div style=${{textAlign:"right",minWidth:62}}>
+            ${p._gres ? html`<span style=${{fontSize:10,fontWeight:700,fontFamily:FM,padding:"2px 7px",borderRadius:4,background:p._gres==="WON"?"#14532d":"#450a0a",color:p._gres==="WON"?"#4ade80":"#f87171"}}>${p._gres}</span>`
+              : o ? html`<div style=${{fontSize:14,fontWeight:700,fontFamily:FM,color:o.avg>=0.6?"#4ade80":o.avg>=0.4?"#fbbf24":"#f87171"}}>${Math.round(o.avg*100)}%</div>
+                  <div style=${{fontSize:8,fontFamily:FM,color:"#4b5563"}}>${o.frozen ? "at poll close" : o.n + " market" + (o.n>1?"s":"")}</div>` : null}
+          </div>
+        </div>`;
+      })}
+    </div>
   </div>`;
 }
 
-function CandidateTimeline({allMembers, challengers, racesData, polyData, descriptions}) {
-  descriptions = (descriptions && typeof descriptions === 'object') ? descriptions : {};
-  const [filter, setFilter] = useState("all");
-
-  const today = new Date(); today.setHours(0,0,0,0);
-
-  function parseDate(s) {
-    if (!s) return null;
-    const d = new Date(s + "T12:00:00");
-    return isNaN(d) ? null : d;
-  }
-  function fmtDate(d) {
-    if (!d) return "";
-    return d.toLocaleDateString("en-US", {month:"short", day:"numeric", year:"numeric"});
-  }
-
-  const allCands = [];
-  const seen = new Set();
-
-  function normName(n) {
-    return (n||"").replace(/^(congressman|senator|representative)\s+/i,"").trim().toLowerCase();
-  }
-  function addCand(c) {
-    const key = normName(c.name);
-    if (seen.has(key)) {
-      const ex = allCands.find(x => x._key === key);
-      if (ex) {
-        if (c.primary_date && !ex.primary_date)   ex.primary_date   = c.primary_date;
-        if (c.general_date && !ex.general_date)   ex.general_date   = c.general_date;
-        if (c.primary_result && !ex.primary_result) ex.primary_result = c.primary_result;
-        if (c.win_prob != null && ex.win_prob == null) ex.win_prob   = c.win_prob;
-        if (c.primary_pct && !ex.primary_pct)     ex.primary_pct    = c.primary_pct;
-        if (c.general_opponent && !ex.general_opponent) ex.general_opponent = c.general_opponent;
-        if (c.primary_opponent && !ex.primary_opponent) ex.primary_opponent = c.primary_opponent;
-        if (c.note && !ex.note)                   ex.note           = c.note;
-        if (c.win_prob_src && !ex.win_prob_src)   ex.win_prob_src   = c.win_prob_src;
-      }
-      return;
-    }
-    seen.add(key);
-    allCands.push({...c, _key: key,
-      name: c.name.replace(/^(congressman|senator|representative)\s+/i,"").trim()});
-  }
-
-  (racesData || []).filter(r => r.type === "challenger" || r.primary_result).forEach(r => {
-    addCand({
-      name: r.name, party: r.party||"D", state: r.state||"", district: r.district,
-      chamber: r.chamber||"house",
-      primary_date: r.primary_date||"", general_date: r.general_date||"",
-      primary_result: r.primary_result||"", primary_pct: r.primary_pct,
-      primary_opponent: r.primary_opponent||"", general_opponent: r.general_opponent||"",
-      win_prob: r.win_prob != null ? r.win_prob : null,
-      win_prob_src: r.win_prob_src||"",
-      note: r.note||"", source: "tracked",
-    });
-  });
-
-  (challengers || []).forEach(c => {
-    const wonOrGen = c.ps === "WON" || c.ps === "GENERAL" || c.primary_result === "WON";
-    addCand({
-      name: c.name, party: c.party||"D",
-      state: c.state||"", district: c.district,
-      chamber: c.chamber||"house",
-      primary_date: c.primaryDate || c.primary_date || "",
-      general_date: c.general_date || (c.ps === "GENERAL" ? GENERAL_DATE() : ""),
-      primary_result: wonOrGen ? "WON" : "",
-      primary_pct: null, primary_opponent: "", general_opponent: "",
-      win_prob: null, win_prob_src: "",
-      note: c.note||"",
-      source: c.source === "rlc_endorsed" ? "rlc" : "trackaipac",
-    });
-  });
-
-  // Add anti-establishment INCUMBENTS who are actively running
-  (allMembers||[]).filter(m =>
-    m.antiArms &&
-    !["RETIRED","RESIGNED","DEFEATED","RETIRING","FLIPPED"].includes(m.ps)
-  ).forEach(m => {
-    const race = (racesData||[]).find(r => r.name === m.name);
-    addCand({
-      name:             m.name,
-      party:            m.party || "?",
-      state:            m.state || "",
-      district:         m.district,
-      chamber:          m.chamber || "house",
-      primary_date:     race?.primary_date || "",
-      general_date:     race?.general_date || GENERAL_DATE(),
-      primary_result:   race?.primary_result || "",
-      primary_pct:      race?.primary_pct || null,
-      primary_opponent: race?.primary_opponent || "",
-      general_opponent: race?.general_opponent || "",
-      win_prob:         race?.win_prob ?? null,
-      win_prob_src:     race?.win_prob_src || "",
-      cook_rating:      race?.cook_rating || "",
-      note:             race?.note || m.note || "",
-      source:           "incumbent",
-      ps:               m.ps,
-    });
-  });
-
-  allCands.forEach(c => {
-    const pd = getValidatedPoly(c, polyData);
-    if (pd && pd.prob != null) {
-      c.win_prob     = pd.prob;
-      c.win_prob_src = pd.src || "polymarket";
-      c.forecast_url = pd.url || "";
-      if (pd.src === "grok_estimate" && pd.question && !c.win_prob_reasoning) {
-        c.win_prob_reasoning = pd.question;
-      }
-    }
-    const desc = descriptions && (descriptions[c.name] || descriptions[normName(c.name)]);
-    if (desc && !c.description) c.description = desc;
-  });
-
-  function getStatus(c) {
-    const pd = parseDate(c.primary_date);
-    const gd = parseDate(c.general_date);
-    const won = c.primary_result === "WON";
-
-    if (won || c.ps === "GENERAL") {
-      if (!gd) return {tag:"WON PRIMARY",      sub:"general date TBD",       color:"#4ade80", phase:"general"};
-      const diff = Math.ceil((gd - today) / 86400000);
-      if (diff < -3) return {tag:"GENERAL PENDING", sub:"results awaited "+fmtDate(gd), color:"#fbbf24", phase:"general"};
-      if (diff < 0)  return {tag:"RECOUNT WINDOW",  sub:fmtDate(gd),                  color:"#f97316", phase:"general"};
-      if (diff === 0)return {tag:"VOTING TODAY",     sub:"general election",            color:"#4ade80", phase:"general"};
-      if (diff <= 14)return {tag:"GENERAL SOON",     sub:fmtDate(gd),                  color:"#4ade80", phase:"general"};
-      return               {tag:"WON PRIMARY",       sub:"general "+fmtDate(gd),        color:"#4ade80", phase:"general"};
-    }
-    if (!pd)    return     {tag:"UPCOMING",          sub:"date TBD",                    color:"#4b5563", phase:"primary"};
-    const diff = Math.ceil((pd - today) / 86400000);
-    if (diff < -10) return {tag:"PENDING RESULTS",   sub:"primary "+fmtDate(pd),        color:"#f59e0b", phase:"primary"};
-    if (diff < -1)  return {tag:"RUNOFF WINDOW",     sub:"primary "+fmtDate(pd),        color:"#f97316", phase:"primary"};
-    if (diff < 0)   return {tag:"RESULTS TODAY",     sub:fmtDate(pd),                   color:"#4ade80", phase:"primary"};
-    if (diff === 0) return {tag:"VOTING TODAY",      sub:"primary",                      color:"#4ade80", phase:"primary"};
-    if (diff <= 7)  return {tag:"THIS WEEK",         sub:fmtDate(pd),                   color:"#a78bfa", phase:"primary"};
-    if (diff <= 30) return {tag:"PRIMARY SOON",      sub:fmtDate(pd),                   color:"#818cf8", phase:"primary"};
-    return               {tag:"UPCOMING PRIMARY",    sub:fmtDate(pd),                   color:"#4b5563", phase:"primary"};
-  }
-
-  function nextDate(c) {
-    const won = c.primary_result === "WON" || c.ps === "GENERAL";
-    const d = won ? parseDate(c.general_date)||parseDate(c.primary_date)
-                  : parseDate(c.primary_date);
-    return d ? d.getTime() : 9e15;
-  }
-
-  const filters = [
-    {k:"all",     label:"All"},
-    {k:"soon",    label:"< 30 days"},
-    {k:"general", label:"In general"},
-    {k:"pending", label:"Pending"},
-    {k:"R",       label:"R candidates"},
-    {k:"D",       label:"D candidates"},
-  ];
-
-  const sorted = [...allCands].sort((a,b) => nextDate(a)-nextDate(b));
-
-  const displayed = sorted.filter(c => {
-    if (filter === "R") return c.party === "R";
-    if (filter === "D") return c.party !== "R";
-    if (filter === "general") return c.primary_result === "WON" || c.ps === "GENERAL";
-    if (filter === "pending") {
-      const t = getStatus(c).tag;
-      return t.includes("PENDING") || t.includes("RUNOFF") || t.includes("RESULTS");
-    }
-    if (filter === "soon") {
-      const won = c.primary_result === "WON" || c.ps === "GENERAL";
-      const d = won ? parseDate(c.general_date) : parseDate(c.primary_date);
-      if (!d) return false;
-      return Math.ceil((d-today)/86400000) <= 30;
-    }
-    return true;
-  });
-
-  function monthKey(c) {
-    const won = c.primary_result === "WON" || c.ps === "GENERAL";
-    const d = won ? parseDate(c.general_date)||parseDate(c.primary_date) : parseDate(c.primary_date);
-    return d ? d.toLocaleDateString("en-US",{month:"long",year:"numeric"}) : "Date TBD";
-  }
-
-  const groups = [];
-  displayed.forEach(c => {
-    const mk = monthKey(c);
-    let g = groups.find(x => x.key===mk);
-    if (!g) { g = {key:mk, cands:[]}; groups.push(g); }
-    g.cands.push(c);
-  });
-
-  function WinGauge({prob, src}) {
-    if (prob == null) return null;
-    const pct = Math.round(prob*100);
-    const col = prob>=0.6 ? "#4ade80" : prob>=0.35 ? "#fbbf24" : "#f87171";
-    const r=16, circ=Math.PI*r, dash=Math.min(1,prob)*circ;
-    const w=44, h=24;
-    const srcLabel = src==="polymarket_live" || src==="polymarket_gamma" || src==="polymarket"
-      ? html`<span style=${{fontSize:6,color:"#4ade80",fontFamily:FM,lineHeight:1}}>◉ Poly</span>`
-      : src==="predictit_contract"
-      ? html`<span style=${{fontSize:6,color:"#f59e0b",fontFamily:FM,lineHeight:1}}>◈ PI</span>`
-      : src==="predictit_party"
-      ? html`<span style=${{fontSize:6,color:"#6b7280",fontFamily:FM,lineHeight:1}}>◇ PI~</span>`
-      : src==="metaculus"
-      ? html`<span style=${{fontSize:6,color:"#a78bfa",fontFamily:FM,lineHeight:1}}>△ Meta</span>`
-      : src==="grok_estimate"
-      ? html`<span style=${{fontSize:6,color:"#38bdf8",fontFamily:FM,lineHeight:1}}>✦ Grok</span>`
-      : null;
-    return html`
-      <div style=${{display:"flex",flexDirection:"column",alignItems:"center",gap:1,width:44}}>
-        <svg width=${w} height=${h} viewBox=${"0 0 "+w+" "+h}>
-          <path d=${"M 6 "+(h-2)+" A "+r+" "+r+" 0 0 1 "+(w-6)+" "+(h-2)}
-            fill="none" stroke="#1e2230" stroke-width="4" stroke-linecap="round"/>
-          <path d=${"M 6 "+(h-2)+" A "+r+" "+r+" 0 0 1 "+(w-6)+" "+(h-2)}
-            fill="none" stroke=${col} stroke-width="4" stroke-linecap="round"
-            stroke-dasharray=${dash+" "+circ}/>
-          <text x=${w/2} y=${h-5} text-anchor="middle" font-size="8"
-            font-family="monospace" fill=${col} font-weight="700">${pct}%</text>
-        </svg>
-        ${srcLabel}
-      </div>`;
-  }
-
-  function CandRow({c}) {
-    const [exp, setExp] = useState(false);
-    const st = getStatus(c);
-    const pc = c.party==="R" ? "#ef4444" : c.party==="D" ? "#60a5fa" : "#a3e635";
-    const loc = c.district
-      ? c.state+"-"+(c.chamber==="senate"?"Sen":c.district)
-      : c.state+(c.chamber==="senate"?" Senate":"");
-    const won = c.primary_result==="WON" || c.ps==="GENERAL";
-    const opp = won ? c.general_opponent : c.primary_opponent;
-    const srcLabel = c.source==="rlc" ? "RLC" : c.source==="tracked" ? "Tracked" : c.source==="incumbent" ? "Incumbent" : "TrackAIPAC";
-
-    return html`
-      <div style=${{borderBottom:"1px solid #0d1018"}}>
-        <div onClick=${()=>setExp(v=>!v)} style=${{
-          display:"flex", alignItems:"center", gap:8,
-          padding:"7px 10px", cursor:"pointer",
-          borderLeft:"3px solid "+st.color+(exp?"90":"40"),
-          background: exp?"#0a0c10":"transparent",
-        }}>
-          <div title=${c.win_prob_reasoning || c.win_prob_src || ""}>
-            <${WinGauge} prob=${c.win_prob} src=${c.win_prob_src}/>
-          </div>
-          ${c.win_prob == null ? html`<div style=${{width:44,flexShrink:0,textAlign:"center",fontSize:7,color:"#374151",fontFamily:FM,lineHeight:1.2}}>no %<br/>data</div>` : null}
-
-          <div style=${{flex:"0 0 148px",minWidth:0}}>
-            <div style=${{fontSize:10,fontWeight:700,color:"#f0ebe0",fontFamily:FM,
-              whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>${c.name}</div>
-            <div style=${{fontSize:7,color:pc,fontFamily:FM,marginTop:1}}>
-              ${c.party} · ${loc||"?"}
-              <span style=${{color:"#374151",marginLeft:4}}>${srcLabel}</span>
-            </div>
-          </div>
-
-          <div style=${{flex:1,minWidth:0}}>
-            <div style=${{display:"flex",alignItems:"center",gap:5,flexWrap:"wrap"}}>
-              <span style=${{fontSize:7,fontFamily:FM,padding:"1px 6px",borderRadius:3,
-                background:st.color+"18",color:st.color,border:"1px solid "+st.color+"40",
-                whiteSpace:"nowrap",letterSpacing:"0.05em"}}>${st.tag}</span>
-              ${won && c.primary_pct ? html`
-                <span style=${{fontSize:7,color:"#4ade80",fontFamily:FM}}>won ${c.primary_pct}%</span>` : null}
-            </div>
-            <div style=${{fontSize:7,color:"#4b5563",fontFamily:FM,marginTop:2,
-              whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>
-              ${st.sub}${opp ? " · vs "+opp.slice(0,32)+(opp.length>32?"…":"") : ""}
-            </div>
-          </div>
-
-          <span style=${{color:"#374151",fontSize:9,flexShrink:0}}>${exp?"▴":"▾"}</span>
-        </div>
-        ${exp && html`
-          <div style=${{padding:"6px 12px 8px 63px",background:"#0a0c10",
-            borderLeft:"3px solid "+st.color+"20",
-            fontSize:8,color:"#6b7280",fontFamily:FM,lineHeight:1.6}}>
-            ${c.description ? html`<div style=${{color:"#9ca3af",fontStyle:"italic",marginBottom:4}}>${c.description}</div>` : null}
-            ${c.note||"No additional detail available."}
-            ${c.website ? html`<br/><a href=${c.website} target="_blank"
-              style=${{color:"#4b5563",textDecoration:"none"}}>→ campaign site</a>` : null}
-          </div>`}
-      </div>`;
-  }
-
-  const wonCount  = allCands.filter(c => c.primary_result==="WON"||c.ps==="GENERAL").length;
-  const liveCount = allCands.filter(c => c.win_prob != null && c.win_prob_src).length;
-
-  return html`
-    <div style=${_SP}>
-      <div style=${{display:"flex",justifyContent:"space-between",alignItems:"flex-start",
-        marginBottom:8,flexWrap:"wrap",gap:6}}>
-        <div>
-          <div style=${{fontSize:11,fontWeight:700,color:"#f0ebe0",fontFamily:FM}}>
-            ${CYCLE()} Anti-Intervention Candidates
-          </div>
-          <div style=${{fontSize:8,color:"#4b5563",fontFamily:FM,marginTop:1}}>
-            ${allCands.length} candidates · ${wonCount} in/past primary · ${allCands.length-wonCount} upcoming
-            ${liveCount>0 ? html` · <span style=${{color:"#4ade80"}}>◉ ${liveCount} live odds</span>` : null}
-          </div>
-        </div>
-        <div style=${{display:"flex",gap:4,flexWrap:"wrap"}}>
-          ${filters.map(f => html`
-            <button key=${f.k} onClick=${e=>{e.stopPropagation();setFilter(f.k)}}
-              style=${{padding:"2px 7px",borderRadius:4,cursor:"pointer",
-                border:"1px solid #1e2230",fontFamily:FM,fontSize:7,
-                background:filter===f.k?"#1e2230":"transparent",
-                color:filter===f.k?"#a5b4fc":"#4b5563"}}>
-              ${f.label}
-            </button>`)}
-        </div>
-      </div>
-
-      <div style=${{background:"#0f1117",border:"1px solid #1a1d27",borderRadius:11,overflow:"hidden"}}>
-        ${groups.length===0
-          ? html`<div style=${{padding:"18px",textAlign:"center",color:"#374151",fontFamily:FM,fontSize:8}}>
-              No candidates match this filter.</div>`
-          : groups.map(g => html`
-            <div key=${g.key}>
-              <div style=${{padding:"4px 10px",background:"#090b0e",fontSize:7,
-                color:"#374151",fontFamily:FM,letterSpacing:"0.12em",
-                textTransform:"uppercase",borderBottom:"1px solid #0d1018"}}>
-                ${g.key}
-                <span style=${{color:"#1e2230",marginLeft:5}}>${g.cands.length} candidate${g.cands.length!==1?"s":""}</span>
-              </div>
-              ${g.cands.map(c => html`<${CandRow} key=${c.name+c.state} c=${c}/>`)}
-            </div>`)}
-      </div>
-
-      <div style=${{marginTop:6,fontSize:7,color:"#374151",fontFamily:FM,lineHeight:1.7}}>
-        ◉ Poly = Polymarket · ◈ PI = PredictIt · ◇ PI~ = PredictIt proxy · △ Meta = Metaculus · ✦ Grok = Grok web estimate · no % data = no forecast found · TrackAIPAC/RLC = endorsing orgs
-      </div>
-    </div>`;
-}
-
-// ── Search over sitting members and every running candidate ─────────────────
 function SearchBox({members, onPick, inline}) {
   const [q, setQ] = useState(""), [open, setOpen] = useState(false);
   const field = window._aectField || [];
@@ -1974,7 +1681,7 @@ function App() {
             background:showTimeline?"#1a0a2e":"transparent",
             color:showTimeline?"#a5b4fc":"#6b7280",
             borderLeft:"1px solid #1e2230"}}>
-          📈 Timeline
+          ☑ Candidates
         </button>
         <button onClick=${()=>{setShowAbout(v=>!v);setShowTimeline(false);}}
           style=${{padding:"5px 15px",borderRadius:8,border:"none",cursor:"pointer",fontFamily:FM,fontSize:10,
@@ -2008,9 +1715,7 @@ function App() {
       <!-- Three columns / Timeline toggle -->
       ${showAbout ? html`<${About} members=${allMembers}/>` : showTimeline ? html`
         <div style=${{width:"100%",maxWidth:860,display:"flex",flexDirection:"column",alignItems:"center",gap:10}}>
-          ${inGeneralPhase(races)
-            ? html`<${ElectionTimeline} races=${races} onSelect=${r => setSelected(r.name)}/>`
-            : html`<${CandidateTimeline} allMembers=${allMembers} challengers=${challengers} polyData=${polyData} racesData=${races} descriptions=${descriptions || {}}/>`}
+          <${Candidates} members=${allMembers} races=${races} onSelect=${p => { setShowTimeline(false); setSelected(p.name); window.scrollTo({top:0,behavior:"smooth"}); }}/>
         </div>`
       : html`
       <div class="three-col" style=${{display:"flex",gap:10,alignItems:"flex-start",flexWrap:"wrap",justifyContent:"center",width:"100%",maxWidth:1080}}>
