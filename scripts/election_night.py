@@ -42,8 +42,8 @@ def main():
     race_ids = {r["id"] for r in data.get("races", [])}
     # the tracked races plus everyone else still on those ballots (for results and opponents)
     seats = {(r.get("state"), r.get("chamber")) for r in data.get("races", [])}
-    subset = {k: p for k, p in people.items()
-              if k in race_ids or (p.get("on_ballot") and (p.get("state"), p.get("chamber")) in seats)}
+    # every race on the ballot, not only tracked ones: the "Next Congress" view needs all winners
+    subset = {k: p for k, p in people.items() if k in race_ids or p.get("on_ballot")}
 
     results.TTL_H = 0.2                       # re-read result pages every run tonight
     cache = results.fetch(subset)
@@ -63,12 +63,16 @@ def main():
     mk = markets.match_people({k: people[k] for k in race_ids if k in people})
     night.apply(data, mk, people, old_data=_load("data.json", {}))   # clock read after markets load
 
+    for c in data.get("field", []):           # candidates' results, for the Next Congress view
+        p = people.get(c.get("id"))
+        if p is not None:
+            c["general_result"] = p.get("general_result")
     by_name = {p["name"]: p for p in people.values() if p.get("incumbent")}
     for m in data.get("members", []):
         p = by_name.get(m["name"])
-        if p and p.get("general_result"):
-            m["general_result"] = p["general_result"]
-            if p["general_result"] == "LOST":
+        if p:
+            m["general_result"] = p.get("general_result")
+            if p.get("general_result") == "LOST":
                 m["ps"] = "DEFEATED"
     hist = _load("history.json", {"events": []})
     n = night.history(hist, data)
