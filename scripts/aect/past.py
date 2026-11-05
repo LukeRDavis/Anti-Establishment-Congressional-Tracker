@@ -22,7 +22,7 @@ from . import votes as V
 
 FIRST = int(os.environ.get("AECT_HISTORY_FROM", "107"))
 OUT_DIR = os.path.join("data", "history")
-VERSION = 3
+VERSION = 4
 URL = "https://voteview.com/static/data/out/{kind}/{ch}{congress}_{kind}.csv"
 CAST = {1: "Yea", 2: "Yea", 3: "Yea", 4: "Nay", 5: "Nay", 6: "Nay"}
 
@@ -82,6 +82,8 @@ def _focus_then(j, rec):
         (len(others) <= 1 and named and "consideration of" not in own)
 
 
+PASSAGE = re.compile(r"passage|pass the bill|suspend the rules and pass|conference report|concur|override", re.I)
+SPEND = re.compile(r"appropriat|supplemental|authoriz", re.I)
 OMNIBUS = re.compile(r"defense authorization|authorization act for fiscal|department of defense appropriations|"
                      r"defense appropriations|consolidated appropriations|omnibus|continuing appropriations|"
                      r"further appropriations|making appropriations for", re.I)
@@ -96,7 +98,9 @@ def _judged_focus(congress, ch_letter, judgments, budget):
         if (r.get("chamber") or "").lower() != chamber:
             continue
         text = " ".join(r.get(f, "") for f in ("bill_number", "vote_question", "vote_desc", "dtl_desc"))
-        if not V.TOPIC.search(text):
+        # standalone aid bills often carry only a generic title ("Making emergency supplemental
+        # appropriations for ..."), so passage votes on any spending bill go to the judge too
+        if not (V.TOPIC.search(text) or (PASSAGE.search(r.get("vote_question", "")) and SPEND.search(text))):
             continue
         n = _num(r.get("rollnumber"))
         date = r.get("date", "")
