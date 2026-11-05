@@ -22,7 +22,7 @@ from . import votes as V
 
 FIRST = int(os.environ.get("AECT_HISTORY_FROM", "107"))
 OUT_DIR = os.path.join("data", "history")
-VERSION = 1
+VERSION = 2
 URL = "https://voteview.com/static/data/out/{kind}/{ch}{congress}_{kind}.csv"
 CAST = {1: "Yea", 2: "Yea", 3: "Yea", 4: "Nay", 5: "Nay", 6: "Nay"}
 
@@ -49,6 +49,28 @@ def _name(bioname):
         last, first = bioname.split(",", 1)
         return f"{first.strip()} {last.strip().title()}".strip()
     return (bioname or "").title()
+
+
+def _focus_then(j, rec):
+    """Arms/military aid to the focus recipients, as it was usually voted on before 2023.
+    Today's test (V.is_focus) needs the focus recipients alone and a 'major' rating; in earlier
+    Congresses the aid mostly rode in omnibus defense and foreign-operations bills covering
+    dozens of countries, which say nothing about Israel in particular, while the standalone
+    measures (security-cooperation acts, Iron Dome funding, resolutions backing military
+    operations) were often rated 'minor'. So: any arms/aid vote whose recipients are only the
+    focus countries, or the focus country with one other, named in the measure itself."""
+    if V.is_focus(j):
+        return True
+    if j.get("category") != V.FOCUS_CATEGORY:
+        return False
+    rec_set = {r.lower() for r in (j.get("recipients") or [])}
+    focus = {f.lower() for f in FOCUS_RECIPIENTS}
+    if not rec_set & focus:
+        return False
+    others = rec_set - focus
+    text = " ".join([rec.get("legis", ""), rec.get("desc", ""), j.get("summary", "")]).lower()
+    named = any(f in text for f in focus)
+    return not others or (len(others) <= 1 and named and "consideration of" not in text)
 
 
 def _judged_focus(congress, ch_letter, judgments, budget):
@@ -79,9 +101,10 @@ def _judged_focus(congress, ch_letter, judgments, budget):
         if j is None:
             pending += 1
             continue
-        if j.get("relevant") and j.get("anti_position") and V.is_focus(j):
-            out[n] = {**rec, "anti_position": j["anti_position"], "summary": j.get("summary", ""),
-                      "measure": rec["legis"]}
+        if j.get("relevant") and _focus_then(j, rec):
+            # a measure that funds or backs the aid: voting no is the anti side; one that cuts it: yes
+            anti = j.get("anti_position") or ("Yea" if j.get("measure_restricts") else "Nay")
+            out[n] = {**rec, "anti_position": anti, "summary": j.get("summary", ""), "measure": rec["legis"]}
     return out, pending
 
 
@@ -102,7 +125,11 @@ def build_congress(congress, judgments, budget):
                 if (m.get("chamber") or "").lower() == chamber and m.get("bioguide_id")]
         votes = {}
         if focus[ch]:
-            for v in _csv("votes", ch, congress):
+            rows_v = _csv("votes", ch, congress)
+            if not rows_v:                    # a failed download must not look like "nobody voted"
+                print(f"  history: {congress}th {chamber} votes file unavailable; will retry")
+                return None, 1
+            for v in rows_v:
                 n = _num(v.get("rollnumber"))
                 if n in focus[ch]:
                     cast = CAST.get(_num(v.get("cast_code"), 9))

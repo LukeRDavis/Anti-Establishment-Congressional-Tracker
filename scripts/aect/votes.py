@@ -31,7 +31,8 @@ TOPIC = re.compile(
     r"afghan|venezuel|military|armed forces|\barms\b|weapon|munition|missile|defen[cs]e|national security|"
     r"department of state|state, foreign operations|foreign (?:military|assistance|aid|operations)|"
     r"security assistance|war powers|use of military force|\baumf\b|troops|deploy|nato|"
-    r"foreign military (?:sale|financing)|arms sale|proposed sale|disapproval", re.I)
+    r"foreign military (?:sale|financing)|arms sale|proposed sale|disapproval|"
+    r"iron dome|david'?s sling|arrow (?:missile|program)|qualitative military edge", re.I)
 
 _VOTE_NORM = {"aye": "Yea", "yea": "Yea", "yes": "Yea", "no": "Nay", "nay": "Nay",
               "present": "Present", "not voting": "Not Voting"}
