@@ -1280,6 +1280,7 @@ function useData() {
 
         window._aectMeta = d.meta || {};
         window._aectCommittees = d.committees || [];
+        window._aectReform = d.reform || {};
         // every candidate still running (all parties), for search and the ballot lookup
         window._aectField = (d.field || []).map(c => ({...c, antiArms: !!c.anti, _candidate: true,
           ps: c.general_result === "WON" ? "ELECTED" : c.general_result === "LOST" ? "DEFEATED"
@@ -1412,13 +1413,57 @@ function About({members}) {
 // Everyone the tracker counts as anti-establishment who is on a ballot this cycle (sitting
 // members running again and challengers of every party), with the contest they are in,
 // odds where markets exist, and results once posted.
-const RCV_STATES = {
-  AK: "Alaska uses a top-four open primary and a ranked-choice general election. A 2026 ballot measure to repeal it was trailing narrowly in early returns with many votes uncounted, so check the current rules before the next election.",
-  ME: "Maine uses ranked-choice voting in its party primaries and in general elections for Congress.",
-};
+// States where an alternative system is used for elections to Congress or statewide,
+// from the reform data the pipeline gathers (Wikipedia + news, structured by AI)
+function rcvStates() {
+  const out = {};
+  ((window._aectReform || {}).items || []).forEach(it => {
+    if (["in use", "adopted"].includes(it.status) && ["statewide", "congressional", "primaries"].includes(it.scope)
+        && it.state && it.state !== "US")
+      out[it.state] = (out[it.state] ? out[it.state] + " " : "") + it.detail;
+  });
+  return out;
+}
 const PARTY_NAME = {R:"Republican", D:"Democrat", I:"Independent", L:"Libertarian", G:"Green"};
 const partyLabel = p => PARTY_NAME[p] || "Other / third party";
 const partyGroup = p => p === "R" ? "R" : p === "D" ? "D" : p === "I" ? "I" : "O";
+
+// ── Strategic voting and electoral reform ───────────────────────────────────
+const REFORM_GROUPS = [
+  {key:"use", title:"In use or adopted", match:it => ["in use","adopted"].includes(it.status) && it.scope !== "party"},
+  {key:"drive", title:"Petition drives and ballot measures", match:it => ["petition drive","ballot measure","proposed"].includes(it.status) && it.scope !== "party"},
+  {key:"party", title:"Inside the parties", match:it => it.scope === "party"},
+  {key:"lost", title:"Repealed, banned or rejected", match:it => ["repealed","banned","rejected"].includes(it.status) && it.scope !== "party"},
+];
+function ElectoralReform() {
+  const [open, setOpen] = useState("use");
+  const R = window._aectReform || {};
+  const items = R.items || [];
+  const host = u => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch { return "source"; } };
+  return html`<div style=${{background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,padding:"12px 16px"}}>
+    <div style=${{fontSize:10,fontWeight:700,color:"#fbbf24",fontFamily:FM,letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:5}}>Strategic voting and electoral reform</div>
+    <div style=${{fontSize:10.5,color:"#9ca3af",lineHeight:1.65}}>
+      In most states the candidate with the most votes wins outright, even without a majority. In a race with three or more serious candidates, a vote for a long shot can help elect the candidate you like least, so some voters weigh each candidate's chances alongside their record. The odds shown here come from prediction markets and are only one input. In a party primary, backing an anti-establishment candidate carries no spoiler risk in November. Alternative voting systems remove the spoiler problem: with ranked-choice voting you can rank an anti-establishment candidate first and others below them; with approval voting you mark every candidate you accept; with STAR voting you score each one. Where these are used, a first-choice vote is never wasted.</div>
+    <div style=${{fontSize:10.5,color:"#9ca3af",lineHeight:1.65,marginTop:6}}>
+      Below is where these systems stand, state by state: where they are used, where voters are petitioning for them, where they were repealed or banned, and where parties use them in their own conventions and primaries. Parties set their own nomination rules, so joining a party and pushing for ranked-choice, approval or STAR voting inside it is a direct way to open those contests to anti-establishment candidates.</div>
+    ${items.length === 0 ? html`<div style=${{fontSize:10,color:"#6b7280",marginTop:8}}>Reform data is being gathered and appears after the next refresh.</div>` : html`
+      <div style=${{display:"flex",gap:6,flexWrap:"wrap",margin:"10px 0 6px"}}>
+        ${REFORM_GROUPS.map(g => html`<button key=${g.key} onClick=${() => setOpen(g.key)}
+          style=${{padding:"3px 9px",borderRadius:12,border:"1px solid "+(open===g.key?"#fbbf24":"#252830"),background:open===g.key?"#2a1f05":"transparent",
+            color:open===g.key?"#fcd34d":"#9ca3af",fontFamily:FM,fontSize:9.5,cursor:"pointer"}}>${g.title} ${items.filter(g.match).length}</button>`)}
+      </div>
+      ${(() => { const g = REFORM_GROUPS.find(x => x.key === open); const list = items.filter(g.match);
+        return list.length === 0 ? html`<div style=${{fontSize:10,color:"#6b7280"}}>Nothing found in the current sources.</div>` :
+          list.map((it, i) => html`<div key=${i} style=${{display:"flex",gap:8,padding:"6px 0",borderTop:i?"1px solid #1a1d27":"none",alignItems:"baseline"}}>
+            <span style=${{fontFamily:FM,fontSize:10,fontWeight:700,color:"#fcd34d",minWidth:24}}>${it.state}</span>
+            <span style=${{fontSize:10,color:"#d1d5db",lineHeight:1.5,flex:1}}>
+              <span style=${{fontFamily:FM,fontSize:9,color:"#c4b5fd"}}>${it.system}${it.scope ? " · " + it.scope : ""}${it.party ? " · " + it.party : ""}${it.year ? " · " + it.year : ""} </span>
+              ${md(it.detail)}
+              ${it.url ? html` <a href=${it.url} target="_blank" rel="noreferrer" style=${{fontFamily:FM,fontSize:8.5,color:"#6b7280",textDecoration:"none"}}>↗ ${host(it.url)}</a>` : null}
+            </span></div>`); })()}
+      <div style=${{fontSize:8,fontFamily:FM,color:"#4b5563",marginTop:6}}>Gathered ${R.at ? new Date(R.at).toLocaleDateString() : ""} from Wikipedia and recent news, structured by free AI models; refreshed weekly. Check a state's election office for current rules.</div>`}
+  </div>`;
+}
 
 function Candidates({members, races, onSelect}) {
   const [party, setParty] = useState("all"), [stage, setStage] = useState("all"),
@@ -1444,6 +1489,7 @@ function Candidates({members, races, onSelect}) {
     return {...p, _race: r, _stage: stg, _when: when, _status: status, _gres: gres};
   }).filter(p => p._stage !== "out");
   const states = [...new Set(people.map(p => p.state).filter(Boolean))].sort();
+  const rcv = rcvStates();
   const shown = people.filter(p =>
     (party === "all" || partyGroup(p.party) === party) && (stage === "all" || p._stage === stage) &&
     (ch === "all" || p.chamber === ch) && (!st || p.state === st) &&
@@ -1480,12 +1526,7 @@ function Candidates({members, races, onSelect}) {
       </div>
     </div>
 
-    <div style=${{background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,padding:"12px 16px"}}>
-      <div style=${{fontSize:10,fontWeight:700,color:"#fbbf24",fontFamily:FM,letterSpacing:"0.08em",textTransform:"uppercase",marginBottom:5}}>A note on strategic voting</div>
-      <div style=${{fontSize:10.5,color:"#9ca3af",lineHeight:1.65}}>
-        In most states the candidate with the most votes wins outright, even without a majority. In a race with three or more serious candidates, a vote for a long shot can help elect the candidate you like least, so some voters weigh each candidate's chances alongside their record. The odds shown here come from prediction markets and are only one input. In a party primary, backing an anti-establishment candidate carries no spoiler risk in November. In ranked-choice states you can rank an anti-establishment candidate first and still rank others below them, so a first-choice vote is never wasted.</div>
-      ${Object.entries(RCV_STATES).map(([k,v]) => html`<div key=${k} style=${{fontSize:10,color:"#c4b5fd",lineHeight:1.55,marginTop:5}}>◆ ${v}</div>`)}
-    </div>
+    <${ElectoralReform}/>
 
     <div style=${{background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,padding:"6px 14px"}}>
       ${shown.length === 0 ? html`<div style=${{fontSize:11,color:"#6b7280",padding:"14px 0"}}>No candidates match these filters yet. The AI judge is still working through candidates; more are added as each one is reviewed.</div>` : null}
@@ -1497,7 +1538,7 @@ function Candidates({members, races, onSelect}) {
           <div style=${{flex:1,minWidth:0}}>
             <div style=${{fontSize:12,fontWeight:700,color:"#f0ebe0"}}>${p.name}
               <span style=${{fontSize:9,fontFamily:FM,color:"#6b7280",fontWeight:400}}> ${partyLabel(p.party)} · ${seat(p)} · ${p._inc ? "incumbent" : "challenger"}</span>
-              ${RCV_STATES[p.state] ? html`<span title=${RCV_STATES[p.state]} style=${{fontSize:8,fontFamily:FM,color:"#c4b5fd",border:"1px solid #c4b5fd55",borderRadius:3,padding:"0 4px",marginLeft:6}}>ranked choice</span>` : null}</div>
+              ${rcv[p.state] ? html`<span title=${rcv[p.state]} style=${{fontSize:8,fontFamily:FM,color:"#c4b5fd",border:"1px solid #c4b5fd55",borderRadius:3,padding:"0 4px",marginLeft:6}}>ranked choice</span>` : null}</div>
             <div style=${{fontSize:9,fontFamily:FM,color:"#9ca3af",marginTop:2}}>${p._status}${p._stage === "general" && p._when ? " · " + p._when : ""}
               ${p._race.opponents && p._race.opponents.length ? " · vs " + p._race.opponents.map(x => x.name + " (" + x.party + ")").join(", ") : ""}</div>
             <div style=${{fontSize:10,color:"#6b7280",lineHeight:1.5,marginTop:3}}>${md(plain(bottomLine(p)).slice(0,220))}

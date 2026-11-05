@@ -17,7 +17,7 @@ os.environ.setdefault("AECT_TIER_BUDGET", "400")
 os.environ.setdefault("AECT_BILLS_BUDGET", "60")
 os.environ.setdefault("AECT_HEADLINE_BUDGET", "60")
 
-from aect import establishment, discharge, ai
+from aect import establishment, discharge, ai, reform
 from aect.net import load_cache, now_iso, STREAMS
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -90,6 +90,7 @@ def main():
     fec_cands = (load_cache("fec_candidates") or {}).get("candidates", {})
     fec_totals = (load_cache("fec_totals") or {}).get("totals", {})
 
+    ref = reform.fetch()                               # weekly; runs before reviews use up the free quota
     petitions = discharge.fetch()                      # cached for 24 h
     house = [p for p in people.values() if p.get("incumbent") and p.get("chamber") == "house"]
     parties = {}
@@ -109,6 +110,7 @@ def main():
     from aect.gitsync import latest_json
     data = latest_json("data.json", data)
     n = patch(data, people)
+    data["reform"] = ref
     _write("data.json", data)
     _write("candidates.json", {**_load("candidates.json", {}), "people": people})
     print(f"Patched {n} members · AI calls {ai.CALLS} · {(STREAMS.get('establishment_tiers') or {}).get('notes')}")
