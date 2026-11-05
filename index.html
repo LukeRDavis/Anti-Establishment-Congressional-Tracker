@@ -1597,9 +1597,9 @@ function Candidates({members, races, onSelect}) {
   </div>`;
 }
 
-function SearchBox({members, onPick, inline}) {
+function SearchBox({members, onPick, inline, withField = true}) {
   const [q, setQ] = useState(""), [open, setOpen] = useState(false);
-  const field = window._aectField || [];
+  const field = withField ? (window._aectField || []) : [];
   const norm = x => (x || "").normalize("NFKD").replace(/[̀-ͯ]/g, "").toLowerCase();
   const nq = norm(q.trim());
   const hits = nq.length < 2 ? [] : [
@@ -1713,9 +1713,31 @@ function App() {
     if (p._kind === "member" && p.chamber && p.chamber !== chamber) setChamber(p.chamber);
     setShowTimeline(false); setShowAbout(false); setSelected(p.name);
   };
-  const [view, setView] = useState("now");          // "now" | "next"
+  // which Congress is on the chart: a past one (from data/history), the current one, or the
+  // next one as called so far
+  const curNo = META().congress || 119, nextNo = curNo + 1;
+  const [congressNo, setCongressNo] = useState(null);
+  const [hist, setHist] = useState({index: null, rosters: {}});
+  useEffect(() => {
+    fetch("./data/history/index.json?_=" + Date.now()).then(r => r.ok ? r.json() : null)
+      .then(ix => ix && setHist(h => ({...h, index: ix}))).catch(() => {});
+  }, []);
+  const shownNo = congressNo || curNo;
+  const view = shownNo === nextNo ? "next" : shownNo === curNo ? "now" : "past";
+  useEffect(() => {
+    if (view !== "past" || hist.rosters[shownNo]) return;
+    fetch("./data/history/congress_" + shownNo + ".json").then(r => r.ok ? r.json() : null)
+      .then(d => d && setHist(h => ({...h, rosters: {...h.rosters, [shownNo]: d.members}}))).catch(() => {});
+  }, [shownNo, view]);
+  const pastNos = ((hist.index || {}).congresses || []).map(c => c.congress).filter(n => n < curNo);
+  const steps = [...pastNos, curNo, nextNo];
+  const stepTo = d => {
+    const i = steps.indexOf(shownNo) + d;
+    if (i >= 0 && i < steps.length) { setCongressNo(steps[i]); setSelected(null); setShowTimeline(false); setShowAbout(false); }
+  };
+  const yearsOf = n => { const y0 = 1789 + 2 * (n - 1); return y0 + "–" + (y0 + 2); };
   const nextMembers = useMemo(() => nextCongress(allMembers), [allMembers]);
-  const seatMembers = view === "next" ? nextMembers : allMembers;
+  const seatMembers = view === "next" ? nextMembers : view === "past" ? (hist.rosters[shownNo] || []) : allMembers;
   const positions = useMemo(()=>computeHemicycle(seatMembers,chamber,cx,cy),
     [seatMembers, chamber, cx, cy]);
 
@@ -1723,13 +1745,13 @@ function App() {
   const ch        = chamber==="house" ? "house" : "senate";
   const chMem     = seatMembers.filter(m => m.chamber === ch && !m._uncalled);
   const nUncalled = seatMembers.filter(m => m.chamber === ch && m._uncalled).length;
-  const nextNo    = (META().congress || 119) + 1;
+
   const selMember = selected ? (seatMembers.find(m => m.name === selected && !m._uncalled) || allMembers.find(m => m.name === selected)
                                || (window._aectField || []).find(c => c.name === selected) || null) : null;
-  const sideR     = allMembers.filter(m=>m.antiArms&&side(m)==="R"&&m.chamber===ch);
-  const sideD     = allMembers.filter(m=>m.antiArms&&side(m)==="D"&&m.chamber===ch);
-  const challR    = challengers.filter(c=>c.party==="R"&&c.chamber===ch);
-  const challD    = challengers.filter(c=>c.party!=="R"&&c.chamber===ch);
+  const sideR     = seatMembers.filter(m=>m.antiArms&&side(m)==="R"&&m.chamber===ch);
+  const sideD     = seatMembers.filter(m=>m.antiArms&&side(m)==="D"&&m.chamber===ch);
+  const challR    = view === "past" ? [] : challengers.filter(c=>c.party==="R"&&c.chamber===ch);
+  const challD    = view === "past" ? [] : challengers.filter(c=>c.party!=="R"&&c.chamber===ch);
 
   if (!loaded) return html`
     <div style=${{minHeight:"100vh",background:"#0a0c10",display:"flex",alignItems:"center",justifyContent:"center"}}>
@@ -1808,16 +1830,21 @@ function App() {
         </button>
       </div>
 
-      <!-- Current Congress / next Congress as called -->
-      <div style=${{display:"flex",gap:0,marginBottom:8,border:"1px solid #fbbf24",borderRadius:9,overflow:"hidden",boxShadow:"0 0 14px rgba(251,191,36,.18)"}}>
-        ${[["now", "Current Congress"], ["next", "Next Congress · called so far"]].map(([k, l]) => html`
-          <button key=${k} onClick=${() => { setView(k); setSelected(null); setShowTimeline(false); setShowAbout(false); }}
-            style=${{padding:"7px 14px",border:"none",cursor:"pointer",fontFamily:FM,fontSize:10.5,fontWeight:700,letterSpacing:"0.04em",
-              background:view===k?"#fbbf24":"transparent",color:view===k?"#0a0c10":"#fcd34d"}}>
-            ${k === "next" ? "★ " : ""}${l}</button>`)}
+      <!-- Congress navigator: past Congresses since 2001 · current · next (called so far) -->
+      <div style=${{display:"flex",alignItems:"stretch",marginBottom:8,border:"1px solid #fbbf24",borderRadius:9,overflow:"hidden",boxShadow:"0 0 14px rgba(251,191,36,.18)"}}>
+        <button onClick=${() => stepTo(-1)} disabled=${steps.indexOf(shownNo) <= 0} aria-label="Earlier Congress"
+          style=${{padding:"6px 14px",border:"none",borderRight:"1px solid #fbbf2455",cursor:"pointer",background:"transparent",color:"#fcd34d",fontSize:16,fontWeight:700,opacity:steps.indexOf(shownNo) <= 0 ? .3 : 1}}>‹</button>
+        <div style=${{padding:"6px 16px",fontFamily:FM,fontSize:10.5,fontWeight:700,color:view==="now"?"#0a0c10":"#fcd34d",background:view==="now"?"#fbbf24":"transparent",display:"flex",alignItems:"center",gap:6,minWidth:210,justifyContent:"center"}}>
+          ${view === "next" ? "★ " : ""}${shownNo}th Congress · ${yearsOf(shownNo)}${view === "now" ? " · current" : view === "next" ? " · called so far" : ""}
+        </div>
+        <button onClick=${() => stepTo(1)} disabled=${steps.indexOf(shownNo) >= steps.length - 1} aria-label="Later Congress"
+          style=${{padding:"6px 14px",border:"none",borderLeft:"1px solid #fbbf2455",cursor:"pointer",background:"transparent",color:"#fcd34d",fontSize:16,fontWeight:700,opacity:steps.indexOf(shownNo) >= steps.length - 1 ? .3 : 1}}>›</button>
       </div>
       ${view === "next" ? html`<div style=${{fontSize:9,fontFamily:FM,color:"#9ca3af",marginBottom:6,textAlign:"center"}}>
-        ${nextNo}th Congress: winners as races are called (incumbents re-elected and members-elect) · ${nUncalled} ${ch === "senate" ? "Senate" : "House"} seat${nUncalled===1?"":"s"} not yet called (gray)</div>` : null}
+        Winners as races are called (incumbents re-elected and members-elect) · ${nUncalled} ${ch === "senate" ? "Senate" : "House"} seat${nUncalled===1?"":"s"} not yet called (gray)</div>` : null}
+      ${view === "past" ? html`<div style=${{fontSize:9,fontFamily:FM,color:"#9ca3af",marginBottom:6,textAlign:"center",maxWidth:620}}>
+        ${hist.rosters[shownNo] ? "Members who held each seat, rated on their arms-aid votes up to this Congress with the same strict rule used today (Voteview roll calls)." : "Loading…"}</div>` : null}
+      ${view !== "past" && (hist.index || {}).remaining ? html`<div style=${{fontSize:8,fontFamily:FM,color:"#4b5563",marginBottom:4}}>Past Congresses since 2001 are being built: ${pastNos.length} ready, ${hist.index.remaining} to go.</div>` : null}
 
       <!-- Legend + stat pills -->
       <div style=${{display:"flex",gap:5,flexWrap:"wrap",justifyContent:"center",marginBottom:7}}>
@@ -1856,7 +1883,7 @@ function App() {
 
           <!-- Hemicycle SVG -->
           <div style=${{position:"relative",background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,overflow:"visible",width:"100%",maxWidth:610}}>
-            <${SearchBox} members=${allMembers} onPick=${pickSearch} inline=${phone}/>
+            <${SearchBox} members=${seatMembers.filter(m => !m._uncalled)} withField=${view !== "past"} onPick=${pickSearch} inline=${phone}/>
             ${zoom.zoomed ? html`<button onClick=${zoom.reset} style=${{position:"absolute",left:6,top:6,zIndex:15,padding:"3px 8px",borderRadius:6,border:"1px solid #252830",background:"#090b0eee",color:"#9ca3af",fontFamily:FM,fontSize:9,cursor:"pointer"}}>⤢ reset zoom</button>` : null}
             <svg class="hemi" width=${svgW} height=${svgH} viewBox=${zoom.vb.join(" ")} ...${zoom.handlers}
               style=${{display:"block",width:"100%",height:"auto",borderRadius:13,touchAction:zoom.zoomed?"none":"pan-y"}}>
@@ -1922,7 +1949,7 @@ function App() {
 
           <!-- Progress bars -->
           <div style=${_SP}>
-            <${ProgressBars} chamber=${chamber} members=${chMem} allMembers=${allMembers} challengers=${challengers} racesData=${races} polyData=${polyData}/>
+            ${view === "past" ? null : html`<${ProgressBars} chamber=${chamber} members=${chMem} allMembers=${allMembers} challengers=${challengers} racesData=${races} polyData=${polyData}/>`}
           </div>
 
           <!-- Legislation -->

@@ -1,0 +1,59 @@
+name: Past Congresses
+
+# Builds the House and Senate of every Congress since 2001 from Voteview, judging the
+# arms-aid roll calls with the free AI tiers, a few Congresses per run. It starts itself
+# again until every Congress is built, then stops. Built Congresses are never redone.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 5 * * *"      # daily safety net in case the chain stops
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: history
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Build past Congresses
+        id: build
+        env:
+          CONGRESS_KEY:       ${{ secrets.CONGRESS_KEY }}
+          GEMINI_API_KEY:     ${{ secrets.GEMINI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GROQ_API_KEY:       ${{ secrets.GROQ_API_KEY }}
+          MISTRAL_API_KEY:    ${{ secrets.MISTRAL_API_KEY }}
+          CEREBRAS_API_KEY:   ${{ secrets.CEREBRAS_API_KEY }}
+          AECT_GEMINI_PAUSED: ${{ vars.AECT_GEMINI_PAUSED || 'false' }}
+        run: |
+          out=$(python -u scripts/history.py 2>&1); echo "$out" | tail -n 40
+          echo "remaining=$(echo "$out" | sed -n 's/^REMAINING=//p' | tail -1)" >> "$GITHUB_OUTPUT"
+      - name: Commit
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch -q origin "${GITHUB_REF_NAME}" && python scripts/merge_caches.py "origin/${GITHUB_REF_NAME}" || true
+          for f in data/history data/cache/vote_judgments.json; do [ -e "$f" ] && git add "$f"; done
+          git diff --cached --quiet && exit 0
+          git commit -m "chore: past Congresses [skip ci]"
+          for i in 1 2 3; do
+            git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push && exit 0
+            sleep 5
+          done
+          exit 1
+      - name: Continue until every Congress is built
+        if: always() && steps.build.outputs.remaining != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run history.yml --ref "${GITHUB_REF_NAME}" || true
