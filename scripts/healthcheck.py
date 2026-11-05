@@ -37,6 +37,7 @@ def report(name, ok, code, secs, detail):
 
 def chat(name, url, k, model, extra_headers=None):
     code, d, s = call(url, {"model": model, "max_tokens": 5, "temperature": 0,
+                            **({"provider": {"max_price": {"prompt": 0, "completion": 0}}} if name == "OpenRouter" else {}),
                             "messages": [{"role": "user", "content": "Reply with the word OK."}]},
                       {"Authorization": f"Bearer {k}", **(extra_headers or {})})
     # a model can answer with null content (e.g. it spent the tiny token budget on reasoning)

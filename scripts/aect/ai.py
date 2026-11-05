@@ -94,9 +94,9 @@ def compat_models(provider):
     elif provider == "openrouter" and OPENROUTER_KEY:
         d = get_json("https://openrouter.ai/api/v1/models", stream_name="ai_openrouter")
         for m in (d or {}).get("data", []):
-            pr = m.get("pricing") or {}
-            free = m.get("id", "").endswith(":free") or (str(pr.get("prompt")) in ("0", "0.0")
-                                                          and str(pr.get("completion")) in ("0", "0.0"))
+            # only OpenRouter's designated free variants (":free"); a model that merely costs $0
+            # today can be repriced at any time
+            free = m.get("id", "").endswith(":free")
             if free and (m.get("context_length") or 0) >= 16000:
                 ids.append(m["id"])
     _COMPAT_MODELS[provider] = _rank_chat_models(ids)[:4]
@@ -263,6 +263,9 @@ def _openai_compat(url, key, provider, system, prompt):
                    "messages": [{"role": "system", "content": system +
                                  "\nYou have no tools and no web access: answer from the text given. Respond with JSON only."},
                                 {"role": "user", "content": prompt}]}
+        if provider == "openrouter":
+            # hard price cap: OpenRouter refuses rather than routes to anything that costs money
+            payload["provider"] = {"max_price": {"prompt": 0, "completion": 0}}
         _pace(provider)
         resp = post_json(url, payload, headers, stream_name=stream_name)
         if not resp:
