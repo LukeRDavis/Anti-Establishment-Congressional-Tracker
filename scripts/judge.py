@@ -99,6 +99,8 @@ def main():
         p["_discharge"] = petitions.get(p.get("bioguide_id"), [])
         p["_party_holds_house"] = (p.get("caucus") or p.get("party")) == majority
 
+    establishment.mark_party_line(people, data.get("relevant_votes", []),
+                                  (data.get("meta") or {}).get("chamber_party", {}))
     print(f"Judging (free tiers first; budget {establishment.BUDGET}, ~{os.environ['AECT_AI_DEADLINE_MIN']} min)")
     establishment.run(people, ie, fec_cands, fec_totals)
     # patch the newest committed data.json, not the copy this job started from (it may be an

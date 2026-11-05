@@ -68,7 +68,9 @@ def _rank_chat_models(ids):
         il = i.lower()
         # total parameters: "550b-a55b" -> 550; mixture-of-experts names list the total first
         size = max([float(x) for x in re.findall(r"(\d+(?:\.\d+)?)b\b", il)] or [0])
-        small = bool(re.search(r"nano|mini\b|-mini|small|tiny|omni|lite|\b[1-9]b\b", il))
+        if not size:                         # flagships that don't put a size in the name
+            size = 150 if re.search(r"large|ultra|\bmax\b|pro\b", il) else 60 if "medium" in il else 0
+        small = bool(re.search(r"nano|mini\b|-mini|ministral|small|tiny|omni|lite|\b[1-9]b\b", il))
         known = bool(re.search(r"gpt-oss|llama-4|llama-3\.3|qwen3|deepseek|kimi|gemini|mistral-large|nemotron", il))
         # strongest first: not a small variant, then size, then a known strong family
         return (not small, size, known)

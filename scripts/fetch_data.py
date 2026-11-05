@@ -163,6 +163,13 @@ def main():
         p["_discharge"] = petitions.get(p.get("bioguide_id"), [])
         p["_party_holds_house"] = (p.get("caucus") or p.get("party")) == majority
 
+    seats = {}
+    for p in people.values():
+        if p.get("incumbent"):
+            c = seats.setdefault(p["chamber"], {})
+            pty = p.get("caucus") or p.get("party")
+            c[pty] = c.get(pty, 0) + 1
+    establishment.mark_party_line(people, relevant, seats)
     print("\n[4e] Reliable vs soft anti-establishment (AI over scraped dossiers)")
     establishment.run(people, ie, fec_cands, fec_totals)
     # anyone the dossier newly marked anti needs outside-spending records too

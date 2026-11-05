@@ -38,7 +38,7 @@ from .config import (CYCLE, CURRENT_CONGRESS, FEC_API, FEC_KEY, FOCUS_RECIPIENTS
 from .net import (get_text, get_json, stream, load_cache, save_cache, now_iso, age_hours,
                   strip_html, qs, circuit_ok)
 
-JUDGE_VERSION = 5
+JUDGE_VERSION = 6
 TTL_H = float(os.environ.get("AECT_TIER_TTL_H", str(24 * 7)))
 BUDGET = int(os.environ.get("AECT_TIER_BUDGET", "40"))
 # breaking from one's own party toward the anti side this many times screens a member in
@@ -76,11 +76,16 @@ def _lobby_ie(p, ie):
 def facts(p, ie):
     rec = p.get("vote_record", [])
     focus = sorted([v for v in rec if v.get("focus")], key=lambda v: v["date"])
-    anti = [v for v in focus if v["anti"]]
+    # an anti vote counts toward the record only when the member broke from their own party's
+    # majority; voting with one's party against the other party's bill is partisanship
+    anti_all = [v for v in focus if v["anti"]]
+    anti = [v for v in anti_all if not v.get("party_line")]
     congs = sorted({v["congress"] for v in anti})
     # has the record HELD? the latest Congress in which they cast focus votes must be mostly anti
     last_c = max((v["congress"] for v in focus), default=None)
-    last = [v for v in focus if v["congress"] == last_c]
+    # party-line anti votes count neither way: drop them from the record being measured
+    judged = [v for v in focus if not (v["anti"] and v.get("party_line"))]
+    last = [v for v in judged if v["congress"] == last_c]
     held = bool(last) and sum(v["anti"] for v in last) / len(last) >= 0.5
     pd = p.get("primary_date")
     pre_primary = bool(anti and pd and all(
@@ -95,8 +100,9 @@ def facts(p, ie):
         "defection_examples": [f"{v['date']} {v['measure']}: {v['summary'][:110]}" for v in dfx[-6:]],
         "incumbent": bool(p.get("incumbent")),
         "focus_votes": len(focus), "anti_focus_votes": len(anti),
+        "party_line_anti_votes_not_counted": len(anti_all) - len(anti),
         "anti_congresses": congs, "first_anti_vote": anti[0]["date"] if anti else None,
-        "anti_ratio": round(len(anti) / len(focus), 2) if focus else None,
+        "anti_ratio": round(len(anti) / len(judged), 2) if judged else None,
         "latest_congress_focus": f"{sum(v['anti'] for v in last)}/{len(last)} anti in the {last_c}th" if last else None,
         "record_held_in_latest_congress": held,
         "all_anti_within_year_before_primary": pre_primary,
@@ -115,6 +121,29 @@ def facts(p, ie):
         "discharge_petitions_against_own_leadership": sum(1 for _ in p.get("_discharge", []))
             if p.get("_party_holds_house") else 0,
     }
+
+
+def mark_party_line(people, relevant, chamber_party):
+    """Tag each focus vote with how much of the member's own party voted the same way.
+    relevant: roll calls with party_anti counts; chamber_party: {chamber: {R, D, I}} seat counts."""
+    by_key = {(v.get("chamber"), v.get("congress"), v.get("roll")): v for v in relevant or []}
+    # members are grouped with the side they caucus with (independents who caucus with
+    # Democrats count with Democrats)
+    side = lambda x: "R" if (x.get("caucus") or x.get("party")) == "R" else "D"
+    for p in people.values():
+        mine = side(p)
+        for v in p.get("vote_record", []):
+            if not v.get("focus") or not v.get("anti"):
+                continue
+            rv = by_key.get((v.get("chamber"), v.get("congress"), v.get("roll")))
+            seats = chamber_party.get(v.get("chamber")) or {}
+            size = sum(n for k, n in seats.items() if side({"party": k}) == mine)
+            if not rv or not size:
+                continue
+            anti = sum(n for k, n in (rv.get("party_anti") or {}).items() if side({"party": k}) == mine)
+            share = min(100, round(100 * anti / size))
+            v["own_party_share"] = share
+            v["party_line"] = share > 50
 
 
 def _sustained(f):
@@ -309,7 +338,9 @@ Respond with JSON only:
 
 def _prompt(p, f, text, emp):
     seat = f"{p.get('state')}-{p.get('district')}" if p.get("chamber") == "house" else f"{p.get('state')} Senate"
-    votes = [f"{v['date']} {v['measure']}: {v['position']} ({'anti' if v['anti'] else 'pro'}) — {v['summary'][:140]}"
+    votes = [f"{v['date']} {v['measure']}: {v['position']} ({'anti' if v['anti'] else 'pro'}"
+             f"{'; PARTY-LINE: ' + str(v.get('own_party_share')) + '% of their own party voted the same way, not counted as principle' if v.get('party_line') else ''}"
+             f") — {v['summary'][:140]}"
              for v in sorted([v for v in p.get("vote_record", []) if v.get("focus")], key=lambda v: v["date"])]
     lines = [f"Person: {p['name']} ({p.get('party')}), {seat}, {'sitting member' if f['incumbent'] else 'candidate'}",
              f"Why screened: {p.get('_screen') or 'marked anti on the focus issue'}",
@@ -494,10 +525,16 @@ def run(people, ie, fec_cands, fec_totals=None):
                 # below can only lower it; when one does, the bottom line says so, so the page
                 # never shows "counts" next to a member who is not counted.
                 overruled = None
-                if tier == "hard" and risk["capital"] == "high":
+                money = f["lobby_money_trackaipac"] >= LOBBY_LIMIT or f["lobby_outside_support"] > 0
+                if tier == "hard" and risk["capital"] == "high" and money:
                     tier, overruled = "soft", "the judge rated their dependence on lobby or establishment money high"
+                # floor for a sitting member: a held record across Congresses, or an anti vote plus
+                # a recorded act of defying their own leadership (House: discharge petitions;
+                # Senate, which has none: breaking with their own party on two or more arms votes)
+                defied = f["discharge_petitions_against_own_leadership"] >= 1 or (
+                    p.get("chamber") == "senate" and f["anti_focus_votes"] >= 2)
                 if tier == "hard" and f["incumbent"] and f["focus_votes"] and not _sustained(f) and not (
-                        f["anti_focus_votes"] >= 1 and f["discharge_petitions_against_own_leadership"] >= 1):
+                        f["anti_focus_votes"] >= 1 and defied and f["record_held_in_latest_congress"]):
                     tier, overruled = "soft", ("their record has not held across Congresses, and they have no "
                                                "anti-arms vote paired with defying their own leadership")
                 if tier == "hard" and not f["incumbent"] and res.get("confidence") != "high":
