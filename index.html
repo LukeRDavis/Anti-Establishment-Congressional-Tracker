@@ -187,7 +187,7 @@ function antiArmsTagColor(m) {
 function computeHemicycle(allMembers, chamber, cx, cy) {
   const ch = chamber === "senate" ? "senate" : "house";
 
-  // Every sitting member holds a seat until the term ends; those leaving are drawn faded,
+  // Every sitting member holds a seat until the term ends (including those leaving),
   // so only true vacancies are empty seats.
   const active = allMembers.filter(m => m.chamber === ch && !["RETIRED","RESIGNED"].includes(m.ps));
 
@@ -222,69 +222,33 @@ function computeHemicycle(allMembers, chamber, cx, cy) {
   let total = rowCounts.reduce((s,v) => s+v, 0);
   let adj = nSeats - total;
   // distribute correction across the largest rows first
-  const order = rowCounts.map((_,i) => i).sort((a,b) => rowCounts[b]-rowCounts[a]);
+  const big = rowCounts.map((_,i) => i).sort((a,b) => rowCounts[b]-rowCounts[a]);
   for (let k = 0; k < Math.abs(adj); k++) {
-    const idx = order[k % order.length];
+    const idx = big[k % big.length];
     rowCounts[idx] += adj > 0 ? 1 : -1;
   }
   total = rowCounts.reduce((s,v) => s+v, 0);
 
-  // ── Per-row allocation: [restR | antiR | antiD | restD] ─────────────────
-  // Establishment R far left, anti-E R and anti-E D in the center, establishment D far right.
-  // Each group gets seats proportional to its share of total, with a correction
-  // loop so each group sums to exactly its real count.
-  const nAntiD = antiD.length, nAntiR = antiR.length;
-  const nRestD = restD.length + restOther.length, nRestR = restR.length;
-
-  function allocGroup(groupSize, rowCount, rowTotal) {
-    return Math.round(groupSize * rowCount / rowTotal);
-  }
-  function correctionPass(perRow, target) {
-    let diff = target - perRow.reduce((s,v) => s+v, 0);
-    for (let i = perRow.length-1; i >= 0 && diff !== 0; i--) {
-      if (diff > 0) { perRow[i]++; diff--; }
-      else if (perRow[i] > 0) { perRow[i]--; diff++; }
-    }
-  }
-
-  const antiDPerRow = rowCounts.map(c => allocGroup(nAntiD, c, total));
-  const restDPerRow = rowCounts.map(c => allocGroup(nRestD, c, total));
-  const restRPerRow = rowCounts.map(c => allocGroup(nRestR, c, total));
-  const antiRPerRow = rowCounts.map(c => allocGroup(nAntiR, c, total));
-  correctionPass(antiDPerRow, nAntiD);
-  correctionPass(restDPerRow, nRestD);
-  correctionPass(restRPerRow, nRestR);
-  correctionPass(antiRPerRow, nAntiR);
-
-  let antiDq = [...antiD], restDq = [...restD, ...restOther];
-  let restRq = [...restR],  antiRq = [...antiR];
-
-  const result = [];
+  // ── Seat assignment by angle (standard parliament-chart method) ─────────
+  // Every seat in every row is placed first, then all seats are ordered by their angle
+  // from the left end of the arc and filled in one sequence:
+  //   establishment R | anti-establishment R | anti-establishment D | establishment D
+  // so each group forms one clean wedge from the inner row to the outer row.
+  // True vacancies sit at the two outer ends, split evenly.
+  const seats = [];
   for (let ri = 0; ri < nRows; ri++) {
-    const count = rowCounts[ri];
-    const r     = radii[ri];
-
-    // Build row left→right: restR | antiR | antiD | restD
-    const row = [];
-    const aDn = antiDPerRow[ri], rDn = restDPerRow[ri];
-    const rRn = restRPerRow[ri], aRn = antiRPerRow[ri];
-
-    // If row total doesn't match due to rounding, pad/trim restD (largest group)
-    const rowSum = aDn + rDn + rRn + aRn;
-    const pad    = count - rowSum;  // usually 0, occasionally ±1
-
-    for (let s = 0; s < rRn; s++)        row.push(restRq.length  ? restRq.shift()  : filler);
-    for (let s = 0; s < aRn; s++)        row.push(antiRq.length  ? antiRq.shift()  : filler);
-    for (let s = 0; s < aDn; s++)        row.push(antiDq.length  ? antiDq.shift()  : filler);
-    for (let s = 0; s < rDn + pad; s++)  row.push(restDq.length  ? restDq.shift()  : filler);
-
-    // Seat positions: equal angular spacing across the semicircle
+    const count = rowCounts[ri], r = radii[ri];
     for (let s = 0; s < count; s++) {
-      const m     = row[s] || filler;
       const angle = count === 1 ? Math.PI/2 : (Math.PI / (count - 1)) * s;
-      result.push({...m, _x: cx - r * Math.cos(angle), _y: cy - r * Math.sin(angle)});
+      seats.push({angle, ri, x: cx - r * Math.cos(angle), y: cy - r * Math.sin(angle)});
     }
   }
+  seats.sort((a, b) => a.angle - b.angle || a.ri - b.ri);
+  const people = [...restR, ...antiR, ...antiD, ...restD, ...restOther];
+  const vacant = Math.max(0, seats.length - people.length);
+  const lead = Math.floor(vacant / 2);
+  const order = [...Array(lead).fill(filler), ...people, ...Array(vacant - lead).fill(filler)];
+  const result = seats.map((st, k) => ({...(order[k] || filler), _x: st.x, _y: st.y}));
   return result;
 }
 
@@ -2029,7 +1993,6 @@ function App() {
           {c:COL.antiR, bg:"rgba(252,165,165,.1)", l:"Anti-E R",        n:chMem.filter(m=>isHard(m)&&side(m)==="R").length},
           {c:COL.antiD, bg:"rgba(147,197,253,.1)", l:"Anti-E "+(chMem.some(m=>m.party==="I"&&isHard(m))?"D/I":"D"), n:chMem.filter(m=>isHard(m)&&side(m)==="D").length},
           {c:COL.estD,  bg:"rgba(37,99,235,.1)",   l:"Establishment D", n:chMem.filter(m=>side(m)==="D"&&!m.antiArms).length},
-          {c:"#9ca3af", bg:"transparent", faded:true, l:"Leaving (faded)", n:chMem.filter(m=>LEAVING.includes(m.ps)).length},
         ].map(b=>html`
           <span key=${b.l} style=${{display:"inline-flex",alignItems:"center",gap:4,background:b.bg,border:"1px solid "+b.c+"30",borderRadius:5,padding:"2px 7px",fontSize:9,fontFamily:FM,color:b.c}}>
             <span style=${{width:5,height:5,borderRadius:"50%",background:b.c,opacity:b.faded?0.35:1,display:"inline-block"}}/>
@@ -2082,7 +2045,7 @@ function App() {
                   ${isSel?html`<circle cx=${pos._x} cy=${pos._y} r=${dotR+5} fill="none" stroke=${color} stroke-width="1.5" opacity=".4"/>`:null}
 
                   <circle cx=${pos._x} cy=${pos._y} r=${r}
-                    fill=${dimDot?"#111419":color} opacity=${dimDot?0.12:leaving?0.35:1}
+                    fill=${dimDot?"#111419":color} opacity=${dimDot?0.12:1}
                     stroke=${isSel?"#fff":"none"} stroke-width="1.5"
                     style=${{cursor:"pointer", transition:"r 0.1s"}}
                     onClick=${()=>{ if (window._aectDragged) return; setSelected(selected===pos.name?null:pos.name);setHovered(pos.name);}}
