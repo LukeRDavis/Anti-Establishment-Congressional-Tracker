@@ -62,7 +62,7 @@ COMPAT = {
 def _rank_chat_models(ids):
     """Prefer large general chat models; drop speech, guard, embedding and vision-only ids."""
     keep = [i for i in ids if not re.search(r"whisper|guard|tts|embed|vision|audio|ocr|moderation|"
-                                              r"compound|playai|distil|rerank|coder|math", i, re.I)]
+                                              r"compound|playai|distil|rerank|coder|math|orpheus|canopylabs|speech|voice", i, re.I)]
 
     def score(i):
         il = i.lower()
@@ -258,7 +258,8 @@ def _openai_compat(url, key, provider, system, prompt):
     dead = _DEAD_MODELS.setdefault(provider, set())
     models = [m for m in compat_models(provider) if m not in dead]
     for model in models:
-        payload = {"model": model, "temperature": 0.1, "max_tokens": 2048,
+        # Groq caps output tokens per minute on some models; a write-up fits well under 1,000
+        payload = {"model": model, "temperature": 0.1, "max_tokens": 1000 if provider == "groq" else 2048,
                    "messages": [{"role": "system", "content": system +
                                  "\nYou have no tools and no web access: answer from the text given. Respond with JSON only."},
                                 {"role": "user", "content": prompt}]}

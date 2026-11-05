@@ -47,6 +47,7 @@ jobs:
           for f in data/history data/cache/vote_judgments.json; do [ -e "$f" ] && git add "$f"; done
           git diff --cached --quiet && exit 0
           git commit -m "chore: past Congresses [skip ci]"
+          git stash -u -q || true          # other caches the merge touched are not this job's to commit
           for i in 1 2 3; do
             git pull --rebase -X theirs origin "${GITHUB_REF_NAME}" && git push && exit 0
             sleep 5
