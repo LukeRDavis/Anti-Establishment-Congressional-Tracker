@@ -14,7 +14,7 @@ IDs), roll calls and individual votes. For each Congress:
 A finished Congress is saved once to data/history/congress_<n>.json and never recomputed.
 Nothing about any person or vote is written here.
 """
-import csv, io, json, os
+import csv, io, json, os, re
 
 from .config import CURRENT_CONGRESS, congress_years, FOCUS_RECIPIENTS, FOCUS_CATEGORY, ai_time_left
 from .net import get_bytes, stream, load_cache, save_cache, now_iso
@@ -22,7 +22,7 @@ from . import votes as V
 
 FIRST = int(os.environ.get("AECT_HISTORY_FROM", "107"))
 OUT_DIR = os.path.join("data", "history")
-VERSION = 2
+VERSION = 3
 URL = "https://voteview.com/static/data/out/{kind}/{ch}{congress}_{kind}.csv"
 CAST = {1: "Yea", 2: "Yea", 3: "Yea", 4: "Nay", 5: "Nay", 6: "Nay"}
 
@@ -44,11 +44,14 @@ def _party(code):
 
 
 def _name(bioname):
-    # "LAST, First Middle" -> "First Middle Last"
-    if "," in (bioname or ""):
-        last, first = bioname.split(",", 1)
-        return f"{first.strip()} {last.strip().title()}".strip()
-    return (bioname or "").title()
+    # Voteview: "LAST, Given Middle (Nickname), Suffix" -> "Nickname-or-Given Last Suffix"
+    if "," not in (bioname or ""):
+        return (bioname or "").title()
+    last, rest = bioname.split(",", 1)
+    given, _, suffix = rest.partition(",")
+    nick = re.search(r"\(([^)]+)\)", given)
+    first = nick.group(1) if nick else (given.split() or [""])[0]
+    return " ".join(x for x in (first.strip(), last.strip().title(), suffix.strip()) if x)
 
 
 def _focus_then(j, rec):
@@ -67,10 +70,21 @@ def _focus_then(j, rec):
     focus = {f.lower() for f in FOCUS_RECIPIENTS}
     if not rec_set & focus:
         return False
+    # the roll call's own description (Voteview), not the AI's summary, must name the focus
+    # recipient for anything but a measure aimed only at it; a general defense or spending
+    # bill that merely includes the aid among everything else says nothing about the member
+    own = " ".join([rec.get("legis", ""), rec.get("question", ""), rec.get("desc", "")]).lower()
+    named = any(f in own for f in focus)
+    if OMNIBUS.search(own) and not named:
+        return False
     others = rec_set - focus
-    text = " ".join([rec.get("legis", ""), rec.get("desc", ""), j.get("summary", "")]).lower()
-    named = any(f in text for f in focus)
-    return not others or (len(others) <= 1 and named and "consideration of" not in text)
+    return (not others and (named or not OMNIBUS.search(j.get("summary", "")))) or \
+        (len(others) <= 1 and named and "consideration of" not in own)
+
+
+OMNIBUS = re.compile(r"defense authorization|authorization act for fiscal|department of defense appropriations|"
+                     r"defense appropriations|consolidated appropriations|omnibus|continuing appropriations|"
+                     r"further appropriations|making appropriations for", re.I)
 
 
 def _judged_focus(congress, ch_letter, judgments, budget):
@@ -227,6 +241,15 @@ def sync(max_congresses=3):
         history[c] = d
         built += 1
         print(f"  history: {c}th Congress built ({len(d['members'])} members, focus rolls {d['focus_rolls']})")
+    # members who still serve show under the name the current roster uses
+    try:
+        with open("data.json") as f:
+            names = {m["bioguide_id"]: m["name"] for m in json.load(f).get("members", []) if m.get("bioguide_id")}
+    except Exception:
+        names = {}
+    for d in history.values():
+        for m in d["members"]:
+            m["name"] = names.get(m["bioguide_id"], m["name"])
     rate(history)
     index = []
     for c, d in sorted(history.items()):
