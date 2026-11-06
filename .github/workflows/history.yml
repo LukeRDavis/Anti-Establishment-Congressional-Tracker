@@ -44,7 +44,7 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch -q origin "${GITHUB_REF_NAME}" && python scripts/merge_caches.py "origin/${GITHUB_REF_NAME}" || true
-          for f in data/history data/cache/vote_judgments.json; do [ -e "$f" ] && git add "$f"; done
+          for f in data/history data/cache/vote_judgments.json data/cache/bill_context.json; do [ -e "$f" ] && git add "$f"; done
           git diff --cached --quiet && exit 0
           git commit -m "chore: past Congresses [skip ci]"
           git stash -u -q || true          # other caches the merge touched are not this job's to commit

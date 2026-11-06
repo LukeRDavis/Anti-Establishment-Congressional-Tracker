@@ -16,13 +16,14 @@ Nothing about any person or vote is written here.
 """
 import csv, io, json, os, re
 
-from .config import CURRENT_CONGRESS, congress_years, FOCUS_RECIPIENTS, FOCUS_CATEGORY, ai_time_left
-from .net import get_bytes, stream, load_cache, save_cache, now_iso
+from .config import (CURRENT_CONGRESS, congress_years, FOCUS_RECIPIENTS, FOCUS_CATEGORY, ai_time_left,
+                     CONGRESS_API, CONGRESS_KEY)
+from .net import get_bytes, get_json, stream, load_cache, save_cache, now_iso
 from . import votes as V
 
 FIRST = int(os.environ.get("AECT_HISTORY_FROM", "107"))
 OUT_DIR = os.path.join("data", "history")
-VERSION = 4
+VERSION = 5
 URL = "https://voteview.com/static/data/out/{kind}/{ch}{congress}_{kind}.csv"
 CAST = {1: "Yea", 2: "Yea", 3: "Yea", 4: "Nay", 5: "Nay", 6: "Nay"}
 
@@ -54,6 +55,36 @@ def _name(bioname):
     return " ".join(x for x in (first.strip(), last.strip().title(), suffix.strip()) if x)
 
 
+BILL_TYPES = {"HR": "hr", "S": "s", "HRES": "hres", "SRES": "sres", "HJRES": "hjres", "SJRES": "sjres",
+              "HCONRES": "hconres", "SCONRES": "sconres"}
+_BILLS = None
+
+
+def _bill_context(congress, bill_number):
+    """Official title and Congressional Research Service summary of a bill, from Congress.gov.
+    Roll-call records often carry only a generic title ("Making emergency supplemental
+    appropriations..."), which tells the judge nothing about what the money is for."""
+    global _BILLS
+    if _BILLS is None:
+        _BILLS = load_cache("bill_context")
+    m = re.match(r"^([A-Z]+?)(\d+)$", (bill_number or "").replace(" ", "").replace(".", "").upper())
+    if not m or m.group(1) not in BILL_TYPES or not CONGRESS_KEY:
+        return ""
+    key = f"{congress}-{m.group(1)}{m.group(2)}"
+    if key in _BILLS:
+        return _BILLS[key]
+    base = f"{CONGRESS_API}/bill/{congress}/{BILL_TYPES[m.group(1)]}/{m.group(2)}"
+    d = get_json(f"{base}?format=json&api_key={CONGRESS_KEY}", stream_name="history_bills")
+    if d is None:
+        return ""                          # not cached: try again next run
+    title = ((d or {}).get("bill") or {}).get("title", "")
+    sm = get_json(f"{base}/summaries?format=json&api_key={CONGRESS_KEY}", stream_name="history_bills") or {}
+    summ = ((sm.get("summaries") or [{}])[-1].get("text") or "")
+    summ = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", summ)).strip()[:1500]
+    _BILLS[key] = (f"Bill title: {title}. " if title else "") + (f"CRS summary: {summ}" if summ else "")
+    return _BILLS[key]
+
+
 def _focus_then(j, rec):
     """Arms/military aid to the focus recipients, as it was usually voted on before 2023.
     Today's test (V.is_focus) needs the focus recipients alone and a 'major' rating; in earlier
@@ -73,7 +104,7 @@ def _focus_then(j, rec):
     # the roll call's own description (Voteview), not the AI's summary, must name the focus
     # recipient for anything but a measure aimed only at it; a general defense or spending
     # bill that merely includes the aid among everything else says nothing about the member
-    own = " ".join([rec.get("legis", ""), rec.get("question", ""), rec.get("desc", "")]).lower()
+    own = " ".join([rec.get("legis", ""), rec.get("question", ""), rec.get("vv_desc", rec.get("desc", ""))]).lower()
     named = any(f in own for f in focus)
     if OMNIBUS.search(own) and not named:
         return False
@@ -112,10 +143,26 @@ def _judged_focus(congress, ch_letter, judgments, budget):
                "question": r.get("vote_question", ""),
                "desc": (r.get("vote_desc") or r.get("dtl_desc") or "")[:400], "result": r.get("vote_result", ""),
                "url": f"https://voteview.com/rollcall/R{ch_letter}{congress:03d}{n:04d}"}
+        # passage-type votes: give the judge the bill's own title and summary; a verdict made
+        # without them is redone when they name a focus recipient it didn't pick up
+        if PASSAGE.search(rec["question"]):
+            ctx = _bill_context(congress, rec["legis"])
+            if ctx:
+                rec["vv_desc"] = rec["desc"]
+                rec["desc"] = (rec["desc"] + " | " + ctx)[:1900]
+                key = f"{chamber}-{rec['year']}-{rec['roll']}"
+                old = judgments.get(key)
+                mentions = any(f.lower() in ctx.lower() for f in FOCUS_RECIPIENTS) or "iron dome" in ctx.lower()
+                if old and mentions and not old.get("bill_context") and not (old.get("relevant") and _focus_then(old, rec)):
+                    judgments.pop(key)
         if budget["left"] <= 0 or ai_time_left() < 60:
-            pending += 1
-            continue
+            key = f"{chamber}-{rec['year']}-{rec['roll']}"
+            if key not in judgments:
+                pending += 1
+                continue
         j = V._judge(rec, judgments, budget)
+        if j is not None and PASSAGE.search(rec["question"]) and "|" in rec["desc"]:
+            j["bill_context"] = True
         if j is None:
             pending += 1
             continue
@@ -236,6 +283,8 @@ def sync(max_congresses=3):
             continue
         d, pending = build_congress(c, judgments, budget)
         save_cache("vote_judgments", judgments)
+        if _BILLS is not None:
+            save_cache("bill_context", _BILLS)
         if d is None:
             waiting += 1
             print(f"  history: {c}th Congress waiting on {pending} roll-call judgments")
