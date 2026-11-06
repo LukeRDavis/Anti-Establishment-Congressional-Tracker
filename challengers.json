@@ -1,23 +1,23 @@
 {
- "generated_at": "2026-11-06T16:19:31.031997+00:00",
+ "generated_at": "2026-11-06T21:53:58.884928+00:00",
  "challengers": [
   {
-   "name": "Mai Vang",
+   "name": "Angelica Duenas",
    "party": "D",
    "state": "CA",
-   "district": 7,
+   "district": 29,
    "chamber": "house",
    "antiArms": true,
    "antiArmsLevel": "yes",
    "antiArmsBasis": "statements",
    "evidence": [
-    "She'll push to ban the sale of weapons used to carry out genocide. (https://www.maiforus.com/)"
+    "I will never vote to send U.S. weapons or military aid to Israel. (https://angelica4congress.com/)"
    ],
    "ps": "WON",
-   "note": "She'll push to ban the sale of weapons used to carry out genocide. (https://www.maiforus.com/)",
-   "website": "https://www.maiforus.com/",
+   "note": "I will never vote to send U.S. weapons or military aid to Israel. (https://angelica4congress.com/)",
+   "website": "https://angelica4congress.com/",
    "fec_ids": [
-    "H6CA07175"
+    "H8CA29100"
    ],
    "primaryDate": "2026-06-02",
    "primary_result": "WON",
@@ -76,59 +76,6 @@
    "primary_result": "WON",
    "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Colorado",
    "general_result": "WON",
-   "general_result_by": "market",
-   "result_conflict": null,
-   "endorsed_by": [
-    "trackaipac_endorsed"
-   ],
-   "antiTier": "hard",
-   "tier_source": "rule",
-   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
-   "tier_evidence": [],
-   "tier_risk": null,
-   "tier_screen": "marked anti on the focus issue by votes or statements",
-   "writeup": "",
-   "bottom_line": "",
-   "principle": null,
-   "judged_model": null,
-   "judged_at": null,
-   "confidence": null,
-   "discharge_petitions": [],
-   "tier_facts": {
-    "focus_votes": 0,
-    "anti_focus_votes": 0,
-    "anti_congresses": [],
-    "latest_congress_focus": null,
-    "lobby_money_trackaipac": 0,
-    "lobby_outside_support": 0,
-    "lobby_outside_oppose": 0,
-    "discharge_petitions_against_own_leadership": 0,
-    "party_defections_to_anti": 0
-   },
-   "source": "fec+trackaipac_endorsed"
-  },
-  {
-   "name": "Robert People",
-   "party": "D",
-   "state": "FL",
-   "district": 15,
-   "chamber": "house",
-   "antiArms": true,
-   "antiArmsLevel": "yes",
-   "antiArmsBasis": "statements",
-   "evidence": [
-    "No AIPAC No arms shipments to Israel (https://www.peopleforcongress.com/)"
-   ],
-   "ps": "WON",
-   "note": "No AIPAC No arms shipments to Israel (https://www.peopleforcongress.com/)",
-   "website": "https://www.peopleforcongress.com/",
-   "fec_ids": [
-    "H6FL15168"
-   ],
-   "primaryDate": "2026-08-18",
-   "primary_result": "WON",
-   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Florida",
-   "general_result": "LOST",
    "general_result_by": "market",
    "result_conflict": null,
    "endorsed_by": [
@@ -267,6 +214,112 @@
    "source": "fec+trackaipac_endorsed"
   },
   {
+   "name": "Robert People",
+   "party": "D",
+   "state": "FL",
+   "district": 15,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "yes",
+   "antiArmsBasis": "statements",
+   "evidence": [
+    "No AIPAC No arms shipments to Israel (https://www.peopleforcongress.com/)"
+   ],
+   "ps": "WON",
+   "note": "No AIPAC No arms shipments to Israel (https://www.peopleforcongress.com/)",
+   "website": "https://www.peopleforcongress.com/",
+   "fec_ids": [
+    "H6FL15168"
+   ],
+   "primaryDate": "2026-08-18",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Florida",
+   "general_result": "LOST",
+   "general_result_by": "market",
+   "result_conflict": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "hard",
+   "tier_source": "rule",
+   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "marked anti on the focus issue by votes or statements",
+   "writeup": "",
+   "bottom_line": "",
+   "principle": null,
+   "judged_model": null,
+   "judged_at": null,
+   "confidence": null,
+   "discharge_petitions": [],
+   "tier_facts": {
+    "focus_votes": 0,
+    "anti_focus_votes": 0,
+    "anti_congresses": [],
+    "latest_congress_focus": null,
+    "lobby_money_trackaipac": 0,
+    "lobby_outside_support": 0,
+    "lobby_outside_oppose": 0,
+    "discharge_petitions_against_own_leadership": 0,
+    "party_defections_to_anti": 0
+   },
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Mai Vang",
+   "party": "D",
+   "state": "CA",
+   "district": 7,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "yes",
+   "antiArmsBasis": "statements",
+   "evidence": [
+    "She'll push to ban the sale of weapons used to carry out genocide. (https://www.maiforus.com/)"
+   ],
+   "ps": "WON",
+   "note": "She'll push to ban the sale of weapons used to carry out genocide. (https://www.maiforus.com/)",
+   "website": "https://www.maiforus.com/",
+   "fec_ids": [
+    "H6CA07175"
+   ],
+   "primaryDate": "2026-06-02",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_California",
+   "general_result": null,
+   "general_result_by": null,
+   "result_conflict": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "hard",
+   "tier_source": "rule",
+   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
+   "tier_evidence": [],
+   "tier_risk": null,
+   "tier_screen": "marked anti on the focus issue by votes or statements",
+   "writeup": "",
+   "bottom_line": "",
+   "principle": null,
+   "judged_model": null,
+   "judged_at": null,
+   "confidence": null,
+   "discharge_petitions": [],
+   "tier_facts": {
+    "focus_votes": 0,
+    "anti_focus_votes": 0,
+    "anti_congresses": [],
+    "latest_congress_focus": null,
+    "lobby_money_trackaipac": 0,
+    "lobby_outside_support": 0,
+    "lobby_outside_oppose": 0,
+    "discharge_petitions_against_own_leadership": 0,
+    "party_defections_to_anti": 0
+   },
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
    "name": "John Vincent",
    "party": "D",
    "state": "SC",
@@ -316,59 +369,6 @@
     "party_defections_to_anti": 0
    },
    "source": "fec"
-  },
-  {
-   "name": "Angelica Duenas",
-   "party": "D",
-   "state": "CA",
-   "district": 29,
-   "chamber": "house",
-   "antiArms": true,
-   "antiArmsLevel": "yes",
-   "antiArmsBasis": "statements",
-   "evidence": [
-    "I will never vote to send U.S. weapons or military aid to Israel. (https://angelica4congress.com/)"
-   ],
-   "ps": "WON",
-   "note": "I will never vote to send U.S. weapons or military aid to Israel. (https://angelica4congress.com/)",
-   "website": "https://angelica4congress.com/",
-   "fec_ids": [
-    "H8CA29100"
-   ],
-   "primaryDate": "2026-06-02",
-   "primary_result": "WON",
-   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_California",
-   "general_result": null,
-   "general_result_by": null,
-   "result_conflict": null,
-   "endorsed_by": [
-    "trackaipac_endorsed"
-   ],
-   "antiTier": "hard",
-   "tier_source": "rule",
-   "tier_reason": "strong cited statements, endorsed by or targeted over the issue, no lobby money",
-   "tier_evidence": [],
-   "tier_risk": null,
-   "tier_screen": "marked anti on the focus issue by votes or statements",
-   "writeup": "",
-   "bottom_line": "",
-   "principle": null,
-   "judged_model": null,
-   "judged_at": null,
-   "confidence": null,
-   "discharge_petitions": [],
-   "tier_facts": {
-    "focus_votes": 0,
-    "anti_focus_votes": 0,
-    "anti_congresses": [],
-    "latest_congress_focus": null,
-    "lobby_money_trackaipac": 0,
-    "lobby_outside_support": 0,
-    "lobby_outside_oppose": 0,
-    "discharge_petitions_against_own_leadership": 0,
-    "party_defections_to_anti": 0
-   },
-   "source": "fec+trackaipac_endorsed"
   },
   {
    "name": "Joseph Tache",
