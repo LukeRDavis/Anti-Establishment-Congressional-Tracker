@@ -14,7 +14,15 @@ No person, race, vote or bill is typed into the code. `scripts/fetch_data.py` re
 2. **Candidates**: every House and Senate filer with the FEC for the current cycle.
 3. **General information**: Wikipedia, Ballotpedia (primary results are accepted only when dated in the current cycle) and Grokipedia, plus each state's primary calendar.
 4. **Anti-interventionist evidence**:
-   * **Votes.** Every roll call is pulled from clerk.house.gov and senate.gov. An AI with web search decides which votes concern foreign military aid, arms or war powers, and which side is the anti-interventionist one. Members are then classified by how they voted.
+   * **Votes.** Every roll call is pulled from clerk.house.gov and senate.gov. An AI with web search sorts each relevant vote into one of five areas and decides which side is the anti-interventionist one:
+     1. aid to the State of Israel;
+     2. military aid or arms to any country;
+     3. sanctions on a country for reasons other than human rights, genocide or mass killing (sanctions aimed at those are neutral);
+     4. restraining U.S. use of force that answers no imminent threat to American soil or citizens and has no declaration of war;
+     5. war declarations and authorizations: voting against broad or open-ended ones, or to repeal them, is anti-interventionist; a narrow, time-limited one aimed at preventing genocide or mass killing is neutral.
+
+     Non-military aid to other countries is neutral. Broad must-pass bills (defense authorizations, omnibus spending) count only when they carried particularly severe interventionist provisions.
+   * **The standard.** A member can stand anywhere on that spectrum, but in every area where they have started voting anti-interventionist they must stay consistent; someone who changed course counts once their anti votes have held (two or more, into their latest Congress). A vote cast with one's own party still counts as anti-interventionist; whether a member also votes that way against their own party is how principle is told from posturing. The floor for a sitting member is one real breaking vote (anti-interventionist against most of their own party), plus, when an anti-interventionist discharge petition is open, signing it.
    * **Statements.** Candidates without a voting record are researched by AI with web search. A position counts only if it comes with a cited source.
    * **Trackers.** TrackAIPAC and RLC data set research priority and serve as corroboration. They are never the only evidence.
    * **Money.** FEC totals and outside spending for and against each candidate.

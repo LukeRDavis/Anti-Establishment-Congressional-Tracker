@@ -73,7 +73,15 @@ def fetch():
     return _by_member(petitions)
 
 
+# petitions this Congress on one of the anti-interventionist areas: when one exists, signing it
+# is part of the floor (the establishment is blocking a measure and members can go around it)
+APPLICABLE = []
+
+
 def _by_member(petitions):
+    from .votes import TOPIC
+    APPLICABLE[:] = [p for p in petitions if TOPIC.search(f"{p.get('measure', '')} {p.get('about', '')}")]
+    applicable = {p["id"] for p in APPLICABLE}
     out = {}
     for p in petitions:
         n = len(p["signers"])
@@ -83,6 +91,7 @@ def _by_member(petitions):
         for s in p["signers"]:
             out.setdefault(s["bg"], []).append({
                 "no": p["no"], "measure": p["measure"], "about": p["about"], "url": p["url"],
+                "applicable": p["id"] in applicable,
                 "signed": s["date"], "signers": n, "signers_by_party": by_party,
                 "own_party_signers": by_party.get(s["party"], 0)})
     return out

@@ -181,10 +181,14 @@ anti = [m for m in data["members"] if m["antiArms"]]
 anti_r = [m["name"] for m in anti if m["party"] == "R"]
 print("\nanti members:", len(anti), "R:", anti_r, "expected D:", expected_d)
 assert anti_r == ["Thomas Massie"], anti_r
-assert sum(1 for m in anti if m["party"] == "D") == expected_d
+# a vote cast with one's own party is still anti-interventionist (it screens the member in),
+# but it is not a breaking vote, so it can never meet the floor or seat anyone in the center
+party_line_only = [m for m in anti if m["party"] == "D" and not (m.get("tier_facts") or {}).get("breaking_anti_votes")]
+assert len([m for m in anti if m["party"] == "D"]) - len(party_line_only) == expected_d
+assert not [m for m in party_line_only if m.get("antiTier") == "hard"]
 assert members["Thomas Massie"]["antiArmsBasis"] == "votes"
 # the party-line war-powers vote is recorded as context but does not decide the dot
-assert members["Ro Khanna"]["other_foreign_policy"]["anti"] >= 1
+assert any(v.get("area") == "use_of_force" and v["anti"] for v in members["Ro Khanna"]["votes"])
 assert members["Thomas Massie"].get("primary_result") is None, "past-cycle win leaked into this cycle"
 assert data["meta"]["anti_by_party"]["R"] == 1
 assert len(data["members"]) == 535, len(data["members"])
@@ -254,6 +258,7 @@ print("special/regular pairing OK")
 # ── reliable (hard) vs soft anti-establishment ───────────────────────────────
 from aect import establishment as _E
 _v = lambda c, d, anti: {"congress": c, "date": d, "focus": True, "anti": anti, "measure": "X", "position": "Yea",
+                         "area": "israel_aid",
                          "summary": "s", "url": "u"}
 _hard = {"name": "A", "antiArms": True, "incumbent": True, "lobby_total": 0, "sources": [], "fec_ids": [],
          "primary_date": "2026-06-02", "vote_record": [_v(118, "2024-04-20", True), _v(119, "2026-07-15", True)]}
@@ -276,4 +281,16 @@ assert _E.rule_tier(_E.facts(_lapsed, {}), _lapsed)[0] == "soft"
 _defector = {"name": "B", "antiArms": False, "incumbent": True, "sources": [], "fec_ids": [],
              "_defections": [{"date": "2025-01-01", "measure": "X", "summary": "s"}] * 30, "vote_record": []}
 assert _E.rule_tier(_E.facts(_defector, {}), _defector)[0] in ("soft", "none")
+# five areas: anti on use of force only, consistently, while still backing aid elsewhere: counts
+_spectrum = {**_hard, "vote_record": [{**_v(118, "2024-01-10", False), "area": "military_aid"},
+                                      {**_v(118, "2024-04-20", True), "area": "use_of_force"},
+                                      {**_v(119, "2026-07-15", True), "area": "use_of_force"}]}
+assert _E.rule_tier(_E.facts(_spectrum, {}), _spectrum)[0] == "hard"
+# started anti on sanctions, then voted for a sanctions bill again: not consistent in that area
+_flip = {**_hard, "vote_record": _hard["vote_record"] + [{**_v(118, "2024-02-01", True), "area": "sanctions"},
+                                                          {**_v(119, "2026-01-01", False), "area": "sanctions"}]}
+assert _E.rule_tier(_E.facts(_flip, {}), _flip)[0] == "soft"
+# only party-line anti votes: anti, but no breaking vote, so below the floor
+_pl = {**_hard, "vote_record": [{**v, "party_line": True} for v in _hard["vote_record"]]}
+assert _E.rule_tier(_E.facts(_pl, {}), _pl)[0] == "soft"
 print("hard/soft tiers OK")

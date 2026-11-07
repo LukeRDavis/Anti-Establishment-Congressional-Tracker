@@ -32,26 +32,43 @@ TOPIC = re.compile(
     r"department of state|state, foreign operations|foreign (?:military|assistance|aid|operations)|"
     r"security assistance|war powers|use of military force|\baumf\b|troops|deploy|nato|"
     r"foreign military (?:sale|financing)|arms sale|proposed sale|disapproval|"
-    r"iron dome|david'?s sling|arrow (?:missile|program)|qualitative military edge", re.I)
+    r"iron dome|david'?s sling|arrow (?:missile|program)|qualitative military edge|"
+    r"sanction|embargo|export control|declaration of war|authorization for (?:the )?use", re.I)
+_TOPIC_ID = __import__("hashlib").sha1(TOPIC.pattern.encode()).hexdigest()[:10]
+# votes the v3 judge set aside that may be sanctions votes, which it was not asked about
+_RECHECK = re.compile(r"sanction|embargo", re.I)
 
 _VOTE_NORM = {"aye": "Yea", "yea": "Yea", "yes": "Yea", "no": "Nay", "nay": "Nay",
               "present": "Present", "not voting": "Not Voting"}
 
-JUDGE_SYSTEM = """You classify U.S. congressional roll-call votes for a tracker of anti-interventionist voting: opposition to foreign military aid, arms sales or transfers, war authorizations, foreign military deployments, and military financing for foreign governments.
+JUDGE_SYSTEM = """You classify U.S. congressional roll-call votes for a non-partisan tracker of anti-interventionist voting. The tracker measures five areas:
+1. israel_aid: any aid to the State of Israel (its government or military): military aid, financing, arms, missile defense, or any other aid given to the Israeli state.
+2. military_aid: military aid, military financing, or arms sales/transfers to any other foreign government or armed force.
+3. sanctions: sanctions, embargoes or similar economic punishment of a foreign country (or blocking their lifting). Sanctions aimed at human-rights abuses, genocide or mass killing are NEUTRAL; sanctions for geopolitical, strategic or trade-rivalry reasons are interventionist.
+4. use_of_force: deploying or keeping U.S. forces abroad, strikes and hostilities. Restraining use of force that does not answer an imminent threat to U.S. soil or citizens and has no formal declaration of war is the anti-interventionist side.
+5. war_authorization: declarations of war and authorizations for use of military force (AUMFs), including repealing them. A broad or open-ended authorization is interventionist; a narrow, time-limited one with constrained goals aimed at preventing genocide or mass killing is NEUTRAL; voting against broad authorizations or to repeal them is anti-interventionist.
+Non-military aid (humanitarian, development, food, refugee) to countries other than Israel is NEUTRAL.
 
-For the roll call given, use web search to find out exactly what the measure or amendment did, then decide:
-- relevant: true only if the vote is substantively about foreign military aid/financing, arms sales or transfers, war powers / use of force, or deploying U.S. forces abroad. Domestic defense matters (base names, pay, procurement for U.S. forces, cultural issues) are NOT relevant. Procedural votes are not relevant.
-- anti_position: "Yea" or "Nay" — the vote that REDUCES, BLOCKS, CONDITIONS or ENDS the aid/sale/authorization/deployment. A vote to cut aid → Yea is anti. A vote to approve or increase aid → Nay is anti. A war-powers resolution to remove forces → Yea is anti.
-- significance: "major" if restricting or approving foreign military aid/arms/war is the vote's main purpose (supplemental aid packages, amendments cutting or adding aid, arms-sale disapproval resolutions, war-powers resolutions). "minor" if it is a broad bill (e.g. final passage of an NDAA or full appropriations act) where foreign military aid is only one part.
-- category: "arms_aid" if the vote is about military aid, military financing, or arms sales/transfers to a foreign government; "war_powers" if it is about U.S. forces, hostilities, strikes or war authorizations; "other" otherwise.
-- measure_restricts: true if the measure or amendment being voted on itself cuts, blocks, conditions or ends the aid/sale/hostilities (e.g. a funding-cut amendment, an arms-sale disapproval resolution, a war-powers removal resolution, or a motion to discharge/proceed to one); false if it provides, approves or expands them.
-- recipients: the foreign countries whose military aid, arms or hostilities the vote is about, as English country names (e.g. ["Israel"], ["Ukraine", "Israel"], ["Iran"]). Empty if none.
+For the roll call given, use the description, bill title and summary given (and web search if available) to find out exactly what the measure or amendment did, then decide:
+- relevant: true if the vote is substantively about any of the five areas. Domestic defense matters (base names, pay, procurement for U.S. forces, cultural issues) and purely procedural votes are NOT relevant.
+- area: one of "israel_aid", "military_aid", "sanctions", "use_of_force", "war_authorization", or "other".
+- neutral: true if, under the rules above, neither side of the vote is interventionist (human-rights or genocide sanctions, narrow atrocity-prevention authorizations, non-military aid).
+- anti_position: "Yea" or "Nay": the vote on the anti-interventionist side, the one that REDUCES, BLOCKS, CONDITIONS, NARROWS or ENDS the aid, arms, sanctions, hostilities or authorization. Null if neutral.
+- significance: "major" if one of the five areas is the vote's main purpose (aid packages, amendments cutting or adding aid, arms-sale disapprovals, sanctions bills, war-powers resolutions, AUMFs or their repeal). "minor" if it is a broad bill (e.g. final passage of an NDAA or full appropriations act) where these are only one part.
+- severe_interventionist: for a "minor" broad bill only: true if it nonetheless contains particularly severe interventionist provisions (e.g. a large new war authorization, tens of billions in new military aid, or a new sanctions regime as a headline part), so that its final passage is a fair test; false otherwise.
+- category: "arms_aid" for aid, financing or arms; "war_powers" for forces, hostilities or authorizations; "sanctions" for sanctions; "other" otherwise.
+- measure_restricts: true if the measure or amendment being voted on itself cuts, blocks, conditions or ends the aid/sale/sanctions/hostilities/authorization; false if it provides, approves, imposes or expands them.
+- recipients: the foreign countries the vote is about, as English country names (e.g. ["Israel"], ["Ukraine", "Israel"], ["Iran"]). Empty if none.
 - summary: one plain sentence saying what the vote did, including dollar amounts and countries when known.
 
 Respond with JSON only:
-{"relevant": true|false, "anti_position": "Yea"|"Nay"|null, "significance": "major"|"minor"|null, "category": "arms_aid"|"war_powers"|"other", "measure_restricts": true|false, "recipients": ["..."], "topic": "short label", "summary": "..."}"""
+{"relevant": true|false, "area": "israel_aid"|"military_aid"|"sanctions"|"use_of_force"|"war_authorization"|"other", "neutral": true|false, "anti_position": "Yea"|"Nay"|null, "significance": "major"|"minor"|null, "severe_interventionist": true|false, "category": "arms_aid"|"war_powers"|"sanctions"|"other", "measure_restricts": true|false, "recipients": ["..."], "topic": "short label", "summary": "..."}"""
 
-JUDGE_VERSION = 3   # bump when the judgment schema changes; older relevant judgments are re-asked
+AREAS = ("israel_aid", "military_aid", "sanctions", "use_of_force", "war_authorization")
+AREA_LABEL = {"israel_aid": "aid to Israel", "military_aid": "military aid to other countries",
+              "sanctions": "sanctions", "use_of_force": "use of force abroad",
+              "war_authorization": "war authorizations"}
+JUDGE_VERSION = 4   # bump when the judgment schema changes; older relevant judgments are re-asked
 
 
 def _iso_date(raw):
@@ -161,9 +178,10 @@ def _backfill_candidates(yc, year):
     titles = yc.get("bill_titles", {})
     newly = []
     for r, rec in yc["rolls"].items():
-        if rec.get("candidate") or not rec.get("amendment_author"):
+        if rec.get("candidate"):
             continue
-        if TOPIC.search(titles.get(rec.get("legis", ""), "")):
+        own = " ".join([rec.get("legis", ""), rec.get("question", ""), rec.get("desc", "")])
+        if TOPIC.search(own) or (rec.get("amendment_author") and TOPIC.search(titles.get(rec.get("legis", ""), ""))):
             newly.append(int(r))
     for r in newly:
         raw = get_bytes(CLERK_ROLL_XML.format(year=year, roll=r), stream_name="votes_house_xml")
@@ -246,7 +264,8 @@ def _csv(url, stream_name):
 def _sync_senate_voteview(congress, cache):
     key = f"vv-{congress}"
     sc = cache.setdefault(key, {"rolls": {}, "complete": False})
-    if sc.get("complete"):
+    # a finished Congress is re-read when the topic filter has changed since it was indexed
+    if sc.get("complete") and sc.get("topic") == _TOPIC_ID:
         return 0
     rollcalls = _csv(VOTEVIEW.format(kind="rollcalls", congress=congress), "votes_senate_voteview")
     if not rollcalls:
@@ -266,9 +285,10 @@ def _sync_senate_voteview(congress, cache):
         if r.get("chamber") != "Senate":
             continue
         n = int(float(r.get("rollnumber") or 0))
-        if not n or str(n) in sc["rolls"]:
-            continue
         text = " ".join(r.get(f, "") for f in ("bill_number", "vote_question", "vote_desc", "dtl_desc"))
+        old = sc["rolls"].get(str(n))
+        if not n or (old and (old.get("candidate") or not TOPIC.search(text))):
+            continue
         rec = {"chamber": "senate", "congress": congress, "roll": n,
                "year": int((r.get("date") or "0")[:4] or 0), "date": r.get("date", ""),
                "session": r.get("session"), "legis": r.get("bill_number", ""),
@@ -296,6 +316,7 @@ def _sync_senate_voteview(congress, cache):
     first, last = congress_years(congress)
     if last < TODAY.year:
         sc["complete"] = True
+        sc["topic"] = _TOPIC_ID
     return len(candidates)
 
 
@@ -387,7 +408,8 @@ def direction_check(rec, j):
 def _judge(rec, judgments, budget_state):
     key = f"{rec['chamber']}-{rec['year']}-{rec['roll']}"
     old = judgments.get(key)
-    if old and (not old.get("relevant") or old.get("version", 1) >= JUDGE_VERSION):
+    if old and (old.get("version", 1) >= JUDGE_VERSION or (not old.get("relevant") and not _RECHECK.search(
+            " ".join(str(rec.get(x, "")) for x in ("legis", "question", "desc")) + " " + old.get("summary", "")))):
         return old
     if budget_state["left"] <= 0 or not ai.available_any():
         budget_state["pending"] += 1
@@ -424,9 +446,12 @@ def _judge(rec, judgments, budget_state):
     j = {"relevant": bool(result.get("relevant")),
          "anti_position": result.get("anti_position") if result.get("anti_position") in ("Yea", "Nay") else None,
          "significance": result.get("significance") if result.get("significance") in ("major", "minor") else "minor",
-         "category": result.get("category") if result.get("category") in ("arms_aid", "war_powers") else "other",
+         "category": result.get("category") if result.get("category") in ("arms_aid", "war_powers", "sanctions") else "other",
          "recipients": [str(c).strip()[:40] for c in (result.get("recipients") or []) if str(c).strip()][:6],
          "measure_restricts": result.get("measure_restricts") if isinstance(result.get("measure_restricts"), bool) else None,
+         "area": result.get("area") if result.get("area") in AREAS else "other",
+         "neutral": bool(result.get("neutral")),
+         "severe_interventionist": bool(result.get("severe_interventionist")),
          "version": JUDGE_VERSION,
          "topic": (result.get("topic") or "")[:80], "summary": (result.get("summary") or "")[:400],
          "sources": (sources or [])[:4], "provider": provider, "grounded": bool(sources),
@@ -494,14 +519,80 @@ def sync_votes():
     return relevant
 
 
-def is_focus(v):
-    """A vote on the tracker's focus: arms/aid votes whose recipients are all focus countries."""
+def area(v):
+    """Which of the five areas a judged vote is in. Judgments made before areas existed
+    (version 3) are mapped from their category and recipients until they are re-judged."""
+    a = v.get("area")
+    if a in AREAS:
+        return a
     rec = {r.lower() for r in (v.get("recipients") or [])}
-    # A measure that itself cuts/blocks the aid is a focus vote whatever "significance"
-    # the model gave it; broad bills (final passage) count only when judged major.
+    if v.get("category") == "arms_aid":
+        return "israel_aid" if rec & FOCUS_RECIPIENTS else "military_aid"
+    if v.get("category") == "war_powers":
+        text = (v.get("summary", "") + " " + v.get("topic", "")).lower()
+        return "war_authorization" if re.search(r"authoriz|aumf|declar", text) else "use_of_force"
+    if v.get("category") == "sanctions":
+        return "sanctions"
+    return None
+
+
+def is_focus(v):
+    """Does this vote count toward the anti-interventionist record? A vote in one of the five
+    areas, with an anti side (not neutral), that is either about that area or (for a broad bill)
+    carries particularly severe interventionist provisions."""
+    if not v.get("anti_position") or v.get("neutral") or not area(v):
+        return False
     pointed = v.get("measure_restricts") is True or v.get("significance") == "major"
-    return (pointed and v.get("category") == FOCUS_CATEGORY
-            and bool(rec) and rec <= FOCUS_RECIPIENTS)
+    if v.get("area") in AREAS:            # judged under the five-area rules
+        return pointed or bool(v.get("severe_interventionist"))
+    # older judgment: aid that mixes the focus recipient with others counts only when major
+    rec = {r.lower() for r in (v.get("recipients") or [])}
+    if area(v) == "israel_aid":
+        return pointed and rec <= FOCUS_RECIPIENTS
+    return v.get("significance") == "major"
+
+
+def area_record(votes):
+    """Per-area consistency, from a member's counted votes (each with area, anti, date, congress).
+
+    The tracker's rule: a member may stand on any part of the spectrum, but in every area where
+    they have started voting the anti-interventionist side they must be consistent from then on.
+    A member who turned (voted the interventionist side, then began voting anti) counts once the
+    anti votes since their last interventionist vote form a run of two or more that reaches their
+    latest Congress voting in that area; until then they are "turning"."""
+    out = {}
+    for a in AREAS:
+        vs = sorted([v for v in votes if v.get("area") == a], key=lambda v: v["date"])
+        if not vs:
+            continue
+        anti = [v for v in vs if v["anti"]]
+        first = next((i for i, v in enumerate(vs) if v["anti"]), None)
+        pro_after = sum(1 for v in vs[first:] if not v["anti"]) if first is not None else 0
+        last_pro = max((i for i, v in enumerate(vs) if not v["anti"]), default=-1)
+        streak = vs[last_pro + 1:]
+        latest_c = vs[-1]["congress"]
+        if first is None:
+            status = "interventionist"
+        elif first == 0 and pro_after == 0:
+            status = "consistent"                 # never voted the interventionist side
+        elif len(streak) >= 2 and streak[-1]["congress"] == latest_c:
+            status = "became consistent"          # turned, and has held since
+        elif pro_after == 0:
+            status = "turning"                    # turned only recently: not yet shown to hold
+        else:
+            status = "inconsistent"
+        out[a] = {"label": AREA_LABEL[a], "votes": len(vs), "anti": len(anti), "status": status,
+                  "first_anti": vs[first]["date"] if first is not None else None,
+                  "interventionist_after_first_anti": pro_after,
+                  "consistent_since": streak[0]["date"] if status == "became consistent" else None,
+                  "breaking_anti_votes": sum(1 for v in anti if not v.get("party_line"))}
+    return out
+
+
+def consistent(areas):
+    """Engaged (voted anti) in at least one area, and consistent in every area engaged."""
+    engaged = [x for x in areas.values() if x["anti"]]
+    return bool(engaged) and all(x["status"] in ("consistent", "became consistent") for x in engaged)
 
 
 def score_members(members, relevant_votes):
@@ -524,6 +615,7 @@ def score_members(members, relevant_votes):
                 "significance": v["significance"], "position": pos,
                 "category": v.get("category", "other"), "recipients": v.get("recipients", []),
                 "focus": is_focus(v),
+                "area": area(v),
                 "anti": pos == v["anti_position"], "url": v.get("url", ""),
             })
     return members

@@ -23,7 +23,7 @@ from . import votes as V
 
 FIRST = int(os.environ.get("AECT_HISTORY_FROM", "107"))
 OUT_DIR = os.path.join("data", "history")
-VERSION = 5
+VERSION = 6
 URL = "https://voteview.com/static/data/out/{kind}/{ch}{congress}_{kind}.csv"
 CAST = {1: "Yea", 2: "Yea", 3: "Yea", 4: "Nay", 5: "Nay", 6: "Nay"}
 
@@ -93,10 +93,12 @@ def _focus_then(j, rec):
     measures (security-cooperation acts, Iron Dome funding, resolutions backing military
     operations) were often rated 'minor'. So: any arms/aid vote whose recipients are only the
     focus countries, or the focus country with one other, named in the measure itself."""
+    if j.get("area") in V.AREAS:          # judged under the five-area rules: the judge decided
+        return V.is_focus(j)
+    if V.area(j) != "israel_aid":         # older judgment, other areas: only votes about that area
+        return V.is_focus(j)
     if V.is_focus(j):
         return True
-    if j.get("category") != V.FOCUS_CATEGORY:
-        return False
     rec_set = {r.lower() for r in (j.get("recipients") or [])}
     focus = {f.lower() for f in FOCUS_RECIPIENTS}
     if not rec_set & focus:
@@ -169,7 +171,8 @@ def _judged_focus(congress, ch_letter, judgments, budget):
         if j.get("relevant") and _focus_then(j, rec):
             # a measure that funds or backs the aid: voting no is the anti side; one that cuts it: yes
             anti = j.get("anti_position") or ("Yea" if j.get("measure_restricts") else "Nay")
-            out[n] = {**rec, "anti_position": anti, "summary": j.get("summary", ""), "measure": rec["legis"]}
+            out[n] = {**rec, "anti_position": anti, "summary": j.get("summary", ""), "measure": rec["legis"],
+                      "area": V.area(j)}
     return out, pending
 
 
@@ -224,10 +227,11 @@ def build_congress(congress, judgments, budget):
                     anti = cast == fv["anti_position"]
                     a, total = (tally.get(n, {}).get(side(party)) or [0, 0])
                     share = round(100 * a / total) if total else 0
+                    share = share if anti else 100 - share      # own party voting the same way
                     rec.append({"congress": congress, "chamber": chamber, "roll": fv["roll"], "date": fv["date"],
-                                "measure": fv["measure"], "position": cast, "anti": anti,
+                                "measure": fv["measure"], "position": cast, "anti": anti, "area": fv["area"],
                                 "summary": fv["summary"] or fv["desc"], "url": fv["url"],
-                                "own_party_share": share, "party_line": anti and share > 50})
+                                "own_party_share": share, "party_line": share > 50})
                 members.append({"bioguide_id": m["bioguide_id"], "name": _name(m.get("bioname")), "party": party,
                                 "chamber": chamber, "state": m.get("state_abbrev", ""),
                                 "district": seat[1], "votes": rec})
@@ -236,31 +240,32 @@ def build_congress(congress, judgments, budget):
 
 
 def rate(history):
-    """Apply today's strict rule to each Congress, on each member's record up to that Congress."""
+    """Apply today's rule to each Congress, on each member's record up to that Congress: at least one
+    real breaking vote (anti-interventionist against most of their own party; discharge-petition data
+    is not available for past Congresses), and consistent in every area where they voted anti."""
     record = {}
     for c in sorted(history):
         for m in history[c]["members"]:
             rec = record.setdefault(m["bioguide_id"], [])
-            rec.extend(m["votes"])
-            judged = [v for v in rec if not (v["anti"] and v.get("party_line"))]
-            anti = [v for v in judged if v["anti"]]
-            congs = sorted({v["congress"] for v in anti})
-            last_c = max((v["congress"] for v in judged), default=None)
-            last = [v for v in judged if v["congress"] == last_c]
-            held = bool(last) and sum(v["anti"] for v in last) / len(last) >= 0.5
-            ratio = len(anti) / len(judged) if judged else 0
-            m["antiArms"] = len(anti) >= 2 and len(congs) >= 2 and ratio >= 0.6 and held
+            rec.extend(v for v in m["votes"] if v.get("area"))
+            anti = [v for v in rec if v["anti"]]
+            breaking = [v for v in anti if not v.get("party_line")]
+            areas = V.area_record(rec)
+            ok = V.consistent(areas)
+            m["antiArms"] = bool(breaking) and ok
             m["antiTier"] = "hard" if m["antiArms"] else None
             m["tier_source"] = "rule:history"
-            m["tier_facts"] = {"focus_votes": len(rec), "anti_focus_votes": len(anti), "anti_congresses": congs,
-                               "latest_congress_focus": f"{sum(v['anti'] for v in last)}/{len(last)} anti in the {last_c}th"
-                               if last else None,
-                               "party_line_anti_votes_not_counted": sum(1 for v in rec if v["anti"] and v.get("party_line"))}
-            m["bottom_line"] = (("Counts as anti-establishment: " if m["antiArms"] else "Does not count: ")
-                                + (f"broke from their own party to vote anti on {len(anti)} arms-aid votes across "
-                                   f"{len(congs)} Congress{'es' if len(congs) != 1 else ''} by this point"
-                                   if anti else "no anti vote on arms aid that broke from their own party by this point")
-                                + ". (Rule-based from Voteview roll calls.)")
+            m["tier_facts"] = {"focus_votes": len(rec), "anti_focus_votes": len(anti),
+                               "breaking_anti_votes": len(breaking), "areas": areas,
+                               "anti_congresses": sorted({v["congress"] for v in anti})}
+            engaged = "; ".join(f"{x['label']}: {x['status']} ({x['anti']} of {x['votes']} anti)"
+                                for x in areas.values() if x["anti"])
+            bad = [x["label"] for x in areas.values() if x["anti"] and x["status"] == "inconsistent"]
+            m["bottom_line"] = (("Counts as anti-establishment: " + engaged) if m["antiArms"] else
+                                ("Does not count: " + (f"went back to the interventionist side on {', '.join(bad)}" if bad
+                                 else "no anti-interventionist vote against most of their own party" if anti
+                                 else "no anti-interventionist vote") + (f" ({engaged})" if engaged else ""))
+                                ) + " by this point. (Rule-based from Voteview roll calls.)"
     return history
 
 

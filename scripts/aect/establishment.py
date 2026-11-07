@@ -32,13 +32,14 @@ conservative rule decides, and the output says which one did.
 import hashlib, json, os, re, urllib.parse
 from datetime import date
 
-from . import ai
+from . import ai, discharge
+from . import votes as V
 from .config import (CYCLE, CURRENT_CONGRESS, FEC_API, FEC_KEY, FOCUS_RECIPIENTS, STATE_NAMES,
                      WIKIPEDIA_SUMMARY, GROKIPEDIA, BALLOTPEDIA, ai_time_left)
 from .net import (get_text, get_json, stream, load_cache, save_cache, now_iso, age_hours,
                   strip_html, qs, circuit_ok)
 
-JUDGE_VERSION = 6
+JUDGE_VERSION = 7
 TTL_H = float(os.environ.get("AECT_TIER_TTL_H", str(24 * 7)))
 BUDGET = int(os.environ.get("AECT_TIER_BUDGET", "40"))
 # once everyone due has been reviewed, verdicts at least this old are re-reviewed with spare capacity
@@ -78,17 +79,15 @@ def _lobby_ie(p, ie):
 def facts(p, ie):
     rec = p.get("vote_record", [])
     focus = sorted([v for v in rec if v.get("focus")], key=lambda v: v["date"])
-    # an anti vote counts toward the record only when the member broke from their own party's
-    # majority; voting with one's party against the other party's bill is partisanship
-    anti_all = [v for v in focus if v["anti"]]
-    anti = [v for v in anti_all if not v.get("party_line")]
+    # every anti vote counts as anti; whether it was cast with or against one's own party is
+    # used to judge consistency and principle, not whether the vote itself is anti
+    anti = [v for v in focus if v["anti"]]
+    breaking = [v for v in anti if not v.get("party_line")]
     congs = sorted({v["congress"] for v in anti})
-    # has the record HELD? the latest Congress in which they cast focus votes must be mostly anti
     last_c = max((v["congress"] for v in focus), default=None)
-    # party-line anti votes count neither way: drop them from the record being measured
-    judged = [v for v in focus if not (v["anti"] and v.get("party_line"))]
-    last = [v for v in judged if v["congress"] == last_c]
+    last = [v for v in focus if v["congress"] == last_c]
     held = bool(last) and sum(v["anti"] for v in last) / len(last) >= 0.5
+    areas = V.area_record(focus)
     pd = p.get("primary_date")
     pre_primary = bool(anti and pd and all(
         0 <= (date.fromisoformat(pd) - date.fromisoformat(v["date"])).days <= 365 for v in anti))
@@ -102,9 +101,11 @@ def facts(p, ie):
         "defection_examples": [f"{v['date']} {v['measure']}: {v['summary'][:110]}" for v in dfx[-6:]],
         "incumbent": bool(p.get("incumbent")), "chamber": p.get("chamber"),
         "focus_votes": len(focus), "anti_focus_votes": len(anti),
-        "party_line_anti_votes_not_counted": len(anti_all) - len(anti),
+        "breaking_anti_votes": len(breaking),
+        "anti_votes_with_own_party_majority": len(anti) - len(breaking),
+        "areas": areas, "consistent_in_every_area_engaged": V.consistent(areas),
         "anti_congresses": congs, "first_anti_vote": anti[0]["date"] if anti else None,
-        "anti_ratio": round(len(anti) / len(judged), 2) if judged else None,
+        "anti_ratio": round(len(anti) / len(focus), 2) if focus else None,
         "latest_congress_focus": f"{sum(v['anti'] for v in last)}/{len(last)} anti in the {last_c}th" if last else None,
         "record_held_in_latest_congress": held,
         "all_anti_within_year_before_primary": pre_primary,
@@ -122,6 +123,9 @@ def facts(p, ie):
         # signed while their own party holds the House majority: going around their own Speaker
         "discharge_petitions_against_own_leadership": sum(1 for _ in p.get("_discharge", []))
             if p.get("_party_holds_house") else 0,
+        # anti-interventionist petitions open this Congress, and how many of them they signed
+        "applicable_discharge_petitions": len(discharge.APPLICABLE) if p.get("chamber") == "house" else 0,
+        "applicable_discharge_petitions_signed": sum(1 for d in p.get("_discharge", []) if d.get("applicable")),
     }
 
 
@@ -135,17 +139,24 @@ def mark_party_line(people, relevant, chamber_party):
     for p in people.values():
         mine = side(p)
         for v in p.get("vote_record", []):
-            if not v.get("focus") or not v.get("anti"):
+            if not v.get("focus"):
                 continue
             rv = by_key.get((v.get("chamber"), v.get("congress"), v.get("roll")))
             seats = chamber_party.get(v.get("chamber")) or {}
             size = sum(n for k, n in seats.items() if side({"party": k}) == mine)
             if not rv or not size:
                 continue
-            anti = sum(n for k, n in (rv.get("party_anti") or {}).items() if side({"party": k}) == mine)
+            pa = rv.get("party_anti")
+            if pa is None:                     # raw roll call (full refresh): count from the positions
+                pa = {}
+                for pos, party, _ in (rv.get("positions") or {}).values():
+                    if pos == rv.get("anti_position"):
+                        pa[party[:1]] = pa.get(party[:1], 0) + 1
+            anti = sum(n for k, n in pa.items() if side({"party": k}) == mine)
             share = min(100, round(100 * anti / size))
-            v["own_party_share"] = share
-            v["party_line"] = share > 50
+            # share of their own party that voted the same way they did
+            v["own_party_share"] = share if v.get("anti") else 100 - share
+            v["party_line"] = v["own_party_share"] > 50
 
 
 def _conf_index(res):
@@ -160,57 +171,63 @@ def _conf_index(res):
 
 
 def _sustained(f):
-    """The bar an incumbent must clear to count: anti on the focus votes in 2+ Congresses,
-    mostly anti overall, and still anti in the latest Congress they voted in."""
-    return (f["anti_focus_votes"] >= 2 and len(f["anti_congresses"]) >= 2
-            and (f["anti_ratio"] or 0) >= 0.6 and f["record_held_in_latest_congress"])
+    """Consistent in every area where they have voted the anti-interventionist side."""
+    return f["consistent_in_every_area_engaged"]
 
 
 def meets_floor(f):
-    """The coalition's stated minimum for a sitting member to be considered at all: at least one
-    anti-arms vote that broke from their own party, plus a recorded act of going around their own
-    leadership (a discharge petition; in the Senate, which has none, a second such vote).
-    Meeting it makes a member eligible; whether they count is the judge's call."""
-    defied = f["discharge_petitions_against_own_leadership"] >= 1 or (
-        f.get("chamber") == "senate" and f["anti_focus_votes"] >= 2)
-    return f["anti_focus_votes"] >= 1 and defied
+    """The coalition's minimum for a sitting member to be considered at all: one real breaking
+    vote (an anti-interventionist vote against most of their own party). When the establishment is
+    blocking an anti-interventionist measure and a discharge petition to go around it is open,
+    signing it is required too. Meeting the floor makes a member eligible; whether they count is
+    the judge's call."""
+    if f.get("applicable_discharge_petitions") and not f.get("applicable_discharge_petitions_signed"):
+        return False
+    return f["breaking_anti_votes"] >= 1
+
+
+def _area_words(f):
+    bits = []
+    for x in (f.get("areas") or {}).values():
+        if x["anti"]:
+            bits.append(f"{x['label']}: {x['status']} ({x['anti']} of {x['votes']} anti)")
+    return "; ".join(bits)
 
 
 def rule_tier(f, p):
-    """Conservative fallback until the AI has reviewed someone: counts only a sustained record.
+    """Conservative fallback until the AI has reviewed someone.
     The reason always says, in plain words, what the record shows and why it does or doesn't count."""
     funded = f["lobby_money_trackaipac"] >= LOBBY_LIMIT or f["lobby_outside_support"] > 0
     if f["incumbent"] and f["focus_votes"]:
         a, n = f["anti_focus_votes"], f["focus_votes"]
-        record = (f"anti on {a} of {n} arms-aid votes that broke from their own party"
-                  + (f" ({f['latest_congress_focus']})" if f.get("latest_congress_focus") else ""))
-        if _sustained(f) and not funded and not f["all_anti_within_year_before_primary"]:
-            return "hard", record + ", held across Congresses, with no focus-lobby money"
+        record = f"anti-interventionist on {a} of {n} counted votes" + (f" ({_area_words(f)})" if a else "")
+        if _sustained(f) and meets_floor(f) and not funded and not f["all_anti_within_year_before_primary"]:
+            return "hard", record + "; consistent in every area engaged, with no focus-lobby money"
+        bad = [x["label"] for x in (f.get("areas") or {}).values() if x["anti"] and x["status"] == "inconsistent"]
         why = ("they take focus-lobby money" if funded
-               else "the anti record did not hold in the latest Congress" if a >= 1 and not f["record_held_in_latest_congress"]
+               else f"they went back to the interventionist side on {', '.join(bad)}" if bad
+               else "no anti-interventionist vote against most of their own party" if a and not f["breaking_anti_votes"]
+               else "they have not signed the open anti-interventionist discharge petition" if a and not meets_floor(f)
                else "the anti votes came only in the year before a primary" if a and f["all_anti_within_year_before_primary"]
-               else "the anti record is one-off or limited to one Congress" if a
-               else "no anti vote on arms aid that broke from their own party")
-        floor = " Meets the coalition's minimum (an anti vote plus a discharge petition), so it awaits the AI judge's call." \
-            if meets_floor(f) else ""
-        return ("soft" if a or p.get("antiArms") else "none"), f"{record}; not counted because {why}.{floor}"
+               else "no anti-interventionist vote")
+        return ("soft" if a or p.get("antiArms") else "none"), f"{record}; not counted because {why}."
     if not p.get("antiArms"):
         if f["party_defections_to_anti"] >= DEFECTION_MIN:
-            return "soft", (f"broke from their party on {f['party_defections_to_anti']} foreign-policy votes, but has no "
-                            "arms-aid record yet; awaiting the AI judge")
+            return "soft", (f"broke from their party on {f['party_defections_to_anti']} foreign-policy votes; "
+                            "awaiting the AI judge")
         if f["rlc_endorsed"] or f["trackaipac_endorsed"]:
             return "soft", "endorsed by an anti-establishment tracker, but not yet corroborated by a record, donors or statements"
         if (p.get("position_research") or {}).get("anti_interventionist"):
-            return "soft", "has cited anti-interventionist statements, but none on arms aid to the focus recipients"
+            return "soft", "has cited anti-interventionist statements, not yet corroborated"
         return "none", "no anti-establishment signal found yet"
-    # never served in Congress (or no focus votes cast): need corroboration beyond their own words
+    # never served in Congress (or no counted votes cast): need corroboration beyond their own words
     targeted = f["lobby_outside_oppose"] > 0 or f["trackaipac_endorsed"]
     if targeted and not funded and (p.get("position_research") or {}).get("strength") == "strong":
         return "hard", "strong cited statements, endorsed by or targeted over the issue, no lobby money"
     return "soft", "statements not yet corroborated by a record, donors or trackers"
 
 
-# ── Dossier (free sources) ───────────────────────────────────────────────────
+
 def _keyword_paras(text, cap):
     paras = [x.strip() for x in re.split(r"\n+|(?<=\.)\s{2,}", text or "") if len(x.strip()) > 60]
     hits = [x for x in paras if _KEYWORDS.search(x)]
@@ -339,20 +356,28 @@ def employers(p, fec_cands, cache):
 
 
 # ── Judge ────────────────────────────────────────────────────────────────────
-SYSTEM = f"""You are a realistic political operative working for a non-partisan anti-establishment coalition of progressives, constitutionalists and libertarians. Your job is to tell the coalition who it can actually COUNT ON when a vote gets hard. For now the coalition's line is anti-intervention: opposing U.S. military aid and arms to {_FOCUS} above all, and more broadly foreign wars, war-powers grabs, large foreign-aid packages and the foreign-policy lobby's money.
+SYSTEM = f"""You are a realistic political operative working for a non-partisan anti-establishment coalition of progressives, constitutionalists and libertarians. Your job is to tell the coalition who it can actually COUNT ON when a vote gets hard. The coalition's line is anti-intervention, measured in five areas. A reliable anti-interventionist has never, or has recently and consistently never:
+1. voted to provide aid to the State of {_FOCUS} (military or otherwise; aid given to the state itself);
+2. voted to provide military aid or arms to any country;
+3. voted to sanction a country for reasons other than human rights, genocide or mass killing (sanctions aimed at those are neutral);
+4. voted against restraining U.S. use of force that does not answer an imminent threat to American soil or citizens and has no formal declaration of war;
+5. voted for broad or open-ended declarations or authorizations of war (voting against them, or to repeal them, is anti-interventionist; a narrow, time-limited authorization with constrained goals to prevent genocide or mass killing is neutral).
+Non-military aid to other countries is neutral, though aid that flows to a government rather than directly and constructively to its people deserves skepticism. Broad must-pass bills (defense authorizations, omnibus spending) count only when they carried particularly severe interventionist provisions.
+A person need not be anti in all five areas: they can stand anywhere on that spectrum. But in every area where they have started voting the anti-interventionist side, they must be consistent from then on. "Recently consistently" means someone who turned (voted the interventionist side, then began voting anti) and has held since, on principle rather than political posturing. The facts give each area's status. Money from the {_FOCUS} lobby and from those who profit from war remains a reason for doubt.
 
 The one question you answer about every person: is this a RELIABLE anti-establishment ally, or are they playing political games?
 
 How to think:
 - Be pessimistic about where things stand: most of Congress is establishment, including many who campaign as outsiders, America First, progressive or anti-war. Be realistic about what counts, and stay open to real allies wherever they come from.
-- Separate principle from partisanship. Opposing the other party's leadership is cheap; it is what minority members do anyway. Breaking with one's OWN party and leadership is costly and is the strongest evidence of principle: votes against one's own party on arms, aid or war; signing discharge petitions that go around one's own party's Speaker and Rules Committee; sponsoring or cosponsoring measures one's leadership opposes. A member who only defects on spending or procedure is not anti-intervention.
-- Judge what the record shows, not what the person says about themselves. Recency and consistency matter: an anti vote followed by later votes for arms to {_FOCUS} is a record that did not hold. A first anti vote cast in the months before a primary, or in a single wave of reaction, is positioning until shown otherwise.
+- Separate principle from partisanship. A vote cast with one's own party can still be anti-interventionist, and principle and political convenience sometimes coincide; but whether a member votes the same way when their own party or president wants the opposite is how you tell principle from posturing. Breaking with one's OWN party and leadership is costly and is the strongest evidence of principle: votes against one's own party on aid, arms, sanctions or war; signing discharge petitions that go around one's own party's Speaker and Rules Committee; sponsoring or cosponsoring measures one's leadership opposes. Anti votes only when the other party holds the White House, or only when the whole party votes that way, suggest posturing. A member who only defects on spending or procedure is not anti-intervention.
+- Judge what the record shows, not what the person says about themselves. Consistency within each area is the test: an anti vote followed by later interventionist votes in the same area is a record that did not hold, unless they have since turned and held. A first anti vote cast in the months before a primary, or in a single wave of reaction, is positioning until shown otherwise.
+- The floor for a sitting member: at least one real breaking vote (anti-interventionist against most of their own party); and when the establishment is blocking an anti-interventionist measure and a discharge petition to go around it is open, signing it. Below the floor they cannot count.
 - Follow the money. Money from the {_FOCUS} lobby (TrackAIPAC-tracked contributions, United Democracy Project, DMFI, AIPAC-aligned super PACs) and dependence on donors and businesses that profit from the status quo are reasons to doubt. Being targeted by that lobby's spending is a reason to believe.
 
 Evidence, in order of weight:
 1. Sitting or former members of Congress: their roll-call votes first, then their own-party defections, discharge petitions and bills.
 2. Candidates who never served in Congress but held state or local office: that record, judged the same way.
-3. Candidates with no record: their donors and business relationships. If those are clean or lean neither way, judge their words: boilerplate or specific? consistent across statements, interviews and social media? do they stand and work alongside people who hold the same positions? Explicit, specific, consistent positions with clean relationships can count; vague or borrowed language cannot.
+3. Candidates with no record: their donors and business relationships. If those are clean or lean neither way, judge their words against the same five areas: truthful and specific or boilerplate? consistent across statements, interviews and social media and over time? do they stand and work alongside people who hold the same positions? Explicit, specific, consistent positions with clean relationships can count, at lower confidence than a voting record; vague or borrowed language cannot.
 
 Verdicts:
 - HARD = a reliable anti-establishment ally. Counted on the tracker and seated in the center of the chart.
@@ -363,20 +388,21 @@ Most people are SOFT or NONE. When in doubt, do not count them.
 Use ONLY the facts and sources given; do not use outside knowledge. Never state a number, date, vote or event that is not in the facts or sources below; if something is unknown, say it is unknown. Cite dossier or roll-call URLs for claims. Make the bottom line agree with the tier you give. Write plain text: no Markdown, asterisks or other formatting marks.
 If a previous verdict is given, re-examine the record from scratch: keep it if the record still supports it, change it if not, and say in the write-up what changed.
 Respond with JSON only:
-{{"tier": "hard"|"soft"|"none", "confidence": "high"|"medium"|"low", "confidence_index": 0-100 (how sure you are of THIS verdict given how complete and consistent the record is: 90+ only for a long, unambiguous record), "scope": "focus"|"broad", "prior_office": "congress"|"state_or_local"|"none"|"unknown", "principle_vs_partisanship": "principled"|"mixed"|"partisan"|"unclear", "political_risk": "low"|"medium"|"high", "capital_risk": "low"|"medium"|"high", "bottom_line": "one sentence beginning 'Counts as anti-establishment because' or 'Does not count because'", "writeup": "a full write-up of 5-9 sentences for the public: who they are, what their record and words show on intervention, own-party defections and leadership defiance, money and donors, whether it is principle or partisanship, and how likely they are to hold under pressure", "reason": "one or two sentences", "risk_notes": "one sentence", "evidence": [{{"claim": "...", "url": "..."}}]}}"""
+{{"tier": "hard"|"soft"|"none", "confidence": "high"|"medium"|"low", "confidence_index": 0-100 (how sure you are of THIS verdict given how complete and consistent the record is: 90+ only for a long, unambiguous record), "scope": "focus"|"broad", "prior_office": "congress"|"state_or_local"|"none"|"unknown", "principle_vs_partisanship": "principled"|"mixed"|"partisan"|"unclear", "political_risk": "low"|"medium"|"high", "capital_risk": "low"|"medium"|"high", "bottom_line": "one sentence beginning 'Counts as anti-establishment because' or 'Does not count because'", "writeup": "a full write-up of 5-9 sentences for the public: who they are, what their record and words show in each of the five areas and whether they have been consistent in each, own-party defections and leadership defiance, money and donors, whether it is principle or partisanship, and how likely they are to hold under pressure", "reason": "one or two sentences", "risk_notes": "one sentence", "evidence": [{{"claim": "...", "url": "..."}}]}}"""
 
 
 def _prompt(p, f, text, emp, prev=None):
     seat = f"{p.get('state')}-{p.get('district')}" if p.get("chamber") == "house" else f"{p.get('state')} Senate"
-    votes = [f"{v['date']} {v['measure']}: {v['position']} ({'anti' if v['anti'] else 'pro'}"
-             f"{'; PARTY-LINE: ' + str(v.get('own_party_share')) + '% of their own party voted the same way, not counted as principle' if v.get('party_line') else ''}"
+    votes = [f"{v['date']} [{V.AREA_LABEL.get(v.get('area'), 'other')}] {v['measure']}: {v['position']} "
+             f"({'anti-interventionist' if v['anti'] else 'interventionist'}"
+             f"{'; ' + str(v.get('own_party_share')) + '% of their own party voted the same way' if v.get('own_party_share') is not None else ''}"
              f") — {v['summary'][:140]}"
              for v in sorted([v for v in p.get("vote_record", []) if v.get("focus")], key=lambda v: v["date"])]
     lines = [f"Person: {p['name']} ({p.get('party')}), {seat}, {'sitting member' if f['incumbent'] else 'candidate'}",
              f"Why screened: {p.get('_screen') or 'marked anti on the focus issue'}",
              f"Primary date: {p.get('primary_date') or 'unknown'} · status: {p.get('ps') or ''}",
              "Facts: " + json.dumps(f, default=str),
-             "Focus roll calls (oldest first):\n" + ("\n".join(votes) or "none cast"),
+             "Counted roll calls (oldest first):\n" + ("\n".join(votes) or "none cast"),
              "Top donor employers this cycle: " + ("; ".join(emp) or "not available"),
              "Dossier:\n" + (text or "(no sources found)")]
     if prev and prev.get("source", "").startswith("ai"):
@@ -391,6 +417,7 @@ def _fingerprint(f, text):
                               "lobby_outside_support", "lobby_outside_oppose", "trackaipac_endorsed",
                               "discharge_petitions_against_own_leadership")}
     keep["petitions"] = len(f.get("discharge_petitions_signed") or [])
+    keep["areas"] = {a: x["status"] for a, x in (f.get("areas") or {}).items()}
     keep["bills"] = len(f.get("bills_on_arms_aid_war") or [])
     return hashlib.sha1((json.dumps(keep, sort_keys=True) + str(len(text) // 500)).encode()).hexdigest()[:12]
 
@@ -569,9 +596,15 @@ def run(people, ie, fec_cands, fec_totals=None):
                 # floor for a sitting member: a held record across Congresses, or an anti vote plus
                 # a recorded act of defying their own leadership (House: discharge petitions;
                 # Senate, which has none: breaking with their own party on two or more arms votes)
-                if tier == "hard" and f["incumbent"] and f["focus_votes"] and not _sustained(f) and not meets_floor(f):
-                    tier, overruled = "soft", ("their record has not held across Congresses, and they have no "
-                                               "anti-arms vote paired with going around their own leadership")
+                if tier == "hard" and f["incumbent"] and f["focus_votes"] and not meets_floor(f):
+                    tier, overruled = "soft", (
+                        "they have not signed the open anti-interventionist discharge petition"
+                        if f["breaking_anti_votes"] else
+                        "they have no anti-interventionist vote against most of their own party")
+                elif tier == "hard" and f["incumbent"] and f["focus_votes"] and not _sustained(f):
+                    bad = [x["label"] for x in f["areas"].values() if x["anti"] and x["status"] == "inconsistent"]
+                    tier, overruled = "soft", ("they went back to the interventionist side on " + ", ".join(bad)
+                                               if bad else "they have no anti-interventionist vote")
                 if tier == "hard" and not f["incumbent"] and res.get("confidence") != "high":
                     tier, overruled = "soft", "a new candidate needs a high-confidence, cited verdict"
                 bl = (res.get("bottom_line") or "")[:240]

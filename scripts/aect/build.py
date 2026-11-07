@@ -340,7 +340,9 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
                 "tier_facts": {k: (p.get("tier_facts") or {}).get(k) for k in (
                     "focus_votes", "anti_focus_votes", "anti_congresses", "latest_congress_focus",
                     "lobby_money_trackaipac", "lobby_outside_support", "lobby_outside_oppose",
-                    "discharge_petitions_against_own_leadership", "party_defections_to_anti")}}
+                    "discharge_petitions_against_own_leadership", "party_defections_to_anti",
+                    "breaking_anti_votes", "areas", "applicable_discharge_petitions",
+                    "applicable_discharge_petitions_signed")}}
         if p.get("incumbent"):
             members.append({**base, "bioguide_id": p.get("bioguide_id", ""), "caucus": p.get("caucus", ""),
                             "lobby_total": p.get("lobby_total", 0), "pacs": p.get("pacs", []),

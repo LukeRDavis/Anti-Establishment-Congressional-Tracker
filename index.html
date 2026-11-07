@@ -164,6 +164,8 @@ const LEAVING = ["DEFEATED","RETIRING","FAILED_PRIMARY"];
 // signals) is establishment here. On load, antiArms is set to this verdict (see App).
 // Data from before tiers existed has no antiTier, so it counts as before.
 const HIGH_ODDS = 0.5;   // market probability that separates "likely" from "long shot" new candidates
+const AREA_LABEL = {israel_aid: "aid to Israel", military_aid: "military aid", sanctions: "sanctions",
+                    use_of_force: "use of force", war_authorization: "war authorization"};
 function isAntiE(m) { return !!m.antiArms && (m.antiTier ? m.antiTier === "hard" : true); }
 const isHard = m => !!m.antiArms;
 const COL = {estR:"#dc2626", estD:"#2563eb", antiR:"#fca5a5", antiD:"#93c5fd"};
@@ -715,7 +717,7 @@ function bottomLine(m) {
   if (m._uncalled) return "Race not called yet.";
   if (m.bottom_line) return m.bottom_line;
   const f = m.tier_facts || {};
-  if (m.antiArms) return "Counts as anti-establishment" + (f.anti_focus_votes ? ": anti on " + f.anti_focus_votes + " of " + f.focus_votes + " arms votes" + ((f.anti_congresses||[]).length ? " across " + f.anti_congresses.length + " Congresses" : "") : "") + ".";
+  if (m.antiArms) return "Counts as anti-establishment" + (f.anti_focus_votes ? ": anti-interventionist on " + f.anti_focus_votes + " of " + f.focus_votes + " counted votes" + ((f.anti_congresses||[]).length ? " across " + f.anti_congresses.length + " Congresses" : "") : "") + ".";
   if (m.tier_reason) return "Does not count: " + m.tier_reason + ".";
   return "Establishment: no anti-establishment record found.";
 }
@@ -723,7 +725,9 @@ function bottomLine(m) {
 // Plain-language summary of the facts, used until an AI write-up exists.
 function factsWriteup(m) {
   const f = m.tier_facts || {}, out = [];
-  if (f.focus_votes) out.push("On " + f.focus_votes + " recorded votes on arms and aid to " + (((META().focus||{}).recipients)||["Israel"]).join(", ") + ", voted the anti side " + (f.anti_focus_votes||0) + " time" + (f.anti_focus_votes===1?"":"s") + (f.latest_congress_focus ? " (" + f.latest_congress_focus + ")" : "") + ".");
+  if (f.focus_votes) out.push("On " + f.focus_votes + " counted votes on aid, arms, sanctions and war, voted the anti-interventionist side " + (f.anti_focus_votes||0) + " time" + (f.anti_focus_votes===1?"":"s") + (f.breaking_anti_votes ? ", " + f.breaking_anti_votes + " of them against most of their own party" : "") + ".");
+  const areas = Object.values(f.areas || {}).filter(a => a.anti);
+  if (areas.length) out.push("By area: " + areas.map(a => a.label + " — " + a.status + " (" + a.anti + " of " + a.votes + " anti)").join("; ") + ".");
   if (f.discharge_petitions_against_own_leadership) out.push("Signed " + f.discharge_petitions_against_own_leadership + " discharge petition" + (f.discharge_petitions_against_own_leadership>1?"s":"") + " going around their own party's House leadership.");
   if (f.lobby_money_trackaipac) out.push("Received " + fmtM(f.lobby_money_trackaipac) + " in contributions tracked by TrackAIPAC.");
   if (f.lobby_outside_support) out.push("Supported by " + fmtM(f.lobby_outside_support) + " in outside spending from the lobby's super PACs.");
@@ -814,11 +818,11 @@ function DetailPanel({member, fecData, polyData, bills, chamber, races}) {
 
       ${votes.length>0?html`
         <div style=${{marginBottom:10}}>
-          <div style=${SECT}>Votes on arms, aid and war</div>
+          <div style=${SECT}>Votes on aid, arms, sanctions and war</div>
           ${votes.map((v,i)=>html`
             <div key=${i} style=${{fontSize:9,fontFamily:FM,marginBottom:4,lineHeight:1.45}}>
               <span style=${{color:v.anti?"#4ade80":"#f87171",fontWeight:700,marginRight:5}}>${v.position||"?"} · ${v.anti?"anti":"pro"}</span>
-              <span style=${{color:"#6b7280"}}>${v.date||""} ${v.measure||""}</span>
+              <span style=${{color:"#6b7280"}}>${v.date||""} ${v.measure||""}${v.area?" · "+(AREA_LABEL[v.area]||v.area):""}</span>
               ${v.summary?html`<div style=${{color:"#4b5563"}}>${v.summary.length>170?v.summary.slice(0,170)+"…":v.summary}</div>`:null}
               ${v.url?html`<a href=${v.url} target="_blank" rel="noreferrer" style=${{color:"#374151",textDecoration:"none"}}>roll call ↗</a>`:null}
             </div>`)}
@@ -1443,13 +1447,14 @@ function About({members}) {
   const P = t => html`<p style=${{fontSize:11,lineHeight:1.6,color:"#9ca3af",margin:"0 0 8px"}}>${t}</p>`;
   return html`<div style=${{width:"100%",maxWidth:760,background:"#0f1117",border:"1px solid #1a1d27",borderRadius:13,padding:"16px 20px"}}>
     <div style=${{fontSize:14,fontWeight:700,color:"#f0ebe0"}}>How this tracker decides who is anti-establishment</div>
-    ${H("The standard, for now: arms to " + focus)}
-    ${P("For now the line is drawn on U.S. military aid and arms to " + focus + ", where party leaders, the foreign-policy lobby and its donors pull hardest in both parties. Broader anti-war, anti-foreign-aid or America First positions are weighed as context, never as a substitute.")}
+    ${H("The standard: anti-intervention, in five areas")}
+    ${P("An anti-interventionist has never, or has recently and consistently never: (1) voted to give aid to the State of " + focus + "; (2) voted to give military aid or arms to any country; (3) voted to sanction a country for reasons other than human rights, genocide or mass killing; (4) voted against restraining U.S. use of force that answers no imminent threat to American soil or citizens and has no declaration of war; (5) voted for broad or open-ended war authorizations. A narrow, time-limited authorization to stop genocide or mass killing, sanctions aimed at those, and non-military aid to other countries are neutral. Broad must-pass bills count only when they carried particularly severe interventionist provisions.")}
+    ${P("No one has to be anti in every area. But in any area where they start voting anti-interventionist, they must stay consistent from then on. Someone who changed course counts once their anti votes since their last interventionist vote have held into the latest Congress.")}
     ${H("Two groups, not three")}
     ${P("Every member and candidate is either anti-establishment or establishment. The chart seats establishment Republicans (solid red) from the left and establishment Democrats (solid blue) from the right. Anti-establishment members crowd the center, light red for Republicans and light blue for Democrats and independents.")}
     ${H("What it takes to count")}
     ${P("The judge works like a realistic political operative for the coalition. It asks one question about everyone: is this a reliable anti-establishment ally, or are they playing political games? It is pessimistic about where things stand, realistic about what counts, and open to real allies from any party.")}
-    ${P("Sitting members are judged on their votes first. Breaking with their own party and leadership counts most: votes against their own side on arms, aid or war, and discharge petitions that go around their own Speaker. At minimum a member needs a record that held across Congresses, or an anti-arms vote plus a recorded act of defying their own leadership. Opposing only the other party's leadership is what partisans do anyway.")}
+    ${P("Sitting members are judged on their votes first. A vote cast with one's own party still counts as anti-interventionist, but breaking with one's own party and leadership is how principle is told apart from posturing. At minimum a member needs one real breaking vote: an anti-interventionist vote against most of their own party. When leadership is blocking an anti-interventionist measure and a discharge petition to force it to the floor is open, they must also have signed it.")}
     ${P("Candidates who never served in Congress are judged on any state or local record. Without one, the judge looks at their donors and business ties. If those are clean or lean neither way, it judges their words: boilerplate or specific, consistent across statements and social media, and whether they work alongside people who hold the same positions.")}
     ${H("Why a vote or a speech is not enough")}
     ${P("Many members cast a first anti vote in 2026 in response to civilian deaths in Gaza, or ahead of a primary. Others defect from their party on spending or procedure, or campaign as outsiders but still back the arms packages. Some voted anti once and then voted for the aid again. These signals are real but untested, and most members who show them fold under leadership, donor or primary pressure. So they are treated as establishment and never counted toward any threshold.")}
