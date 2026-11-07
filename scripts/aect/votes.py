@@ -44,7 +44,7 @@ _VOTE_NORM = {"aye": "Yea", "yea": "Yea", "yes": "Yea", "no": "Nay", "nay": "Nay
 JUDGE_SYSTEM = """You classify U.S. congressional roll-call votes for a non-partisan tracker of anti-interventionist voting. The tracker measures five areas:
 1. israel_aid: any aid to the State of Israel (its government or military): military aid, financing, arms, missile defense, or any other aid given to the Israeli state.
 2. military_aid: military aid, military financing, or arms sales/transfers to any other foreign government or armed force.
-3. sanctions: sanctions, embargoes or similar economic punishment of a foreign country (or blocking their lifting). Sanctions aimed at human-rights abuses, genocide or mass killing are NEUTRAL; sanctions for geopolitical, strategic or trade-rivalry reasons are interventionist.
+3. sanctions: sanctions, embargoes or similar economic punishment of a foreign country (or blocking their lifting). Sanctions aimed at human-rights abuses, genocide or mass killing are NEUTRAL; sanctions for geopolitical, strategic or trade-rivalry reasons are interventionist. A measure that bars a country from trade, financing, loans, investment or support through international institutions IS a sanction: imposing, extending or tightening it is the interventionist side, and lifting, easing or blocking it is the anti-interventionist side. A measure that cuts or bars military aid or arms to a country is military_aid (or israel_aid), not sanctions.
 4. use_of_force: deploying or keeping U.S. forces abroad, strikes and hostilities. Restraining use of force that does not answer an imminent threat to U.S. soil or citizens and has no formal declaration of war is the anti-interventionist side.
 5. war_authorization: declarations of war and authorizations for use of military force (AUMFs), including repealing them. A broad or open-ended authorization is interventionist; a narrow, time-limited one with constrained goals aimed at preventing genocide or mass killing is NEUTRAL; voting against broad authorizations or to repeal them is anti-interventionist.
 Non-military aid (humanitarian, development, food, refugee) to countries other than Israel is NEUTRAL.
@@ -53,11 +53,11 @@ For the roll call given, use the description, bill title and summary given (and 
 - relevant: true if the vote is substantively about any of the five areas. Domestic defense matters (base names, pay, procurement for U.S. forces, cultural issues) and purely procedural votes are NOT relevant.
 - area: one of "israel_aid", "military_aid", "sanctions", "use_of_force", "war_authorization", or "other".
 - neutral: true if, under the rules above, neither side of the vote is interventionist (human-rights or genocide sanctions, narrow atrocity-prevention authorizations, non-military aid).
-- anti_position: "Yea" or "Nay": the vote on the anti-interventionist side, the one that REDUCES, BLOCKS, CONDITIONS, NARROWS or ENDS the aid, arms, sanctions, hostilities or authorization. Null if neutral.
+- anti_position: "Yea" or "Nay": the vote on the anti-interventionist side, the one that REDUCES, BLOCKS, CONDITIONS, NARROWS or ENDS the aid, arms, sanctions, hostilities or authorization (for sanctions: the side against imposing or keeping them). Null if neutral.
 - significance: "major" if one of the five areas is the vote's main purpose (aid packages, amendments cutting or adding aid, arms-sale disapprovals, sanctions bills, war-powers resolutions, AUMFs or their repeal). "minor" if it is a broad bill (e.g. final passage of an NDAA or full appropriations act) where these are only one part.
 - severe_interventionist: for a "minor" broad bill only: true if it nonetheless contains particularly severe interventionist provisions (e.g. a large new war authorization, tens of billions in new military aid, or a new sanctions regime as a headline part), so that its final passage is a fair test; false otherwise.
 - category: "arms_aid" for aid, financing or arms; "war_powers" for forces, hostilities or authorizations; "sanctions" for sanctions; "other" otherwise.
-- measure_restricts: true if the measure or amendment being voted on itself cuts, blocks, conditions or ends the aid/sale/sanctions/hostilities/authorization; false if it provides, approves, imposes or expands them.
+- measure_restricts: true if the measure or amendment being voted on itself cuts, blocks, conditions or ends the aid/sale/sanctions/hostilities/authorization; false if it provides, approves, imposes or expands them (a bill barring a country from financing or trade imposes a sanction, so it is false).
 - recipients: the foreign countries the vote is about, as English country names (e.g. ["Israel"], ["Ukraine", "Israel"], ["Iran"]). Empty if none.
 - summary: one plain sentence saying what the vote did, including dollar amounts and countries when known.
 
@@ -68,7 +68,14 @@ AREAS = ("israel_aid", "military_aid", "sanctions", "use_of_force", "war_authori
 AREA_LABEL = {"israel_aid": "aid to Israel", "military_aid": "military aid to other countries",
               "sanctions": "sanctions", "use_of_force": "use of force abroad",
               "war_authorization": "war authorizations"}
-JUDGE_VERSION = 4   # bump when the judgment schema changes; older relevant judgments are re-asked
+JUDGE_VERSION = 5   # bump when the judgment schema changes; older relevant judgments are re-asked
+# version 5 only clarified sanctions: version-4 judgments outside the sanctions area stay current
+_REASK_FROM_4 = ("sanctions",)
+
+
+def _current(j):
+    v = j.get("version", 1)
+    return v >= JUDGE_VERSION or (v == 4 and j.get("area") not in _REASK_FROM_4)
 
 
 def _iso_date(raw):
@@ -408,7 +415,7 @@ def direction_check(rec, j):
 def _judge(rec, judgments, budget_state):
     key = f"{rec['chamber']}-{rec['year']}-{rec['roll']}"
     old = judgments.get(key)
-    if old and (old.get("version", 1) >= JUDGE_VERSION or (not old.get("relevant") and not _RECHECK.search(
+    if old and (_current(old) or (not old.get("relevant") and not _RECHECK.search(
             " ".join(str(rec.get(x, "")) for x in ("legis", "question", "desc")) + " " + old.get("summary", "")))):
         return old
     if budget_state["left"] <= 0 or not ai.available_any():
@@ -500,7 +507,7 @@ def sync_votes():
     all_rolls.sort(key=lambda r: (r.get("year", 0), r.get("roll", 0)), reverse=True)
     def _stale(r):
         j = judgments.get(f"{r['chamber']}-{r['year']}-{r['roll']}")
-        return bool(j and j.get("relevant") and j.get("version", 1) < JUDGE_VERSION)
+        return bool(j and j.get("relevant") and not _current(j))
     all_rolls.sort(key=lambda r: not _stale(r))      # stable: stale relevant ones first, still newest first
     state = {"left": int(__import__("os").environ.get("AECT_VOTE_AI_BUDGET", "200")), "pending": 0}
     relevant = []

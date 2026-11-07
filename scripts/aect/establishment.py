@@ -201,14 +201,18 @@ def rule_tier(f, p):
     if f["incumbent"] and f["focus_votes"]:
         a, n = f["anti_focus_votes"], f["focus_votes"]
         record = f"anti-interventionist on {a} of {n} counted votes" + (f" ({_area_words(f)})" if a else "")
-        if _sustained(f) and meets_floor(f) and not funded and not f["all_anti_within_year_before_primary"]:
-            return "hard", record + "; consistent in every area engaged, with no focus-lobby money"
+        # the rule is only a stand-in until the AI judges principle versus posturing, so it asks
+        # for more than the floor: anti votes held across at least two Congresses
+        held = len(f.get("anti_congresses") or []) >= 2
+        if _sustained(f) and meets_floor(f) and held and not funded and not f["all_anti_within_year_before_primary"]:
+            return "hard", record + "; consistent in every area engaged across Congresses, with no focus-lobby money"
         bad = [x["label"] for x in (f.get("areas") or {}).values() if x["anti"] and x["status"] == "inconsistent"]
         why = ("they take focus-lobby money" if funded
                else f"they went back to the interventionist side on {', '.join(bad)}" if bad
                else "no anti-interventionist vote against most of their own party" if a and not f["breaking_anti_votes"]
                else "they have not signed the open anti-interventionist discharge petition" if a and not meets_floor(f)
                else "the anti votes came only in the year before a primary" if a and f["all_anti_within_year_before_primary"]
+               else "the record covers only one Congress so far; awaiting the AI judge" if a and not held
                else "no anti-interventionist vote")
         return ("soft" if a or p.get("antiArms") else "none"), f"{record}; not counted because {why}."
     if not p.get("antiArms"):

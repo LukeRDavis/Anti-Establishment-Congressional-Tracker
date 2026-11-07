@@ -81,8 +81,11 @@ def patch(data, people):
 
 
 def main():
+    from aect.gitsync import latest_json
     data = _load("data.json", {})
-    people = _load("candidates.json", {}).get("people", {})
+    # start from the newest committed records: a full refresh may have landed since checkout
+    start = latest_json("candidates.json", _load("candidates.json", {})) or {}
+    people = start.get("people", {})
     if not data or not people:
         print("No data yet; the full pipeline has to run first.")
         return 0
@@ -107,12 +110,17 @@ def main():
     establishment.run(people, ie, fec_cands, fec_totals)
     # patch the newest committed data.json, not the copy this job started from (it may be an
     # hour old and would erase the election-night job's odds and results)
-    from aect.gitsync import latest_json
+    # a full refresh that committed while this job ran rebuilt every record from fresher data:
+    # keep only the AI verdicts (in data/cache, merged before commit) and let it stand
+    now = latest_json("candidates.json", {}) or {}
+    if now.get("generated_at") and now.get("generated_at") != start.get("generated_at"):
+        print("A full refresh landed during judging; keeping its records and committing only the verdict cache.")
+        return 0
     data = latest_json("data.json", data)
     n = patch(data, people)
     data["reform"] = ref
     _write("data.json", data)
-    _write("candidates.json", {**_load("candidates.json", {}), "people": people})
+    _write("candidates.json", {**start, "people": people})
     print(f"Patched {n} members · AI calls {ai.CALLS} · {(STREAMS.get('establishment_tiers') or {}).get('notes')}")
     return 0
 
