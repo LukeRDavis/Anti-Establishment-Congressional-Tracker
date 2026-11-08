@@ -376,7 +376,16 @@ def _sponsor(rec):
         atype, anum = rec["congress_gov_amendment"].lower().split()
         a = (_cg(f"/amendment/{rec['congress']}/{atype}/{anum}") or {}).get("amendment") or {}
         sid = ((a.get("sponsors") or [{}])[0]).get("bioguideId")
-    if not sid:
+    if not sid and rec.get("chamber") == "senate" and rec.get("amendment_num"):
+        n = re.search(r"(\d+)", rec["amendment_num"])
+        if n:
+            a = (_cg(f"/amendment/{rec['congress']}/samdt/{n.group(1)}") or {}).get("amendment") or {}
+            sid = ((a.get("sponsors") or [{}])[0]).get("bioguideId")
+    # a vote on an amendment is never checked against the underlying bill's sponsor:
+    # the bill's author often votes against an amendment that cuts its own bill
+    on_amendment = bool(rec.get("amendment_num") or rec.get("amendment_author") or rec.get("congress_gov_amendment")
+                        or re.search(r"amendment", f"{rec.get('question','')} {rec.get('desc','')}", re.I))
+    if not sid and not on_amendment:
         m = re.match(r"([A-Z\. ]+?)\s*(\d+)$", (rec.get("legis") or "").upper().strip())
         if m:
             btype = _BILL_TYPES.get(re.sub(r"[\. ]", "", m.group(1)))
@@ -411,10 +420,31 @@ def direction_check(rec, j):
     return j
 
 
+def _recheck_direction(rec, j):
+    """Redo the sponsor cross-check with the amendment-aware sponsor lookup, undoing a
+    correction that was made against the underlying bill's sponsor."""
+    if not CONGRESS_KEY or not circuit_ok("congress_gov"):
+        return                  # can't look the sponsor up now; try again next run
+    _amendment_context(rec)
+    rec.pop("sponsor", None)
+    sid = _sponsor(rec)
+    if sid != j.get("sponsor"):
+        if j.get("direction") == "corrected_by_sponsor_vote" and j.get("anti_position") in ("Yea", "Nay"):
+            j["anti_position"] = "Nay" if j["anti_position"] == "Yea" else "Yea"
+            print(f"    ↺ {rec['chamber']}-{rec['year']}-{rec['roll']}: undid a correction made against the bill sponsor")
+        j.pop("sponsor", None)
+        j["direction"] = None
+        if sid:
+            direction_check(rec, j)
+    j["sponsor_check"] = 2
+
+
 # ── AI judgment ───────────────────────────────────────────────────────────────
 def _judge(rec, judgments, budget_state):
     key = f"{rec['chamber']}-{rec['year']}-{rec['roll']}"
     old = judgments.get(key)
+    if old and old.get("relevant") and old.get("direction") and old.get("sponsor_check") != 2:
+        _recheck_direction(rec, old)
     if old and (_current(old) or (not old.get("relevant") and not _RECHECK.search(
             " ".join(str(rec.get(x, "")) for x in ("legis", "question", "desc")) + " " + old.get("summary", "")))):
         return old
@@ -465,6 +495,7 @@ def _judge(rec, judgments, budget_state):
          "context": rec.get("amendment_purpose", "")[:300], "judged_at": now_iso()}
     if j["relevant"]:
         direction_check(rec, j)
+        j["sponsor_check"] = 2
     judgments[key] = j
     if j["relevant"]:
         print(f"    ✓ {key} {rec.get('legis','')}: {j['significance']} — anti={j['anti_position']} — {j['summary'][:90]}")
