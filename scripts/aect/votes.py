@@ -45,6 +45,7 @@ JUDGE_SYSTEM = """You classify U.S. congressional roll-call votes for a non-part
 1. israel_aid: any aid to the State of Israel (its government or military): military aid, financing, arms, missile defense, or any other aid given to the Israeli state.
 2. military_aid: military aid, military financing, or arms sales/transfers to any other foreign government or armed force.
 3. sanctions: sanctions, embargoes or similar economic punishment of a foreign country (or blocking their lifting). Sanctions aimed at human-rights abuses, genocide or mass killing are NEUTRAL; sanctions for geopolitical, strategic or trade-rivalry reasons are interventionist. A measure that bars a country from trade, financing, loans, investment or support through international institutions IS a sanction: imposing, extending or tightening it is the interventionist side, and lifting, easing or blocking it is the anti-interventionist side. A measure that cuts or bars military aid or arms to a country is military_aid (or israel_aid), not sanctions.
+Sovereignty-defense exception (military_aid only, never israel_aid): legitimate lend-lease deals and MOSTLY defensive arms (air and missile defense, defensive equipment) for a country resisting a direct violation of its territorial sovereignty — an invasion, annexation or occupation of its territory recognized as unlawful under international law standards (Hague conventions, UN General Assembly or Security Council, ICC, ICJ, or major human rights organizations) — are NEUTRAL. Deterrence against a threat that has not happened, offensive or long-range strike weapons as a main part, open-ended financing, and arms to a government not itself defending its own territory are not covered. A package that bundles covered aid with aid that is not covered is judged by the uncovered part.
 4. use_of_force: deploying or keeping U.S. forces abroad, strikes and hostilities. Restraining use of force that does not answer an imminent threat to U.S. soil or citizens and has no formal declaration of war is the anti-interventionist side.
 5. war_authorization: declarations of war and authorizations for use of military force (AUMFs), including repealing them. A broad or open-ended authorization is interventionist; a narrow, time-limited one with constrained goals aimed at preventing genocide or mass killing is NEUTRAL; voting against broad authorizations or to repeal them is anti-interventionist.
 Non-military aid (humanitarian, development, food, refugee) to countries other than Israel is NEUTRAL.
@@ -52,7 +53,7 @@ Non-military aid (humanitarian, development, food, refugee) to countries other t
 For the roll call given, use the description, bill title and summary given (and web search if available) to find out exactly what the measure or amendment did, then decide:
 - relevant: true if the vote is substantively about any of the five areas. Domestic defense matters (base names, pay, procurement for U.S. forces, cultural issues) and purely procedural votes are NOT relevant.
 - area: one of "israel_aid", "military_aid", "sanctions", "use_of_force", "war_authorization", or "other".
-- neutral: true if, under the rules above, neither side of the vote is interventionist (human-rights or genocide sanctions, narrow atrocity-prevention authorizations, non-military aid).
+- neutral: true if, under the rules above, neither side of the vote is interventionist (human-rights or genocide sanctions, narrow atrocity-prevention authorizations, non-military aid, sovereignty-defense lend-lease or mostly defensive arms).
 - anti_position: "Yea" or "Nay": the vote on the anti-interventionist side, the one that REDUCES, BLOCKS, CONDITIONS, NARROWS or ENDS the aid, arms, sanctions, hostilities or authorization (for sanctions: the side against imposing or keeping them). Null if neutral.
 - significance: "major" if one of the five areas is the vote's main purpose (aid packages, amendments cutting or adding aid, arms-sale disapprovals, sanctions bills, war-powers resolutions, AUMFs or their repeal). "minor" if it is a broad bill (e.g. final passage of an NDAA or full appropriations act) where these are only one part.
 - severe_interventionist: for a "minor" broad bill only: true if it nonetheless contains particularly severe interventionist provisions (e.g. a large new war authorization, tens of billions in new military aid, or a new sanctions regime as a headline part), so that its final passage is a fair test; false otherwise.
@@ -68,14 +69,15 @@ AREAS = ("israel_aid", "military_aid", "sanctions", "use_of_force", "war_authori
 AREA_LABEL = {"israel_aid": "aid to Israel", "military_aid": "military aid to other countries",
               "sanctions": "sanctions", "use_of_force": "use of force abroad",
               "war_authorization": "war authorizations"}
-JUDGE_VERSION = 5   # bump when the judgment schema changes; older relevant judgments are re-asked
-# version 5 only clarified sanctions: version-4 judgments outside the sanctions area stay current
-_REASK_FROM_4 = ("sanctions",)
+JUDGE_VERSION = 6   # bump when the judgment schema changes; older relevant judgments are re-asked
+# versions 5 and 6 changed one area each (sanctions; the sovereignty-defense exception for
+# military aid): older judgments outside the areas changed since stay current
+_CHANGED_SINCE = {4: ("sanctions", "military_aid"), 5: ("military_aid",)}
 
 
 def _current(j):
     v = j.get("version", 1)
-    return v >= JUDGE_VERSION or (v == 4 and j.get("area") not in _REASK_FROM_4)
+    return v >= JUDGE_VERSION or (v in _CHANGED_SINCE and j.get("area") not in _CHANGED_SINCE[v])
 
 
 def _iso_date(raw):

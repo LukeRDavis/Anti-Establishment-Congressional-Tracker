@@ -16,7 +16,7 @@ No person, race, vote or bill is typed into the code. `scripts/fetch_data.py` re
 4. **Anti-interventionist evidence**:
    * **Votes.** Every roll call is pulled from clerk.house.gov and senate.gov. An AI with web search sorts each relevant vote into one of five areas and decides which side is the anti-interventionist one:
      1. aid to the State of Israel;
-     2. military aid or arms to any country;
+     2. military aid or arms to any country (legitimate lend-lease deals and mostly defensive arms for a country resisting a direct violation of its territorial sovereignty, as recognized under international law standards such as the Hague conventions, UN, ICC, ICJ and human rights organizations, are neutral; this never covers aid to Israel, which is its own area);
      3. sanctions on a country for reasons other than human rights, genocide or mass killing (sanctions aimed at those are neutral);
      4. restraining U.S. use of force that answers no imminent threat to American soil or citizens and has no declaration of war;
      5. war declarations and authorizations: voting against broad or open-ended ones, or to repeal them, is anti-interventionist; a narrow, time-limited one aimed at preventing genocide or mass killing is neutral.

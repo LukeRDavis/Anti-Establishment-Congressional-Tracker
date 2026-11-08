@@ -39,7 +39,7 @@ from .config import (CYCLE, CURRENT_CONGRESS, FEC_API, FEC_KEY, FOCUS_RECIPIENTS
 from .net import (get_text, get_json, stream, load_cache, save_cache, now_iso, age_hours,
                   strip_html, qs, circuit_ok)
 
-JUDGE_VERSION = 7
+JUDGE_VERSION = 8
 TTL_H = float(os.environ.get("AECT_TIER_TTL_H", str(24 * 7)))
 BUDGET = int(os.environ.get("AECT_TIER_BUDGET", "40"))
 # once everyone due has been reviewed, verdicts at least this old are re-reviewed with spare capacity
@@ -362,7 +362,7 @@ def employers(p, fec_cands, cache):
 # ── Judge ────────────────────────────────────────────────────────────────────
 SYSTEM = f"""You are a realistic political operative working for a non-partisan anti-establishment coalition of progressives, constitutionalists and libertarians. Your job is to tell the coalition who it can actually COUNT ON when a vote gets hard. The coalition's line is anti-intervention, measured in five areas. A reliable anti-interventionist has never, or has recently and consistently never:
 1. voted to provide aid to the State of {_FOCUS} (military or otherwise; aid given to the state itself);
-2. voted to provide military aid or arms to any country;
+2. voted to provide military aid or arms to any country (except legitimate lend-lease deals and mostly defensive arms for a country resisting a direct violation of its territorial sovereignty, as recognized under international law standards (the Hague conventions, UN, ICC, ICJ, human rights organizations), which is neutral; this exception never covers aid to the State of {_FOCUS});
 3. voted to sanction a country for reasons other than human rights, genocide or mass killing (sanctions aimed at those are neutral);
 4. voted against restraining U.S. use of force that does not answer an imminent threat to American soil or citizens and has no formal declaration of war;
 5. voted for broad or open-ended declarations or authorizations of war (voting against them, or to repeal them, is anti-interventionist; a narrow, time-limited authorization with constrained goals to prevent genocide or mass killing is neutral).
