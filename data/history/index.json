@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-10T13:28:04.709442+00:00",
+ "updated_at": "2026-11-11T12:44:51.359004+00:00",
  "first": 107,
  "current": 119,
  "congresses": [
@@ -10,8 +10,8 @@
     2002
    ],
    "anti": {
-    "house": 12,
-    "senate": 21
+    "house": 0,
+    "senate": 0
    }
   },
   {
@@ -21,7 +21,7 @@
     2004
    ],
    "anti": {
-    "house": 5,
+    "house": 0,
     "senate": 0
    }
   },
@@ -35,106 +35,7 @@
     "house": 6,
     "senate": 0
    }
-  },
-  {
-   "congress": 110,
-   "years": [
-    2007,
-    2008
-   ],
-   "anti": {
-    "house": 5,
-    "senate": 0
-   }
-  },
-  {
-   "congress": 111,
-   "years": [
-    2009,
-    2010
-   ],
-   "anti": {
-    "house": 6,
-    "senate": 0
-   }
-  },
-  {
-   "congress": 112,
-   "years": [
-    2011,
-    2012
-   ],
-   "anti": {
-    "house": 2,
-    "senate": 2
-   }
-  },
-  {
-   "congress": 113,
-   "years": [
-    2013,
-    2014
-   ],
-   "anti": {
-    "house": 3,
-    "senate": 3
-   }
-  },
-  {
-   "congress": 114,
-   "years": [
-    2015,
-    2016
-   ],
-   "anti": {
-    "house": 1,
-    "senate": 3
-   }
-  },
-  {
-   "congress": 115,
-   "years": [
-    2017,
-    2018
-   ],
-   "anti": {
-    "house": 12,
-    "senate": 2
-   }
-  },
-  {
-   "congress": 116,
-   "years": [
-    2019,
-    2020
-   ],
-   "anti": {
-    "house": 32,
-    "senate": 3
-   }
-  },
-  {
-   "congress": 117,
-   "years": [
-    2021,
-    2022
-   ],
-   "anti": {
-    "house": 16,
-    "senate": 0
-   }
-  },
-  {
-   "congress": 118,
-   "years": [
-    2023,
-    2024
-   ],
-   "anti": {
-    "house": 1,
-    "senate": 0
-   }
   }
  ],
- "remaining": 0
+ "remaining": 9
 }
