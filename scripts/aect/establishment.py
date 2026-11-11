@@ -39,7 +39,7 @@ from .config import (CYCLE, CURRENT_CONGRESS, FEC_API, FEC_KEY, FOCUS_RECIPIENTS
 from .net import (get_text, get_json, stream, load_cache, save_cache, now_iso, age_hours,
                   strip_html, qs, circuit_ok)
 
-JUDGE_VERSION = 8
+JUDGE_VERSION = 9
 TTL_H = float(os.environ.get("AECT_TIER_TTL_H", str(24 * 7)))
 BUDGET = int(os.environ.get("AECT_TIER_BUDGET", "40"))
 # once everyone due has been reviewed, verdicts at least this old are re-reviewed with spare capacity
@@ -103,7 +103,10 @@ def facts(p, ie):
         "focus_votes": len(focus), "anti_focus_votes": len(anti),
         "breaking_anti_votes": len(breaking),
         "anti_votes_with_own_party_majority": len(anti) - len(breaking),
-        "areas": areas, "consistent_in_every_area_engaged": V.consistent(areas),
+        "areas": areas, "anchor_area": V.AREA_LABEL[V.ANCHOR],
+        "consistent_on_anchor_area": V.consistent(areas),
+        "breaking_anti_votes_on_anchor": sum(1 for v in breaking if v.get("area") == V.ANCHOR),
+        "supporting_areas_with_slips": V.slips(areas),
         "anti_congresses": congs, "first_anti_vote": anti[0]["date"] if anti else None,
         "anti_ratio": round(len(anti) / len(focus), 2) if focus else None,
         "latest_congress_focus": f"{sum(v['anti'] for v in last)}/{len(last)} anti in the {last_c}th" if last else None,
@@ -171,8 +174,15 @@ def _conf_index(res):
 
 
 def _sustained(f):
-    """Consistent in every area where they have voted the anti-interventionist side."""
-    return f["consistent_in_every_area_engaged"]
+    """The anchor: voted anti-interventionist on aid to the focus state and stayed consistent there."""
+    return f["consistent_on_anchor_area"]
+
+
+def _anchor_gap(f):
+    x = (f.get("areas") or {}).get(V.ANCHOR)
+    if not x or not x["anti"]:
+        return f"they have no anti-interventionist vote on {V.AREA_LABEL[V.ANCHOR]}"
+    return f"they are {x['status']} on {V.AREA_LABEL[V.ANCHOR]} ({x['anti']} of {x['votes']} anti)"
 
 
 def meets_floor(f):
@@ -190,7 +200,9 @@ def _area_words(f):
     bits = []
     for x in (f.get("areas") or {}).values():
         if x["anti"]:
-            bits.append(f"{x['label']}: {x['status']} ({x['anti']} of {x['votes']} anti)")
+            br = [f"{r}: {st}" for r, st in (x.get("by_recipient") or {}).items() if st != "interventionist"]
+            bits.append(f"{x['label']}: {x['status']} ({x['anti']} of {x['votes']} anti"
+                        + (f"; by country: {', '.join(br[:6])}" if br else "") + ")")
     return "; ".join(bits)
 
 
@@ -203,16 +215,20 @@ def rule_tier(f, p):
         record = f"anti-interventionist on {a} of {n} counted votes" + (f" ({_area_words(f)})" if a else "")
         # the rule is only a stand-in until the AI judges principle versus posturing, so it asks
         # for more than the floor: anti votes held across at least two Congresses
+        # and that at least one breaking vote is on the anchor itself
         held = len(f.get("anti_congresses") or []) >= 2
-        if _sustained(f) and meets_floor(f) and held and not funded and not f["all_anti_within_year_before_primary"]:
-            return "hard", record + "; consistent in every area engaged across Congresses, with no focus-lobby money"
-        bad = [x["label"] for x in (f.get("areas") or {}).values() if x["anti"] and x["status"] == "inconsistent"]
+        anchor_break = f.get("breaking_anti_votes_on_anchor", 0) >= 1
+        if _sustained(f) and meets_floor(f) and held and anchor_break and not funded and not f["all_anti_within_year_before_primary"]:
+            sl = f.get("supporting_areas_with_slips") or []
+            return "hard", (record + f"; consistent on {V.AREA_LABEL[V.ANCHOR]} across Congresses, with no focus-lobby money"
+                            + (f" (lower confidence: went back to the interventionist side on {', '.join(sl)})" if sl else ""))
         why = ("they take focus-lobby money" if funded
-               else f"they went back to the interventionist side on {', '.join(bad)}" if bad
+               else _anchor_gap(f) if not _sustained(f)
                else "no anti-interventionist vote against most of their own party" if a and not f["breaking_anti_votes"]
                else "they have not signed the open anti-interventionist discharge petition" if a and not meets_floor(f)
                else "the anti votes came only in the year before a primary" if a and f["all_anti_within_year_before_primary"]
                else "the record covers only one Congress so far; awaiting the AI judge" if a and not held
+               else f"none of their breaking votes is on {V.AREA_LABEL[V.ANCHOR]}; awaiting the AI judge" if a and not anchor_break
                else "no anti-interventionist vote")
         return ("soft" if a or p.get("antiArms") else "none"), f"{record}; not counted because {why}."
     if not p.get("antiArms"):
@@ -367,7 +383,7 @@ SYSTEM = f"""You are a realistic political operative working for a non-partisan 
 4. voted against restraining U.S. use of force that does not answer an imminent threat to American soil or citizens and has no formal declaration of war;
 5. voted for broad or open-ended declarations or authorizations of war (voting against them, or to repeal them, is anti-interventionist; a narrow, time-limited authorization with constrained goals to prevent genocide or mass killing is neutral).
 Non-military aid to other countries is neutral, though aid that flows to a government rather than directly and constructively to its people deserves skepticism. Broad must-pass bills (defense authorizations, omnibus spending) count only when they carried particularly severe interventionist provisions.
-A person need not be anti in all five areas: they can stand anywhere on that spectrum. But in every area where they have started voting the anti-interventionist side, they must be consistent from then on. "Recently consistently" means someone who turned (voted the interventionist side, then began voting anti) and has held since, on principle rather than political posturing. The facts give each area's status. Money from the {_FOCUS} lobby and from those who profit from war remains a reason for doubt.
+Aid to the State of {_FOCUS} is the anchor. A sitting member must have voted the anti-interventionist side on it and stayed consistent there from then on; "recently consistently" means someone who turned (voted the interventionist side, then began voting anti) and has held since, on principle rather than political posturing. The other four areas are supporting evidence: a person can stand anywhere on that spectrum, and where they started anti and later went back, that lowers your confidence but does not by itself disqualify them. Military aid and sanctions are judged country by country: being anti on arms to one country does not oblige being anti on arms to another, but once anti on a given recipient they should stay consistent on it. The facts give each area's status (and, for military aid and sanctions, each recipient's). Money from the {_FOCUS} lobby and from those who profit from war remains a reason for doubt.
 
 The one question you answer about every person: is this a RELIABLE anti-establishment ally, or are they playing political games?
 
@@ -606,9 +622,7 @@ def run(people, ie, fec_cands, fec_totals=None):
                         if f["breaking_anti_votes"] else
                         "they have no anti-interventionist vote against most of their own party")
                 elif tier == "hard" and f["incumbent"] and f["focus_votes"] and not _sustained(f):
-                    bad = [x["label"] for x in f["areas"].values() if x["anti"] and x["status"] == "inconsistent"]
-                    tier, overruled = "soft", ("they went back to the interventionist side on " + ", ".join(bad)
-                                               if bad else "they have no anti-interventionist vote")
+                    tier, overruled = "soft", _anchor_gap(f)
                 if tier == "hard" and not f["incumbent"] and res.get("confidence") != "high":
                     tier, overruled = "soft", "a new candidate needs a high-confidence, cited verdict"
                 bl = (res.get("bottom_line") or "")[:240]

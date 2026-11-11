@@ -281,15 +281,25 @@ assert _E.rule_tier(_E.facts(_lapsed, {}), _lapsed)[0] == "soft"
 _defector = {"name": "B", "antiArms": False, "incumbent": True, "sources": [], "fec_ids": [],
              "_defections": [{"date": "2025-01-01", "measure": "X", "summary": "s"}] * 30, "vote_record": []}
 assert _E.rule_tier(_E.facts(_defector, {}), _defector)[0] in ("soft", "none")
-# five areas: anti on use of force only, consistently, while still backing aid elsewhere: counts
+# the anchor: anti on use of force only, with no anti vote on Israel aid: not counted
 _spectrum = {**_hard, "vote_record": [{**_v(118, "2024-01-10", False), "area": "military_aid"},
                                       {**_v(118, "2024-04-20", True), "area": "use_of_force"},
                                       {**_v(119, "2026-07-15", True), "area": "use_of_force"}]}
-assert _E.rule_tier(_E.facts(_spectrum, {}), _spectrum)[0] == "hard"
-# started anti on sanctions, then voted for a sanctions bill again: not consistent in that area
+assert _E.rule_tier(_E.facts(_spectrum, {}), _spectrum)[0] == "soft"
+# consistent on the anchor, but went back on sanctions: a slip in a supporting area still counts
 _flip = {**_hard, "vote_record": _hard["vote_record"] + [{**_v(118, "2024-02-01", True), "area": "sanctions"},
                                                           {**_v(119, "2026-01-01", False), "area": "sanctions"}]}
-assert _E.rule_tier(_E.facts(_flip, {}), _flip)[0] == "soft"
+_t = _E.rule_tier(_E.facts(_flip, {}), _flip)
+assert _t[0] == "hard" and "lower confidence" in _t[1], _t
+# went back on the anchor itself: not counted
+_back = {**_hard, "vote_record": _hard["vote_record"] + [{**_v(119, "2026-08-01", False)}]}
+assert _E.rule_tier(_E.facts(_back, {}), _back)[0] == "soft"
+# military aid is judged country by country: anti on one recipient, pro on another, is consistent
+_cc = [{**_v(118, "2024-01-10", True), "area": "military_aid", "recipients": ["A"]},
+       {**_v(118, "2024-02-10", False), "area": "military_aid", "recipients": ["B"]},
+       {**_v(119, "2026-02-10", True), "area": "military_aid", "recipients": ["A"]}]
+assert votes.area_record(_cc)["military_aid"]["status"] == "consistent"
+assert votes.area_record(_cc + [{**_v(119, "2026-03-10", False), "area": "military_aid", "recipients": ["A"]}])["military_aid"]["status"] == "inconsistent"
 # only party-line anti votes: anti, but no breaking vote, so below the floor
 _pl = {**_hard, "vote_record": [{**v, "party_line": True} for v in _hard["vote_record"]]}
 assert _E.rule_tier(_E.facts(_pl, {}), _pl)[0] == "soft"

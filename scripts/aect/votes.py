@@ -627,47 +627,77 @@ def is_focus(v):
     return v.get("significance") == "major"
 
 
-def area_record(votes):
-    """Per-area consistency, from a member's counted votes (each with area, anti, date, congress).
+# Israel aid is the anchor: a member must be consistent there; the other four areas are
+# supporting evidence, where a slip lowers confidence instead of disqualifying.
+ANCHOR = "israel_aid"
+# military aid and sanctions are judged country by country: anti on arms to one country doesn't
+# oblige anti on arms to another, but once anti on a given recipient, stay consistent on it
+BY_RECIPIENT = ("military_aid", "sanctions")
+_RANK = {"consistent": 0, "became consistent": 1, "turning": 2, "inconsistent": 3}
+OK = ("consistent", "became consistent")
 
-    The tracker's rule: a member may stand on any part of the spectrum, but in every area where
-    they have started voting the anti-interventionist side they must be consistent from then on.
+
+def _status(vs):
+    """Status of one run of votes (sorted by date) on one area, or one recipient within it.
+
     A member who turned (voted the interventionist side, then began voting anti) counts once the
     anti votes since their last interventionist vote form a run of two or more that reaches their
-    latest Congress voting in that area; until then they are "turning"."""
+    latest Congress voting there; until then they are "turning"."""
+    first = next((i for i, v in enumerate(vs) if v["anti"]), None)
+    pro_after = sum(1 for v in vs[first:] if not v["anti"]) if first is not None else 0
+    last_pro = max((i for i, v in enumerate(vs) if not v["anti"]), default=-1)
+    streak = vs[last_pro + 1:]
+    if first is None:
+        return "interventionist", first, pro_after, streak
+    if first == 0 and pro_after == 0:
+        return "consistent", first, pro_after, streak
+    if len(streak) >= 2 and streak[-1]["congress"] == vs[-1]["congress"]:
+        return "became consistent", first, pro_after, streak
+    if pro_after == 0:
+        return "turning", first, pro_after, streak
+    return "inconsistent", first, pro_after, streak
+
+
+def area_record(votes):
+    """Per-area consistency, from a member's counted votes (each with area, anti, date, congress,
+    recipients). Military aid and sanctions are checked recipient by recipient, and the area takes
+    the worst status among the recipients the member has voted anti on."""
     out = {}
     for a in AREAS:
         vs = sorted([v for v in votes if v.get("area") == a], key=lambda v: v["date"])
         if not vs:
             continue
         anti = [v for v in vs if v["anti"]]
-        first = next((i for i, v in enumerate(vs) if v["anti"]), None)
-        pro_after = sum(1 for v in vs[first:] if not v["anti"]) if first is not None else 0
-        last_pro = max((i for i, v in enumerate(vs) if not v["anti"]), default=-1)
-        streak = vs[last_pro + 1:]
-        latest_c = vs[-1]["congress"]
-        if first is None:
-            status = "interventionist"
-        elif first == 0 and pro_after == 0:
-            status = "consistent"                 # never voted the interventionist side
-        elif len(streak) >= 2 and streak[-1]["congress"] == latest_c:
-            status = "became consistent"          # turned, and has held since
-        elif pro_after == 0:
-            status = "turning"                    # turned only recently: not yet shown to hold
-        else:
-            status = "inconsistent"
+        status, first, pro_after, streak = _status(vs)
+        by_r = None
+        if a in BY_RECIPIENT and anti:
+            groups = {}
+            for v in vs:
+                for r in (v.get("recipients") or ["unspecified"]):
+                    groups.setdefault(r.strip().lower(), []).append(v)
+            by_r = {r: _status(g)[0] for r, g in groups.items()}
+            engaged = [st for st in by_r.values() if st != "interventionist"]
+            status = max(engaged, key=_RANK.get)
+            pro_after = sum(_status(g)[2] for g in groups.values())
         out[a] = {"label": AREA_LABEL[a], "votes": len(vs), "anti": len(anti), "status": status,
                   "first_anti": vs[first]["date"] if first is not None else None,
                   "interventionist_after_first_anti": pro_after,
-                  "consistent_since": streak[0]["date"] if status == "became consistent" else None,
+                  "consistent_since": streak[0]["date"] if status == "became consistent" and streak and not by_r else None,
                   "breaking_anti_votes": sum(1 for v in anti if not v.get("party_line"))}
+        if by_r:
+            out[a]["by_recipient"] = dict(sorted(by_r.items(), key=lambda kv: _RANK.get(kv[1], 4))[:12])
     return out
 
 
 def consistent(areas):
-    """Engaged (voted anti) in at least one area, and consistent in every area engaged."""
-    engaged = [x for x in areas.values() if x["anti"]]
-    return bool(engaged) and all(x["status"] in ("consistent", "became consistent") for x in engaged)
+    """The anchor test: has voted anti-interventionist on aid to Israel and stayed consistent there."""
+    x = areas.get(ANCHOR)
+    return bool(x and x["anti"] and x["status"] in OK)
+
+
+def slips(areas):
+    """Supporting areas where the member started anti and later went back: lower confidence only."""
+    return [x["label"] for k, x in areas.items() if k != ANCHOR and x["anti"] and x["status"] not in OK]
 
 
 def score_members(members, relevant_votes):

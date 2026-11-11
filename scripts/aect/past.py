@@ -23,7 +23,7 @@ from . import votes as V
 
 FIRST = int(os.environ.get("AECT_HISTORY_FROM", "107"))
 OUT_DIR = os.path.join("data", "history")
-VERSION = 6
+VERSION = 7
 URL = "https://voteview.com/static/data/out/{kind}/{ch}{congress}_{kind}.csv"
 CAST = {1: "Yea", 2: "Yea", 3: "Yea", 4: "Nay", 5: "Nay", 6: "Nay"}
 
@@ -242,7 +242,8 @@ def build_congress(congress, judgments, budget):
 def rate(history):
     """Apply today's rule to each Congress, on each member's record up to that Congress: at least one
     real breaking vote (anti-interventionist against most of their own party; discharge-petition data
-    is not available for past Congresses), and consistent in every area where they voted anti."""
+    is not available for past Congresses), and consistent on the anchor area, aid to Israel; the other
+    areas are supporting evidence (military aid and sanctions judged country by country)."""
     record = {}
     for c in sorted(history):
         for m in history[c]["members"]:
@@ -260,9 +261,12 @@ def rate(history):
                                "anti_congresses": sorted({v["congress"] for v in anti})}
             engaged = "; ".join(f"{x['label']}: {x['status']} ({x['anti']} of {x['votes']} anti)"
                                 for x in areas.values() if x["anti"])
-            bad = [x["label"] for x in areas.values() if x["anti"] and x["status"] == "inconsistent"]
-            m["bottom_line"] = (("Counts as anti-establishment: " + engaged) if m["antiArms"] else
-                                ("Does not count: " + (f"went back to the interventionist side on {', '.join(bad)}" if bad
+            anc = areas.get(V.ANCHOR)
+            sl = V.slips(areas)
+            m["bottom_line"] = (("Counts as anti-establishment: " + engaged
+                                 + (f"; lower confidence: went back on {', '.join(sl)}" if sl else "")) if m["antiArms"] else
+                                ("Does not count: " + (f"{anc['status']} on {anc['label']}" if anc and anc["anti"] and not ok
+                                 else f"no anti-interventionist vote on {V.AREA_LABEL[V.ANCHOR]}" if anti and not ok
                                  else "no anti-interventionist vote against most of their own party" if anti
                                  else "no anti-interventionist vote") + (f" ({engaged})" if engaged else ""))
                                 ) + " by this point. (Rule-based from Voteview roll calls.)"
