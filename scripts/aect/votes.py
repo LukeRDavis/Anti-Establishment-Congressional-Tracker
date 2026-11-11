@@ -58,21 +58,25 @@ For the roll call given, use the description, bill title and summary given (and 
 - significance: "major" if one of the five areas is the vote's main purpose (aid packages, amendments cutting or adding aid, arms-sale disapprovals, sanctions bills, war-powers resolutions, AUMFs or their repeal). "minor" if it is a broad bill (e.g. final passage of an NDAA or full appropriations act) where these are only one part.
 - severe_interventionist: for a "minor" broad bill only: true if it nonetheless contains particularly severe interventionist provisions (e.g. a large new war authorization, tens of billions in new military aid, or a new sanctions regime as a headline part), so that its final passage is a fair test; false otherwise.
 - category: "arms_aid" for aid, financing or arms; "war_powers" for forces, hostilities or authorizations; "sanctions" for sanctions; "other" otherwise.
+- sanctions_effect (sanctions votes only, else null): "imposes" if the measure or amendment voted on imposes, extends, tightens or makes sanctions harder to lift (including barring waivers, rescinding licenses or relief, or reviewing/limiting the President's power to ease them); "eases" if it lifts, eases, suspends or terminates them.
+- sovereignty_defense (military_aid votes only, else false): true if the recipient is resisting a direct violation of its own territorial sovereignty (an invasion, annexation or occupation of its territory) recognized as unlawful by the UN, ICJ, ICC, the Hague conventions or major human rights organizations.
+- defensive_or_lend_lease (military_aid votes only, else false): true if the aid in question is a lend-lease arrangement or MOSTLY defensive arms or equipment.
 - measure_restricts: true if the measure or amendment being voted on itself cuts, blocks, conditions or ends the aid/sale/sanctions/hostilities/authorization; false if it provides, approves, imposes or expands them (a bill barring a country from financing or trade imposes a sanction, so it is false).
 - recipients: the foreign countries the vote is about, as English country names (e.g. ["Israel"], ["Ukraine", "Israel"], ["Iran"]). Empty if none.
 - summary: one plain sentence saying what the vote did, including dollar amounts and countries when known.
 
 Respond with JSON only:
-{"relevant": true|false, "area": "israel_aid"|"military_aid"|"sanctions"|"use_of_force"|"war_authorization"|"other", "neutral": true|false, "anti_position": "Yea"|"Nay"|null, "significance": "major"|"minor"|null, "severe_interventionist": true|false, "category": "arms_aid"|"war_powers"|"sanctions"|"other", "measure_restricts": true|false, "recipients": ["..."], "topic": "short label", "summary": "..."}"""
+{"relevant": true|false, "area": "israel_aid"|"military_aid"|"sanctions"|"use_of_force"|"war_authorization"|"other", "neutral": true|false, "anti_position": "Yea"|"Nay"|null, "significance": "major"|"minor"|null, "severe_interventionist": true|false, "category": "arms_aid"|"war_powers"|"sanctions"|"other", "measure_restricts": true|false, "sanctions_effect": "imposes"|"eases"|null, "sovereignty_defense": true|false, "defensive_or_lend_lease": true|false, "recipients": ["..."], "topic": "short label", "summary": "..."}"""
 
 AREAS = ("israel_aid", "military_aid", "sanctions", "use_of_force", "war_authorization")
 AREA_LABEL = {"israel_aid": "aid to Israel", "military_aid": "military aid to other countries",
               "sanctions": "sanctions", "use_of_force": "use of force abroad",
               "war_authorization": "war authorizations"}
-JUDGE_VERSION = 6   # bump when the judgment schema changes; older relevant judgments are re-asked
+JUDGE_VERSION = 7   # bump when the judgment schema changes; older relevant judgments are re-asked
 # versions 5 and 6 changed one area each (sanctions; the sovereignty-defense exception for
 # military aid): older judgments outside the areas changed since stay current
-_CHANGED_SINCE = {4: ("sanctions", "military_aid"), 5: ("military_aid",)}
+_CHANGED_SINCE = {4: ("sanctions", "military_aid"), 5: ("sanctions", "military_aid"),
+                  6: ("sanctions", "military_aid")}
 
 
 def _current(j):
@@ -398,6 +402,24 @@ def _sponsor(rec):
     return sid
 
 
+def _apply_rules(j):
+    """Turn the AI's narrow yes/no answers into the tracker's rules, so the direction and the
+    exceptions don't hang on the model getting a compound judgment right in one step."""
+    if j.get("area") == "sanctions" and j.get("sanctions_effect"):
+        # the anti-interventionist side opposes imposing sanctions and supports easing them
+        j["measure_restricts"] = j["sanctions_effect"] == "eases"
+    if j.get("area") == "military_aid" and j.get("sovereignty_defense") and j.get("defensive_or_lend_lease"):
+        j["neutral"] = True                    # the sovereignty-defense exception
+        j["anti_position"] = None
+    return j
+
+
+# a vote whose Yea advances the measure itself (not a motion to table or recommit it)
+_YEA_ADVANCES = re.compile(r"^\s*on (?:passage|the passage|agreeing to the (?:amendment|resolution|conference report)|"
+                           r"motion to suspend the rules and (?:pass|agree)|the (?:amendment|joint resolution|bill|"
+                           r"resolution|concurrent resolution)|the motion to proceed|cloture|the cloture motion)", re.I)
+
+
 def direction_check(rec, j):
     """
     Cross-check the AI's anti side against the record: whoever offered a
@@ -409,6 +431,15 @@ def direction_check(rec, j):
     sid = j.get("sponsor") or _sponsor(rec)
     pos = ((rec.get("positions") or {}).get(sid) or [None])[0] if sid else None
     if pos not in ("Yea", "Nay"):
+        # no sponsor vote to check against: on a straight vote on the measure, Yea is for it
+        if _YEA_ADVANCES.search(rec.get("question") or ""):
+            expected = "Yea" if j["measure_restricts"] else "Nay"
+            if expected != j["anti_position"]:
+                print(f"    ↺ {rec['chamber']}-{rec['year']}-{rec['roll']}: anti side corrected "
+                      f"{j['anti_position']}→{expected} (Yea advances a measure that "
+                      f"{'restricts' if j['measure_restricts'] else 'provides or imposes'})")
+                j["anti_position"] = expected
+                j["direction"] = "corrected_by_question"
         return j
     expected = pos if j["measure_restricts"] else ("Nay" if pos == "Yea" else "Yea")
     j["sponsor"] = sid
@@ -491,10 +522,14 @@ def _judge(rec, judgments, budget_state):
          "area": result.get("area") if result.get("area") in AREAS else "other",
          "neutral": bool(result.get("neutral")),
          "severe_interventionist": bool(result.get("severe_interventionist")),
+         "sanctions_effect": result.get("sanctions_effect") if result.get("sanctions_effect") in ("imposes", "eases") else None,
+         "sovereignty_defense": bool(result.get("sovereignty_defense")),
+         "defensive_or_lend_lease": bool(result.get("defensive_or_lend_lease")),
          "version": JUDGE_VERSION,
          "topic": (result.get("topic") or "")[:80], "summary": (result.get("summary") or "")[:400],
          "sources": (sources or [])[:4], "provider": provider, "grounded": bool(sources),
          "context": rec.get("amendment_purpose", "")[:300], "judged_at": now_iso()}
+    _apply_rules(j)
     if j["relevant"]:
         direction_check(rec, j)
         j["sponsor_check"] = 2
