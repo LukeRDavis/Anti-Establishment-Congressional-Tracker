@@ -23,7 +23,7 @@ from . import votes as V
 
 FIRST = int(os.environ.get("AECT_HISTORY_FROM", "107"))
 OUT_DIR = os.path.join("data", "history")
-VERSION = 8
+VERSION = 9
 URL = "https://voteview.com/static/data/out/{kind}/{ch}{congress}_{kind}.csv"
 CAST = {1: "Yea", 2: "Yea", 3: "Yea", 4: "Nay", 5: "Nay", 6: "Nay"}
 
@@ -244,17 +244,26 @@ def rate(history):
     real breaking vote (anti-interventionist against most of their own party; discharge-petition data
     is not available for past Congresses), and consistent on the anchor area, aid to Israel; the other
     areas are supporting evidence (military aid and sanctions judged country by country)."""
-    record = {}
+    record, anchor_seen = {}, set()
     for c in sorted(history):
+        # a chamber that has not yet held a roll call on the anchor can't be judged on it:
+        # until it has, members there are judged on the old bar (consistent in every area engaged)
+        anchor_seen |= {m.get("chamber") for m in history[c]["members"]
+                        if any(v.get("area") == V.ANCHOR for v in m["votes"])}
         for m in history[c]["members"]:
             rec = record.setdefault(m["bioguide_id"], [])
             rec.extend(v for v in m["votes"] if v.get("area"))
             anti = [v for v in rec if v["anti"]]
             breaking = [v for v in anti if not v.get("party_line")]
             areas = V.area_record(rec)
-            ok = V.consistent(areas)
-            # same bar as today's rule fallback: at least one breaking vote on the anchor itself
-            m["antiArms"] = any(v.get("area") == V.ANCHOR for v in breaking) and ok
+            has_anchor = m.get("chamber") in anchor_seen
+            if has_anchor:
+                ok = V.consistent(areas)
+                # same bar as today's rule fallback: at least one breaking vote on the anchor itself
+                m["antiArms"] = any(v.get("area") == V.ANCHOR for v in breaking) and ok
+            else:
+                ok = bool(anti) and not V.slips(areas)
+                m["antiArms"] = bool(breaking) and ok
             m["antiTier"] = "hard" if m["antiArms"] else None
             m["tier_source"] = "rule:history"
             m["tier_facts"] = {"focus_votes": len(rec), "anti_focus_votes": len(anti),
@@ -264,13 +273,23 @@ def rate(history):
                                 for x in areas.values() if x["anti"])
             anc = areas.get(V.ANCHOR)
             sl = V.slips(areas)
-            m["bottom_line"] = (("Counts as anti-establishment: " + engaged
-                                 + (f"; lower confidence: went back on {', '.join(sl)}" if sl else "")) if m["antiArms"] else
-                                ("Does not count: " + (f"{anc['status']} on {anc['label']}" if anc and anc["anti"] and not ok
-                                 else f"no anti-interventionist vote on {V.AREA_LABEL[V.ANCHOR]}" if anti and not ok
-                                 else f"no anti-interventionist vote on {V.AREA_LABEL[V.ANCHOR]} against most of their own party" if anti
-                                 else "no anti-interventionist vote") + (f" ({engaged})" if engaged else ""))
-                                ) + " by this point. (Rule-based from Voteview roll calls.)"
+            if m["antiArms"]:
+                why = "Counts as anti-establishment: " + engaged + (f"; lower confidence: went back on {', '.join(sl)}" if sl else "")
+            elif not anti:
+                why = "Does not count: no anti-interventionist vote"
+            elif not has_anchor:
+                why = ("Does not count: " + (f"went back to the interventionist side on {', '.join(sl)}" if sl
+                                             else "no anti-interventionist vote against most of their own party"))
+            elif anc and anc["anti"] and not ok:
+                why = f"Does not count: {anc['status']} on {anc['label']}"
+            elif not ok:
+                why = f"Does not count: no anti-interventionist vote on {V.AREA_LABEL[V.ANCHOR]}"
+            else:
+                why = f"Does not count: no anti-interventionist vote on {V.AREA_LABEL[V.ANCHOR]} against most of their own party"
+            m["bottom_line"] = (why + (f" ({engaged})" if engaged and not m["antiArms"] else "") + " by this point."
+                                + ("" if has_anchor else f" No roll call on {V.AREA_LABEL[V.ANCHOR]} had been held in this "
+                                   "chamber yet, so this is judged on consistency in every area engaged.")
+                                + " (Rule-based from Voteview roll calls.)")
     return history
 
 

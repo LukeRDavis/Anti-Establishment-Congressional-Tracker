@@ -411,23 +411,44 @@ Respond with JSON only:
 {{"tier": "hard"|"soft"|"none", "confidence": "high"|"medium"|"low", "confidence_index": 0-100 (how sure you are of THIS verdict given how complete and consistent the record is: 90+ only for a long, unambiguous record), "scope": "focus"|"broad", "prior_office": "congress"|"state_or_local"|"none"|"unknown", "principle_vs_partisanship": "principled"|"mixed"|"partisan"|"unclear", "political_risk": "low"|"medium"|"high", "capital_risk": "low"|"medium"|"high", "bottom_line": "one sentence beginning 'Counts as anti-establishment because' or 'Does not count because'", "writeup": "a full write-up of 5-9 sentences for the public: who they are, what their record and words show in each of the five areas and whether they have been consistent in each, own-party defections and leadership defiance, money and donors, whether it is principle or partisanship, and how likely they are to hold under pressure", "reason": "one or two sentences", "risk_notes": "one sentence", "evidence": [{{"claim": "...", "url": "..."}}]}}"""
 
 
+# the free tiers that answer most often (Groq) cap a request at 7-8k tokens, system prompt and
+# answer included, so the person's record is fitted to a budget rather than sent whole
+PROMPT_BUDGET = int(os.environ.get("AECT_JUDGE_PROMPT_CHARS", "12000"))
+
+
 def _prompt(p, f, text, emp, prev=None):
     seat = f"{p.get('state')}-{p.get('district')}" if p.get("chamber") == "house" else f"{p.get('state')} Senate"
+    focus = sorted([v for v in p.get("vote_record", []) if v.get("focus")], key=lambda v: v["date"])
+    # every vote on the anchor and every breaking vote, then the most recent of the rest
+    key = [v for v in focus if v.get("area") == V.ANCHOR or (v["anti"] and not v.get("party_line"))]
+    rest = [v for v in focus if v not in key]
+    picked = sorted(key[-28:] + rest[-max(0, 34 - len(key[-28:])):], key=lambda v: v["date"])
     votes = [f"{v['date']} [{V.AREA_LABEL.get(v.get('area'), 'other')}] {v['measure']}: {v['position']} "
-             f"({'anti-interventionist' if v['anti'] else 'interventionist'}"
-             f"{'; ' + str(v.get('own_party_share')) + '% of their own party voted the same way' if v.get('own_party_share') is not None else ''}"
-             f") — {v['summary'][:140]}"
-             for v in sorted([v for v in p.get("vote_record", []) if v.get("focus")], key=lambda v: v["date"])]
+             f"({'anti' if v['anti'] else 'interventionist'}"
+             f"{'; own party ' + str(v.get('own_party_share')) + '% same' if v.get('own_party_share') is not None else ''}"
+             f") {v['summary'][:70]}"
+             for v in picked]
+    if len(picked) < len(focus):
+        votes.insert(0, f"({len(focus) - len(picked)} older routine votes left out; the facts count all {len(focus)})")
+    facts = {k: v for k, v in f.items() if k != "areas"}
+    for k in ("bills_on_arms_aid_war", "defection_examples", "discharge_petitions_signed"):
+        if isinstance(facts.get(k), list) and len(facts[k]) > 6:      # long lists: most recent few
+            facts[k] = facts[k][-6:] + [f"(+{len(f[k]) - 6} more)"]
     lines = [f"Person: {p['name']} ({p.get('party')}), {seat}, {'sitting member' if f['incumbent'] else 'candidate'}",
              f"Why screened: {p.get('_screen') or 'marked anti on the focus issue'}",
              f"Primary date: {p.get('primary_date') or 'unknown'} · status: {p.get('ps') or ''}",
-             "Facts: " + json.dumps(f, default=str),
+             "Areas: " + (_area_words(f) or "none engaged"),
+             "Facts: " + json.dumps(facts, default=str, separators=(",", ":")),
              "Counted roll calls (oldest first):\n" + ("\n".join(votes) or "none cast"),
-             "Top donor employers this cycle: " + ("; ".join(emp) or "not available"),
-             "Dossier:\n" + (text or "(no sources found)")]
+             "Top donor employers this cycle: " + ("; ".join(emp[:8]) or "not available")]
     if prev and prev.get("source", "").startswith("ai"):
         lines.append(f"Previous verdict ({(prev.get('judged_at') or prev.get('at') or '')[:10]}, "
                      f"{prev.get('model') or prev.get('source')}): {prev.get('tier')} — {prev.get('bottom_line') or prev.get('reason')}")
+    room = max(1500, PROMPT_BUDGET - sum(len(x) + 2 for x in lines))
+    dossier = text or "(no sources found)"
+    if len(dossier) > room:
+        dossier = dossier[:room].rsplit("\n", 1)[0] + "\n(dossier trimmed to fit)"
+    lines.append("Dossier:\n" + dossier)
     return "\n\n".join(lines)
 
 
