@@ -23,7 +23,7 @@ from . import votes as V
 
 FIRST = int(os.environ.get("AECT_HISTORY_FROM", "107"))
 OUT_DIR = os.path.join("data", "history")
-VERSION = 7
+VERSION = 8
 URL = "https://voteview.com/static/data/out/{kind}/{ch}{congress}_{kind}.csv"
 CAST = {1: "Yea", 2: "Yea", 3: "Yea", 4: "Nay", 5: "Nay", 6: "Nay"}
 
@@ -253,7 +253,8 @@ def rate(history):
             breaking = [v for v in anti if not v.get("party_line")]
             areas = V.area_record(rec)
             ok = V.consistent(areas)
-            m["antiArms"] = bool(breaking) and ok
+            # same bar as today's rule fallback: at least one breaking vote on the anchor itself
+            m["antiArms"] = any(v.get("area") == V.ANCHOR for v in breaking) and ok
             m["antiTier"] = "hard" if m["antiArms"] else None
             m["tier_source"] = "rule:history"
             m["tier_facts"] = {"focus_votes": len(rec), "anti_focus_votes": len(anti),
@@ -267,7 +268,7 @@ def rate(history):
                                  + (f"; lower confidence: went back on {', '.join(sl)}" if sl else "")) if m["antiArms"] else
                                 ("Does not count: " + (f"{anc['status']} on {anc['label']}" if anc and anc["anti"] and not ok
                                  else f"no anti-interventionist vote on {V.AREA_LABEL[V.ANCHOR]}" if anti and not ok
-                                 else "no anti-interventionist vote against most of their own party" if anti
+                                 else f"no anti-interventionist vote on {V.AREA_LABEL[V.ANCHOR]} against most of their own party" if anti
                                  else "no anti-interventionist vote") + (f" ({engaged})" if engaged else ""))
                                 ) + " by this point. (Rule-based from Voteview roll calls.)"
     return history
