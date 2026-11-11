@@ -15,25 +15,21 @@ AECT pipeline v10 — 2026-11-11 · 119th Congress · 2026 cycle
 [1] Current members of Congress
   [roster_house] 433 Representatives + 6 delegates, 2 vacancies (published November 3, 2026)
   [roster_senate] 100 senators (file last updated 2026-11-10T12:29-05:00)
-  [roster_senate] no longer voting (roster file stale): Ben Luján
+    HTTP 403 https://www.senate.gov/legislative/LIS/roll_call_lists/vote_menu_119_2.xml :: <HTML><HEAD> <TITLE>Access Denied</TITLE> </HEAD><BODY> <H1>Access Denied</H1>   You don't have permission to access "http&#58;&#47;&#47;www&#46;senate&#46;gov&
+  ⚡ votes_senate_xml: circuit opened (HTTP 403) — skipping its remaining calls
   [congress_gov] 539 current members
-  [congress_gov] 1 current members in Congress.gov not in roster files
 
 [2] FEC candidates and finance
-  [fec_candidates] 4353 active 2026 House+Senate filers
-  [fec_finance] totals for 3969 filers
+  [fec_candidates] cache fresh
+  [fec_finance] cache fresh
 
 [4c] Trackers
-  [trackaipac] /congress: 1 members, 1 approved
-  [trackaipac] /endorsements: 0 endorsed candidates
-  [rlc] Liberty Index cache fresh
-  [rlc] endorsements: 9 candidates
 
   People universe: 4464 (533 members, 3931 candidates)
 
 [4a] Roll-call votes
-  [votes_house_xml] 2920 House roll calls cached (+3 this run)
-  [votes_senate_voteview] 2556 Senate roll calls indexed from Voteview (+0 topical this run)
+  [votes_house_xml] 2920 House roll calls cached (+0 this run)
+  [votes_senate_voteview] 2557 Senate roll calls indexed from Voteview (+0 topical this run)
   [ai_gemini] models available: gemini-3.8-flash, gemini-3.7-flash, gemini-3.6-flash, gemini-3.5-flash, gemini-3-flash-preview, gemini-2.5-flash
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc.Help
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc.Help
@@ -42,13 +38,296 @@ AECT pipeline v10 — 2026-11-11 · 119th Congress · 2026 cycle
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateCon :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc.Help
     HTTP 404 https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?k :: {   "error": {     "code": 404,     "message": "This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://aistudio.google.com/docs/get-started).",     "status": "NOT_FOUND"   } } 
   [ai_groq] models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
-  [votes_ai_relevance] 912 topical roll calls · 130 judged relevant · 0 awaiting AI judgment
+    ✓ senate-2026-883 HR5334: major — anti=Nay — The bill imposed new sanctions on the Russian Federation.
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 6221, Requested 2624. Please try again in 6.337499999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+    ✓ senate-2026-882 HR5334: minor — anti=Yea — The Senate rejected an amendment that would have removed provisions imposing duties on cou
+  [congress_gov] house-vote fields: ['amendmentAuthor', 'amendmentNumber', 'amendmentType', 'congress', 'identifier', 'legislationNumber', 'legislationType', 'legislationUrl', 'result', 'rollCallNumber', 'sessionNumber', 'sourceDataURL', 'startDate', 'updateDate', 'votePartyTotal', 'voteQuestion', 'voteType']
+  [congress_gov] amendment fields: ['actions', 'amendedBill', 'chamber', 'congress', 'description', 'latestAction', 'number', 'sponsors', 'submittedDate', 'type', 'updateDate']
+    ✓ house-2026-264 H R 8800: minor — anti=Yea — The House voted down an amendment that would have prohibited the use of funds for Ukraine 
+    ✓ house-2026-246 H R 8595: minor — anti=Yea — The House voted on a motion to recommit the National Security, Department of State, and Re
+    ✓ house-2026-244 H R 8595: minor — anti=Yea — The House rejected an amendment to prohibit the use of $2.1 billion in appropriated funds 
+    ✓ house-2026-207 H R 2913: major — anti=Nay — Passed the Ukraine Support Act to provide military and financial assistance to Ukraine.
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on output tokens per minute (OTPM): Limit 1000, Used 61, Requested 1000. Please try again in 3.66s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+    ↺ house-2026-58: anti side corrected Yea→Nay (sponsor L000491 voted Yea)
+    ✓ house-2026-58 H R 1531: major — anti=Nay — The bill passed to impose sanctions on Taiwan for human rights abuses and to support Taiwa
+    ✓ house-2025-257 H R 3838: major — anti=None — Amendment sought to strike foreign aid funding for the Taiwan Security Cooperation Initiat
+    ✓ house-2025-255 H R 3838: major — anti=Yea — Amendment to prohibit U.S. assistance to Ukraine.
+    ✓ house-2025-210 H R 4016: major — anti=Yea — Amendment to prohibit all U.S. assistance to the Lebanese Armed Forces.
+    ↺ house-2025-209: anti side corrected Nay→Yea (sponsor G000596 voted Yea)
+    ✓ house-2025-209 H R 4016: minor — anti=Yea — The amendment sought to strike funds for assistance to Ukraine in H.R. 4016, which was def
+    ✓ house-2025-208 H R 4016: major — anti=Yea — Amendment to strike funding for the armed forces of Jordan.
+    ✓ house-2025-205 H R 4016: major — anti=Yea — Amendment to remove funding for the Taiwan Security Cooperation Initiative, cutting U.S. m
+    ✓ senate-2025-178 HCONRES14: major — anti=None — Amendment to prevent disruption in security assistance to Ukraine; rejected.
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Used 5978, Requested 2629. Please try again in 4.5525s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+    ↺ house-2025-172: anti side corrected Yea→Nay (sponsor J000309 voted Yea)
+    ✓ house-2025-172 H R 1998: minor — anti=Nay — The House passed a bill to impose sanctions on pirates and their supporters who attack U.S
+    ↺ senate-2025-76: anti side corrected Nay→Yea (Yea advances a measure that restricts)
+    ✓ senate-2025-76 SCONRES7: minor — anti=Yea — The Amendment aimed to ease sanctions on Ukraine in response to the ongoing conflict with 
+    ✓ senate-2025-22 HR23: major — anti=Nay — HR23 was a bill to impose sanctions on the International Criminal Court for investigating,
+    ✓ senate-2024-647 SJRES117: minor — anti=None — The motion to proceed to consider S.J.Res. 117, a joint resolution relating to the disappr
+    ✓ house-2024-324 H R 8774: minor — anti=None — The amendment prohibits funding for Ukraine sanctions.
+    ✓ house-2024-322 H R 8771: minor — anti=Yea — The amendment clarifies that no foreign assistance funds in the bill may be made available
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `allam-2-7b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 4618, Requested 1948. Please try again in 5.66s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+  ⚡ ai_groq: circuit opened (every available model failed or is over quota) — skipping its remaining calls
+  [ai_mistral] models available: mistral-large-4, mistral-large-4-0, mistral-medium-latest, mistral-medium
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+  [ai_openrouter] models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/gemma-4-31b-it:free, google/gemma-4-26b-a4b-it:free, nvidia/nemotron-3.5-super-vl:free, openrouter/free
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy_hin
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy_hin
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-26b-a4b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy
+    ✓ house-2024-317 H R 8771: major — anti=Yea — The amendment sought to prohibit funds from being provided to the Lebanese Armed Forces.
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-26b-a4b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-26b-a4b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy
+    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, mode
+    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, mode
+    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, mode
+    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, mode
+    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateCon :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, mode
+    HTTP 404 https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?k :: {   "error": {     "code": 404,     "message": "This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://aistudio.google.com/docs/get-started).",     "status": "NOT_FOUND"   } } 
+  ⚡ ai_gemini: circuit opened (every available model is over quota or retired) — skipping its remaining calls
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    ✓ house-2024-140 H R 6323: major — anti=Nay — The House passed H.R. 6323, the Iran Counterterrorism Act, imposing new sanctions on Iran.
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day-high-balance. ","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"1000","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1794441600000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model daily limit.","provider_name":null,"previo
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day-high-balance. ","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"1000","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1794441600000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model daily limit.","provider_name":null}},"user
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day-high-balance. ","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"1000","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1794441600000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model daily limit.","provider_name":null}},"user
+  ⚡ ai_openrouter: circuit opened (every available model failed or is over quota) — skipping its remaining calls
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+  [votes_ai_relevance] 912 topical roll calls · 128 judged relevant · 56 awaiting AI judgment — web-search AI unavailable; judging only votes with a recorded description
 
 [3] General information
   [primary_calendar] cache fresh
   ⚡ ballotpedia: circuit opened (only empty responses (blocked for this host)) — skipping its remaining calls
   [enrichment] refreshed 250/250 this run · 1548/4464 people have a bio
-  [ballotpedia] outcomes {'no_page': 17} · probes: 200 0B '' https://ballotpedia.org/Matthew_Rains | 200 0B '' https://ballotpedia.org/Madison_Sheahan | 200 0B '' https://ballotpedia.org/Sarah_Zabel | 200 0B '' https://ballotpedia.org/Ammie_Akin | 200 0B '' https://ballotpedia.org/Nick_Pyati | 200 0B '' https://ballotpedia.org/Caroline_Shinkle
+  [ballotpedia] outcomes {'no_page': 17} · probes: 200 0B '' https://ballotpedia.org/Bajun_Mavalwalla | 200 0B '' https://ballotpedia.org/Pete_Barlow | 200 0B '' https://ballotpedia.org/Brenton_Awa | 200 0B '' https://ballotpedia.org/Ben_Luj%C3%A1n | 200 0B '' https://ballotpedia.org/Chris_Espinosa | 200 0B '' https://ballotpedia.org/Lauren_Pena
   [wikipedia_results] 85 state election pages (0 refreshed) · 1267 result boxes
   [poll_closes] cached
   [poll_closes] cached
@@ -328,170 +607,177 @@ AECT pipeline v10 — 2026-11-11 · 119th Congress · 2026 cycle
   [poll_closes] cached
 
 [4b] Candidate positions (AI research)
-  [fec_websites] looked up 1 committees · 724 campaign websites known
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/
-  ⚡ ai_gemini: circuit opened (every available model is over quota or retired) — skipping its remaining calls
-    HTTP 403 https://www.rajaforil.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.natemorris.com/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://www,shawnforgeorgia.com/
-    URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1018)> :: https://marklambforcongress.com/
-    URLError: <urlopen error [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1018)> :: https://www.danforusa.com/
-    RemoteDisconnected: Remote end closed connection without response :: https://amyroma.com/
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://www.alanpardee.com/
-    URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1018)> :: https://www.gillfornj.com/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.mandelforcongress.us/
-    HTTP 520 https://www.jenkinsforfl.com/ :: error code: 520 
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.erbeckforohio.com/
-    HTTP 502 https://www.aaronforny23.com/ :: <html> <head><title>502 Bad Gateway</title></head> <body> <center><h1>502 Bad Gateway</h1></center> <hr><center>nginx</center> </body> </html> 
-    RemoteDisconnected: Remote end closed connection without response :: https://micahqjones.com/
-    URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'www.meganorourkeforcongress.com'. (_ssl.c:1018)> :: https://www.meganorourkeforcongress.com/
-    URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'leejohnsonforsc.com'. (_ssl.c:1018)> :: https://leejohnsonforsc.com/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.danformaine.com/
-    URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1018)> :: https://ehrforcongress.us/
-    URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1018)> :: https://www.alexhawkinsforcongress.com/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.raymondesmithjr.com/
-    URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://rickjakious.com/
-    URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1018)> :: https://joelforkentucky.com/
-    HTTP 520 https://rondakennedy.com/ :: error code: 520 
-    URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://votegeorgeforcongress.com/
-    RemoteDisconnected: Remote end closed connection without response :: https://vincentmatriscianoforcongress.com/
-    URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://voteanna4congress.com/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.tonyguyforcongress.com/
-    URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1018)> :: https://joshcowenmi.com/
-    URLError: <urlopen error [Errno 111] Connection refused> :: https://blau4congress.com/
-    URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1018)> :: https://www.katherinealeman.com/
-    RemoteDisconnected: Remote end closed connection without response :: https://bradmeyer.org/
-    URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1018)> :: https://timmyersforcongress.com/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://vivioforcongress.com/
-    URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://dalourny.nyc/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.drkednermaximeforcongress.com/
-    HTTP 502 https://www.mariajukicforcongress.com/ :: <html> <head><title>502 Bad Gateway</title></head> <body> <center><h1>502 Bad Gateway</h1></center> <hr><center>nginx</center> </body> </html> 
-    HTTP 301 https://maryjoforcongress.com/ :: <!DOCTYPE html> <html style="height:100%"> <head> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <title> 301 Moved Perma
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.carlosmooref4ga.com/
-    URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1018)> :: https://moedavis.com/
-    HTTP 403 https://adeleforcongress.com/ :: <!DOCTYPE html> <html>     <iframe src="https://cloudways-static-content.s3.us-east-1.amazonaws.com/error_page/maintenance-domain-mapping.html" frameborder="0" 
-    URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1018)> :: https://colecarter2026.com/
-    URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'jeblittleforsenate.com'. (_ssl.c:1018)> :: https://jeblittleforsenate.com/
-    HTTP 403 https://www.stokerfortexas.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
-    URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'bobbykhanforcongress.com'. (_ssl.c:1018)> :: https://bobbykhanforcongress.com/
-    URLError: <urlopen error timed out> :: https://scottforussenate.com/
-    HTTP 403 https://www.troymcghie.com/ :: <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"> <html><head> <title>403 Forbidden</title> </head><body> <h1>Forbidden</h1> <p>You don't have permission to ac
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://johnmcbride4congress.com/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.yorkformn.com/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://votekd4c.com/
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.jonahschulzforcongress.com
-    URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://votehutch.nyc
-  [ai_positions] researched 0 this run (no_source: 1834) · 2685 total · 24 with cited anti-interventionist positions
+  [fec_websites] looked up 0 committees · 724 campaign websites known
+  [ai_positions] researched 0 this run (none) · 2685 total · 24 with cited anti-interventionist positions
 
 [4d] Outside spending
-  [fec_outside_spending] refreshed 136, 458 candidates with outside-spending records
+  [fec_outside_spending] refreshed 63, 458 candidates with outside-spending records
 
 [4e'] House discharge petitions (signers, from the Clerk)
   [discharge_petitions] cached
 
 [4e] Reliable vs soft anti-establishment (AI over scraped dossiers)
-    HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 11435, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-    HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 12076, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 189603, Requested 11419. Please try again in 7m21.504s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-    HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Please reduce the length of the messages or completion.","type":"invalid_request_error","param":"messages"}} 
-  [ai_mistral] models available: mistral-large-4, mistral-large-4-0, mistral-medium-latest, mistral-medium
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-  [ai_openrouter] models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/gemma-4-31b-it:free, google/gemma-4-26b-a4b-it:free, nvidia/nemotron-3.5-super-vl:free, openrouter/free
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy_hin
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy_hin
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-26b-a4b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-26b-a4b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 190199, Requested 10176. Please try again in 2m42s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-    HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 10687, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 12705, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 12294, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 10430, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 11409, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 12058, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 11516, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 9243, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 9608, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 8243, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 11394, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 11458, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 11696, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 11724, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 7923, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 12248, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Requested 11749, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-  [establishment_tiers] 9 hard · 173 soft · judged 18 with AI this run · verdicts from AI 18, rule 164 · AI has reviewed 2959 of 2960 members and running candidates (624 with signals)
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+  [establishment_tiers] 9 hard · 236 soft · judged 40 with AI this run · verdicts from AI 19, rule 226 · AI has reviewed 2960 of 2960 members and running candidates (628 with signals)
 
 [5] Prediction markets
   [market_polymarket] 800 catalog pages scanned · 76 open congressional markets
@@ -504,10 +790,10 @@ AECT pipeline v10 — 2026-11-11 · 119th Congress · 2026 cycle
   [poll_closes] cached
   [results_cross_check] called by both 168 · Wikipedia only 106 · markets only 669 · conflicting 6
   [poll_closes] cached
-  [election_night] 109 races frozen at poll close · 106 called
+  [election_night] 156 races frozen at poll close · 153 called
 
 [6] Committee rosters
-  [committees] 10 committees for planks power, anti_arms
+  [committees] cached
 
 [7] Electoral reform (alternative voting systems)
   [reform] cached
@@ -516,25 +802,24 @@ AECT pipeline v10 — 2026-11-11 · 119th Congress · 2026 cycle
 STREAM                       STATUS     COUNT  NOTES / ERRORS
 ────────────────────────────────────────────────────────────────────────
 ai_gemini                    —              0  HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "er
-ai_groq                      —              0  HTTP 413 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Request too large for model `
+ai_groq                      —              0  HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model 
 ai_mistral                   —              0  HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","ty
 ai_openrouter                —              0  HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code"
-ai_positions                 OK          2685  researched 0 this run (no_source: 1834) · 2685 total · 24 with cited anti-interventionist positions
+ai_positions                 OK          2685  researched 0 this run (none) · 2685 total · 24 with cited anti-interventionist positions
 ballotpedia                  FAIL           0  circuit opened: only empty responses (blocked for this host)
-campaign_sites               —              0  URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/
-committees                   OK            10  10 committees for planks power, anti_arms
-congress_gov                 OK           539  1 current members in Congress.gov not in roster files
+committees                   OK            10  cached
+congress_gov                 OK           539  amendment fields: ['actions', 'amendedBill', 'chamber', 'congress', 'description', 'latestAction', 'number', '
 discharge_petitions          OK            60  cached
 dossier_grokipedia           —              0  
 dossier_news_google          —              0  
 dossier_wikipedia            —              0  
-election_night               OK           138  109 races frozen at poll close · 106 called
+election_night               OK           197  156 races frozen at poll close · 153 called
 enrichment                   OK          1548  refreshed 250/250 this run · 1548/4464 people have a bio
-establishment_tiers          OK             9  9 hard · 173 soft · judged 18 with AI this run · verdicts from AI 18, rule 164 · AI has reviewed 2959 of 2960 
-fec_candidates               OK          4353  4353 active 2026 House+Senate filers
-fec_finance                  OK          3969  totals for 3969 filers
-fec_outside_spending         OK           458  refreshed 136, 458 candidates with outside-spending records
-fec_websites                 OK           724  looked up 1 committees · 724 campaign websites known
+establishment_tiers          OK             9  9 hard · 236 soft · judged 40 with AI this run · verdicts from AI 19, rule 226 · AI has reviewed 2960 of 2960 
+fec_candidates               OK          4353  cache fresh
+fec_finance                  OK          3969  cache fresh
+fec_outside_spending         OK           458  refreshed 63, 458 candidates with outside-spending records
+fec_websites                 OK           724  looked up 0 committees · 724 campaign websites known
 grokipedia                   —              0  
 market_kalshi                OK         23258  40 pages · 23258 political markets
 market_kalshi_races          OK           291  481 House/Senate race events
@@ -548,27 +833,27 @@ poll_closes                  OK            51  cached
 primary_calendar             OK            50  cache fresh
 reform                       OK            17  cached
 results_cross_check          OK           949  called by both 168 · Wikipedia only 106 · markets only 669 · conflicting 6
-rlc                          OK           283  endorsements: 9 candidates
+rlc                          OK           283  
 roster_house                 OK           433  433 Representatives + 6 delegates, 2 vacancies (published November 3, 2026)
-roster_senate                OK           100  no longer voting (roster file stale): Ben Luján
-trackaipac                   OK             1  /endorsements: 0 endorsed candidates
-votes_ai_relevance           OK           130  912 topical roll calls · 130 judged relevant · 0 awaiting AI judgment
+roster_senate                OK           100  100 senators (file last updated 2026-11-10T12:29-05:00)
+trackaipac                   OK             0  
+votes_ai_relevance           OK           128  912 topical roll calls · 128 judged relevant · 56 awaiting AI judgment — web-search AI unavailable; judging on
 votes_house_xml              OK          2920  2026 roll 320: no <vote-metadata> (root <xml>)
-votes_senate_voteview        OK          2556  2556 Senate roll calls indexed from Voteview (+0 topical this run)
-votes_senate_xml             —              0  
+votes_senate_voteview        OK          2557  2557 Senate roll calls indexed from Voteview (+0 topical this run)
+votes_senate_xml             —              0  HTTP 403 https://www.senate.gov/legislative/LIS/roll_call_lists/vote_menu_119_2.xml :: <HTML><HEAD> <TITLE>Acc
 wikipedia                    —              0  
 wikipedia_results            OK            85  85 state election pages (0 refreshed) · 1267 result boxes
 ════════════════════════════════════════════════════════════════════════
 {
  "members": 533,
- "anti_members": 176,
+ "anti_members": 239,
  "anti_by_party": {
   "R": 3,
-  "D": 171,
+  "D": 234,
   "I": 2
  },
  "anti_candidates": 8,
- "relevant_votes": 130,
+ "relevant_votes": 128,
  "odds": 19,
  "history_events_added": 0
 }
