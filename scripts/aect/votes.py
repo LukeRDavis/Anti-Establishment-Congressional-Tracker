@@ -34,9 +34,18 @@ TOPIC = re.compile(
     r"foreign military (?:sale|financing)|arms sale|proposed sale|disapproval|"
     r"iron dome|david'?s sling|arrow (?:missile|program)|qualitative military edge|"
     r"sanction|embargo|export control|declaration of war|authorization for (?:the )?use", re.I)
-_TOPIC_ID = __import__("hashlib").sha1(TOPIC.pattern.encode()).hexdigest()[:10]
+# the suffix changes whenever candidate selection changes, so finished Congresses are re-indexed
+_TOPIC_ID = __import__("hashlib").sha1(TOPIC.pattern.encode()).hexdigest()[:10] + "-s2"
+_PASS_S = re.compile(r"passage|pass the bill|conference report|concur|cloture|motion to proceed|override", re.I)
+_SPEND_S = re.compile(r"appropriat|supplemental|authoriz", re.I)
 # votes the v3 judge set aside that may be sanctions votes, which it was not asked about
 _RECHECK = re.compile(r"sanction|embargo", re.I)
+# older "not relevant" verdicts on votes whose own text is about an arms sale, export or transfer
+# (disapproval resolutions, often decided on a procedural motion) are asked again under the
+# current rules: earlier versions waved many of them off as "procedural"
+_RECHECK_ARMS = re.compile(r"disapprov\w*[^.]{0,160}\b(?:sale|export|license|transfer)|"
+                           r"\b(?:arms|weapons?|munitions?|defense articles?|military equipment)\s+"
+                           r"(?:sales?|exports?|transfers?)\b", re.I)
 
 _VOTE_NORM = {"aye": "Yea", "yea": "Yea", "yes": "Yea", "no": "Nay", "nay": "Nay",
               "present": "Present", "not voting": "Not Voting"}
@@ -300,13 +309,22 @@ def _sync_senate_voteview(congress, cache):
         n = int(float(r.get("rollnumber") or 0))
         text = " ".join(r.get(f, "") for f in ("bill_number", "vote_question", "vote_desc", "dtl_desc"))
         old = sc["rolls"].get(str(n))
-        if not n or (old and (old.get("candidate") or not TOPIC.search(text))):
+        # standalone aid bills often carry only a generic title ("making emergency supplemental
+        # appropriations..."): for votes on passing or advancing a spending bill, read the bill's
+        # own title and summary from Congress.gov
+        ctx = ""
+        spend = _PASS_S.search(r.get("vote_question", "")) and _SPEND_S.search(text)
+        if not n or (old and (old.get("candidate") or not (TOPIC.search(text) or spend))):
             continue
+        if spend and not TOPIC.search(text):
+            from .past import _bill_context
+            ctx = _bill_context(congress, r.get("bill_number", "")) or ""
+            text += " " + ctx
         rec = {"chamber": "senate", "congress": congress, "roll": n,
                "year": int((r.get("date") or "0")[:4] or 0), "date": r.get("date", ""),
                "session": r.get("session"), "legis": r.get("bill_number", ""),
                "question": r.get("vote_question", ""),
-               "desc": (r.get("vote_desc") or r.get("dtl_desc") or "")[:400],
+               "desc": ((r.get("vote_desc") or r.get("dtl_desc") or "")[:400] + (" | " + ctx if ctx else ""))[:1900],
                "result": r.get("vote_result", ""), "candidate": bool(TOPIC.search(text)),
                "url": (f"https://www.senate.gov/legislative/LIS/roll_call_votes/vote{congress}{r.get('session')}/"
                        f"vote_{congress}_{r.get('session')}_{int(float(r.get('clerk_rollnumber') or n)):05d}.htm")}
@@ -478,8 +496,13 @@ def _judge(rec, judgments, budget_state):
     old = judgments.get(key)
     if old and old.get("relevant") and old.get("direction") and old.get("sponsor_check") != 2:
         _recheck_direction(rec, old)
-    if old and (_current(old) or (not old.get("relevant") and not _RECHECK.search(
-            " ".join(str(rec.get(x, "")) for x in ("legis", "question", "desc")) + " " + old.get("summary", "")))):
+    own = " ".join(str(rec.get(x, "")) for x in ("legis", "question", "desc"))
+    # an arms-sale vote filed under sanctions is a misreading: ask once more
+    misfiled = bool(old and old.get("relevant") and old.get("area") == "sanctions"
+                    and _RECHECK_ARMS.search(own) and not old.get("arms_rechecked"))
+    if old and not misfiled and (_current(old) or (not old.get("relevant")
+                                  and not _RECHECK.search(own + " " + old.get("summary", ""))
+                                  and not _RECHECK_ARMS.search(own))):
         return old
     if budget_state["left"] <= 0 or not ai.available_any():
         budget_state["pending"] += 1
@@ -530,6 +553,8 @@ def _judge(rec, judgments, budget_state):
          "sources": (sources or [])[:4], "provider": provider, "grounded": bool(sources),
          "context": rec.get("amendment_purpose", "")[:300], "judged_at": now_iso()}
     _apply_rules(j)
+    if _RECHECK_ARMS.search(" ".join(str(rec.get(x, "")) for x in ("legis", "question", "desc"))):
+        j["arms_rechecked"] = True
     if j["relevant"]:
         direction_check(rec, j)
         j["sponsor_check"] = 2
@@ -558,6 +583,9 @@ def sync_votes():
         fetched_s += _sync_senate_voteview(c, senate_cache)
     save_cache("votes_house", house_cache)
     save_cache("votes_senate", senate_cache)
+    from . import past
+    if past._BILLS is not None:
+        save_cache("bill_context", past._BILLS)
 
     all_rolls = []
     for yc in house_cache.values():
