@@ -1,4 +1,4 @@
-AECT pipeline v10 — 2026-11-11 · 119th Congress · 2026 cycle
+AECT pipeline v10 — 2026-11-12 · 119th Congress · 2026 cycle
 
 [Keys]
   CONGRESS_KEY         present
@@ -36,7 +36,7 @@ AECT pipeline v10 — 2026-11-11 · 119th Congress · 2026 cycle
   [primary_calendar] cache fresh
   ⚡ ballotpedia: circuit opened (only empty responses (blocked for this host)) — skipping its remaining calls
   [enrichment] refreshed 250/250 this run · 1549/4464 people have a bio
-  [ballotpedia] outcomes {'no_page': 16} · probes: 200 0B '' ttps://ballotpedia.org/Alexander_Nicholi | 200 0B '' https://ballotpedia.org/Isaiah_Martin | 200 0B '' https://ballotpedia.org/Houston_Brignano | 200 0B '' https://ballotpedia.org/Bill_Brough | 200 0B '' https://ballotpedia.org/John_Wick | 200 0B '' https://ballotpedia.org/Joshua_Ferguson
+  [ballotpedia] outcomes {'no_page': 17} · probes: 200 0B '' https://ballotpedia.org/Kat_Cammack | 200 0B '' https://ballotpedia.org/Mike_Rogers | 200 0B '' https://ballotpedia.org/Barry_Moore | 200 0B '' //ballotpedia.org/Jes%C3%BAs_Garc%C3%ADa | 200 0B '' https://ballotpedia.org/Shomari_Figures | 200 0B '' https://ballotpedia.org/Thomas_Massie
   [wikipedia_results] 85 state election pages (0 refreshed) · 1267 result boxes
   [poll_closes] cached
   [poll_closes] cached
@@ -325,7 +325,7 @@ AECT pipeline v10 — 2026-11-11 · 119th Congress · 2026 cycle
   [poll_closes] cached
 
 [4b] Candidate positions (AI research)
-  [fec_websites] looked up 1 committees · 726 campaign websites known
+  [fec_websites] looked up 0 committees · 726 campaign websites known
   [ai_gemini] models available: gemini-3.8-flash, gemini-3.7-flash, gemini-3.6-flash, gemini-3.5-flash, gemini-3-flash-preview, gemini-2.5-flash
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc.Help
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc.Help
@@ -336,9 +336,10 @@ AECT pipeline v10 — 2026-11-11 · 119th Congress · 2026 cycle
   ⚡ ai_gemini: circuit opened (every available model is over quota or retired) — skipping its remaining calls
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/
     HTTP 403 https://www.rajaforil.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
-    URLError: <urlopen error [SSL: TLSV1_UNRECOGNIZED_NAME] tlsv1 unrecognized name (_ssl.c:1018)> :: https://www.natemorris.com/
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.natemorris.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www,shawnforgeorgia.com/
     URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1018)> :: https://marklambforcongress.com/
+    TimeoutError: The read operation timed out :: https://nadiaforcongress.com/
     URLError: <urlopen error [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1018)> :: https://www.danforusa.com/
     RemoteDisconnected: Remote end closed connection without response :: https://amyroma.com/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://www.alanpardee.com/
@@ -381,14 +382,12 @@ AECT pipeline v10 — 2026-11-11 · 119th Congress · 2026 cycle
     HTTP 403 https://www.troymcghie.com/ :: <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"> <html><head> <title>403 Forbidden</title> </head><body> <h1>Forbidden</h1> <p>You don't have permission to ac
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://johnmcbride4congress.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.yorkformn.com/
-  [ai_groq] models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199202, Requested 1767. Please try again in 6m58.608s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://votekd4c.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.jonahschulzforcongress.com
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://votehutch.nyc
     URLError: <urlopen error [Errno 111] Connection refused> :: https://electericalee.com
-  [ai_positions] researched 2 this run (no_source: 1829, campaign_site_text: 1, wikipedia_text: 1) · 2685 total · 24 with cited anti-interventionist positions
+  [ai_positions] researched 0 this run (no_source: 1829) · 2685 total · 24 with cited anti-interventionist positions
 
 [4d] Outside spending
   [fec_outside_spending] refreshed 0, 458 candidates with outside-spending records
@@ -397,266 +396,138 @@ AECT pipeline v10 — 2026-11-11 · 119th Congress · 2026 cycle
   [discharge_petitions] cached
 
 [4e] Reliable vs soft anti-establishment (AI over scraped dossiers)
-    HTTP 503 https://news.google.com/rss/search?q=%22Thomas+Massie%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US% :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Thomas+Massie%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+ :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Summer+Lee%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3Ae :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Summer+Lee%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+Fir :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on input tokens per minute (ITPM): Limit 7000, Used 3167, Requested 5196. Please try again in 11.682857142s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 196972, Requested 5676. Please try again in 19m3.936s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+  [ai_groq] models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 196539, Requested 5892. Please try again in 17m30.192s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 196987, Requested 5802. Please try again in 20m4.848s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Please reduce the length of the messages or completion.","type":"invalid_request_error","param":"messages","code":"context_length_exceeded"}} 
-  ⚡ ai_groq: circuit opened (every available model failed or is over quota) — skipping its remaining calls
   [ai_mistral] models available: mistral-large-4, mistral-large-4-0, mistral-medium-latest, mistral-medium
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
   [ai_openrouter] models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/gemma-4-31b-it:free, google/gemma-4-26b-a4b-it:free, nvidia/nemotron-3.5-super-vl:free, openrouter/free
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day-high-balance. ","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"1000","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1794441600000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model daily limit.","provider_name":null}},"user
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day-high-balance. ","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"1000","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1794441600000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model daily limit.","provider_name":null}},"user
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day-high-balance. ","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"1000","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1794441600000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model daily limit.","provider_name":null}},"user
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day-high-balance. ","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"1000","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1794441600000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model daily limit.","provider_name":null}},"user
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day-high-balance. ","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"1000","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1794441600000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model daily limit.","provider_name":null,"previo
-  ⚡ ai_openrouter: circuit opened (every available model failed or is over quota) — skipping its remaining calls
-    HTTP 503 https://news.google.com/rss/search?q=%22Al+Green%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3Aen :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Al+Green%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+First :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy_hin
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy_hin
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-26b-a4b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-26b-a4b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198508, Requested 6281. Please try again in 34m28.848s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+  ⚡ ai_groq: circuit opened (every available model failed or is over quota) — skipping its remaining calls
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Sylvia+Garcia%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US% :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Sylvia+Garcia%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+ :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Jasmine+Crockett%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid= :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Jasmine+Crockett%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22Ameri :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Greg+Casar%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3Ae :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Greg+Casar%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+Fir :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Pramila+Jayapal%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=U :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Pramila+Jayapal%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22Americ :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Andy+Kim%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3Aen :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Andy+Kim%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+First :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Jeff+Merkley%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3 :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Jeff+Merkley%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+F :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Peter+Welch%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3A :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Peter+Welch%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+Fi :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Yassamin+Ansari%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=U :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Yassamin+Ansari%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22Americ :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Ami+Bera%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3Aen :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Ami+Bera%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+First :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Doris+Matsui%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3 :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Doris+Matsui%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+F :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Josh+Harder%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3A :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Josh+Harder%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+Fi :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Mark+DeSaulnier%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=U :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Mark+DeSaulnier%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22Americ :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Nancy+Pelosi%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3 :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Nancy+Pelosi%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+F :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Lateefah+Simon%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Lateefah+Simon%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Kevin+Mullin%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3 :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Kevin+Mullin%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+F :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Ro+Khanna%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3Aen :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Ro+Khanna%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+Firs :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Zoe+Lofgren%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3A :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Zoe+Lofgren%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+Fi :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Salud+Carbajal%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Salud+Carbajal%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Raul+Ruiz%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3Aen :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Raul+Ruiz%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+Firs :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Julia+Brownley%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Julia+Brownley%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Judy+Chu%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3Aen :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Judy+Chu%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+First :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Luz+Rivas%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3Aen :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Luz+Rivas%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+Firs :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Laura+Friedman%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Laura+Friedman%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Jimmy+Gomez%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3A :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Jimmy+Gomez%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+Fi :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Sydney+Kamlager-Dove%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&c :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Sydney+Kamlager-Dove%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22A :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Mark+Takano%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3A :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Mark+Takano%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+Fi :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Robert+Garcia%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US% :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Robert+Garcia%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+ :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Maxine+Waters%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US% :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Maxine+Waters%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+ :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Nanette+Barrag%C3%A1n%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US& :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Nanette+Barrag%C3%A1n%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22 :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Derek+Tran%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3Ae :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Derek+Tran%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+Fir :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Dave+Min%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3Aen :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Dave+Min%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+First :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Sara+Jacobs%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3A :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Sara+Jacobs%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+Fi :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Diana+DeGette%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US% :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Diana+DeGette%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+ :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Joe+Neguse%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3Ae :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Joe+Neguse%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+Fir :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Jason+Crow%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3Ae :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Jason+Crow%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+Fir :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22Brittany+Pettersen%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&cei :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22Brittany+Pettersen%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22Ame :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 503 https://news.google.com/rss/search?q=%22John+Larson%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US&ceid=US%3A :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 503 https://news.google.com/rss/search?q=%22John+Larson%22+%28war+OR+%22foreign+aid%22+OR+Ukraine+OR+%22America+Fi :: <html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"/><title>Sorry...</title><style> body { font-family: verdana, arial, sans-serif; b
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-  [establishment_tiers] 25 hard · 157 soft · judged 40 with AI this run · verdicts from AI 4, rule 178 · AI has reviewed 2955 of 2956 members and running candidates (628 with signals)
+  [establishment_tiers] 24 hard · 158 soft · judged 28 with AI this run · verdicts from AI 23, rule 159 · AI has reviewed 2955 of 2956 members and running candidates (627 with signals)
 
 [5] Prediction markets
-  [market_polymarket] 800 catalog pages scanned · 74 open congressional markets
-  [market_kalshi_races] 479 House/Senate race events
-  [market_kalshi] 40 pages · 23209 political markets
-  [market_predictit] 534 live contracts
-  [markets] 24104 market outcomes loaded · 18 tracked people matched
-  [market_kalshi_settled] 751 settled race outcomes
-  [market_settlements] 886 candidates called by settled markets, 8 with markets disagreeing
+  [market_polymarket] 800 catalog pages scanned · 70 open congressional markets
+  [market_kalshi_races] 478 House/Senate race events
+  [market_kalshi] 40 pages · 23203 political markets
+  [market_predictit] 544 live contracts
+  [markets] 24102 market outcomes loaded · 16 tracked people matched
+  [market_kalshi_settled] 753 settled race outcomes
+  [market_settlements] 888 candidates called by settled markets, 8 with markets disagreeing
   [poll_closes] cached
-  [results_cross_check] called by both 175 · Wikipedia only 108 · markets only 668 · conflicting 6
+  [results_cross_check] called by both 177 · Wikipedia only 106 · markets only 668 · conflicting 6
   [poll_closes] cached
   [election_night] 109 races frozen at poll close · 106 called
 
@@ -672,37 +543,36 @@ STREAM                       STATUS     COUNT  NOTES / ERRORS
 ai_gemini                    —              0  HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "er
 ai_groq                      —              0  HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model 
 ai_mistral                   —              0  HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","ty
-ai_openrouter                —              0  HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-model
-ai_positions                 OK          2685  researched 2 this run (no_source: 1829, campaign_site_text: 1, wikipedia_text: 1) · 2685 total · 24 with cited
+ai_openrouter                —              0  HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code"
+ai_positions                 OK          2685  researched 0 this run (no_source: 1829) · 2685 total · 24 with cited anti-interventionist positions
 ballotpedia                  FAIL           0  circuit opened: only empty responses (blocked for this host)
 campaign_sites               —              0  URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/
 committees                   OK            10  cached
 congress_gov                 OK           539  1 current members in Congress.gov not in roster files
 discharge_petitions          OK            60  cached
 dossier_grokipedia           —              0  
-dossier_news_bing            —              0  
-dossier_news_google          —              0  HTTP 503 https://news.google.com/rss/search?q=%22Thomas+Massie%22+%28Israel+OR+Gaza+OR+AIPAC%29&hl=en-US&gl=US
+dossier_news_google          —              0  
 dossier_wikipedia            —              0  
 election_night               OK           138  109 races frozen at poll close · 106 called
 enrichment                   OK          1549  refreshed 250/250 this run · 1549/4464 people have a bio
-establishment_tiers          OK            25  25 hard · 157 soft · judged 40 with AI this run · verdicts from AI 4, rule 178 · AI has reviewed 2955 of 2956 
+establishment_tiers          OK            24  24 hard · 158 soft · judged 28 with AI this run · verdicts from AI 23, rule 159 · AI has reviewed 2955 of 2956
 fec_candidates               OK          4353  cache fresh
 fec_finance                  OK          3997  cache fresh
 fec_outside_spending         OK           458  refreshed 0, 458 candidates with outside-spending records
-fec_websites                 OK           726  looked up 1 committees · 726 campaign websites known
+fec_websites                 OK           726  looked up 0 committees · 726 campaign websites known
 grokipedia                   —              0  
-market_kalshi                OK         23209  40 pages · 23209 political markets
-market_kalshi_races          OK           287  479 House/Senate race events
+market_kalshi                OK         23203  40 pages · 23203 political markets
+market_kalshi_races          OK           285  478 House/Senate race events
 market_kalshi_senate         —              0  
-market_kalshi_settled        OK           751  751 settled race outcomes
-market_polymarket            OK            74  800 catalog pages scanned · 74 open congressional markets
-market_predictit             OK           534  534 live contracts
-market_settlements           OK           894  886 candidates called by settled markets, 8 with markets disagreeing
-markets                      OK            18  24104 market outcomes loaded · 18 tracked people matched
+market_kalshi_settled        OK           753  753 settled race outcomes
+market_polymarket            OK            70  800 catalog pages scanned · 70 open congressional markets
+market_predictit             OK           544  544 live contracts
+market_settlements           OK           896  888 candidates called by settled markets, 8 with markets disagreeing
+markets                      OK            16  24102 market outcomes loaded · 16 tracked people matched
 poll_closes                  OK            51  cached
 primary_calendar             OK            50  cache fresh
 reform                       OK            17  cached
-results_cross_check          OK           957  called by both 175 · Wikipedia only 108 · markets only 668 · conflicting 6
+results_cross_check          OK           957  called by both 177 · Wikipedia only 106 · markets only 668 · conflicting 6
 rlc                          OK           283  
 roster_house                 OK           433  433 Representatives + 6 delegates, 2 vacancies (published November 3, 2026)
 roster_senate                OK           100  no longer voting (roster file stale): Ben Luján
@@ -724,6 +594,6 @@ wikipedia_results            OK            85  85 state election pages (0 refres
  },
  "anti_candidates": 8,
  "relevant_votes": 126,
- "odds": 18,
- "history_events_added": 0
+ "odds": 16,
+ "history_events_added": 1
 }
