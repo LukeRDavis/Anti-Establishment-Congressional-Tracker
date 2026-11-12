@@ -35,7 +35,7 @@ TOPIC = re.compile(
     r"iron dome|david'?s sling|arrow (?:missile|program)|qualitative military edge|"
     r"sanction|embargo|export control|declaration of war|authorization for (?:the )?use", re.I)
 # the suffix changes whenever candidate selection changes, so finished Congresses are re-indexed
-_TOPIC_ID = __import__("hashlib").sha1(TOPIC.pattern.encode()).hexdigest()[:10] + "-s2"
+_TOPIC_ID = __import__("hashlib").sha1(TOPIC.pattern.encode()).hexdigest()[:10] + "-s3"
 _PASS_S = re.compile(r"passage|pass the bill|conference report|concur|cloture|motion to proceed|override", re.I)
 _SPEND_S = re.compile(r"appropriat|supplemental|authoriz", re.I)
 # votes the v3 judge set aside that may be sanctions votes, which it was not asked about
@@ -309,11 +309,12 @@ def _sync_senate_voteview(congress, cache):
         n = int(float(r.get("rollnumber") or 0))
         text = " ".join(r.get(f, "") for f in ("bill_number", "vote_question", "vote_desc", "dtl_desc"))
         old = sc["rolls"].get(str(n))
-        # standalone aid bills often carry only a generic title ("making emergency supplemental
-        # appropriations..."): for votes on passing or advancing a spending bill, read the bill's
-        # own title and summary from Congress.gov
+        # aid bills often carry a generic title ("making emergency supplemental appropriations...")
+        # or ride on an unrelated shell bill (the 2024 Israel-Ukraine-Taiwan supplemental was H.R.
+        # 815, titled as a veterans bill): for any vote on passing or advancing a bill, read the
+        # bill's own summary from Congress.gov, which describes the enacted text
         ctx = ""
-        spend = _PASS_S.search(r.get("vote_question", "")) and _SPEND_S.search(text)
+        spend = bool(_PASS_S.search(r.get("vote_question", "")) and r.get("bill_number"))
         if not n or (old and (old.get("candidate") or not (TOPIC.search(text) or spend))):
             continue
         if spend and not TOPIC.search(text):
