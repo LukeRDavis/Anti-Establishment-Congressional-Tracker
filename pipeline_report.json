@@ -1,16 +1,16 @@
 {
- "run_at": "2026-11-12T20:31:00.289701+00:00",
- "runtime_s": 1853,
+ "run_at": "2026-11-12T21:01:15.061250+00:00",
+ "runtime_s": 1669,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
   "gemini": 1,
   "xai": 0,
   "openrouter": 0,
-  "groq": 5,
+  "groq": 7,
   "cerebras": 0,
   "mistral": 0,
-  "failed": 133
+  "failed": 132
  },
  "streams": {
   "key:CONGRESS_KEY": {
@@ -124,11 +124,10 @@
   "votes_senate_xml": {
    "ok": null,
    "count": 0,
-   "requests": 1,
-   "failures": 2,
+   "requests": 2,
+   "failures": 1,
    "errors": [
-    "HTTP 403 https://www.senate.gov/legislative/LIS/roll_call_lists/vote_menu_119_2.xml :: <HTML><HEAD> <TITLE>Access Denied</TITLE> </HEAD><BODY> <H1>Access Denied</H1>   You don't have permission to access \"http&#58;&#47;&#47;www&#46;senate&#46;gov&",
-    "circuit opened: HTTP 403"
+    "not XML (vote 260): mismatched tag: line 33, column 2 :: <!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\"> <!-- [if lt IE 7]> <html lang=\"en\" cla"
    ],
    "notes": []
   },
@@ -216,13 +215,13 @@
   "ai_groq": {
    "ok": null,
    "count": 0,
-   "requests": 10,
+   "requests": 14,
    "failures": 5,
    "errors": [
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198998, Requested 2363. Please try again in 9m47.952s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199354, Requested 2039. Please try again in 10m1.776s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199508, Requested 2330. Please try again in 13m14.016s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `allam-2-7b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 3098, Requested 3164. Please try again in 2.62s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199477, Requested 2437. Please try again in 13m46.848s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199243, Requested 2116. Please try again in 9m47.088s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199882, Requested 2405. Please try again in 16m27.984s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `allam-2-7b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 3848, Requested 3024. Please try again in 8.72s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
     "circuit opened: every available model failed or is over quota"
    ],
    "notes": [
@@ -232,8 +231,8 @@
   "ai_mistral": {
    "ok": null,
    "count": 0,
-   "requests": 537,
-   "failures": 535,
+   "requests": 529,
+   "failures": 528,
    "errors": [
     "HTTP 402 https://api.mistral.ai/v1/chat/completions :: {\"object\":\"error\",\"message\":\"API budget exhausted.\",\"type\":\"billing_api_budget_exhausted\",\"param\":null,\"code\":\"2303\",\"raw_status_code\":402}"
    ],
@@ -284,7 +283,7 @@
     "circuit opened: only empty responses (blocked for this host)"
    ],
    "notes": [
-    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Willie_Montague | 200 0B '' https://ballotpedia.org/Brandon_Herrera | 200 0B '' https://ballotpedia.org/Missi_Hesketh | 200 0B '' https://ballotpedia.org/Jerrad_Christian | 200 0B '' https://ballotpedia.org/Analilia_Mejia | 200 0B '' https://ballotpedia.org/Tanya_Lloyd"
+    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Jerrad_Christian | 200 0B '' https://ballotpedia.org/Brandon_Herrera | 200 0B '' https://ballotpedia.org/Tanya_Lloyd | 200 0B '' https://ballotpedia.org/Missi_Hesketh | 200 0B '' https://ballotpedia.org/Willie_Montague | 200 0B '' https://ballotpedia.org/Analilia_Mejia"
    ]
   },
   "wikipedia": {
@@ -724,12 +723,12 @@
   },
   "market_kalshi": {
    "ok": true,
-   "count": 23135,
+   "count": 23136,
    "requests": 40,
    "failures": 0,
    "errors": [],
    "notes": [
-    "40 pages \u00b7 23135 political markets"
+    "40 pages \u00b7 23136 political markets"
    ]
   },
   "market_predictit": {
@@ -749,7 +748,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "24035 market outcomes loaded \u00b7 16 tracked people matched"
+    "24036 market outcomes loaded \u00b7 16 tracked people matched"
    ]
   },
   "market_kalshi_settled": {

@@ -15,8 +15,6 @@ AECT pipeline v10 — 2026-11-12 · 119th Congress · 2026 cycle
 [1] Current members of Congress
   [roster_house] 433 Representatives + 6 delegates, 2 vacancies (published November 3, 2026)
   [roster_senate] 100 senators (file last updated 2026-11-10T12:29-05:00)
-    HTTP 403 https://www.senate.gov/legislative/LIS/roll_call_lists/vote_menu_119_2.xml :: <HTML><HEAD> <TITLE>Access Denied</TITLE> </HEAD><BODY> <H1>Access Denied</H1>   You don't have permission to access "http&#58;&#47;&#47;www&#46;senate&#46;gov&
-  ⚡ votes_senate_xml: circuit opened (HTTP 403) — skipping its remaining calls
   [congress_gov] 539 current members
 
 [2] FEC candidates and finance
@@ -38,13 +36,10 @@ AECT pipeline v10 — 2026-11-12 · 119th Congress · 2026 cycle
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateCon :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc.Help
     HTTP 404 https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?k :: {   "error": {     "code": 404,     "message": "This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://aistudio.google.com/docs/get-started).",     "status": "NOT_FOUND"   } } 
   [ai_groq] models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198998, Requested 2363. Please try again in 9m47.952s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-    ✓ senate-2026-871 HR5334: major — anti=Nay — Vote to invoke cloture on the Lindsey O. Graham Sanctioning Russia and Iran Act of 2026, w
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199354, Requested 2039. Please try again in 10m1.776s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199508, Requested 2330. Please try again in 13m14.016s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-    ✓ senate-2026-795 S2: minor — anti=None — The Senate passed a motion to proceed with a bill that provides funding for immigration en
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `allam-2-7b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 3098, Requested 3164. Please try again in 2.62s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-  ⚡ ai_groq: circuit opened (every available model failed or is over quota) — skipping its remaining calls
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199477, Requested 2437. Please try again in 13m46.848s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+    ✓ senate-2026-871 HR5334: major — anti=Nay — Vote on cloture to proceed to the Lindsey O. Graham Sanctioning Russia and Iran Act of 202
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199243, Requested 2116. Please try again in 9m47.088s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199882, Requested 2405. Please try again in 16m27.984s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
   [ai_mistral] models available: mistral-large-4, mistral-large-4-0, mistral-large-latest, mistral-medium-latest
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
@@ -72,10 +67,8 @@ AECT pipeline v10 — 2026-11-12 · 119th Congress · 2026 cycle
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `allam-2-7b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 3848, Requested 3024. Please try again in 8.72s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+  ⚡ ai_groq: circuit opened (every available model failed or is over quota) — skipping its remaining calls
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
@@ -390,7 +383,7 @@ AECT pipeline v10 — 2026-11-12 · 119th Congress · 2026 cycle
   [primary_calendar] cache fresh
   ⚡ ballotpedia: circuit opened (only empty responses (blocked for this host)) — skipping its remaining calls
   [enrichment] refreshed 250/250 this run · 1550/4464 people have a bio
-  [ballotpedia] outcomes {'no_page': 17} · probes: 200 0B '' https://ballotpedia.org/Willie_Montague | 200 0B '' https://ballotpedia.org/Brandon_Herrera | 200 0B '' https://ballotpedia.org/Missi_Hesketh | 200 0B '' https://ballotpedia.org/Jerrad_Christian | 200 0B '' https://ballotpedia.org/Analilia_Mejia | 200 0B '' https://ballotpedia.org/Tanya_Lloyd
+  [ballotpedia] outcomes {'no_page': 17} · probes: 200 0B '' https://ballotpedia.org/Jerrad_Christian | 200 0B '' https://ballotpedia.org/Brandon_Herrera | 200 0B '' https://ballotpedia.org/Tanya_Lloyd | 200 0B '' https://ballotpedia.org/Missi_Hesketh | 200 0B '' https://ballotpedia.org/Willie_Montague | 200 0B '' https://ballotpedia.org/Analilia_Mejia
   [wikipedia_results] 85 state election pages (0 refreshed) · 1267 result boxes
   [poll_closes] cached
   [poll_closes] cached
@@ -855,9 +848,9 @@ AECT pipeline v10 — 2026-11-12 · 119th Congress · 2026 cycle
 [5] Prediction markets
   [market_polymarket] 800 catalog pages scanned · 70 open congressional markets
   [market_kalshi_races] 478 House/Senate race events
-  [market_kalshi] 40 pages · 23135 political markets
+  [market_kalshi] 40 pages · 23136 political markets
   [market_predictit] 545 live contracts
-  [markets] 24035 market outcomes loaded · 16 tracked people matched
+  [markets] 24036 market outcomes loaded · 16 tracked people matched
   [market_kalshi_settled] 753 settled race outcomes
   [market_settlements] 889 candidates called by settled markets, 8 with markets disagreeing
   [poll_closes] cached
@@ -946,14 +939,14 @@ fec_outside_spending         OK           458  refreshed 1, 458 candidates with 
 fec_websites                 OK           726  looked up 0 committees · 726 campaign websites known
 grokipedia                   —              0  
 history_bills                —              0  
-market_kalshi                OK         23135  40 pages · 23135 political markets
+market_kalshi                OK         23136  40 pages · 23136 political markets
 market_kalshi_races          OK           285  478 House/Senate race events
 market_kalshi_senate         —              0  
 market_kalshi_settled        OK           753  753 settled race outcomes
 market_polymarket            OK            70  800 catalog pages scanned · 70 open congressional markets
 market_predictit             OK           545  545 live contracts
 market_settlements           OK           897  889 candidates called by settled markets, 8 with markets disagreeing
-markets                      OK            16  24035 market outcomes loaded · 16 tracked people matched
+markets                      OK            16  24036 market outcomes loaded · 16 tracked people matched
 poll_closes                  OK            51  cached
 primary_calendar             OK            50  cache fresh
 reform                       FAIL           0  0 items from 13 source texts · 13 still to read
@@ -966,7 +959,7 @@ trackaipac                   OK             0
 votes_ai_relevance           OK           129  1002 topical roll calls · 129 judged relevant · 80 awaiting AI judgment — web-search AI unavailable; judging o
 votes_house_xml              OK          2924  2026 roll 324: no <vote-metadata> (root <xml>)
 votes_senate_voteview        OK          2557  2557 Senate roll calls indexed from Voteview (+42 topical this run)
-votes_senate_xml             —              0  HTTP 403 https://www.senate.gov/legislative/LIS/roll_call_lists/vote_menu_119_2.xml :: <HTML><HEAD> <TITLE>Acc
+votes_senate_xml             —              0  not XML (vote 260): mismatched tag: line 33, column 2 :: <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transiti
 wikipedia                    —              0  
 wikipedia_results            OK            85  85 state election pages (0 refreshed) · 1267 result boxes
 ════════════════════════════════════════════════════════════════════════
