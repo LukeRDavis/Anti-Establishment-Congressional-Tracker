@@ -15,7 +15,7 @@ import os
 
 from . import votes as V
 
-PATH = os.path.join("data", "history", "bridges.json")
+PATH = os.environ.get("AECT_BRIDGES") or os.path.join("data", "history", "bridges.json")
 
 
 def ordinal(n):

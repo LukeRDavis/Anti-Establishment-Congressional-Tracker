@@ -16,6 +16,7 @@ sys.path.insert(0, SCRIPTS)
 
 tmp = tempfile.mkdtemp()
 os.environ["AECT_CACHE_DIR"] = os.path.join(tmp, "data", "cache")
+os.environ["AECT_BRIDGES"] = os.path.join(tmp, "data", "history", "bridges.json")   # never the live file
 for k in ("CONGRESS_KEY", "FEC_KEY", "GEMINI_KEY", "XAI_API_KEY", "OPENROUTER_API_KEY", "GROQ_API_KEY"):
     os.environ.pop(k, None)
 
