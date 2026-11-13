@@ -406,9 +406,10 @@ Verdicts:
 Most people are SOFT or NONE. When in doubt, do not count them.
 
 Use ONLY the facts and sources given; do not use outside knowledge. Never state a number, date, vote or event that is not in the facts or sources below; if something is unknown, say it is unknown. Cite dossier or roll-call URLs for claims. Make the bottom line agree with the tier you give. Write plain text: no Markdown, asterisks or other formatting marks.
+Leadership: report whether the dossier shows this person ACTIVELY backing a party leader or Speaker candidate for the latest or upcoming Congress: endorsing, nominating, whipping or campaigning for them, or serving in an elected leadership post under them. The routine opening-day floor vote for one's own party's nominee does NOT count. Report only what the sources show, with the URL; the tracker judges the leader on their own record.
 If a previous verdict is given, re-examine the record from scratch: keep it if the record still supports it, change it if not, and say in the write-up what changed.
 Respond with JSON only:
-{{"tier": "hard"|"soft"|"none", "confidence": "high"|"medium"|"low", "confidence_index": 0-100 (how sure you are of THIS verdict given how complete and consistent the record is: 90+ only for a long, unambiguous record), "scope": "focus"|"broad", "prior_office": "congress"|"state_or_local"|"none"|"unknown", "principle_vs_partisanship": "principled"|"mixed"|"partisan"|"unclear", "political_risk": "low"|"medium"|"high", "capital_risk": "low"|"medium"|"high", "bottom_line": "one sentence beginning 'Counts as anti-establishment because' or 'Does not count because'", "writeup": "a full write-up of 5-9 sentences for the public: who they are, what their record and words show in each of the five areas and whether they have been consistent in each, own-party defections and leadership defiance, money and donors, whether it is principle or partisanship, and how likely they are to hold under pressure", "reason": "one or two sentences", "risk_notes": "one sentence", "evidence": [{{"claim": "...", "url": "..."}}]}}"""
+{{"tier": "hard"|"soft"|"none", "confidence": "high"|"medium"|"low", "confidence_index": 0-100 (how sure you are of THIS verdict given how complete and consistent the record is: 90+ only for a long, unambiguous record), "scope": "focus"|"broad", "prior_office": "congress"|"state_or_local"|"none"|"unknown", "principle_vs_partisanship": "principled"|"mixed"|"partisan"|"unclear", "political_risk": "low"|"medium"|"high", "capital_risk": "low"|"medium"|"high", "bottom_line": "one sentence beginning 'Counts as anti-establishment because' or 'Does not count because'", "writeup": "a full write-up of 5-9 sentences for the public: who they are, what their record and words show in each of the five areas and whether they have been consistent in each, own-party defections and leadership defiance, money and donors, whether it is principle or partisanship, and how likely they are to hold under pressure", "reason": "one or two sentences", "risk_notes": "one sentence", "evidence": [{{"claim": "...", "url": "..."}}], "leadership_support": {{"leader": "full name of the leader or Speaker candidate they actively back, or null", "act": "endorsed|nominated|whipped|campaigned|serves under", "url": "source URL"}} or null}}"""
 
 
 # the free tiers that answer most often (Groq) cap a request at 7-8k tokens, system prompt and
@@ -557,6 +558,68 @@ def _headline_screen(p, cache):
     return why, True
 
 
+def _leadership(x, urls):
+    """The AI's report of active support for a leader, kept only with a name and a cited source."""
+    if not isinstance(x, dict) or not str(x.get("leader") or "").strip() or str(x.get("leader")).lower() == "null":
+        return None
+    url = str(x.get("url") or "")
+    if not url.startswith("http") or (urls and url not in set(urls)):
+        return None                       # only a source that is actually in the dossier
+    return {"leader": str(x["leader"]).strip()[:80], "act": str(x.get("act") or "backed")[:40], "url": url[:300]}
+
+
+def _norm(name):
+    return " ".join(w for w in "".join(ch.lower() if ch.isalnum() or ch == " " else " " for ch in name).split()
+                    if len(w) > 1)
+
+
+def _bridge_pass(people):
+    """Carry forward anyone who first counted in a past Congress (see bridge.py), and end the bridge
+    (or keep a first-time qualifier out) on a vote for the anchor since, focus-lobby money, or
+    actively backing a leader whose own record fails the standard."""
+    from . import bridge as B
+    state = B.load()
+    by_name = {_norm(p.get("name", "")): p for p in people.values() if p.get("incumbent")}
+    for p in people.values():
+        if not p.get("incumbent") or "tier_facts" not in p:
+            continue
+        f, bid = p["tier_facts"], p.get("bioguide_id")
+        b = state.get(bid) if bid else None
+        carrying = bool(b and not b.get("ended"))
+        qualifies = p.get("antiTier") == "hard"
+        if not (carrying or qualifies):
+            continue
+        ended = None
+        if carrying:
+            brk = B.anchor_break([v for v in p.get("vote_record", []) if v.get("focus")], b["since"])
+            if brk:
+                ended = B.break_words(brk)
+            elif f.get("lobby_money_trackaipac", 0) >= LOBBY_LIMIT or f.get("lobby_outside_support", 0) > 0:
+                ended = f"took money from the {_FOCUS} lobby"
+        lead = p.get("_leadership")
+        if not ended and lead:
+            lp = by_name.get(_norm(lead["leader"]))
+            if lp is not None and lp is not p and lp.get("antiTier") != "hard":
+                ended = (f"{lead['act']} {lp['name']}, a party leader whose own record does not meet the "
+                         f"standard ({lead['url']})")
+        if ended:
+            p["antiTier"] = "soft" if p.get("antiArms") or qualifies else None
+            p["antiArms"] = bool(p["antiTier"])
+            since = f" from the {B.ordinal(b['since'])} Congress" if carrying else ""
+            p["tier_bottom_line"] = f"Does not count: the bridge{since} ended when they {ended}."
+            p["bridge"] = {"since": b["since"] if carrying else None, "carried": False, "ended": ended}
+        elif carrying and not qualifies:
+            p["antiTier"], p["antiArms"] = "hard", True
+            p.setdefault("antiArmsBasis", "anti_establishment")
+            p["tier_bottom_line"] = (f"Counts as anti-establishment (carried forward): first counted in the "
+                                     f"{B.ordinal(b['since'])} Congress, and nothing has ended it since: no vote for "
+                                     f"{V.AREA_LABEL[V.ANCHOR]}, no {_FOCUS}-lobby money, no active backing of an "
+                                     f"establishment leader. Today's review on its own: {p.get('tier_bottom_line') or p.get('tier_reason') or ''}")
+            p["bridge"] = {"since": b["since"], "carried": True, "ended": None}
+        else:
+            p["bridge"] = {"since": b["since"] if carrying else None, "carried": False, "ended": None}
+
+
 def run(people, ie, fec_cands, fec_totals=None):
     """Investigate everyone with an anti-establishment signal and set antiTier / tier_source /
     tier_reason / tier_evidence / tier_risk. Soft verdicts are shown, never counted."""
@@ -657,6 +720,7 @@ def run(people, ie, fec_cands, fec_totals=None):
                            "risk": risk, "scope": res.get("scope"),
                            "confidence": res.get("confidence"), "prior_office": res.get("prior_office"),
                            "confidence_index": _conf_index(res),
+                           "leadership": _leadership(res.get("leadership_support"), urls),
                            "source": f"ai:{provider}", "at": now_iso(), "v": JUDGE_VERSION,
                            "facts_fp": _fingerprint(f, text), "text_len": len(text)}
                 cache[k] = verdict
@@ -691,6 +755,8 @@ def run(people, ie, fec_cands, fec_totals=None):
         p["tier_model"] = verdict.get("model")
         p["tier_judged_at"] = verdict.get("judged_at") or verdict.get("at")
         p["tier_confidence"] = verdict.get("confidence_index")
+        p["_leadership"] = verdict.get("leadership")
+        p["tier_leadership"] = verdict.get("leadership")
         p["discharge_petitions"] = [{k: d[k] for k in ("no", "measure", "about", "url", "signed")}
                                     for d in p.get("_discharge", [])][:12]
         if p.get("antiTier"):
@@ -698,6 +764,11 @@ def run(people, ie, fec_cands, fec_totals=None):
             sources["ai" if verdict["source"].startswith("ai") else "rule"] += 1
     save_cache("establishment", cache)
     save_cache("fec_employers", emp_cache)
+    _bridge_pass(people)
+    counts = {"hard": 0, "soft": 0, "none": 0}
+    for k in keys:
+        if people[k].get("antiTier"):
+            counts[people[k]["antiTier"]] += 1
     stream("establishment_tiers", ok=bool(keys), count=counts["hard"],
            note=f"{counts['hard']} hard · {counts['soft']} soft · judged {judged} with AI this run · "
                 f"verdicts from AI {sources['ai']}, rule {sources['rule']} · AI has reviewed "

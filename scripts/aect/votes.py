@@ -678,7 +678,8 @@ def _status(vs):
 
     A member who turned (voted the interventionist side, then began voting anti) counts once the
     anti votes since their last interventionist vote form a run of two or more that reaches their
-    latest Congress voting there; until then they are "turning"."""
+    latest Congress voting there and includes a vote against most of their own party; until then
+    they are "turning"."""
     first = next((i for i, v in enumerate(vs) if v["anti"]), None)
     pro_after = sum(1 for v in vs[first:] if not v["anti"]) if first is not None else 0
     last_pro = max((i for i, v in enumerate(vs) if not v["anti"]), default=-1)
@@ -687,7 +688,10 @@ def _status(vs):
         return "interventionist", first, pro_after, streak
     if first == 0 and pro_after == 0:
         return "consistent", first, pro_after, streak
-    if len(streak) >= 2 and streak[-1]["congress"] == vs[-1]["congress"]:
+    # turning back has to show principle, not posture: the run of anti votes since the last
+    # interventionist one must include at least one cast against most of their own party
+    if (len(streak) >= 2 and streak[-1]["congress"] == vs[-1]["congress"]
+            and any(not v.get("party_line") for v in streak)):
         return "became consistent", first, pro_after, streak
     if pro_after == 0:
         return "turning", first, pro_after, streak

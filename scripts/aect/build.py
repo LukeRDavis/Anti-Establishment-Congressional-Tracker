@@ -337,6 +337,7 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
                 "principle": p.get("tier_principle"), "judged_model": p.get("tier_model"),
                 "judged_at": p.get("tier_judged_at"), "confidence": p.get("tier_confidence"),
                 "discharge_petitions": p.get("discharge_petitions", []),
+                "bridge": p.get("bridge"), "leadership": p.get("tier_leadership"),
                 "tier_facts": {k: (p.get("tier_facts") or {}).get(k) for k in (
                     "focus_votes", "anti_focus_votes", "anti_congresses", "latest_congress_focus",
                     "lobby_money_trackaipac", "lobby_outside_support", "lobby_outside_oppose",

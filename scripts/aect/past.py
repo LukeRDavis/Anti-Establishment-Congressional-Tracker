@@ -244,7 +244,8 @@ def rate(history):
     real breaking vote (anti-interventionist against most of their own party; discharge-petition data
     is not available for past Congresses), and consistent on the anchor area, aid to Israel; the other
     areas are supporting evidence (military aid and sanctions judged country by country)."""
-    record, anchor_seen = {}, set()
+    from . import bridge as B
+    record, anchor_seen, bridges = {}, set(), {}
     for c in sorted(history):
         # a chamber that has not yet held a roll call on the anchor can't be judged on it:
         # until it has, members there are judged on the old bar (consistent in every area engaged)
@@ -264,6 +265,21 @@ def rate(history):
             else:
                 ok = bool(anti) and not V.slips(areas)
                 m["antiArms"] = bool(breaking) and ok
+            # the bridge: once counted, keep counting until a vote for the anchor ends it
+            qualifies = m["antiArms"]
+            bid = m["bioguide_id"]
+            b = bridges.get(bid)
+            ended_now = None
+            if b and not b.get("ended"):
+                brk = B.anchor_break(rec, b["since"])
+                if brk:
+                    b["ended"] = ended_now = {"congress": c, "reason": B.break_words(brk)}
+            if qualifies and (not b or b.get("ended")) and ended_now is None:
+                b = bridges[bid] = {"since": c, "name": m["name"]}
+            carried = bool(b and not b.get("ended") and not qualifies)
+            m["antiArms"] = bool(b and not b.get("ended"))
+            m["qualified_this_congress"] = qualifies
+            m["bridge"] = {"since": b["since"], "ended": b.get("ended")} if b else None
             m["antiTier"] = "hard" if m["antiArms"] else None
             m["tier_source"] = "rule:history"
             m["tier_facts"] = {"focus_votes": len(rec), "anti_focus_votes": len(anti),
@@ -273,7 +289,14 @@ def rate(history):
                                 for x in areas.values() if x["anti"])
             anc = areas.get(V.ANCHOR)
             sl = V.slips(areas)
-            if m["antiArms"]:
+            if carried:
+                why = (f"Counts as anti-establishment (carried forward): first counted in the {B.ordinal(b['since'])} "
+                       f"Congress, with no vote for {V.AREA_LABEL[V.ANCHOR]} since. On this Congress's record alone: "
+                       + (engaged or "no anti-interventionist vote"))
+            elif ended_now:
+                why = (f"No longer counts: the bridge from the {B.ordinal(b['since'])} Congress ended when they "
+                       f"{ended_now['reason']}")
+            elif m["antiArms"]:
                 why = "Counts as anti-establishment: " + engaged + (f"; lower confidence: went back on {', '.join(sl)}" if sl else "")
             elif not anti:
                 why = "Does not count: no anti-interventionist vote"
@@ -290,7 +313,7 @@ def rate(history):
                                 + ("" if has_anchor else f" No roll call on {V.AREA_LABEL[V.ANCHOR]} had been held in this "
                                    "chamber yet, so this is judged on consistency in every area engaged.")
                                 + " (Rule-based from Voteview roll calls.)")
-    return history
+    return history, bridges
 
 
 def sync(max_congresses=3):
@@ -332,7 +355,9 @@ def sync(max_congresses=3):
     for d in history.values():
         for m in d["members"]:
             m["name"] = names.get(m["bioguide_id"], m["name"])
-    rate(history)
+    from . import bridge as B
+    _, bridges = rate(history)
+    B.save({k: v for k, v in bridges.items()})
     index = []
     for c, d in sorted(history.items()):
         with open(os.path.join(OUT_DIR, f"congress_{c}.json"), "w") as f:
