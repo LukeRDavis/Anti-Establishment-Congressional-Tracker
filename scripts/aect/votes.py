@@ -698,11 +698,19 @@ def _status(vs):
     return "inconsistent", first, pro_after, streak
 
 
+def counts_for_consistency(v):
+    """A party-line vote on a procedural motion (recommit, table, previous question...) says how a
+    member votes with their party on procedure, not where they stand: it neither builds nor breaks
+    consistency. The same motion cast against one's own party still counts."""
+    return not (v.get("procedural") and v.get("party_line"))
+
+
 def area_record(votes):
     """Per-area consistency, from a member's counted votes (each with area, anti, date, congress,
     recipients). Military aid and sanctions are checked recipient by recipient, and the area takes
     the worst status among the recipients the member has voted anti on."""
     out = {}
+    votes = [v for v in votes if counts_for_consistency(v)]
     for a in AREAS:
         vs = sorted([v for v in votes if v.get("area") == a], key=lambda v: v["date"])
         if not vs:
@@ -762,6 +770,7 @@ def score_members(members, relevant_votes):
                 "focus": is_focus(v),
                 "area": area(v),
                 "anti": pos == v["anti_position"], "url": v.get("url", ""),
+                "procedural": bool(_PROCEDURAL.search(v.get("question") or "")),
             })
     return members
 

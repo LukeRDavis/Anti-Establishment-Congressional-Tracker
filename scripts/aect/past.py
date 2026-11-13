@@ -23,7 +23,7 @@ from . import votes as V
 
 FIRST = int(os.environ.get("AECT_HISTORY_FROM", "107"))
 OUT_DIR = os.path.join("data", "history")
-VERSION = 10
+VERSION = 11
 URL = "https://voteview.com/static/data/out/{kind}/{ch}{congress}_{kind}.csv"
 CAST = {1: "Yea", 2: "Yea", 3: "Yea", 4: "Nay", 5: "Nay", 6: "Nay"}
 
@@ -231,7 +231,8 @@ def build_congress(congress, judgments, budget):
                     rec.append({"congress": congress, "chamber": chamber, "roll": fv["roll"], "date": fv["date"],
                                 "measure": fv["measure"], "position": cast, "anti": anti, "area": fv["area"],
                                 "summary": fv["summary"] or fv["desc"], "url": fv["url"],
-                                "own_party_share": share, "party_line": share > 50})
+                                "own_party_share": share, "party_line": share > 50,
+                                "procedural": bool(V._PROCEDURAL.search(fv.get("question") or ""))})
                 members.append({"bioguide_id": m["bioguide_id"], "name": _name(m.get("bioname")), "party": party,
                                 "chamber": chamber, "state": m.get("state_abbrev", ""),
                                 "district": seat[1], "votes": rec})

@@ -26,7 +26,8 @@ def ordinal(n):
 def anchor_break(votes, since):
     """The vote that broke the bridge on the anchor: an interventionist vote on aid to Israel cast in
     a Congress after `since`, not followed by two or more anti votes on it. None if unbroken."""
-    vs = sorted([v for v in votes if v.get("area") == V.ANCHOR and int(v.get("congress") or 0) > int(since)],
+    vs = sorted([v for v in votes if v.get("area") == V.ANCHOR and int(v.get("congress") or 0) > int(since)
+                 and V.counts_for_consistency(v)],
                 key=lambda v: v.get("date") or "")
     pro = [i for i, v in enumerate(vs) if not v.get("anti")]
     if not pro:
