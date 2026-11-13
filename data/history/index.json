@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-13T17:05:48.591437+00:00",
+ "updated_at": "2026-11-13T17:06:32.348246+00:00",
  "first": 107,
  "current": 119,
  "congresses": [
@@ -101,7 +101,40 @@
     "house": 1,
     "senate": 9
    }
+  },
+  {
+   "congress": 116,
+   "years": [
+    2019,
+    2020
+   ],
+   "anti": {
+    "house": 1,
+    "senate": 10
+   }
+  },
+  {
+   "congress": 117,
+   "years": [
+    2021,
+    2022
+   ],
+   "anti": {
+    "house": 7,
+    "senate": 9
+   }
+  },
+  {
+   "congress": 118,
+   "years": [
+    2023,
+    2024
+   ],
+   "anti": {
+    "house": 43,
+    "senate": 18
+   }
   }
  ],
- "remaining": 3
+ "remaining": 0
 }
