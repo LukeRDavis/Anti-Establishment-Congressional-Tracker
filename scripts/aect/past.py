@@ -23,7 +23,7 @@ from . import votes as V
 
 FIRST = int(os.environ.get("AECT_HISTORY_FROM", "107"))
 OUT_DIR = os.path.join("data", "history")
-VERSION = 9
+VERSION = 10
 URL = "https://voteview.com/static/data/out/{kind}/{ch}{congress}_{kind}.csv"
 CAST = {1: "Yea", 2: "Yea", 3: "Yea", 4: "Nay", 5: "Nay", 6: "Nay"}
 

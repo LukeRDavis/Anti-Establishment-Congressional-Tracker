@@ -392,8 +392,15 @@ _BILL_TYPES = {"HR": "hr", "S": "s", "HRES": "hres", "SRES": "sres", "HJRES": "h
                "SJRES": "sjres", "HCONRES": "hconres", "SCONRES": "sconres"}
 
 
+_PROCEDURAL = re.compile(r"recommit|to table|reconsider|previous question|postpone|adjourn|refer", re.I)
+
+
 def _sponsor(rec):
     """Bioguide ID of whoever offered the measure (amendment author, else bill sponsor), from Congress.gov."""
+    # on a procedural motion (recommit, table, reconsider, previous question) the bill's sponsor
+    # votes to protect their bill, which says nothing about which side of the motion is anti
+    if _PROCEDURAL.search(rec.get("question") or ""):
+        return None
     if "sponsor" in rec:
         return rec["sponsor"]
     sid = None
@@ -488,14 +495,14 @@ def _recheck_direction(rec, j):
         j["direction"] = None
         if sid:
             direction_check(rec, j)
-    j["sponsor_check"] = 2
+    j["sponsor_check"] = 3
 
 
 # ── AI judgment ───────────────────────────────────────────────────────────────
 def _judge(rec, judgments, budget_state):
     key = f"{rec['chamber']}-{rec['year']}-{rec['roll']}"
     old = judgments.get(key)
-    if old and old.get("relevant") and old.get("direction") and old.get("sponsor_check") != 2:
+    if old and old.get("relevant") and old.get("direction") and old.get("sponsor_check") != 3:
         _recheck_direction(rec, old)
     own = " ".join(str(rec.get(x, "")) for x in ("legis", "question", "desc"))
     # an arms-sale vote filed under sanctions is a misreading: ask once more
@@ -558,7 +565,7 @@ def _judge(rec, judgments, budget_state):
         j["arms_rechecked"] = True
     if j["relevant"]:
         direction_check(rec, j)
-        j["sponsor_check"] = 2
+        j["sponsor_check"] = 3
     judgments[key] = j
     if j["relevant"]:
         print(f"    ✓ {key} {rec.get('legis','')}: {j['significance']} — anti={j['anti_position']} — {j['summary'][:90]}")
