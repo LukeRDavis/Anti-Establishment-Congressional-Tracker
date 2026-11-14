@@ -1,27 +1,27 @@
 {
- "generated_at": "2026-11-14T02:37:32.982320+00:00",
+ "generated_at": "2026-11-14T06:27:07.819997+00:00",
  "challengers": [
   {
-   "name": "Mai Vang",
-   "party": "D",
-   "state": "CA",
-   "district": 7,
+   "name": "Karen Ortiz",
+   "party": "I",
+   "state": "NY",
+   "district": 12,
    "chamber": "house",
    "antiArms": true,
    "antiArmsLevel": "yes",
    "antiArmsBasis": "statements",
    "evidence": [
-    "She'll push to ban the sale of weapons used to carry out genocide. (https://www.maiforus.com/)"
+    "We must impose an arms embargo on and stop sending our tax dollars to Israel. (https://ko4congress.com/)"
    ],
    "ps": "WON",
-   "note": "She'll push to ban the sale of weapons used to carry out genocide. (https://www.maiforus.com/)",
-   "website": "https://www.maiforus.com/",
+   "note": "We must impose an arms embargo on and stop sending our tax dollars to Israel. (https://ko4congress.com/)",
+   "website": "https://ko4congress.com/",
    "fec_ids": [
-    "H6CA07175"
+    "H6NY12297"
    ],
-   "primaryDate": "2026-06-02",
+   "primaryDate": "2026-06-23",
    "primary_result": "WON",
-   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_California",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_New_York",
    "general_result": null,
    "general_result_by": null,
    "result_conflict": null,
@@ -120,26 +120,26 @@
    "source": "fec+trackaipac_endorsed"
   },
   {
-   "name": "Karen Ortiz",
-   "party": "I",
-   "state": "NY",
-   "district": 12,
+   "name": "Mai Vang",
+   "party": "D",
+   "state": "CA",
+   "district": 7,
    "chamber": "house",
    "antiArms": true,
    "antiArmsLevel": "yes",
    "antiArmsBasis": "statements",
    "evidence": [
-    "We must impose an arms embargo on and stop sending our tax dollars to Israel. (https://ko4congress.com/)"
+    "She'll push to ban the sale of weapons used to carry out genocide. (https://www.maiforus.com/)"
    ],
    "ps": "WON",
-   "note": "We must impose an arms embargo on and stop sending our tax dollars to Israel. (https://ko4congress.com/)",
-   "website": "https://ko4congress.com/",
+   "note": "She'll push to ban the sale of weapons used to carry out genocide. (https://www.maiforus.com/)",
+   "website": "https://www.maiforus.com/",
    "fec_ids": [
-    "H6NY12297"
+    "H6CA07175"
    ],
-   "primaryDate": "2026-06-23",
+   "primaryDate": "2026-06-02",
    "primary_result": "WON",
-   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_New_York",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_California",
    "general_result": null,
    "general_result_by": null,
    "result_conflict": null,
