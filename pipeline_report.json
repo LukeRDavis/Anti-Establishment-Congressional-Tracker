@@ -1,16 +1,16 @@
 {
- "run_at": "2026-11-14T01:30:27.019654+00:00",
- "runtime_s": 4113,
+ "run_at": "2026-11-14T02:37:31.631674+00:00",
+ "runtime_s": 3883,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
   "gemini": 0,
   "xai": 0,
-  "openrouter": 3,
-  "groq": 9,
+  "openrouter": 2,
+  "groq": 11,
   "cerebras": 0,
   "mistral": 0,
-  "failed": 19
+  "failed": 24
  },
  "streams": {
   "key:CONGRESS_KEY": {
@@ -216,7 +216,7 @@
     "circuit opened: only empty responses (blocked for this host)"
    ],
    "notes": [
-    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Heath_Fulkerson | 200 0B '' https://ballotpedia.org/Kindra_Pring | 200 0B '' https://ballotpedia.org/Angelina_Sigala | 200 0B '' https://ballotpedia.org/Jason_Weland | 200 0B '' https://ballotpedia.org/Enayat_Nazhat | 200 0B '' https://ballotpedia.org/Charles_Uribe"
+    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Jason_Weland | 200 0B '' https://ballotpedia.org/Heath_Fulkerson | 200 0B '' https://ballotpedia.org/Kindra_Pring | 200 0B '' https://ballotpedia.org/Charles_Uribe | 200 0B '' https://ballotpedia.org/Enayat_Nazhat | 200 0B '' https://ballotpedia.org/Angelina_Sigala"
    ]
   },
   "wikipedia": {
@@ -621,39 +621,14 @@
    "requests": 16,
    "failures": 5,
    "errors": [
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199706, Requested 1773. Please try again in 10m38.928s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199286, Requested 1693. Please try again in 7m2.928s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199553, Requested 1674. Please try again in 8m50.063999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199821, Requested 1265. Please try again in 7m49.152s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199536, Requested 813. Please try again in 2m30.768s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198205, Requested 6216. Please try again in 31m49.872s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
     "HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Please reduce the length of the messages or completion.\",\"type\":\"invalid_request_error\",\"param\":\"messages\"}} ",
     "circuit opened: every available model failed or is over quota"
    ],
    "notes": [
     "models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b"
-   ]
-  },
-  "ai_mistral": {
-   "ok": null,
-   "count": 0,
-   "requests": 85,
-   "failures": 84,
-   "errors": [
-    "HTTP 402 https://api.mistral.ai/v1/chat/completions :: {\"object\":\"error\",\"message\":\"API budget exhausted.\",\"type\":\"billing_api_budget_exhausted\",\"param\":null,\"code\":\"2303\",\"raw_status_code\":402}"
-   ],
-   "notes": [
-    "models available: mistral-medium-latest, mistral-medium, mistral-medium-3-5, mistral-medium-3.5"
-   ]
-  },
-  "ai_openrouter": {
-   "ok": null,
-   "count": 0,
-   "requests": 62,
-   "failures": 4,
-   "errors": [
-    "HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok\",\"provider_name\":\"Google AI Studio\",\"is_byok\":false,\"provider_error_code\":\"429\",\"limit_source\":\"upstream_provider_shared_pool\",\"remedy_hin",
-    "HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"google/gemma-4-26b-a4b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok\",\"provider_name\":\"Google AI Studio\",\"is_byok\":false,\"provider_error_code\":\"429\",\"limit_source\":\"upstream_provider_shared_pool\",\"remedy"
-   ],
-   "notes": [
-    "models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/gemma-4-31b-it:free, google/gemma-4-26b-a4b-it:free, nvidia/nemotron-3.5-super-vl:free, openrouter/free"
    ]
   },
   "ai_positions": {
@@ -689,7 +664,7 @@
   "dossier_grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 9,
+   "requests": 15,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -697,15 +672,40 @@
   "dossier_news_google": {
    "ok": null,
    "count": 0,
-   "requests": 25,
+   "requests": 37,
    "failures": 0,
    "errors": [],
    "notes": []
   },
+  "ai_mistral": {
+   "ok": null,
+   "count": 0,
+   "requests": 101,
+   "failures": 100,
+   "errors": [
+    "HTTP 402 https://api.mistral.ai/v1/chat/completions :: {\"object\":\"error\",\"message\":\"API budget exhausted.\",\"type\":\"billing_api_budget_exhausted\",\"param\":null,\"code\":\"2303\",\"raw_status_code\":402}"
+   ],
+   "notes": [
+    "models available: mistral-medium-latest, mistral-medium, mistral-medium-3-5, mistral-medium-3.5"
+   ]
+  },
+  "ai_openrouter": {
+   "ok": null,
+   "count": 0,
+   "requests": 78,
+   "failures": 4,
+   "errors": [
+    "HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok\",\"provider_name\":\"Google AI Studio\",\"is_byok\":false,\"provider_error_code\":\"429\",\"limit_source\":\"upstream_provider_shared_pool\",\"remedy_hin",
+    "HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"google/gemma-4-26b-a4b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok\",\"provider_name\":\"Google AI Studio\",\"is_byok\":false,\"provider_error_code\":\"429\",\"limit_source\":\"upstream_provider_shared_pool\",\"remedy"
+   ],
+   "notes": [
+    "models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/gemma-4-31b-it:free, google/gemma-4-26b-a4b-it:free, nvidia/nemotron-3.5-super-vl:free, openrouter/free"
+   ]
+  },
   "dossier_wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 7,
+   "requests": 13,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -717,7 +717,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "25 hard \u00b7 151 soft \u00b7 judged 9 with AI this run \u00b7 verdicts from AI 37, rule 139 \u00b7 AI has reviewed 2942 of 2944 members and running candidates (631 with signals)"
+    "25 hard \u00b7 151 soft \u00b7 judged 15 with AI this run \u00b7 verdicts from AI 37, rule 139 \u00b7 AI has reviewed 2942 of 2944 members and running candidates (631 with signals)"
    ]
   },
   "market_polymarket": {
@@ -838,12 +838,12 @@
   },
   "reform": {
    "ok": true,
-   "count": 8,
+   "count": 12,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "8 items from 13 source texts \u00b7 9 still to read"
+    "12 items from 13 source texts \u00b7 8 still to read"
    ]
   }
  },
