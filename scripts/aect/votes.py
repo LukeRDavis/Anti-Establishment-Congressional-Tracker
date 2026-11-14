@@ -698,11 +698,29 @@ def _status(vs):
     return "inconsistent", first, pro_after, streak
 
 
+# simple and concurrent resolutions (H.Res., S.Res., H.Con.Res., S.Con.Res.) never become law;
+# joint resolutions (H.J.Res., S.J.Res.: arms-sale disapprovals, war powers) do
+_SIMPLE_RES = re.compile(r"^\s*[HS]\.?\s*RES\.?\s*\d", re.I)
+_CON_RES = re.compile(r"^\s*[HS]\.?\s*CON\.?\s*RES\.?\s*\d", re.I)
+
+
+def non_binding(v):
+    """A vote on a non-binding resolution: any simple resolution (statements of support or
+    condemnation, such as resolving to achieve "victory" in a war), and concurrent resolutions
+    except in the war-powers areas, where the War Powers Resolution lets one direct the removal of
+    forces. Such votes are usually politicking: they carry almost no weight either way."""
+    m = v.get("measure") or v.get("legis") or ""
+    return bool(_SIMPLE_RES.search(m)) or (bool(_CON_RES.search(m))
+                                            and v.get("area") not in ("use_of_force", "war_authorization"))
+
+
 def counts_for_consistency(v):
-    """A party-line vote on a procedural motion (recommit, table, previous question...) says how a
-    member votes with their party on procedure, not where they stand: it neither builds nor breaks
-    consistency. The same motion cast against one's own party still counts."""
-    return not (v.get("procedural") and v.get("party_line"))
+    """Votes that neither build nor break consistency, the floor or the bridge:
+      * a party-line vote on a procedural motion (recommit, table, previous question...), which says
+        how a member votes with their party on procedure, not where they stand (the same motion
+        cast against one's own party still counts);
+      * a vote on a non-binding resolution of support or condemnation (see non_binding)."""
+    return not (v.get("procedural") and v.get("party_line")) and not non_binding(v)
 
 
 def area_record(votes):

@@ -82,7 +82,7 @@ def facts(p, ie):
     # every anti vote counts as anti; whether it was cast with or against one's own party is
     # used to judge consistency and principle, not whether the vote itself is anti
     anti = [v for v in focus if v["anti"]]
-    breaking = [v for v in anti if not v.get("party_line")]
+    breaking = [v for v in anti if not v.get("party_line") and not V.non_binding(v)]
     congs = sorted({v["congress"] for v in anti})
     last_c = max((v["congress"] for v in focus), default=None)
     last = [v for v in focus if v["congress"] == last_c]
@@ -406,6 +406,7 @@ Verdicts:
 Most people are SOFT or NONE. When in doubt, do not count them.
 
 Use ONLY the facts and sources given; do not use outside knowledge. Never state a number, date, vote or event that is not in the facts or sources below; if something is unknown, say it is unknown. Cite dossier or roll-call URLs for claims. Make the bottom line agree with the tier you give. Write plain text: no Markdown, asterisks or other formatting marks.
+Non-binding resolutions (simple or concurrent resolutions of support or condemnation, marked [non-binding]) carry almost no weight either way: a member with an otherwise principled record who also votes for every such statement is politicking, not wavering. Party-line votes on procedural motions likewise say little. Votes against war-on-terror-era authorizations were a radical stand at the time and weigh as such.
 Leadership: report whether the dossier shows this person ACTIVELY backing a party leader or Speaker candidate for the latest or upcoming Congress: endorsing, nominating, whipping or campaigning for them, or serving in an elected leadership post under them. The routine opening-day floor vote for one's own party's nominee does NOT count. Report only what the sources show, with the URL; the tracker judges the leader on their own record.
 If a previous verdict is given, re-examine the record from scratch: keep it if the record still supports it, change it if not, and say in the write-up what changed.
 Respond with JSON only:
@@ -424,7 +425,7 @@ def _prompt(p, f, text, emp, prev=None):
     key = [v for v in focus if v.get("area") == V.ANCHOR or (v["anti"] and not v.get("party_line"))]
     rest = [v for v in focus if v not in key]
     picked = sorted(key[-28:] + rest[-max(0, 34 - len(key[-28:])):], key=lambda v: v["date"])
-    votes = [f"{v['date']} [{V.AREA_LABEL.get(v.get('area'), 'other')}] {v['measure']}: {v['position']} "
+    votes = [f"{v['date']} [{V.AREA_LABEL.get(v.get('area'), 'other')}]{' [non-binding]' if V.non_binding(v) else ''} {v['measure']}: {v['position']} "
              f"({'anti' if v['anti'] else 'interventionist'}"
              f"{'; own party ' + str(v.get('own_party_share')) + '% same' if v.get('own_party_share') is not None else ''}"
              f") {v['summary'][:70]}"

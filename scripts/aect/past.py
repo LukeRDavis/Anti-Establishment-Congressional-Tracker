@@ -23,7 +23,7 @@ from . import votes as V
 
 FIRST = int(os.environ.get("AECT_HISTORY_FROM", "107"))
 OUT_DIR = os.path.join("data", "history")
-VERSION = 11
+VERSION = 12
 URL = "https://voteview.com/static/data/out/{kind}/{ch}{congress}_{kind}.csv"
 CAST = {1: "Yea", 2: "Yea", 3: "Yea", 4: "Nay", 5: "Nay", 6: "Nay"}
 
@@ -133,8 +133,14 @@ def _judged_focus(congress, ch_letter, judgments, budget):
         text = " ".join(r.get(f, "") for f in ("bill_number", "vote_question", "vote_desc", "dtl_desc"))
         # standalone aid bills often carry only a generic title ("Making emergency supplemental
         # appropriations for ..."), so passage votes on any spending bill go to the judge too
-        if not (V.TOPIC.search(text) or (PASSAGE.search(r.get("vote_question", "")) and SPEND.search(text))):
-            continue
+        # aid can also ride on an unrelated shell bill (the 2024 Israel-Ukraine-Taiwan supplemental
+        # was H.R. 815, titled as a veterans bill): passage votes on any bill are checked against
+        # the bill's own Congress.gov summary
+        if not V.TOPIC.search(text):
+            if not (PASSAGE.search(r.get("vote_question", "")) and r.get("bill_number")):
+                continue
+            if not SPEND.search(text) and not V.TOPIC.search(_bill_context(congress, r.get("bill_number", "")) or ""):
+                continue
         n = _num(r.get("rollnumber"))
         date = r.get("date", "")
         # same judgment keys as the current-Congress pipeline: House by the Clerk's yearly roll
@@ -256,7 +262,7 @@ def rate(history):
             rec = record.setdefault(m["bioguide_id"], [])
             rec.extend(v for v in m["votes"] if v.get("area"))
             anti = [v for v in rec if v["anti"]]
-            breaking = [v for v in anti if not v.get("party_line")]
+            breaking = [v for v in anti if not v.get("party_line") and not V.non_binding(v)]
             areas = V.area_record(rec)
             has_anchor = m.get("chamber") in anchor_seen
             if has_anchor:
