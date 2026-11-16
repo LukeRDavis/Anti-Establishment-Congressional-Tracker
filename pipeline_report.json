@@ -1,16 +1,16 @@
 {
- "run_at": "2026-11-15T21:25:05.637216+00:00",
- "runtime_s": 1574,
+ "run_at": "2026-11-16T06:59:15.922442+00:00",
+ "runtime_s": 3578,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
   "gemini": 0,
   "xai": 0,
-  "openrouter": 4,
-  "groq": 11,
+  "openrouter": 23,
+  "groq": 37,
   "cerebras": 0,
   "mistral": 0,
-  "failed": 90
+  "failed": 24
  },
  "streams": {
   "key:CONGRESS_KEY": {
@@ -144,38 +144,44 @@
   "fec_candidates": {
    "ok": true,
    "count": 4353,
-   "requests": 0,
+   "requests": 44,
    "failures": 0,
    "errors": [],
    "notes": [
-    "cache fresh"
+    "4353 active 2026 House+Senate filers"
    ]
   },
   "fec_finance": {
    "ok": true,
-   "count": 4021,
-   "requests": 0,
+   "count": 3840,
+   "requests": 46,
    "failures": 0,
    "errors": [],
    "notes": [
-    "cache fresh"
+    "totals for 3840 filers"
    ]
   },
   "trackaipac": {
    "ok": true,
-   "count": 0,
-   "requests": 0,
+   "count": 1,
+   "requests": 2,
    "failures": 0,
    "errors": [],
-   "notes": []
+   "notes": [
+    "/congress: 1 members, 1 approved",
+    "/endorsements: 0 endorsed candidates"
+   ]
   },
   "rlc": {
    "ok": true,
    "count": 283,
-   "requests": 0,
+   "requests": 4,
    "failures": 0,
    "errors": [],
-   "notes": []
+   "notes": [
+    "Liberty Index cache fresh",
+    "endorsements: 9 candidates"
+   ]
   },
   "votes_senate_voteview": {
    "ok": true,
@@ -208,21 +214,19 @@
    ]
   },
   "ballotpedia": {
-   "ok": false,
-   "count": 0,
-   "requests": 17,
-   "failures": 1,
-   "errors": [
-    "circuit opened: only empty responses (blocked for this host)"
-   ],
+   "ok": true,
+   "count": 68,
+   "requests": 614,
+   "failures": 0,
+   "errors": [],
    "notes": [
-    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Willie_Montague | 200 0B '' https://ballotpedia.org/Missi_Hesketh | 200 0B '' https://ballotpedia.org/Brandon_Herrera | 200 0B '' https://ballotpedia.org/Jerrad_Christian | 200 0B '' https://ballotpedia.org/Tanya_Lloyd | 200 0B '' https://ballotpedia.org/Analilia_Mejia"
+    "outcomes {'matched': 68, 'no_page': 545, 'other_state': 1} \u00b7 probes: 200 616790B 'Ruben Gallego - Ballotpedia' https://ballotpedia.org/Ruben_Gallego | 200 565568B 'Joni Ernst - Ballotpedia' https://ballotpedia.org/Joni_Ernst | 200 593073B 'Tammy Duckworth - Ballotpedia' https://ballotpedia.org/Tammy_Duckworth | 200 568291B 'Kirsten Gillibrand - Ballotpedia' tps://ballotpedia.org/Kirsten_Gillibrand | 200 350857B 'John Fetterman - Ballotpedia' https://ballotpedia.org/John_Fetterman | 200 521962B 'Deb Fischer - Ballotpedia' https://ballotpedia.org/Deb_Fischer | 200 567197B 'Dick Durbin - Ballotpedia' https://ballotpedia.org/Richard_Durbin"
    ]
   },
   "wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 376,
+   "requests": 392,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -230,7 +234,7 @@
   "grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 63,
+   "requests": 71,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -252,7 +256,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "85 state election pages (0 refreshed) \u00b7 1272 result boxes"
+    "85 state election pages (0 refreshed) \u00b7 1271 result boxes"
    ]
   },
   "poll_closes": {
@@ -601,15 +605,15 @@
   "campaign_sites": {
    "ok": null,
    "count": 0,
-   "requests": 110,
-   "failures": 33,
+   "requests": 58,
+   "failures": 9,
    "errors": [
     "URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/",
+    "HTTP 403 https://www.sherrodbrown.com/ :: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA",
     "HTTP 403 https://www.rajaforil.com/ :: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA",
     "URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.natemorris.com/",
     "URLError: <urlopen error [Errno -2] Name or service not known> :: https://www,shawnforgeorgia.com/",
-    "URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1018)> :: https://marklambforcongress.com/",
-    "URLError: <urlopen error [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1018)> :: https://www.danforusa.com/"
+    "URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1018)> :: https://marklambforcongress.com/"
    ],
    "notes": []
   },
@@ -633,13 +637,13 @@
   "ai_groq": {
    "ok": null,
    "count": 0,
-   "requests": 16,
+   "requests": 45,
    "failures": 5,
    "errors": [
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199657, Requested 1907. Please try again in 11m15.648s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199102, Requested 1407. Please try again in 3m39.888s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198733, Requested 1719. Please try again in 3m15.263999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `allam-2-7b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 4721, Requested 1924. Please try again in 6.45s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198591, Requested 1782. Please try again in 2m41.136s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199944, Requested 1019. Please try again in 6m56.015999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198883, Requested 1223. Please try again in 45.792s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `allam-2-7b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 3512, Requested 2752. Please try again in 2.639999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
     "circuit opened: every available model failed or is over quota"
    ],
    "notes": [
@@ -649,8 +653,8 @@
   "ai_mistral": {
    "ok": null,
    "count": 0,
-   "requests": 373,
-   "failures": 372,
+   "requests": 185,
+   "failures": 184,
    "errors": [
     "HTTP 402 https://api.mistral.ai/v1/chat/completions :: {\"object\":\"error\",\"message\":\"API budget exhausted.\",\"type\":\"billing_api_budget_exhausted\",\"param\":null,\"code\":\"2303\",\"raw_status_code\":402}"
    ],
@@ -661,12 +665,11 @@
   "ai_openrouter": {
    "ok": null,
    "count": 0,
-   "requests": 10,
-   "failures": 6,
+   "requests": 97,
+   "failures": 4,
    "errors": [
-    "HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit exceeded: free-models-per-day-high-balance. \",\"code\":429,\"metadata\":{\"headers\":{\"X-RateLimit-Limit\":\"1000\",\"X-RateLimit-Remaining\":\"0\",\"X-RateLimit-Reset\":\"1794787200000\"},\"limit_source\":\"openrouter_free_tier_daily\",\"remedy_hint\":\"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model daily limit.\",\"provider_name\":null}},\"user",
-    "HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit exceeded: free-models-per-day-high-balance. \",\"code\":429,\"metadata\":{\"headers\":{\"X-RateLimit-Limit\":\"1000\",\"X-RateLimit-Remaining\":\"0\",\"X-RateLimit-Reset\":\"1794787200000\"},\"limit_source\":\"openrouter_free_tier_daily\",\"remedy_hint\":\"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model daily limit.\",\"provider_name\":null,\"previo",
-    "circuit opened: every available model failed or is over quota"
+    "HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok\",\"provider_name\":\"Google AI Studio\",\"is_byok\":false,\"provider_error_code\":\"429\",\"limit_source\":\"upstream_provider_shared_pool\",\"remedy_hin",
+    "HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"google/gemma-4-26b-a4b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok\",\"provider_name\":\"Google AI Studio\",\"is_byok\":false,\"provider_error_code\":\"429\",\"limit_source\":\"upstream_provider_shared_pool\",\"remedy"
    ],
    "notes": [
     "models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/gemma-4-31b-it:free, google/gemma-4-26b-a4b-it:free, nvidia/nemotron-3.5-super-vl:free, openrouter/free"
@@ -679,17 +682,17 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "researched 60 this run (no_source: 96, campaign_site_text: 59, wikipedia_text: 1) \u00b7 2686 total \u00b7 18 with cited anti-interventionist positions"
+    "researched 60 this run (no_source: 27, wikipedia_text: 23, campaign_site_text: 37) \u00b7 2686 total \u00b7 18 with cited anti-interventionist positions"
    ]
   },
   "fec_outside_spending": {
    "ok": true,
    "count": 458,
-   "requests": 0,
+   "requests": 132,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 0, 458 candidates with outside-spending records"
+    "refreshed 132, 458 candidates with outside-spending records"
    ]
   },
   "discharge_petitions": {
@@ -705,7 +708,7 @@
   "dossier_news_google": {
    "ok": null,
    "count": 0,
-   "requests": 88,
+   "requests": 46,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -713,7 +716,7 @@
   "dossier_wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 33,
+   "requests": 14,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -721,7 +724,7 @@
   "dossier_grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 40,
+   "requests": 19,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -733,7 +736,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "25 hard \u00b7 151 soft \u00b7 judged 40 with AI this run \u00b7 verdicts from AI 51, rule 125 \u00b7 AI has reviewed 2930 of 2932 members and running candidates (628 with signals)"
+    "25 hard \u00b7 151 soft \u00b7 judged 19 with AI this run \u00b7 verdicts from AI 58, rule 118 \u00b7 AI has reviewed 2930 of 2933 members and running candidates (629 with signals)"
    ]
   },
   "market_polymarket": {
@@ -766,12 +769,12 @@
   },
   "market_kalshi": {
    "ok": true,
-   "count": 22162,
+   "count": 22156,
    "requests": 40,
    "failures": 0,
    "errors": [],
    "notes": [
-    "40 pages \u00b7 22162 political markets"
+    "40 pages \u00b7 22156 political markets"
    ]
   },
   "market_predictit": {
@@ -791,7 +794,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "23060 market outcomes loaded \u00b7 14 tracked people matched"
+    "23054 market outcomes loaded \u00b7 14 tracked people matched"
    ]
   },
   "market_kalshi_settled": {
@@ -826,7 +829,7 @@
   },
   "election_night": {
    "ok": true,
-   "count": 134,
+   "count": 133,
    "requests": 0,
    "failures": 0,
    "errors": [],
@@ -837,11 +840,11 @@
   "committees": {
    "ok": true,
    "count": 10,
-   "requests": 0,
+   "requests": 2,
    "failures": 0,
    "errors": [],
    "notes": [
-    "cached"
+    "10 committees for planks power, anti_arms"
    ]
   },
   "reform_wikipedia": {
