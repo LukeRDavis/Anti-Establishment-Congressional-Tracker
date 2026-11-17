@@ -1,16 +1,16 @@
 {
- "run_at": "2026-11-17T13:36:07.473554+00:00",
- "runtime_s": 2058,
+ "run_at": "2026-11-17T23:58:50.065607+00:00",
+ "runtime_s": 1852,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
   "gemini": 0,
   "xai": 0,
   "openrouter": 0,
-  "groq": 20,
+  "groq": 54,
   "cerebras": 0,
   "mistral": 0,
-  "failed": 85
+  "failed": 51
  },
  "streams": {
   "key:CONGRESS_KEY": {
@@ -144,44 +144,38 @@
   "fec_candidates": {
    "ok": true,
    "count": 4353,
-   "requests": 44,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "4353 active 2026 House+Senate filers"
+    "cache fresh"
    ]
   },
   "fec_finance": {
    "ok": true,
    "count": 3940,
-   "requests": 46,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "totals for 3940 filers"
+    "cache fresh"
    ]
   },
   "trackaipac": {
    "ok": true,
-   "count": 1,
-   "requests": 2,
+   "count": 0,
+   "requests": 0,
    "failures": 0,
    "errors": [],
-   "notes": [
-    "/congress: 1 members, 1 approved",
-    "/endorsements: 0 endorsed candidates"
-   ]
+   "notes": []
   },
   "rlc": {
    "ok": true,
    "count": 283,
-   "requests": 4,
+   "requests": 0,
    "failures": 0,
    "errors": [],
-   "notes": [
-    "Liberty Index cache fresh",
-    "endorsements: 9 candidates"
-   ]
+   "notes": []
   },
   "votes_senate_voteview": {
    "ok": true,
@@ -222,13 +216,13 @@
     "circuit opened: only empty responses (blocked for this host)"
    ],
    "notes": [
-    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Nick_Pyati | 200 0B '' https://ballotpedia.org/Sarah_Zabel | 200 0B '' https://ballotpedia.org/Ammie_Akin | 200 0B '' https://ballotpedia.org/Madison_Sheahan | 200 0B '' https://ballotpedia.org/Caroline_Shinkle | 200 0B '' https://ballotpedia.org/Matthew_Rains"
+    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Brenton_Awa | 200 0B '' https://ballotpedia.org/Chris_Espinosa | 200 0B '' https://ballotpedia.org/Pete_Barlow | 200 0B '' https://ballotpedia.org/Bajun_Mavalwalla | 200 0B '' https://ballotpedia.org/Lauren_Pena | 200 0B '' https://ballotpedia.org/Courtney_McClain"
    ]
   },
   "wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 658,
+   "requests": 674,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -236,7 +230,7 @@
   "grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 204,
+   "requests": 212,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -258,13 +252,13 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "85 state election pages (0 refreshed) \u00b7 1272 result boxes"
+    "85 state election pages (0 refreshed) \u00b7 1274 result boxes"
    ]
   },
   "poll_closes": {
    "ok": true,
    "count": 51,
-   "requests": 0,
+   "requests": 1,
    "failures": 0,
    "errors": [],
    "notes": [
@@ -400,6 +394,44 @@
     "cached",
     "cached",
     "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "first poll-closing time for 0 states on 2026-12-12",
     "cached",
     "cached",
     "cached",
@@ -609,19 +641,19 @@
   },
   "fec_websites": {
    "ok": true,
-   "count": 740,
-   "requests": 0,
+   "count": 753,
+   "requests": 16,
    "failures": 0,
    "errors": [],
    "notes": [
-    "looked up 0 committees \u00b7 740 campaign websites known"
+    "looked up 16 committees \u00b7 753 campaign websites known"
    ]
   },
   "campaign_sites": {
    "ok": null,
    "count": 0,
-   "requests": 129,
-   "failures": 57,
+   "requests": 126,
+   "failures": 60,
    "errors": [
     "URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/",
     "HTTP 403 https://www.rajaforil.com/ :: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA",
@@ -652,13 +684,13 @@
   "ai_groq": {
    "ok": null,
    "count": 0,
-   "requests": 26,
+   "requests": 65,
    "failures": 5,
    "errors": [
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199407, Requested 1521. Please try again in 6m40.896s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199273, Requested 2077. Please try again in 9m43.2s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199320, Requested 711. Please try again in 13.392s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `allam-2-7b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per minute (TPM): Limit 6000, Used 5029, Requested 2599. Please try again in 16.279999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199259, Requested 1203. Please try again in 3m19.584s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199843, Requested 424. Please try again in 1m55.344s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199126, Requested 1374. Please try again in 3m36s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Please reduce the length of the messages or completion.\",\"type\":\"invalid_request_error\",\"param\":\"messages\"}} ",
     "circuit opened: every available model failed or is over quota"
    ],
    "notes": [
@@ -668,8 +700,8 @@
   "ai_mistral": {
    "ok": null,
    "count": 0,
-   "requests": 337,
-   "failures": 336,
+   "requests": 201,
+   "failures": 200,
    "errors": [
     "HTTP 402 https://api.mistral.ai/v1/chat/completions :: {\"object\":\"error\",\"message\":\"API budget exhausted.\",\"type\":\"billing_api_budget_exhausted\",\"param\":null,\"code\":\"2303\",\"raw_status_code\":402}"
    ],
@@ -698,17 +730,17 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "researched 60 this run (no_source: 200, campaign_site_text: 36, wikipedia_text: 24) \u00b7 2686 total \u00b7 19 with cited anti-interventionist positions"
+    "researched 60 this run (no_source: 246, campaign_site_text: 29, wikipedia_text: 31) \u00b7 2686 total \u00b7 19 with cited anti-interventionist positions"
    ]
   },
   "fec_outside_spending": {
    "ok": true,
    "count": 458,
-   "requests": 132,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 132, 458 candidates with outside-spending records"
+    "refreshed 0, 458 candidates with outside-spending records"
    ]
   },
   "discharge_petitions": {
@@ -724,7 +756,7 @@
   "dossier_news_google": {
    "ok": null,
    "count": 0,
-   "requests": 90,
+   "requests": 127,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -752,7 +784,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "25 hard \u00b7 151 soft \u00b7 judged 40 with AI this run \u00b7 verdicts from AI 84, rule 92 \u00b7 AI has reviewed 2919 of 2922 members and running candidates (629 with signals)"
+    "25 hard \u00b7 151 soft \u00b7 judged 40 with AI this run \u00b7 verdicts from AI 85, rule 91 \u00b7 AI has reviewed 2892 of 2895 members and running candidates (627 with signals)"
    ]
   },
   "market_polymarket": {
@@ -785,22 +817,22 @@
   },
   "market_kalshi": {
    "ok": true,
-   "count": 21840,
+   "count": 21791,
    "requests": 40,
    "failures": 0,
    "errors": [],
    "notes": [
-    "40 pages \u00b7 21840 political markets"
+    "40 pages \u00b7 21791 political markets"
    ]
   },
   "market_predictit": {
    "ok": true,
-   "count": 547,
+   "count": 557,
    "requests": 1,
    "failures": 0,
    "errors": [],
    "notes": [
-    "547 live contracts"
+    "557 live contracts"
    ]
   },
   "markets": {
@@ -810,7 +842,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "22733 market outcomes loaded \u00b7 12 tracked people matched"
+    "22694 market outcomes loaded \u00b7 12 tracked people matched"
    ]
   },
   "market_kalshi_settled": {
@@ -840,7 +872,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "called by both 208 \u00b7 Wikipedia only 123 \u00b7 markets only 645 \u00b7 conflicting 7"
+    "called by both 212 \u00b7 Wikipedia only 123 \u00b7 markets only 641 \u00b7 conflicting 7"
    ]
   },
   "election_night": {
@@ -850,17 +882,17 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "108 races frozen at poll close \u00b7 103 called"
+    "108 races frozen at poll close \u00b7 104 called"
    ]
   },
   "committees": {
    "ok": true,
    "count": 10,
-   "requests": 0,
+   "requests": 2,
    "failures": 0,
    "errors": [],
    "notes": [
-    "cached"
+    "10 committees for planks power, anti_arms"
    ]
   },
   "reform_wikipedia": {
