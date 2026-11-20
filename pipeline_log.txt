@@ -20,75 +20,38 @@ AECT pipeline v10 — 2026-11-20 · 119th Congress · 2026 cycle
   [congress_gov] 1 current members in Congress.gov not in roster files
 
 [2] FEC candidates and finance
-  [fec_candidates] cache fresh
-  [fec_finance] cache fresh
+  [fec_candidates] 4355 active 2026 House+Senate filers
+  [fec_finance] totals for 3878 filers
 
 [4c] Trackers
+  [trackaipac] /congress: 1 members, 1 approved
+  [trackaipac] /endorsements: 0 endorsed candidates
+  [rlc] Liberty Index cache fresh
+  [rlc] endorsements: 9 candidates
 
-  People universe: 4464 (533 members, 3931 candidates)
+  People universe: 4466 (533 members, 3933 candidates)
 
 [4a] Roll-call votes
   [votes_house_xml] 2928 House roll calls cached (+0 this run)
-  [votes_senate_voteview] 2567 Senate roll calls indexed from Voteview (+0 topical this run)
-  [votes_ai_relevance] 1002 topical roll calls · 146 judged relevant · 0 awaiting AI judgment
+  [votes_senate_voteview] 2570 Senate roll calls indexed from Voteview (+1 topical this run)
+  [ai_gemini] models available: gemini-3.8-flash, gemini-3.7-flash, gemini-3.6-flash, gemini-3.5-flash, gemini-3-flash-preview, gemini-2.5-flash
+    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc.Help
+    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc.Help
+    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc.Help
+    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc.Help
+    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateCon :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc.Help
+    HTTP 404 https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?k :: {   "error": {     "code": 404,     "message": "This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://aistudio.google.com/docs/get-started).",     "status": "NOT_FOUND"   } } 
+  [ai_groq] models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
+    ↺ senate-2026-928: anti side corrected Nay→Yea (Yea advances a measure that restricts)
+    ✓ senate-2026-928 HCONRES93: major — anti=Yea — The Senate rejected a concurrent resolution directing the President to withdraw U.S. force
+  [votes_ai_relevance] 1003 topical roll calls · 147 judged relevant · 0 awaiting AI judgment
 
 [3] General information
   [primary_calendar] cache fresh
   ⚡ ballotpedia: circuit opened (only empty responses (blocked for this host)) — skipping its remaining calls
-  [enrichment] refreshed 250/250 this run · 1554/4464 people have a bio
-  [ballotpedia] outcomes {'no_page': 17} · probes: 200 0B '' https://ballotpedia.org/Joseph_Cooney | 200 0B '' https://ballotpedia.org/Thomas_Willis | 200 0B '' https://ballotpedia.org/Carleigh_Beriont | 200 0B '' https://ballotpedia.org/Jerrod_Sessler | 200 0B '' https://ballotpedia.org/Katy_Tyndell | 200 0B '' https://ballotpedia.org/John_Vincent
+  [enrichment] refreshed 250/250 this run · 1555/4466 people have a bio
+  [ballotpedia] outcomes {'no_page': 15} · probes: 200 0B '' https://ballotpedia.org/Caroline_Shinkle | 200 0B '' https://ballotpedia.org/Madison_Sheahan | 200 0B '' https://ballotpedia.org/Ammie_Akin | 200 0B '' https://ballotpedia.org/Nick_Pyati | 200 0B '' https://ballotpedia.org/Sarah_Zabel | 200 0B '' https://ballotpedia.org/Matthew_Rains
   [wikipedia_results] 85 state election pages (0 refreshed) · 1275 result boxes
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
   [poll_closes] cached
   [poll_closes] cached
   [poll_closes] cached
@@ -424,29 +387,73 @@ AECT pipeline v10 — 2026-11-20 · 119th Congress · 2026 cycle
   [poll_closes] cached
   [poll_closes] cached
   [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
 
 [4b] Candidate positions (AI research)
-  [fec_websites] looked up 0 committees · 757 campaign websites known
-  [ai_gemini] models available: gemini-3.8-flash, gemini-3.7-flash, gemini-3.6-flash, gemini-3.5-flash, gemini-3-flash-preview, gemini-2.5-flash
-    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc.Help
-    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc.Help
-    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc.Help
-    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc.Help
-    HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateCon :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc.Help
-    HTTP 404 https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?k :: {   "error": {     "code": 404,     "message": "This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://aistudio.google.com/docs/get-started).",     "status": "NOT_FOUND"   } } 
+  [fec_websites] looked up 1 committees · 758 campaign websites known
+    HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
   ⚡ ai_gemini: circuit opened (every available model is over quota or retired) — skipping its remaining calls
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/
     HTTP 403 https://www.rajaforil.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.natemorris.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www,shawnforgeorgia.com/
     URLError: <urlopen error [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1018)> :: https://www.danforusa.com/
-    RemoteDisconnected: Remote end closed connection without response :: https://amyroma.com/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://www.alanpardee.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.mandelforcongress.us/
-    HTTP 520 https://www.jenkinsforfl.com/ :: error code: 520 
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.erbeckforohio.com/
-    HTTP 502 https://www.aaronforny23.com/ :: <html> <head><title>502 Bad Gateway</title></head> <body> <center><h1>502 Bad Gateway</h1></center> <hr><center>nginx</center> </body> </html> 
-    RemoteDisconnected: Remote end closed connection without response :: https://micahqjones.com/
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'meganorourkeforcongress.com'. (_ssl.c:1018)> :: https://meganorourkeforcongress.com/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://leejohnsonforsc.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.danformaine.com/
@@ -454,22 +461,18 @@ AECT pipeline v10 — 2026-11-20 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.raymondesmithjr.com/
     URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://rickjakious.com/
     URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1018)> :: https://joelforkentucky.com/
-    HTTP 520 https://rondakennedy.com/ :: error code: 520 
-    RemoteDisconnected: Remote end closed connection without response :: https://vincentmatriscianoforcongress.com/
     URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://voteanna4congress.com/
-    RemoteDisconnected: Remote end closed connection without response :: https://davedawsonforiowa.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.tonyguyforcongress.com/
     URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1018)> :: https://joshcowenmi.com/
     URLError: <urlopen error [Errno 111] Connection refused> :: https://blau4congress.com/
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1018)> :: https://www.katherinealeman.com/
-    RemoteDisconnected: Remote end closed connection without response :: https://bradmeyer.org/
-    HTTP 503 https://www.chrisbrandlin.com/ :: The deployment is currently unavailable  DEPLOYMENT_PAUSED  sfo1::jwj67-1795157771006-d1539608de5d 
+    HTTP 503 https://www.chrisbrandlin.com/ :: The deployment is currently unavailable  DEPLOYMENT_PAUSED  sfo1::zk8q9-1795194009010-2626ee21e5a1 
+    HTTP 500 https://kurdianforcongress.com/ ::  <!DOCTYPE html> <html lang="en">   <head>     <meta charset="UTF-8">     <meta name="viewport" content="width=device-width, initial-scale=1.0">     <meta http-
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1018)> :: https://timmyersforcongress.com/
     URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://dalourny.nyc/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.drkednermaximeforcongress.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://roperforcongress.com/
     URLError: <urlopen error [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1018)> :: https://carl4congress.com/
-    HTTP 502 https://www.mariajukicforcongress.com/ :: <html> <head><title>502 Bad Gateway</title></head> <body> <center><h1>502 Bad Gateway</h1></center> <hr><center>nginx</center> </body> </html> 
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.carlosmooref4ga.com/
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: certificate has expired (_ssl.c:1018)> :: https://moedavis.com/
     URLError: <urlopen error [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1018)> :: https://ahlmanfornebraska.com/
@@ -477,6 +480,7 @@ AECT pipeline v10 — 2026-11-20 · 119th Congress · 2026 cycle
     URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1018)> :: https://colecarter2026.com/
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1018)> :: https://jeblittleforsenate.com/
     HTTP 403 https://www.stokerfortexas.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198229, Requested 1881. Please try again in 47.52s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     URLError: <urlopen error timed out> :: https://scottforussenate.com/
     HTTP 403 https://www.troymcghie.com/ :: <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN"> <html><head> <title>403 Forbidden</title> </head><body> <h1>Forbidden</h1> <p>You don't have permission to ac
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://johnmcbride4congress.com/
@@ -484,31 +488,29 @@ AECT pipeline v10 — 2026-11-20 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://isabelleharman.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.believeinsteve.org/
     URLError: <urlopen error timed out> :: https://seanforva.com/
-    RemoteDisconnected: Remote end closed connection without response :: https://leemcinnis4alabama.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://charay@charayforcongress.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://jerliiaryans.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://aguilar4uscongress.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.loritadaniels.com/
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1018)> :: https://michelleforconnecticut.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.phillipformaine.com/
-    RemoteDisconnected: Remote end closed connection without response :: https://seanpond.com/
-    HTTP 503 https://www.levforcongress.org/ :: The deployment is currently unavailable  DEPLOYMENT_PAUSED  sfo1::kjgq5-1795157844501-38ab9c8be912 
+    HTTP 503 https://www.levforcongress.org/ :: The deployment is currently unavailable  DEPLOYMENT_PAUSED  sfo1::vrvfd-1795194100314-c36e3931cd9b 
     HTTP 401 https://miracleforthefuture.com/ ::   <!doctype html> <html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml" itemscope itemtype="http://schema.org/Thing
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://votekd4c.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.jonahschulzforcongress.com
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://votehutch.nyc
     URLError: <urlopen error [Errno 111] Connection refused> :: https://electericalee.com
-  [ai_positions] researched 0 this run (no_source: 1776) · 2687 total · 19 with cited anti-interventionist positions
+  [ai_positions] researched 3 this run (wikipedia_text: 1, no_source: 1776, campaign_site_text: 2) · 2689 total · 19 with cited anti-interventionist positions
 
 [4d] Outside spending
-  [fec_outside_spending] refreshed 0, 458 candidates with outside-spending records
+  [fec_outside_spending] refreshed 132, 458 candidates with outside-spending records
 
 [4e'] House discharge petitions (signers, from the Clerk)
   [discharge_petitions] cached
 
 [4e] Reliable vs soft anti-establishment (AI over scraped dossiers)
-  [ai_groq] models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 194105, Requested 6499. Please try again in 4m20.928s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
     HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Please reduce the length of the messages or completion.","type":"invalid_request_error","param":"messages"}} 
   [ai_mistral] models available: mistral-medium-latest, mistral-medium, mistral-medium-3-5, mistral-medium-3.5
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
@@ -516,13 +518,13 @@ AECT pipeline v10 — 2026-11-20 · 119th Congress · 2026 cycle
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
   [ai_openrouter] models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/gemma-4-31b-it:free, google/gemma-4-26b-a4b-it:free, nvidia/nemotron-3.5-super-vl:free, openrouter/free
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy_hin
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy_hin
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-26b-a4b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-26b-a4b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 197924, Requested 5904. Please try again in 27m33.696s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198773, Requested 6925. Please try again in 41m1.536s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198846, Requested 5951. Please try again in 34m32.304s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+    HTTP 404 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"0 endpoints out of 1 requested are available matching your guardrail restrictions and data policy. We removed them for the following reasons (an endpoint may have matched multiple reasons):\nFree model training violation (account settings): 1 endpoint excluded; configurable at https://openrouter.ai/settings/privacy\nZDR violation (account settings): 1 endpoint excluded; config
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day-high-balance. ","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"1000","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1795219200000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model daily limit.","provider_name":null}},"user
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day-high-balance. ","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"1000","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1795219200000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model daily limit.","provider_name":null}},"user
+    HTTP 404 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"0 endpoints out of 1 requested are available matching your guardrail restrictions and data policy. We removed them for the following reasons (an endpoint may have matched multiple reasons):\nFree model training violation (account settings): 1 endpoint excluded; configurable at https://openrouter.ai/settings/privacy\nZDR violation (account settings): 1 endpoint excluded; config
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Rate limit exceeded: free-models-per-day-high-balance. ","code":429,"metadata":{"headers":{"X-RateLimit-Limit":"1000","X-RateLimit-Remaining":"0","X-RateLimit-Reset":"1795219200000"},"limit_source":"openrouter_free_tier_daily","remedy_hint":"Wait for the daily reset (see X-RateLimit-Reset), or purchase credits to raise your free-model daily limit.","provider_name":null,"previo
+  ⚡ ai_openrouter: circuit opened (every available model failed or is over quota) — skipping its remaining calls
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199917, Requested 6113. Please try again in 43m24.96s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
   ⚡ ai_groq: circuit opened (every available model failed or is over quota) — skipping its remaining calls
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
@@ -592,23 +594,111 @@ AECT pipeline v10 — 2026-11-20 · 119th Congress · 2026 cycle
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
-  [establishment_tiers] 25 hard · 151 soft · judged 18 with AI this run · verdicts from AI 125, rule 51 · AI has reviewed 2884 of 2887 members and running candidates (625 with signals)
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+    HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
+  [establishment_tiers] 25 hard · 151 soft · judged 40 with AI this run · verdicts from AI 129, rule 47 · AI has reviewed 2882 of 2887 members and running candidates (622 with signals)
 
 [5] Prediction markets
   [market_polymarket] 800 catalog pages scanned · 49 open congressional markets
   [market_kalshi_races] 474 House/Senate race events
-  [market_kalshi] 40 pages · 21804 political markets
-  [market_predictit] 546 live contracts
-  [markets] 22685 market outcomes loaded · 8 tracked people matched
+  [market_kalshi] 40 pages · 21794 political markets
+  [market_predictit] 541 live contracts
+  [markets] 22670 market outcomes loaded · 8 tracked people matched
   [market_kalshi_settled] 761 settled race outcomes
   [market_settlements] 906 candidates called by settled markets, 8 with markets disagreeing
   [poll_closes] cached
-  [results_cross_check] called by both 220 · Wikipedia only 128 · markets only 639 · conflicting 9
+  [results_cross_check] called by both 222 · Wikipedia only 129 · markets only 637 · conflicting 9
   [poll_closes] cached
   [election_night] 108 races frozen at poll close · 104 called
 
 [6] Committee rosters
-  [committees] 10 committees for planks power, anti_arms
+  [committees] cached
 
 [7] Electoral reform (alternative voting systems)
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
@@ -629,46 +719,47 @@ AECT pipeline v10 — 2026-11-20 · 119th Congress · 2026 cycle
 STREAM                       STATUS     COUNT  NOTES / ERRORS
 ────────────────────────────────────────────────────────────────────────
 ai_gemini                    —              0  HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "er
-ai_groq                      —              0  HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Please reduce the length of t
+ai_groq                      —              0  HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model 
 ai_mistral                   —              0  HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","ty
-ai_openrouter                —              0  HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code"
-ai_positions                 OK          2687  researched 0 this run (no_source: 1776) · 2687 total · 19 with cited anti-interventionist positions
+ai_openrouter                —              0  HTTP 404 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"0 endpoints out of 1 requested 
+ai_positions                 OK          2689  researched 3 this run (wikipedia_text: 1, no_source: 1776, campaign_site_text: 2) · 2689 total · 19 with cited
 ballotpedia                  FAIL           0  circuit opened: only empty responses (blocked for this host)
-campaign_sites               —              0  URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/
-committees                   OK            10  10 committees for planks power, anti_arms
+campaign_sites               —              0  HTTP 403 https://www.tanyafortexas.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</ti
+committees                   OK            10  cached
 congress_gov                 OK           539  1 current members in Congress.gov not in roster files
 discharge_petitions          OK            60  cached
 dossier_grokipedia           —              0  
+dossier_news_bing            —              0  
 dossier_news_google          —              0  
 dossier_wikipedia            —              0  
 election_night               OK           133  108 races frozen at poll close · 104 called
-enrichment                   OK          1554  refreshed 250/250 this run · 1554/4464 people have a bio
-establishment_tiers          OK            25  25 hard · 151 soft · judged 18 with AI this run · verdicts from AI 125, rule 51 · AI has reviewed 2884 of 2887
-fec_candidates               OK          4353  cache fresh
-fec_finance                  OK          4012  cache fresh
-fec_outside_spending         OK           458  refreshed 0, 458 candidates with outside-spending records
-fec_websites                 OK           757  looked up 0 committees · 757 campaign websites known
+enrichment                   OK          1555  refreshed 250/250 this run · 1555/4466 people have a bio
+establishment_tiers          OK            25  25 hard · 151 soft · judged 40 with AI this run · verdicts from AI 129, rule 47 · AI has reviewed 2882 of 2887
+fec_candidates               OK          4355  4355 active 2026 House+Senate filers
+fec_finance                  OK          3878  totals for 3878 filers
+fec_outside_spending         OK           458  refreshed 132, 458 candidates with outside-spending records
+fec_websites                 OK           758  looked up 1 committees · 758 campaign websites known
 grokipedia                   —              0  
-market_kalshi                OK         21804  40 pages · 21804 political markets
+market_kalshi                OK         21794  40 pages · 21794 political markets
 market_kalshi_races          OK           286  474 House/Senate race events
 market_kalshi_senate         —              0  
 market_kalshi_settled        OK           761  761 settled race outcomes
 market_polymarket            OK            49  800 catalog pages scanned · 49 open congressional markets
-market_predictit             OK           546  546 live contracts
+market_predictit             OK           541  541 live contracts
 market_settlements           OK           914  906 candidates called by settled markets, 8 with markets disagreeing
-markets                      OK             8  22685 market outcomes loaded · 8 tracked people matched
+markets                      OK             8  22670 market outcomes loaded · 8 tracked people matched
 poll_closes                  OK            51  cached
 primary_calendar             OK            50  cache fresh
 reform                       OK            65  65 items from 13 source texts · 3 still to read
 reform_wikipedia             —              0  
-results_cross_check          OK           996  called by both 220 · Wikipedia only 128 · markets only 639 · conflicting 9
-rlc                          OK           283  
+results_cross_check          OK           997  called by both 222 · Wikipedia only 129 · markets only 637 · conflicting 9
+rlc                          OK           283  endorsements: 9 candidates
 roster_house                 OK           433  433 Representatives + 6 delegates, 2 vacancies (published November 3, 2026)
 roster_senate                OK           100  no longer voting (roster file stale): Ben Luján
-trackaipac                   OK             0  
-votes_ai_relevance           OK           146  1002 topical roll calls · 146 judged relevant · 0 awaiting AI judgment
+trackaipac                   OK             1  /endorsements: 0 endorsed candidates
+votes_ai_relevance           OK           147  1003 topical roll calls · 147 judged relevant · 0 awaiting AI judgment
 votes_house_xml              OK          2928  2026 roll 328: no <vote-metadata> (root <xml>)
-votes_senate_voteview        OK          2567  2567 Senate roll calls indexed from Voteview (+0 topical this run)
+votes_senate_voteview        OK          2570  2570 Senate roll calls indexed from Voteview (+1 topical this run)
 votes_senate_xml             —              0  
 wikipedia                    —              0  
 wikipedia_results            OK            85  85 state election pages (0 refreshed) · 1275 result boxes
@@ -682,7 +773,7 @@ wikipedia_results            OK            85  85 state election pages (0 refres
   "I": 2
  },
  "anti_candidates": 5,
- "relevant_votes": 146,
+ "relevant_votes": 147,
  "odds": 8,
  "history_events_added": 0
 }
