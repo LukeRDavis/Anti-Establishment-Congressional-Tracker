@@ -771,7 +771,8 @@ function Verdict({member}) {
       Risk of folding: political ${member.tier_risk.political||"?"}, money ${member.tier_risk.capital||"?"}${member.tier_risk.notes ? " · " : ""}${md(member.tier_risk.notes)}</div>` : null}
     <div style=${{fontSize:8.5,fontFamily:FM,color:"#4b5563",marginTop:7,borderTop:"1px solid #1a1d27",paddingTop:5}}>
       ${ai ? "Analysis by " + (member.judged_model || member.tier_source.slice(3)) + " (" + member.tier_source.slice(3) + ")" + (when ? " · " + when : "")
-           : "Rule-based call from the record; AI review pending" + (when ? " · " + when : "")}
+             + (member.tier_stale ? " · the record has changed since; a fresh review is queued" : "")
+           : "Rule-based call from the record; AI review queued (it works through every member on free AI tiers)" + (when ? " · " + when : "")}
     </div>
   </div>`;
 }

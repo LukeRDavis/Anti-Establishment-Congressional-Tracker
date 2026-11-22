@@ -337,7 +337,7 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
                 "principle": p.get("tier_principle"), "judged_model": p.get("tier_model"),
                 "judged_at": p.get("tier_judged_at"), "confidence": p.get("tier_confidence"),
                 "discharge_petitions": p.get("discharge_petitions", []),
-                "bridge": p.get("bridge"), "leadership": p.get("tier_leadership"),
+                "bridge": p.get("bridge"), "leadership": p.get("tier_leadership"), "tier_stale": p.get("tier_stale"),
                 "tier_facts": {k: (p.get("tier_facts") or {}).get(k) for k in (
                     "focus_votes", "anti_focus_votes", "anti_congresses", "latest_congress_focus",
                     "lobby_money_trackaipac", "lobby_outside_support", "lobby_outside_oppose",
@@ -385,7 +385,7 @@ def frontend_data(people, markets, fec_totals, fec_ie, history, relevant_votes, 
                       "primary_date": p.get("primary_date"),
                       "bottom_line": p.get("tier_bottom_line") or "", "tier_reason": p.get("tier_reason") or "",
                       "writeup": p.get("tier_writeup", ""), "judged_model": p.get("tier_model"),
-                      "judged_at": p.get("tier_judged_at"), "tier_source": p.get("tier_source"),
+                      "judged_at": p.get("tier_judged_at"), "tier_source": p.get("tier_source"), "tier_stale": p.get("tier_stale"),
                       "confidence": p.get("tier_confidence"),
                       "description": _clean_desc(p.get("description"))[:300]})
     anti_members = [m for m in members if m["antiArms"]]

@@ -47,7 +47,7 @@ def verdict_fields(p):
         "bottom_line": p.get("tier_bottom_line", ""), "principle": p.get("tier_principle"),
         "judged_model": p.get("tier_model"), "judged_at": p.get("tier_judged_at"),
         "confidence": p.get("tier_confidence"),
-        "bridge": p.get("bridge"), "leadership": p.get("tier_leadership"),
+        "bridge": p.get("bridge"), "leadership": p.get("tier_leadership"), "tier_stale": p.get("tier_stale"),
     }
 
 

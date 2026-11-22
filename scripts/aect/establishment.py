@@ -633,10 +633,17 @@ def run(people, ie, fec_cands, fec_totals=None):
     bill_cache = load_cache("member_bills")
     head_cache = load_cache("headline_screen")
     bills_left, heads_left = BILLS_BUDGET, HEADLINE_BUDGET
+    from .build import general_election_day
+    from .config import CYCLE, TODAY
+    after_general = TODAY.isoformat() > general_election_day(CYCLE)
     keys = []
     for k, p in people.items():
         running = (not p.get("incumbent") and p.get("on_ballot") and p.get("ps") not in ("DEFEATED", "WITHDREW")
                    and p.get("primary_result") not in ("LOST", "WITHDREW"))
+        if running and after_general:
+            # once the general is held, only nominees whose race is won or still uncalled are left;
+            # everyone else's campaign is over and would only crowd the AI queue
+            running = p.get("primary_result") == "WON" and p.get("general_result") != "LOST"
         if not (p.get("incumbent") or running):
             continue
         if p.get("incumbent"):
@@ -730,6 +737,17 @@ def run(people, ie, fec_cands, fec_totals=None):
                     save_cache("fec_employers", emp_cache)
         if verdict is None and old.get("source", "").startswith("ai") and old.get("v") == JUDGE_VERSION:
             verdict = old                            # stale AI verdict beats the rule until refreshed
+        if verdict is None and old.get("v") == JUDGE_VERSION and old.get("source", "").startswith("ai"):
+            # the record changed (or the verdict aged out) and no AI capacity was left this run:
+            # keep showing the last AI review under the current standard, re-checked against the
+            # tracker's hard limits on today's facts, until the re-review lands
+            verdict = {**old, "stale": True}
+            if verdict["tier"] == "hard" and f["incumbent"] and f["focus_votes"] and \
+                    (not _sustained(f) or not meets_floor(f)):
+                verdict["tier"] = "soft"
+                verdict["bottom_line"] = ("Does not count today: " + (_anchor_gap(f) if not _sustained(f)
+                                          else "the record no longer meets the floor") +
+                                          ". Earlier review: " + (old.get("bottom_line") or old.get("reason") or ""))
         if verdict is None:
             tier, why = rule_tier(f, p)
             verdict = {"tier": tier, "reason": why, "evidence": [], "source": "rule"}
@@ -756,6 +774,7 @@ def run(people, ie, fec_cands, fec_totals=None):
         p["tier_model"] = verdict.get("model")
         p["tier_judged_at"] = verdict.get("judged_at") or verdict.get("at")
         p["tier_confidence"] = verdict.get("confidence_index")
+        p["tier_stale"] = bool(verdict.get("stale"))
         p["_leadership"] = verdict.get("leadership")
         p["tier_leadership"] = verdict.get("leadership")
         p["discharge_petitions"] = [{k: d[k] for k in ("no", "measure", "about", "url", "signed")}

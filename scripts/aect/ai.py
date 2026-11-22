@@ -229,6 +229,9 @@ _MIN_INTERVAL = {"groq": float(os.environ.get("AECT_GROQ_MIN_INTERVAL", "9")),
                  "openrouter": float(os.environ.get("AECT_OPENROUTER_MIN_INTERVAL", "4"))}
 
 
+_LAST_MODEL_CALL = {}
+
+
 def _pace(provider):
     import time
     gap = _MIN_INTERVAL.get(provider, 0) - (time.time() - _LAST_CALL.get(provider, 0))
@@ -257,7 +260,11 @@ def _openai_compat(url, key, provider, system, prompt):
                "X-Title": "AECT"}
     dead = _DEAD_MODELS.setdefault(provider, set())
     models = [m for m in compat_models(provider) if m not in dead]
-    for model in models:
+    if provider == "groq":
+        # Groq's free tier meters tokens per minute per model, and one review is most of a minute's
+        # allowance: start with the model that has rested longest instead of waiting on the same one
+        models.sort(key=lambda m: _LAST_MODEL_CALL.get(m, 0))
+    for i, model in enumerate(models):
         # Groq caps output tokens per minute on some models; a write-up fits well under 1,000
         payload = {"model": model, "temperature": 0.1, "max_tokens": 1000 if provider == "groq" else 2048,
                    "messages": [{"role": "system", "content": system +
@@ -267,10 +274,13 @@ def _openai_compat(url, key, provider, system, prompt):
             # hard price cap: OpenRouter refuses rather than routes to anything that costs money
             payload["provider"] = {"max_price": {"prompt": 0, "completion": 0}}
         _pace(provider)
+        _LAST_MODEL_CALL[model] = __import__("time").time()
         resp = post_json(url, payload, headers, stream_name=stream_name)
         if not resp:
             code, body = LAST_HTTP_STATUS.get(stream_name), LAST_ERROR_BODY.get(stream_name, "")
             wait = _short_wait(code, body)
+            if wait and provider == "groq" and i < len(models) - 1:
+                continue                     # per-minute limit on this model: try a rested one first
             if wait:                         # a per-minute limit: wait it out once and retry this model
                 import time
                 time.sleep(wait)
@@ -281,6 +291,11 @@ def _openai_compat(url, key, provider, system, prompt):
                     continue
         if not resp:
             code, body = LAST_HTTP_STATUS.get(stream_name), LAST_ERROR_BODY.get(stream_name, "")
+            if code in (401, 402, 403) or re.search(r"budget exhausted|insufficient (?:credits|balance)|billing", body, re.I):
+                # the account itself is out of free budget (or the key is refused): no model of this
+                # provider will answer, so stop calling it for the rest of the run
+                circuit_trip(stream_name, f"account refused ({code}): {body[:80]}")
+                return None, None
             if code == 404 or (code == 400 and "tool_use_failed" not in body) or \
                     (code == 429 and re.search(r"per[- ]day|daily|credits|billing", body, re.I)):
                 dead.add(model)          # retired, or out of quota for the day
