@@ -20,14 +20,10 @@ AECT pipeline v10 — 2026-11-22 · 119th Congress · 2026 cycle
   [congress_gov] 1 current members in Congress.gov not in roster files
 
 [2] FEC candidates and finance
-  [fec_candidates] 4355 active 2026 House+Senate filers
-  [fec_finance] totals for 4028 filers
+  [fec_candidates] cache fresh
+  [fec_finance] cache fresh
 
 [4c] Trackers
-  [trackaipac] /congress: 1 members, 1 approved
-  [trackaipac] /endorsements: 0 endorsed candidates
-  [rlc] Liberty Index cache fresh
-  [rlc] endorsements: 9 candidates
 
   People universe: 4466 (533 members, 3933 candidates)
 
@@ -38,10 +34,80 @@ AECT pipeline v10 — 2026-11-22 · 119th Congress · 2026 cycle
 
 [3] General information
   [primary_calendar] cache fresh
-  ⚡ ballotpedia: circuit opened (only empty responses (blocked for this host)) — skipping its remaining calls
   [enrichment] refreshed 250/250 this run · 1555/4466 people have a bio
-  [ballotpedia] outcomes {'no_page': 17} · probes: 200 0B '' https://ballotpedia.org/Everyone | 200 0B '' https://ballotpedia.org/Troy_Green | 200 0B '' https://ballotpedia.org/Zurit_Horowitz | 200 0B '' https://ballotpedia.org/Sean_Pond | 200 0B '' https://ballotpedia.org/Billy_Mawhiney | 200 0B '' //ballotpedia.org/Galvin_Deleon_Guerrero
+  [ballotpedia] outcomes {'matched': 42, 'other_state': 1, 'no_page': 623} · probes: 200 183343B 'Tanya Lloyd - Ballotpedia' https://ballotpedia.org/Tanya_Lloyd | 200 172808B 'Brandon Herrera - Ballotpedia' https://ballotpedia.org/Brandon_Herrera | 200 234890B 'Missi Hesketh - Ballotpedia' https://ballotpedia.org/Missi_Hesketh | 200 204934B 'Jerrad Christian - Ballotpedia' https://ballotpedia.org/Jerrad_Christian | 200 215073B 'Willie Montague - Ballotpedia' https://ballotpedia.org/Willie_Montague | 200 190888B 'Analilia Mejia - Ballotpedia' https://ballotpedia.org/Analilia_Mejia
   [wikipedia_results] 85 state election pages (0 refreshed) · 1275 result boxes
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
+  [poll_closes] cached
   [poll_closes] cached
   [poll_closes] cached
   [poll_closes] cached
@@ -400,81 +466,9 @@ AECT pipeline v10 — 2026-11-22 · 119th Congress · 2026 cycle
   [poll_closes] cached
   [poll_closes] cached
   [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
-  [poll_closes] cached
 
 [4b] Candidate positions (AI research)
   [fec_websites] looked up 0 committees · 766 campaign websites known
-    URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/
   [ai_gemini] models available: gemini-3.8-flash, gemini-3.7-flash, gemini-3.6-flash, gemini-3.5-flash, gemini-3-flash-preview, gemini-2.5-flash
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc.Help
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?k :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc.Help
@@ -483,13 +477,18 @@ AECT pipeline v10 — 2026-11-22 · 119th Congress · 2026 cycle
     HTTP 429 https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateCon :: {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://aistudio.google.com/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. ",     "status": "RESOURCE_EXHAUSTED",     "details": [       {         "@type": "type.googleapis.com/google.rpc.Help
     HTTP 404 https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?k :: {   "error": {     "code": 404,     "message": "This model models/gemini-2.5-flash is no longer available to new users. Please update your code to use models/gemini-3.8-flash for the latest features and improvements. We recommend you to use the Interactions API (https://aistudio.google.com/docs/get-started).",     "status": "NOT_FOUND"   } } 
   ⚡ ai_gemini: circuit opened (every available model is over quota or retired) — skipping its remaining calls
+    URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/
     HTTP 403 https://www.rajaforil.com/ :: <!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.natemorris.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www,shawnforgeorgia.com/
     URLError: <urlopen error [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1018)> :: https://www.danforusa.com/
+    RemoteDisconnected: Remote end closed connection without response :: https://amyroma.com/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://www.alanpardee.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.mandelforcongress.us/
+    HTTP 520 https://www.jenkinsforfl.com/ :: error code: 520 
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.erbeckforohio.com/
+    HTTP 502 https://www.aaronforny23.com/ :: <html> <head><title>502 Bad Gateway</title></head> <body> <center><h1>502 Bad Gateway</h1></center> <hr><center>nginx</center> </body> </html> 
+    RemoteDisconnected: Remote end closed connection without response :: https://micahqjones.com/
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'meganorourkeforcongress.com'. (_ssl.c:1018)> :: https://meganorourkeforcongress.com/
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://leejohnsonforsc.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.danformaine.com/
@@ -497,18 +496,23 @@ AECT pipeline v10 — 2026-11-22 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.raymondesmithjr.com/
     URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://rickjakious.com/
     URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1018)> :: https://joelforkentucky.com/
+    HTTP 520 https://rondakennedy.com/ :: error code: 520 
+    RemoteDisconnected: Remote end closed connection without response :: https://vincentmatriscianoforcongress.com/
     URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://voteanna4congress.com/
+    RemoteDisconnected: Remote end closed connection without response :: https://davedawsonforiowa.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.tonyguyforcongress.com/
     URLError: <urlopen error [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1018)> :: https://joshcowenmi.com/
     URLError: <urlopen error [Errno 111] Connection refused> :: https://blau4congress.com/
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1018)> :: https://www.katherinealeman.com/
     RemoteDisconnected: Remote end closed connection without response :: https://bradmeyer.org/
-    HTTP 503 https://www.chrisbrandlin.com/ :: The deployment is currently unavailable  DEPLOYMENT_PAUSED  cle1::tm57q-1795310033245-48d721a9422f 
+    HTTP 503 https://www.chrisbrandlin.com/ :: The deployment is currently unavailable  DEPLOYMENT_PAUSED  pdx1::z84pc-1795313307398-89add3215b9d 
     URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1018)> :: https://timmyersforcongress.com/
+  [ai_groq] models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
     URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://dalourny.nyc/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.drkednermaximeforcongress.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://roperforcongress.com/
     URLError: <urlopen error [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1018)> :: https://carl4congress.com/
+    HTTP 502 https://www.mariajukicforcongress.com/ :: <html> <head><title>502 Bad Gateway</title></head> <body> <center><h1>502 Bad Gateway</h1></center> <hr><center>nginx</center> </body> </html> 
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.carlosmooref4ga.com/
     URLError: <urlopen error [Errno 111] Connection refused> :: https://moedavis.com/
     URLError: <urlopen error [SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] ssl/tls alert handshake failure (_ssl.c:1018)> :: https://ahlmanfornebraska.com/
@@ -523,6 +527,7 @@ AECT pipeline v10 — 2026-11-22 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -5] No address associated with hostname> :: https://isabelleharman.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.believeinsteve.org/
     URLError: <urlopen error timed out> :: https://seanforva.com/
+    RemoteDisconnected: Remote end closed connection without response :: https://leemcinnis4alabama.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://charay@charayforcongress.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://jerliiaryans.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://aguilar4uscongress.com/
@@ -533,25 +538,24 @@ AECT pipeline v10 — 2026-11-22 · 119th Congress · 2026 cycle
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://amandapohlforcongress.com/
     HTTP 403 https://billbledsoeforcongress.com/ :: 403 Forbidden
     RemoteDisconnected: Remote end closed connection without response :: https://seanpond.com/
-    HTTP 503 https://www.levforcongress.org/ :: The deployment is currently unavailable  DEPLOYMENT_PAUSED  cle1::8d9z4-1795310114445-92644c43b554 
+    HTTP 503 https://www.levforcongress.org/ :: The deployment is currently unavailable  DEPLOYMENT_PAUSED  pdx1::9ffdd-1795313384782-ef1a38f50858 
     HTTP 401 https://miracleforthefuture.com/ ::   <!doctype html> <html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml" itemscope itemtype="http://schema.org/Thing
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://votekd4c.com/
     URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.jonahschulzforcongress.com
     URLError: <urlopen error [Errno -3] Temporary failure in name resolution> :: https://votehutch.nyc
     URLError: <urlopen error [Errno 111] Connection refused> :: https://electericalee.com
-  [ai_positions] researched 0 this run (no_source: 1764) · 2690 total · 19 with cited anti-interventionist positions
+  [ai_positions] researched 1 this run (no_source: 1763, campaign_site_text: 1) · 2690 total · 19 with cited anti-interventionist positions
 
 [4d] Outside spending
-  [fec_outside_spending] refreshed 132, 458 candidates with outside-spending records
+  [fec_outside_spending] refreshed 0, 458 candidates with outside-spending records
 
 [4e'] House discharge petitions (signers, from the Clerk)
   [discharge_petitions] cached
 
 [4e] Reliable vs soft anti-establishment (AI over scraped dossiers)
-  [ai_groq] models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b
-    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 197426, Requested 5556. Please try again in 21m28.224s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
-  ⚡ ai_groq: circuit opened (account refused (429): {"error":{"message":"Rate limit reached for model `openai/gpt-oss-120b` in organ) — skipping its remaining calls
+    HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 195262, Requested 6700. Please try again in 14m7.584s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing","type":"tokens","code":"rate_limit_exceeded"}} 
+  ⚡ ai_groq: circuit opened (account refused (429): {"error":{"message":"Rate limit reached for model `qwen/qwen3.8-27b` in organiza) — skipping its remaining calls
   [ai_mistral] models available: mistral-medium-latest, mistral-medium, mistral-medium-3-5, mistral-medium-3.5
     HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_exhausted","param":null,"code":"2303","raw_status_code":402}
   ⚡ ai_mistral: circuit opened (account refused (402): {"object":"error","message":"API budget exhausted.","type":"billing_api_budget_e) — skipping its remaining calls
@@ -562,10 +566,10 @@ AECT pipeline v10 — 2026-11-22 · 119th Congress · 2026 cycle
     HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-26b-a4b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy
     HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-26b-a4b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy
     HTTP 404 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"0 endpoints out of 1 requested are available matching your guardrail restrictions and data policy. We removed them for the following reasons (an endpoint may have matched multiple reasons):\nFree model training violation (account settings): 1 endpoint excluded; configurable at https://openrouter.ai/settings/privacy\nZDR violation (account settings): 1 endpoint excluded; config
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"inclusionai/ling-3.2-flash:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Ant Digital","is_byok":false,"provider_error_code":"TooManyRequests","limit_source":"upstream_provider_shared_pool"
-    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy_hin
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-26b-a4b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy
+    HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"Provider returned error","code":429,"metadata":{"raw":"google/gemma-4-26b-a4b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok","provider_name":"Google AI Studio","is_byok":false,"provider_error_code":"429","limit_source":"upstream_provider_shared_pool","remedy
   ⚡ ai_openrouter: circuit opened (every available model failed or is over quota) — skipping its remaining calls
-  [establishment_tiers] 25 hard · 151 soft · judged 40 with AI this run · verdicts from AI 151, rule 25 · AI has reviewed 1033 of 1036 members and running candidates (605 with signals)
+  [establishment_tiers] 25 hard · 151 soft · judged 40 with AI this run · verdicts from AI 154, rule 22 · AI has reviewed 1033 of 1036 members and running candidates (605 with signals)
 
 [5] Prediction markets
   [market_polymarket] 800 catalog pages scanned · 47 open congressional markets
@@ -593,22 +597,23 @@ ai_gemini                    —              0  HTTP 429 https://generativelang
 ai_groq                      —              0  HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {"error":{"message":"Rate limit reached for model 
 ai_mistral                   —              0  HTTP 402 https://api.mistral.ai/v1/chat/completions :: {"object":"error","message":"API budget exhausted.","ty
 ai_openrouter                —              0  HTTP 404 https://openrouter.ai/api/v1/chat/completions :: {"error":{"message":"0 endpoints out of 1 requested 
-ai_positions                 OK          2690  researched 0 this run (no_source: 1764) · 2690 total · 19 with cited anti-interventionist positions
-ballotpedia                  FAIL           0  circuit opened: only empty responses (blocked for this host)
+ai_positions                 OK          2690  researched 1 this run (no_source: 1763, campaign_site_text: 1) · 2690 total · 19 with cited anti-interventioni
+ballotpedia                  OK            42  outcomes {'matched': 42, 'other_state': 1, 'no_page': 623} · probes: 200 183343B 'Tanya Lloyd - Ballotpedia' h
 campaign_sites               —              0  URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/
 committees                   OK            10  cached
 congress_gov                 OK           539  1 current members in Congress.gov not in roster files
 discharge_petitions          OK            60  cached
+dossier_ballotpedia          —              0  
 dossier_grokipedia           —              0  
 dossier_news_bing            —              0  
 dossier_news_google          —              0  
 dossier_wikipedia            —              0  
 election_night               OK           133  108 races frozen at poll close · 104 called
 enrichment                   OK          1555  refreshed 250/250 this run · 1555/4466 people have a bio
-establishment_tiers          OK            25  25 hard · 151 soft · judged 40 with AI this run · verdicts from AI 151, rule 25 · AI has reviewed 1033 of 1036
-fec_candidates               OK          4355  4355 active 2026 House+Senate filers
-fec_finance                  OK          4028  totals for 4028 filers
-fec_outside_spending         OK           458  refreshed 132, 458 candidates with outside-spending records
+establishment_tiers          OK            25  25 hard · 151 soft · judged 40 with AI this run · verdicts from AI 154, rule 22 · AI has reviewed 1033 of 1036
+fec_candidates               OK          4355  cache fresh
+fec_finance                  OK          4028  cache fresh
+fec_outside_spending         OK           458  refreshed 0, 458 candidates with outside-spending records
 fec_websites                 OK           766  looked up 0 committees · 766 campaign websites known
 grokipedia                   —              0  
 market_kalshi                OK         21746  40 pages · 21746 political markets
@@ -624,10 +629,10 @@ primary_calendar             OK            50  cache fresh
 reform                       OK            65  65 items from 13 source texts · 3 still to read
 reform_wikipedia             —              0  
 results_cross_check          OK          1011  called by both 250 · Wikipedia only 141 · markets only 611 · conflicting 9
-rlc                          OK           283  endorsements: 9 candidates
+rlc                          OK           283  
 roster_house                 OK           433  433 Representatives + 6 delegates, 2 vacancies (published November 3, 2026)
 roster_senate                OK           100  no longer voting (roster file stale): Ben Luján
-trackaipac                   OK             1  /endorsements: 0 endorsed candidates
+trackaipac                   OK             0  
 votes_ai_relevance           OK           147  1003 topical roll calls · 147 judged relevant · 0 awaiting AI judgment
 votes_house_xml              OK          2928  2026 roll 328: no <vote-metadata> (root <xml>)
 votes_senate_voteview        OK          2578  2578 Senate roll calls indexed from Voteview (+0 topical this run)
