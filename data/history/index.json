@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-11-22T15:32:26.027553+00:00",
+ "updated_at": "2026-11-22T15:54:54.733333+00:00",
  "first": 107,
  "current": 119,
  "congresses": [
@@ -110,7 +110,7 @@
    ],
    "anti": {
     "house": 1,
-    "senate": 12
+    "senate": 11
    }
   },
   {
@@ -121,7 +121,7 @@
    ],
    "anti": {
     "house": 4,
-    "senate": 10
+    "senate": 9
    }
   },
   {
@@ -132,7 +132,7 @@
    ],
    "anti": {
     "house": 14,
-    "senate": 3
+    "senate": 2
    }
   }
  ],
