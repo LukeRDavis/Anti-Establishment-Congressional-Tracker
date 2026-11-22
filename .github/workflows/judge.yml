@@ -44,7 +44,7 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch -q origin "${GITHUB_REF_NAME}" && python scripts/merge_caches.py "origin/${GITHUB_REF_NAME}" || true
-          for f in data.json candidates.json data/cache; do [ -e "$f" ] && git add "$f"; done
+          for f in data.json candidates.json data/cache data/history; do [ -e "$f" ] && git add "$f"; done
           git diff --cached --quiet && exit 0
           git commit -m "chore: judge verdicts [skip ci]"
           for i in 1 2 3; do

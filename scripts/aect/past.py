@@ -252,6 +252,8 @@ def rate(history):
     is not available for past Congresses), and consistent on the anchor area, aid to Israel; the other
     areas are supporting evidence (military aid and sanctions judged country by country)."""
     from . import bridge as B
+    from .establishment import JUDGE_VERSION
+    reviews = {k: j for k, j in (load_cache("history_judgments") or {}).items() if j.get("v") == JUDGE_VERSION}
     record, anchor_seen, bridges = {}, set(), {}
     for c in sorted(history):
         # a chamber that has not yet held a roll call on the anchor can't be judged on it:
@@ -276,6 +278,12 @@ def rate(history):
             qualifies = m["antiArms"]
             bid = m["bioguide_id"]
             b = bridges.get(bid)
+            # an AI review can keep a first-time qualifier out (principle vs posture), as it does
+            # today; it cannot end a bridge already standing (only the three events do that)
+            review = reviews.get(f"{c}-{bid}")
+            ai_out = bool(review and qualifies and review["tier"] != "hard" and not (b and not b.get("ended")))
+            if ai_out:
+                qualifies = False
             ended_now = None
             if b and not b.get("ended"):
                 brk = B.anchor_break(rec, b["since"])
@@ -320,6 +328,15 @@ def rate(history):
                                 + ("" if has_anchor else f" No roll call on {V.AREA_LABEL[V.ANCHOR]} had been held in this "
                                    "chamber yet, so this is judged on consistency in every area engaged.")
                                 + " (Rule-based from Voteview roll calls.)")
+            m.pop("writeup", None)
+            if review:
+                m["tier_source"] = f"ai:{review.get('provider') or 'ai'}"
+                m["judged_model"], m["judged_at"] = review.get("model"), review.get("judged_at")
+                m["confidence"], m["writeup"] = review.get("confidence"), review.get("writeup") or ""
+                lead = ("Does not count: " if not m["antiArms"] else
+                        "Counts as anti-establishment (carried forward): " if carried else "Counts as anti-establishment: ")
+                m["bottom_line"] = lead + (review.get("bottom_line") or m["bottom_line"])
+            m["ai_review_due"] = bool(m["antiArms"] and not review)
     return history, bridges
 
 
@@ -353,7 +370,33 @@ def sync(max_congresses=3):
         history[c] = d
         built += 1
         print(f"  history: {c}th Congress built ({len(d['members'])} members, focus rolls {d['focus_rolls']})")
-    # members who still serve show under the name the current roster uses
+    # members who still serve show under the name the current roster uses (in publish)
+    publish(history, waiting)
+    return waiting
+
+
+def rerate():
+    """Re-apply the rules (and any new AI reviews) to the Congresses already built, and rewrite them."""
+    history = {}
+    for c in range(FIRST, CURRENT_CONGRESS):
+        try:
+            with open(os.path.join(OUT_DIR, f"raw_{c}.json")) as f:
+                d = json.load(f)
+        except Exception:
+            continue
+        if d.get("v") == VERSION:
+            history[c] = d
+    try:
+        with open(os.path.join(OUT_DIR, "index.json")) as f:
+            waiting = json.load(f).get("remaining", 0)
+    except Exception:
+        waiting = 0
+    if history:
+        publish(history, waiting)
+    return history
+
+
+def publish(history, waiting):
     try:
         with open("data.json") as f:
             names = {m["bioguide_id"]: m["name"] for m in json.load(f).get("members", []) if m.get("bioguide_id")}
@@ -377,4 +420,3 @@ def sync(max_congresses=3):
                    "congresses": index, "remaining": waiting}, f, indent=1)
     stream("history", ok=bool(history), count=len(history),
            note=f"{len(history)} past Congresses ready · {waiting} still to build")
-    return waiting
