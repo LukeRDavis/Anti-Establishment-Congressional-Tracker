@@ -1,16 +1,16 @@
 {
- "run_at": "2026-11-22T06:36:19.775700+00:00",
- "runtime_s": 1125,
+ "run_at": "2026-11-22T16:33:18.897591+00:00",
+ "runtime_s": 1409,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
   "gemini": 0,
   "xai": 0,
-  "openrouter": 0,
-  "groq": 3,
+  "openrouter": 1,
+  "groq": 0,
   "cerebras": 0,
   "mistral": 0,
-  "failed": 41
+  "failed": 44
  },
  "streams": {
   "key:CONGRESS_KEY": {
@@ -144,38 +144,44 @@
   "fec_candidates": {
    "ok": true,
    "count": 4355,
-   "requests": 0,
+   "requests": 44,
    "failures": 0,
    "errors": [],
    "notes": [
-    "cache fresh"
+    "4355 active 2026 House+Senate filers"
    ]
   },
   "fec_finance": {
    "ok": true,
-   "count": 4028,
-   "requests": 0,
+   "count": 4044,
+   "requests": 46,
    "failures": 0,
    "errors": [],
    "notes": [
-    "cache fresh"
+    "totals for 4044 filers"
    ]
   },
   "trackaipac": {
    "ok": true,
-   "count": 0,
-   "requests": 0,
+   "count": 1,
+   "requests": 2,
    "failures": 0,
    "errors": [],
-   "notes": []
+   "notes": [
+    "/congress: 1 members, 1 approved",
+    "/endorsements: 0 endorsed candidates"
+   ]
   },
   "rlc": {
    "ok": true,
    "count": 283,
-   "requests": 0,
+   "requests": 4,
    "failures": 0,
    "errors": [],
-   "notes": []
+   "notes": [
+    "Liberty Index cache fresh",
+    "endorsements: 9 candidates"
+   ]
   },
   "votes_senate_voteview": {
    "ok": true,
@@ -208,21 +214,19 @@
    ]
   },
   "ballotpedia": {
-   "ok": false,
-   "count": 0,
-   "requests": 17,
-   "failures": 1,
-   "errors": [
-    "circuit opened: only empty responses (blocked for this host)"
-   ],
+   "ok": true,
+   "count": 60,
+   "requests": 630,
+   "failures": 0,
+   "errors": [],
    "notes": [
-    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Terry_Jackson | 200 0B '' https://ballotpedia.org/Damon_Galdo | 200 0B '' https://ballotpedia.org/Ernest_Rivera | 200 0B '' https://ballotpedia.org/Justin_Pinker | 200 0B '' https://ballotpedia.org/Eric_Cunningham | 200 0B '' https://ballotpedia.org/Mario_Morales"
+    "outcomes {'matched': 60, 'no_page': 569, 'other_state': 1} \u00b7 probes: 200 616764B 'Ruben Gallego - Ballotpedia' https://ballotpedia.org/Ruben_Gallego | 200 350857B 'John Fetterman - Ballotpedia' https://ballotpedia.org/John_Fetterman | 200 565562B 'Joni Ernst - Ballotpedia' https://ballotpedia.org/Joni_Ernst | 200 593871B 'Tammy Duckworth - Ballotpedia' https://ballotpedia.org/Tammy_Duckworth | 200 521938B 'Deb Fischer - Ballotpedia' https://ballotpedia.org/Deb_Fischer | 200 567217B 'Dick Durbin - Ballotpedia' https://ballotpedia.org/Richard_Durbin"
    ]
   },
   "wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 706,
+   "requests": 392,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -230,7 +234,7 @@
   "grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 228,
+   "requests": 71,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -262,76 +266,6 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
     "cached",
     "cached",
     "cached",
@@ -692,23 +626,95 @@
     "cached",
     "cached",
     "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
     "cached"
    ]
   },
   "fec_websites": {
    "ok": true,
-   "count": 766,
-   "requests": 0,
+   "count": 767,
+   "requests": 1,
    "failures": 0,
    "errors": [],
    "notes": [
-    "looked up 0 committees \u00b7 766 campaign websites known"
+    "looked up 1 committees \u00b7 767 campaign websites known"
    ]
   },
   "campaign_sites": {
    "ok": null,
    "count": 0,
-   "requests": 109,
+   "requests": 108,
    "failures": 67,
    "errors": [
     "URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/",
@@ -740,70 +746,15 @@
   "ai_groq": {
    "ok": null,
    "count": 0,
-   "requests": 6,
-   "failures": 3,
+   "requests": 2,
+   "failures": 2,
    "errors": [
-    "HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Please reduce the length of the messages or completion.\",\"type\":\"invalid_request_error\",\"param\":\"messages\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 197810, Requested 5481. Please try again in 23m41.712s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198217, Requested 2282. Please try again in 3m35.567999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
     "circuit opened: account refused (429): {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organ"
    ],
    "notes": [
     "models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b"
    ]
-  },
-  "ai_positions": {
-   "ok": true,
-   "count": 2690,
-   "requests": 0,
-   "failures": 0,
-   "errors": [],
-   "notes": [
-    "researched 3 this run (no_source: 1762, campaign_site_text: 2, wikipedia_text: 1) \u00b7 2690 total \u00b7 19 with cited anti-interventionist positions"
-   ]
-  },
-  "fec_outside_spending": {
-   "ok": true,
-   "count": 458,
-   "requests": 0,
-   "failures": 0,
-   "errors": [],
-   "notes": [
-    "refreshed 0, 458 candidates with outside-spending records"
-   ]
-  },
-  "discharge_petitions": {
-   "ok": true,
-   "count": 60,
-   "requests": 0,
-   "failures": 0,
-   "errors": [],
-   "notes": [
-    "cached"
-   ]
-  },
-  "dossier_news_google": {
-   "ok": null,
-   "count": 0,
-   "requests": 81,
-   "failures": 0,
-   "errors": [],
-   "notes": []
-  },
-  "dossier_wikipedia": {
-   "ok": null,
-   "count": 0,
-   "requests": 35,
-   "failures": 0,
-   "errors": [],
-   "notes": []
-  },
-  "dossier_grokipedia": {
-   "ok": null,
-   "count": 0,
-   "requests": 40,
-   "failures": 0,
-   "errors": [],
-   "notes": []
   },
   "ai_mistral": {
    "ok": null,
@@ -821,8 +772,8 @@
   "ai_openrouter": {
    "ok": null,
    "count": 0,
-   "requests": 9,
-   "failures": 9,
+   "requests": 12,
+   "failures": 10,
    "errors": [
     "HTTP 404 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"0 endpoints out of 1 requested are available matching your guardrail restrictions and data policy. We removed them for the following reasons (an endpoint may have matched multiple reasons):\\nFree model training violation (account settings): 1 endpoint excluded; configurable at https://openrouter.ai/settings/privacy\\nZDR violation (account settings): 1 endpoint excluded; config",
     "HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok\",\"provider_name\":\"Google AI Studio\",\"is_byok\":false,\"provider_error_code\":\"429\",\"limit_source\":\"upstream_provider_shared_pool\",\"remedy_hin",
@@ -834,6 +785,68 @@
     "models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/gemma-4-31b-it:free, google/gemma-4-26b-a4b-it:free, nvidia/nemotron-3.5-super-vl:free, openrouter/free"
    ]
   },
+  "ai_positions": {
+   "ok": true,
+   "count": 2690,
+   "requests": 0,
+   "failures": 0,
+   "errors": [],
+   "notes": [
+    "researched 1 this run (no_source: 1761, campaign_site_text: 1) \u00b7 2690 total \u00b7 19 with cited anti-interventionist positions"
+   ]
+  },
+  "fec_outside_spending": {
+   "ok": true,
+   "count": 458,
+   "requests": 132,
+   "failures": 0,
+   "errors": [],
+   "notes": [
+    "refreshed 132, 458 candidates with outside-spending records"
+   ]
+  },
+  "discharge_petitions": {
+   "ok": true,
+   "count": 60,
+   "requests": 0,
+   "failures": 0,
+   "errors": [],
+   "notes": [
+    "cached"
+   ]
+  },
+  "dossier_wikipedia": {
+   "ok": null,
+   "count": 0,
+   "requests": 36,
+   "failures": 0,
+   "errors": [],
+   "notes": []
+  },
+  "dossier_grokipedia": {
+   "ok": null,
+   "count": 0,
+   "requests": 40,
+   "failures": 0,
+   "errors": [],
+   "notes": []
+  },
+  "dossier_ballotpedia": {
+   "ok": null,
+   "count": 0,
+   "requests": 3,
+   "failures": 0,
+   "errors": [],
+   "notes": []
+  },
+  "dossier_news_google": {
+   "ok": null,
+   "count": 0,
+   "requests": 87,
+   "failures": 0,
+   "errors": [],
+   "notes": []
+  },
   "dossier_news_bing": {
    "ok": null,
    "count": 0,
@@ -844,12 +857,12 @@
   },
   "establishment_tiers": {
    "ok": true,
-   "count": 25,
+   "count": 13,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "25 hard \u00b7 151 soft \u00b7 judged 40 with AI this run \u00b7 verdicts from AI 154, rule 22 \u00b7 AI has reviewed 1033 of 1036 members and running candidates (605 with signals)"
+    "13 hard \u00b7 163 soft \u00b7 judged 40 with AI this run \u00b7 verdicts from AI 154, rule 22 \u00b7 AI has reviewed 1032 of 1035 members and running candidates (605 with signals)"
    ]
   },
   "market_polymarket": {
@@ -864,7 +877,7 @@
   },
   "market_kalshi_races": {
    "ok": true,
-   "count": 291,
+   "count": 292,
    "requests": 3,
    "failures": 0,
    "errors": [],
@@ -907,7 +920,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "22601 market outcomes loaded \u00b7 7 tracked people matched"
+    "22602 market outcomes loaded \u00b7 7 tracked people matched"
    ]
   },
   "market_kalshi_settled": {
@@ -932,12 +945,12 @@
   },
   "results_cross_check": {
    "ok": true,
-   "count": 1011,
+   "count": 1013,
    "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "called by both 250 \u00b7 Wikipedia only 141 \u00b7 markets only 611 \u00b7 conflicting 9"
+    "called by both 250 \u00b7 Wikipedia only 143 \u00b7 markets only 611 \u00b7 conflicting 9"
    ]
   },
   "election_night": {
@@ -953,12 +966,20 @@
   "committees": {
    "ok": true,
    "count": 10,
-   "requests": 0,
+   "requests": 2,
    "failures": 0,
    "errors": [],
    "notes": [
-    "cached"
+    "10 committees for planks power, anti_arms"
    ]
+  },
+  "reform_wikipedia": {
+   "ok": null,
+   "count": 0,
+   "requests": 5,
+   "failures": 0,
+   "errors": [],
+   "notes": []
   },
   "reform": {
    "ok": true,
@@ -967,7 +988,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "cached"
+    "65 items from 13 source texts \u00b7 3 still to read"
    ]
   }
  },
