@@ -253,7 +253,9 @@ def rate(history):
     areas are supporting evidence (military aid and sanctions judged country by country)."""
     from . import bridge as B
     from .establishment import JUDGE_VERSION
-    reviews = {k: j for k, j in (load_cache("history_judgments") or {}).items() if j.get("v") == JUDGE_VERSION}
+    from .past_judge import HV
+    reviews = {k: j for k, j in (load_cache("history_judgments") or {}).items()
+               if j.get("v") == JUDGE_VERSION and j.get("hv") == HV}
     record, anchor_seen, bridges = {}, set(), {}
     for c in sorted(history):
         # a chamber that has not yet held a roll call on the anchor can't be judged on it:
@@ -278,12 +280,9 @@ def rate(history):
             qualifies = m["antiArms"]
             bid = m["bioguide_id"]
             b = bridges.get(bid)
-            # an AI review can keep a first-time qualifier out (principle vs posture), as it does
-            # today; it cannot end a bridge already standing (only the three events do that)
+            # past-Congress AI reviews are advisory: the rule decides who counts (the free models
+            # too often ruled people out over supporting areas, which the anchor rule forbids)
             review = reviews.get(f"{c}-{bid}")
-            ai_out = bool(review and qualifies and review["tier"] != "hard" and not (b and not b.get("ended")))
-            if ai_out:
-                qualifies = False
             ended_now = None
             if b and not b.get("ended"):
                 brk = B.anchor_break(rec, b["since"])
@@ -333,9 +332,10 @@ def rate(history):
                 m["tier_source"] = f"ai:{review.get('provider') or 'ai'}"
                 m["judged_model"], m["judged_at"] = review.get("model"), review.get("judged_at")
                 m["confidence"], m["writeup"] = review.get("confidence"), review.get("writeup") or ""
-                lead = ("Does not count: " if not m["antiArms"] else
-                        "Counts as anti-establishment (carried forward): " if carried else "Counts as anti-establishment: ")
-                m["bottom_line"] = lead + (review.get("bottom_line") or m["bottom_line"])
+                agrees = (review["tier"] == "hard") == bool(m["antiArms"])
+                m["ai_agrees"] = agrees
+                m["bottom_line"] = (m["bottom_line"] + " AI review" + ("" if agrees else " (disagrees)") + ": "
+                                    + (review.get("bottom_line") or ""))
             m["ai_review_due"] = bool(m["antiArms"] and not review)
     return history, bridges
 

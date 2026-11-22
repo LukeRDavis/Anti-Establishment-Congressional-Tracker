@@ -2,8 +2,8 @@
 
 Past records never change, so each member who counts in a past Congress is reviewed once per judge
 standard (JUDGE_VERSION) and the review is kept for good. The review sees what the rule saw: the
-member's counted roll calls up to the end of that Congress. It can keep a first-time qualifier out
-(principle versus posture), as the AI judge does today; it cannot end a bridge already standing."""
+member's counted roll calls up to the end of that Congress. It is advisory: the rule decides who
+counts in a past Congress, and the card shows where the AI agrees or disagrees."""
 import glob
 import json
 import os
@@ -14,6 +14,7 @@ from . import votes as V
 from .config import ai_time_left, congress_years
 from .net import load_cache, save_cache, now_iso
 
+HV = 2          # history review version: 2 = with the anchor-rule reminder at the end of the prompt
 PER_RUN = int(os.environ.get("AECT_HISTORY_REVIEWS", "8"))
 
 SYSTEM_H = E.SYSTEM + """
@@ -52,6 +53,7 @@ def _prompt(c, m, rec):
         f"First counted: the {_ordinal(b['since'])} Congress" if b.get("since") else "",
         "Areas by the end of this Congress: " + (words or "none engaged"),
         "Counted roll calls up to this Congress (oldest first):\n" + ("\n".join(lines) or "none"),
+        E.ANCHOR_REMINDER,
     ])
 
 
@@ -73,7 +75,7 @@ def run():
         for m in history[c]["members"]:
             records.setdefault(m["bioguide_id"], []).extend(v for v in m.get("votes", []) if v.get("area"))
             j = cache.get(f"{c}-{m['bioguide_id']}")
-            if m.get("antiArms") and not (j and j.get("v") == E.JUDGE_VERSION):
+            if m.get("antiArms") and not (j and j.get("v") == E.JUDGE_VERSION and j.get("hv") == HV):
                 queue.append((c, m, list(records[m["bioguide_id"]])))
     queue.sort(key=lambda x: (-x[0], x[1]["name"]))      # the most recent Congresses first
     done = tried = 0
@@ -85,7 +87,7 @@ def run():
         if not (isinstance(res, dict) and res.get("tier") in ("hard", "soft", "none")):
             continue
         cache[f"{c}-{m['bioguide_id']}"] = {
-            "v": E.JUDGE_VERSION, "tier": res["tier"], "provider": provider,
+            "v": E.JUDGE_VERSION, "hv": HV, "tier": res["tier"], "provider": provider,
             "bottom_line": (res.get("bottom_line") or "")[:240], "writeup": (res.get("writeup") or "")[:2400],
             "confidence": E._conf_index(res), "model": ai.LAST.get("model"), "judged_at": now_iso()}
         done += 1

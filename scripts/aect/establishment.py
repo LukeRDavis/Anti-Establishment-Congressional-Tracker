@@ -413,6 +413,10 @@ Respond with JSON only:
 {{"tier": "hard"|"soft"|"none", "confidence": "high"|"medium"|"low", "confidence_index": 0-100 (how sure you are of THIS verdict given how complete and consistent the record is: 90+ only for a long, unambiguous record), "scope": "focus"|"broad", "prior_office": "congress"|"state_or_local"|"none"|"unknown", "principle_vs_partisanship": "principled"|"mixed"|"partisan"|"unclear", "political_risk": "low"|"medium"|"high", "capital_risk": "low"|"medium"|"high", "bottom_line": "one sentence beginning 'Counts as anti-establishment because' or 'Does not count because'", "writeup": "a full write-up of 5-9 sentences for the public: who they are, what their record and words show in each of the five areas and whether they have been consistent in each, own-party defections and leadership defiance, money and donors, whether it is principle or partisanship, and how likely they are to hold under pressure", "reason": "one or two sentences", "risk_notes": "one sentence", "evidence": [{{"claim": "...", "url": "..."}}], "leadership_support": {{"leader": "full name of the leader or Speaker candidate they actively back, or null", "act": "endorsed|nominated|whipped|campaigned|serves under", "url": "source URL"}} or null}}"""
 
 
+# weaker free models drift from the anchor rule in a long prompt; restating it last keeps them on it
+ANCHOR_REMINDER = """Before answering, apply the anchor rule exactly: the tier turns on aid to Israel. Inconsistency in the other four areas (military aid to other countries, sanctions, use of force, war authorizations) lowers confidence but is NOT by itself a reason to rule "soft" or "none". Rule "soft" or "none" only for: inconsistency on aid to Israel, no breaking vote, focus-lobby money, actively backing an establishment leader, or concrete evidence the anti votes are posturing. Your bottom_line must match your tier."""
+
+
 # the free tiers that answer most often (Groq) cap a request at 7-8k tokens, system prompt and
 # answer included, so the person's record is fitted to a budget rather than sent whole
 PROMPT_BUDGET = int(os.environ.get("AECT_JUDGE_PROMPT_CHARS", "12000"))
@@ -451,6 +455,7 @@ def _prompt(p, f, text, emp, prev=None):
     if len(dossier) > room:
         dossier = dossier[:room].rsplit("\n", 1)[0] + "\n(dossier trimmed to fit)"
     lines.append("Dossier:\n" + dossier)
+    lines.append(ANCHOR_REMINDER)
     return "\n\n".join(lines)
 
 
@@ -791,7 +796,7 @@ def run(people, ie, fec_cands, fec_totals=None):
             counts[people[k]["antiTier"]] += 1
     stream("establishment_tiers", ok=bool(keys), count=counts["hard"],
            note=f"{counts['hard']} hard · {counts['soft']} soft · judged {judged} with AI this run · "
-                f"verdicts from AI {sources['ai']}, rule {sources['rule']} · AI has reviewed "
-                f"{sum(1 for k in keys if (cache.get(k) or {}).get('source', '').startswith('ai'))} of {len(keys)} "
+                f"verdicts from AI {sources['ai']}, rule {sources['rule']} · AI has reviewed (current standard) "
+                f"{sum(1 for k in keys if (cache.get(k) or {}).get('source', '').startswith('ai') and (cache.get(k) or {}).get('v') == JUDGE_VERSION)} of {len(keys)} "
                 f"members and running candidates ({sum(1 for k in keys if people[k].get('_signal'))} with signals)")
     return counts

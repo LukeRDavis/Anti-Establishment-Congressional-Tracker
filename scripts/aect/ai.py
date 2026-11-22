@@ -291,7 +291,9 @@ def _openai_compat(url, key, provider, system, prompt):
                     continue
         if not resp:
             code, body = LAST_HTTP_STATUS.get(stream_name), LAST_ERROR_BODY.get(stream_name, "")
-            if code in (401, 402, 403) or re.search(r"budget exhausted|insufficient (?:credits|balance)|billing", body, re.I):
+            # (not "billing" alone: Groq's per-model daily-limit message links to its billing page,
+            # and its other models still have their own allowance)
+            if code in (401, 402, 403) or re.search(r"budget exhausted|insufficient (?:credits|balance)", body, re.I):
                 # the account itself is out of free budget (or the key is refused): no model of this
                 # provider will answer, so stop calling it for the rest of the run
                 circuit_trip(stream_name, f"account refused ({code}): {body[:80]}")
