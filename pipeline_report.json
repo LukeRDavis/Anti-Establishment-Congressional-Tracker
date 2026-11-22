@@ -1,13 +1,13 @@
 {
- "run_at": "2026-11-22T01:05:44.797573+00:00",
- "runtime_s": 1489,
+ "run_at": "2026-11-22T01:32:43.949469+00:00",
+ "runtime_s": 1473,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
   "gemini": 0,
   "xai": 0,
   "openrouter": 0,
-  "groq": 1,
+  "groq": 0,
   "cerebras": 0,
   "mistral": 0,
   "failed": 44
@@ -153,12 +153,12 @@
   },
   "fec_finance": {
    "ok": true,
-   "count": 3912,
+   "count": 4028,
    "requests": 46,
    "failures": 0,
    "errors": [],
    "notes": [
-    "totals for 3912 filers"
+    "totals for 4028 filers"
    ]
   },
   "trackaipac": {
@@ -222,7 +222,7 @@
     "circuit opened: only empty responses (blocked for this host)"
    ],
    "notes": [
-    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Billy_Mawhiney | 200 0B '' https://ballotpedia.org/Zurit_Horowitz | 200 0B '' //ballotpedia.org/Galvin_Deleon_Guerrero | 200 0B '' https://ballotpedia.org/Sean_Pond | 200 0B '' https://ballotpedia.org/Everyone | 200 0B '' https://ballotpedia.org/Troy_Green"
+    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Everyone | 200 0B '' https://ballotpedia.org/Troy_Green | 200 0B '' https://ballotpedia.org/Zurit_Horowitz | 200 0B '' https://ballotpedia.org/Sean_Pond | 200 0B '' https://ballotpedia.org/Billy_Mawhiney | 200 0B '' //ballotpedia.org/Galvin_Deleon_Guerrero"
    ]
   },
   "wikipedia": {
@@ -715,7 +715,7 @@
    "ok": null,
    "count": 0,
    "requests": 108,
-   "failures": 56,
+   "failures": 67,
    "errors": [
     "URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/",
     "HTTP 403 https://www.rajaforil.com/ :: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA",
@@ -743,19 +743,6 @@
     "models available: gemini-3.8-flash, gemini-3.7-flash, gemini-3.6-flash, gemini-3.5-flash, gemini-3-flash-preview, gemini-2.5-flash"
    ]
   },
-  "ai_groq": {
-   "ok": null,
-   "count": 0,
-   "requests": 3,
-   "failures": 2,
-   "errors": [
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 194480, Requested 5566. Please try again in 19.872s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "circuit opened: account refused (429): {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organiza"
-   ],
-   "notes": [
-    "models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b"
-   ]
-  },
   "ai_positions": {
    "ok": true,
    "count": 2690,
@@ -763,7 +750,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "researched 1 this run (no_source: 1763, campaign_site_text: 1) \u00b7 2690 total \u00b7 19 with cited anti-interventionist positions"
+    "researched 0 this run (no_source: 1764) \u00b7 2690 total \u00b7 19 with cited anti-interventionist positions"
    ]
   },
   "fec_outside_spending": {
@@ -810,6 +797,19 @@
    "errors": [],
    "notes": []
   },
+  "ai_groq": {
+   "ok": null,
+   "count": 0,
+   "requests": 2,
+   "failures": 2,
+   "errors": [
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 197426, Requested 5556. Please try again in 21m28.224s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "circuit opened: account refused (429): {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organ"
+   ],
+   "notes": [
+    "models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b"
+   ]
+  },
   "ai_mistral": {
    "ok": null,
    "count": 0,
@@ -826,8 +826,8 @@
   "ai_openrouter": {
    "ok": null,
    "count": 0,
-   "requests": 13,
-   "failures": 11,
+   "requests": 9,
+   "failures": 9,
    "errors": [
     "HTTP 404 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"0 endpoints out of 1 requested are available matching your guardrail restrictions and data policy. We removed them for the following reasons (an endpoint may have matched multiple reasons):\\nFree model training violation (account settings): 1 endpoint excluded; configurable at https://openrouter.ai/settings/privacy\\nZDR violation (account settings): 1 endpoint excluded; config",
     "HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok\",\"provider_name\":\"Google AI Studio\",\"is_byok\":false,\"provider_error_code\":\"429\",\"limit_source\":\"upstream_provider_shared_pool\",\"remedy_hin",
