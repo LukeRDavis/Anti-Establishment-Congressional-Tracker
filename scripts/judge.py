@@ -107,15 +107,15 @@ def main():
 
     establishment.mark_party_line(people, data.get("relevant_votes", []),
                                   (data.get("meta") or {}).get("chamber_party", {}))
-    # a small share of every run goes to past Congresses, so their reviews move even while today's
-    # queue is long (past records never change: each review is kept for good)
+    print(f"Judging (free tiers first; budget {establishment.BUDGET}, ~{os.environ['AECT_AI_DEADLINE_MIN']} min)")
+    establishment.run(people, ie, fec_cands, fec_totals)
+    # today's members come first; past Congresses get what's left of this run's free capacity
+    # (past records never change: each review is kept for good)
     try:
         from aect import past_judge
         past_judge.run()
     except Exception as e:
         print(f"  history reviews skipped: {e}")
-    print(f"Judging (free tiers first; budget {establishment.BUDGET}, ~{os.environ['AECT_AI_DEADLINE_MIN']} min)")
-    establishment.run(people, ie, fec_cands, fec_totals)
     # patch the newest committed data.json, not the copy this job started from (it may be an
     # hour old and would erase the election-night job's odds and results)
     # a full refresh that committed while this job ran rebuilt every record from fresher data:

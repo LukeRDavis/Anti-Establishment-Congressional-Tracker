@@ -270,6 +270,11 @@ def _openai_compat(url, key, provider, system, prompt):
                    "messages": [{"role": "system", "content": system +
                                  "\nYou have no tools and no web access: answer from the text given. Respond with JSON only."},
                                 {"role": "user", "content": prompt}]}
+        if provider == "groq" and "gpt-oss" in model:
+            # gpt-oss spends its output allowance on hidden reasoning first; at the default effort a
+            # 1,000-token cap often ran out before the JSON answer, wasting the day's token quota
+            payload["reasoning_effort"] = "low"
+            payload["max_tokens"] = 1800
         if provider == "openrouter":
             # hard price cap: OpenRouter refuses rather than routes to anything that costs money
             payload["provider"] = {"max_price": {"prompt": 0, "completion": 0}}
@@ -303,11 +308,16 @@ def _openai_compat(url, key, provider, system, prompt):
                 dead.add(model)          # retired, or out of quota for the day
             continue
         try:
-            out = parse_json_loose(resp["choices"][0]["message"]["content"])
+            choice = resp["choices"][0]
+            out = parse_json_loose(choice["message"].get("content") or "")
             if out is not None:
                 LAST["model"] = resp.get("model") or model   # a router reports the model it actually used
                 return out, []
-        except Exception:
+            print(f"    ! {provider}/{model}: answer was not usable JSON (finish {choice.get('finish_reason')}, "
+                  f"tokens {(resp.get('usage') or {}).get('total_tokens')}): "
+                  f"{(choice['message'].get('content') or '')[:100]!r}")
+        except Exception as e:
+            print(f"    ! {provider}/{model}: unreadable answer ({e})")
             continue
     if compat_models(provider) and all(m in dead for m in compat_models(provider)):
         circuit_trip(stream_name, "every available model failed or is over quota")
