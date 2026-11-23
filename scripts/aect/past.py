@@ -332,7 +332,12 @@ def rate(history):
                 m["tier_source"] = f"ai:{review.get('provider') or 'ai'}"
                 m["judged_model"], m["judged_at"] = review.get("model"), review.get("judged_at")
                 m["confidence"], m["writeup"] = review.get("confidence"), review.get("writeup") or ""
-                agrees = (review["tier"] == "hard") == bool(m["antiArms"])
+                # the free models sometimes give a tier that contradicts their own bottom line; the
+                # sentence they wrote for readers is what the card shows, so it decides agreement
+                said = (review.get("bottom_line") or "").lower()
+                ai_counts = (True if said.startswith("counts") else False if said.startswith("does not count")
+                             else review["tier"] == "hard")
+                agrees = ai_counts == bool(m["antiArms"])
                 m["ai_agrees"] = agrees
                 m["bottom_line"] = (m["bottom_line"] + " AI review" + ("" if agrees else " (disagrees)") + ": "
                                     + (review.get("bottom_line") or ""))
