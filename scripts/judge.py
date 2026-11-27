@@ -108,6 +108,11 @@ def main():
     establishment.mark_party_line(people, data.get("relevant_votes", []),
                                   (data.get("meta") or {}).get("chamber_party", {}))
     print(f"Judging (free tiers first; budget {establishment.BUDGET}, ~{os.environ['AECT_AI_DEADLINE_MIN']} min)")
+    try:
+        from aect import past_judge
+        establishment.DEFER_REREVIEWS = past_judge.due_count() > 0
+    except Exception:
+        pass
     establishment.run(people, ie, fec_cands, fec_totals)
     # today's members come first; past Congresses get what's left of this run's free capacity
     # (past records never change: each review is kept for good)

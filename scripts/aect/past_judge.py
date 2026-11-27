@@ -57,6 +57,20 @@ def _prompt(c, m, rec):
     ])
 
 
+def due_count():
+    """How many past members who count still await a review under the current standard."""
+    cache = load_cache("history_judgments") or {}
+    n = 0
+    for f in glob.glob(os.path.join(past.OUT_DIR, "congress_*.json")):
+        with open(f) as fh:
+            d = json.load(fh)
+        for m in d["members"]:
+            j = cache.get(f"{d['congress']}-{m['bioguide_id']}")
+            if m.get("antiArms") and not (j and j.get("v") == E.JUDGE_VERSION and j.get("hv") == HV):
+                n += 1
+    return n
+
+
 def run():
     """Review the next past members who count; returns how many reviews landed."""
     if PER_RUN <= 0 or not ai.available_any():

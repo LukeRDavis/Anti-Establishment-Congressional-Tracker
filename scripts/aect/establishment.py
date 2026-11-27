@@ -626,6 +626,11 @@ def _bridge_pass(people):
             p["bridge"] = {"since": b["since"] if carrying else None, "carried": False, "ended": None}
 
 
+# set by the hourly judge while past Congresses still await reviews: routine re-reviews of unchanged
+# records wait, so the free capacity left over after new and changed records goes to the past
+DEFER_REREVIEWS = False
+
+
 def run(people, ie, fec_cands, fec_totals=None):
     """Investigate everyone with an anti-establishment signal and set antiTier / tier_source /
     tier_reason / tier_evidence / tier_risk. Soft verdicts are shown, never counted."""
@@ -686,7 +691,11 @@ def run(people, ie, fec_cands, fec_totals=None):
         old = cache.get(k) or {}
         ttl = TTL_H * (2 if old.get("tier") == "none" else 1)
         fresh = old.get("v") == JUDGE_VERSION and age_hours(old.get("at")) < ttl and old.get("source", "").startswith("ai")
-        if fresh and can_ai and judged < BUDGET and ai_time_left() > 120 and age_hours(old.get("at")) >= REREVIEW_H:
+        if DEFER_REREVIEWS and old.get("v") == JUDGE_VERSION and old.get("source", "").startswith("ai"):
+            # past Congresses still await their first review: an unchanged record keeps its review
+            # (a changed record still gets a fresh one below, since the fingerprint no longer matches)
+            fresh = True
+        elif fresh and can_ai and judged < BUDGET and ai_time_left() > 120 and age_hours(old.get("at")) >= REREVIEW_H:
             fresh = False                    # spare free capacity: re-examine the oldest verdicts again
         verdict = old if fresh and old.get("facts_fp") == _fingerprint(f, "x" * old.get("text_len", 0)) else None
         if verdict is None and can_ai and judged < BUDGET and ai_time_left() > 120:
