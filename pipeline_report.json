@@ -1,16 +1,16 @@
 {
- "run_at": "2026-11-27T00:54:00.783477+00:00",
- "runtime_s": 1440,
+ "run_at": "2026-11-27T14:08:28.461870+00:00",
+ "runtime_s": 1584,
  "congress": 119,
  "cycle": 2026,
  "ai_calls": {
   "gemini": 0,
   "xai": 0,
-  "openrouter": 0,
+  "openrouter": 1,
   "groq": 1,
   "cerebras": 0,
   "mistral": 0,
-  "failed": 41
+  "failed": 39
  },
  "streams": {
   "key:CONGRESS_KEY": {
@@ -133,7 +133,7 @@
   "congress_gov": {
    "ok": true,
    "count": 539,
-   "requests": 123,
+   "requests": 3,
    "failures": 0,
    "errors": [],
    "notes": [
@@ -144,38 +144,44 @@
   "fec_candidates": {
    "ok": true,
    "count": 4355,
-   "requests": 0,
+   "requests": 44,
    "failures": 0,
    "errors": [],
    "notes": [
-    "cache fresh"
+    "4355 active 2026 House+Senate filers"
    ]
   },
   "fec_finance": {
    "ok": true,
-   "count": 4043,
-   "requests": 0,
+   "count": 4021,
+   "requests": 46,
    "failures": 0,
    "errors": [],
    "notes": [
-    "cache fresh"
+    "totals for 4021 filers"
    ]
   },
   "trackaipac": {
    "ok": true,
-   "count": 0,
-   "requests": 0,
+   "count": 1,
+   "requests": 2,
    "failures": 0,
    "errors": [],
-   "notes": []
+   "notes": [
+    "/congress: 1 members, 1 approved",
+    "/endorsements: 0 endorsed candidates"
+   ]
   },
   "rlc": {
    "ok": true,
    "count": 283,
-   "requests": 0,
+   "requests": 4,
    "failures": 0,
    "errors": [],
-   "notes": []
+   "notes": [
+    "Liberty Index cache fresh",
+    "endorsements: 9 candidates"
+   ]
   },
   "votes_senate_voteview": {
    "ok": true,
@@ -208,19 +214,21 @@
    ]
   },
   "ballotpedia": {
-   "ok": true,
-   "count": 36,
-   "requests": 678,
-   "failures": 0,
-   "errors": [],
+   "ok": false,
+   "count": 0,
+   "requests": 17,
+   "failures": 1,
+   "errors": [
+    "circuit opened: only empty responses (blocked for this host)"
+   ],
    "notes": [
-    "outcomes {'matched': 36, 'no_page': 642} \u00b7 probes: 200 126183B 'Carleigh Beriont - Ballotpedia' https://ballotpedia.org/Carleigh_Beriont | 200 53414B 'John Vincent - Ballotpedia' https://ballotpedia.org/John_Vincent | 200 53272B 'Thomas Willis - Ballotpedia' https://ballotpedia.org/Thomas_Willis | 200 128654B 'Katy Tyndell - Ballotpedia' https://ballotpedia.org/Katy_Tyndell | 200 107466B 'Joseph Cooney - Ballotpedia' https://ballotpedia.org/Joseph_Cooney | 200 206167B 'Jerrod Sessler - Ballotpedia' https://ballotpedia.org/Jerrod_Sessler | 200 265262B 'Joe Kaufman - Ballotpedia' https://ballotpedia.org/Joe_Kaufman"
+    "outcomes {'no_page': 17} \u00b7 probes: 200 0B '' https://ballotpedia.org/Matthew_Rains | 200 0B '' https://ballotpedia.org/Nick_Pyati | 200 0B '' https://ballotpedia.org/Sarah_Zabel | 200 0B '' https://ballotpedia.org/Caroline_Shinkle | 200 0B '' https://ballotpedia.org/Eric_Troutman | 200 0B '' https://ballotpedia.org/Madison_Sheahan"
    ]
   },
   "wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 590,
+   "requests": 658,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -228,7 +236,7 @@
   "grokipedia": {
    "ok": null,
    "count": 0,
-   "requests": 170,
+   "requests": 204,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -256,100 +264,10 @@
   "poll_closes": {
    "ok": true,
    "count": 51,
-   "requests": 1,
+   "requests": 2,
    "failures": 0,
    "errors": [],
    "notes": [
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
-    "cached",
     "cached",
     "cached",
     "cached",
@@ -728,24 +646,114 @@
     "cached",
     "cached",
     "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "cached",
+    "first poll-closing time for 51 states on 2026-11-03",
     "cached"
    ]
   },
   "fec_websites": {
    "ok": true,
    "count": 771,
-   "requests": 1,
+   "requests": 0,
    "failures": 0,
    "errors": [],
    "notes": [
-    "looked up 1 committees \u00b7 771 campaign websites known"
+    "looked up 0 committees \u00b7 771 campaign websites known"
    ]
   },
   "campaign_sites": {
    "ok": null,
    "count": 0,
-   "requests": 107,
-   "failures": 64,
+   "requests": 106,
+   "failures": 67,
    "errors": [
     "URLError: <urlopen error [Errno -2] Name or service not known> :: https://www.votejohnmills.org/",
     "HTTP 403 https://www.rajaforil.com/ :: <!DOCTYPE html><html lang=\"en-US\"><head><title>Just a moment...</title><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta http-equiv=\"X-UA",
@@ -773,22 +781,6 @@
     "models available: gemini-3.8-flash, gemini-3.7-flash, gemini-3.6-flash, gemini-3.5-flash, gemini-3-flash-preview, gemini-2.5-flash"
    ]
   },
-  "ai_groq": {
-   "ok": null,
-   "count": 0,
-   "requests": 6,
-   "failures": 5,
-   "errors": [
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 196834, Requested 5958. Please try again in 20m6.144s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 197481, Requested 5208. Please try again in 19m21.648s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Please reduce the length of the messages or completion.\",\"type\":\"invalid_request_error\",\"param\":\"messages\",\"code\":\"context_length_exceeded\"}} ",
-    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 195940, Requested 5289. Please try again in 8m50.928s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
-    "circuit opened: every available model failed or is over quota"
-   ],
-   "notes": [
-    "models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b"
-   ]
-  },
   "ai_positions": {
    "ok": true,
    "count": 2690,
@@ -796,17 +788,17 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "researched 1 this run (no_source: 1745, campaign_site_text: 1) \u00b7 2690 total \u00b7 19 with cited anti-interventionist positions"
+    "researched 0 this run (no_source: 1745) \u00b7 2690 total \u00b7 19 with cited anti-interventionist positions"
    ]
   },
   "fec_outside_spending": {
    "ok": true,
    "count": 458,
-   "requests": 0,
+   "requests": 132,
    "failures": 0,
    "errors": [],
    "notes": [
-    "refreshed 0, 458 candidates with outside-spending records"
+    "refreshed 132, 458 candidates with outside-spending records"
    ]
   },
   "discharge_petitions": {
@@ -822,15 +814,7 @@
   "dossier_news_google": {
    "ok": null,
    "count": 0,
-   "requests": 185,
-   "failures": 0,
-   "errors": [],
-   "notes": []
-  },
-  "dossier_news_bing": {
-   "ok": null,
-   "count": 0,
-   "requests": 4,
+   "requests": 119,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -842,6 +826,22 @@
    "failures": 0,
    "errors": [],
    "notes": []
+  },
+  "ai_groq": {
+   "ok": null,
+   "count": 0,
+   "requests": 6,
+   "failures": 5,
+   "errors": [
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `qwen/qwen3.8-27b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198103, Requested 5091. Please try again in 22m59.808s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-20b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 198125, Requested 5168. Please try again in 23m42.576s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "HTTP 400 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Please reduce the length of the messages or completion.\",\"type\":\"invalid_request_error\",\"param\":\"messages\",\"code\":\"context_length_exceeded\"}} ",
+    "HTTP 429 https://api.groq.com/openai/v1/chat/completions :: {\"error\":{\"message\":\"Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01jtj192kkfvcrcazmbz44zdxm` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199696, Requested 4892. Please try again in 33m2.015999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing\",\"type\":\"tokens\",\"code\":\"rate_limit_exceeded\"}} ",
+    "circuit opened: every available model failed or is over quota"
+   ],
+   "notes": [
+    "models available: openai/gpt-oss-120b, qwen/qwen3.8-27b, openai/gpt-oss-20b, allam-2-7b"
+   ]
   },
   "ai_mistral": {
    "ok": null,
@@ -859,8 +859,8 @@
   "ai_openrouter": {
    "ok": null,
    "count": 0,
-   "requests": 9,
-   "failures": 9,
+   "requests": 11,
+   "failures": 10,
    "errors": [
     "HTTP 404 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"0 endpoints out of 1 requested are available matching your guardrail restrictions and data policy. We removed them for the following reasons (an endpoint may have matched multiple reasons):\\nFree model training violation (account settings): 1 endpoint excluded; configurable at https://openrouter.ai/settings/privacy\\nZDR violation (account settings): 1 endpoint excluded; config",
     "HTTP 429 https://openrouter.ai/api/v1/chat/completions :: {\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"google/gemma-4-31b-it:free is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok\",\"provider_name\":\"Google AI Studio\",\"is_byok\":false,\"provider_error_code\":\"429\",\"limit_source\":\"upstream_provider_shared_pool\",\"remedy_hin",
@@ -871,10 +871,18 @@
     "models available: nvidia/nemotron-3-ultra-550b-a55b:free, google/gemma-4-31b-it:free, google/gemma-4-26b-a4b-it:free, nvidia/nemotron-3.5-super-vl:free, openrouter/free"
    ]
   },
-  "dossier_ballotpedia": {
+  "fec_employers": {
    "ok": null,
    "count": 0,
-   "requests": 18,
+   "requests": 13,
+   "failures": 0,
+   "errors": [],
+   "notes": []
+  },
+  "dossier_news_bing": {
+   "ok": null,
+   "count": 0,
+   "requests": 2,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -882,15 +890,7 @@
   "dossier_wikipedia": {
    "ok": null,
    "count": 0,
-   "requests": 8,
-   "failures": 0,
-   "errors": [],
-   "notes": []
-  },
-  "fec_employers": {
-   "ok": null,
-   "count": 0,
-   "requests": 20,
+   "requests": 7,
    "failures": 0,
    "errors": [],
    "notes": []
@@ -902,7 +902,7 @@
    "failures": 0,
    "errors": [],
    "notes": [
-    "22 hard \u00b7 154 soft \u00b7 judged 40 with AI this run \u00b7 verdicts from AI 176, rule 0 \u00b7 AI has reviewed (current standard) 591 of 1021 members and running candidates (598 with signals)"
+    "22 hard \u00b7 154 soft \u00b7 judged 40 with AI this run \u00b7 verdicts from AI 176, rule 0 \u00b7 AI has reviewed (current standard) 705 of 1021 members and running candidates (598 with signals)"
    ]
   },
   "market_polymarket": {
@@ -1006,11 +1006,11 @@
   "committees": {
    "ok": true,
    "count": 10,
-   "requests": 0,
+   "requests": 2,
    "failures": 0,
    "errors": [],
    "notes": [
-    "cached"
+    "10 committees for planks power, anti_arms"
    ]
   },
   "reform": {
