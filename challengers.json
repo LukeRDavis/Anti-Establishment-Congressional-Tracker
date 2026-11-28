@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-27T17:13:16.573985+00:00",
+ "generated_at": "2026-11-28T00:26:38.547359+00:00",
  "challengers": [
   {
    "name": "Mai Vang",
@@ -11,10 +11,10 @@
    "antiArmsLevel": "yes",
    "antiArmsBasis": "statements",
    "evidence": [
-    "She'll push to ban the sale of weapons used to carry out genocide. (https://www.maiforus.com/)"
+    "Mai will fight to end the genocide in Gaza, reject AIPAC money, and invest our tax dollars in health care, housing, and jobs at home\u2014not endless wars abroad. (https://www.maiforus.com/)"
    ],
    "ps": "WON",
-   "note": "She'll push to ban the sale of weapons used to carry out genocide. (https://www.maiforus.com/)",
+   "note": "Mai will fight to end the genocide in Gaza, reject AIPAC money, and invest our tax dollars in health care, housing, and jobs at home\u2014not endless wars abroad. (https://www.maiforus.",
    "website": "https://www.maiforus.com/",
    "fec_ids": [
     "H6CA07175"
@@ -66,53 +66,53 @@
    "source": "fec+trackaipac_endorsed"
   },
   {
-   "name": "Robert People",
+   "name": "Melat Kiros",
    "party": "D",
-   "state": "FL",
-   "district": 15,
+   "state": "CO",
+   "district": 1,
    "chamber": "house",
    "antiArms": true,
    "antiArmsLevel": "yes",
    "antiArmsBasis": "statements",
    "evidence": [
-    "No AIPAC No arms shipments to Israel (https://www.peopleforcongress.com/)"
+    "Arms Embargo (https://www.kirosforco.com/)"
    ],
-   "ps": "WON",
-   "note": "No AIPAC No arms shipments to Israel (https://www.peopleforcongress.com/)",
-   "website": "https://www.peopleforcongress.com/",
+   "ps": "ELECTED",
+   "note": "Arms Embargo (https://www.kirosforco.com/)",
+   "website": "https://www.kirosforco.com/",
    "fec_ids": [
-    "H6FL15168"
+    "H6CO01273"
    ],
-   "primaryDate": "2026-08-18",
+   "primaryDate": "2026-06-30",
    "primary_result": "WON",
-   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Florida",
-   "general_result": "LOST",
-   "general_result_by": "market",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Colorado",
+   "general_result": "WON",
+   "general_result_by": "both",
    "result_conflict": null,
    "endorsed_by": [
     "trackaipac_endorsed"
    ],
    "antiTier": "soft",
    "tier_source": "ai:openrouter",
-   "tier_reason": "No legislative record and a direct contradiction between anti-lobby rhetoric and a TrackAIPAC endorsement.",
+   "tier_reason": "While her statements and personal history show strong anti-establishment principles, she lacks the required legislative record of breaking votes to be rated HARD.",
    "tier_evidence": [
     {
-     "claim": "The candidate's platform explicitly lists 'No arms shipments to Israel' and 'No AIPAC' as policy priorities.",
-     "url": "https://www.peopleforcongress.com/"
+     "claim": "Sidley Austin asked Kiros to take the letter down. When she refused, she was fired",
+     "url": "https://en.wikipedia.org/wiki/Melat_Kiros"
     }
    ],
    "tier_risk": {
-    "capital": "medium",
-    "notes": "Endorsement by TrackAIPAC is a significant red flag for a candidate claiming to be anti-AIPAC.",
-    "political": "low"
+    "capital": "low",
+    "notes": "High political risk given her history of being fired for her views and the heavy outside spending targeting her.",
+    "political": "high"
    },
    "tier_screen": "marked anti on the focus issue by votes or statements",
-   "writeup": "Robert People is a candidate for FL-15 with no prior record in Congress or local office. While his platform explicitly lists No arms shipments to Israel and No AIPAC as priorities, he has no voting record to demonstrate these positions under pressure. Most critically, despite his rhetoric against the Israel lobby, he is endorsed by TrackAIPAC. Without a history of breaking with leadership or a clean relationship with establishment donors, his statements remain unverified positioning. He has not engaged in any of the other four anti-interventionist areas. Given the contradiction between his platform and his endorsement, he cannot be relied upon as an anti-establishment ally.",
-   "bottom_line": "Does not count because there is no legislative record to confirm principle and the candidate is endorsed by TrackAIPAC despite contradictory statements.",
-   "principle": "unclear",
+   "writeup": "Melat Kiros is a newly elected member of Congress with no voting record. Her public positions are strongly anti-interventionist: she supports a full arms embargo on Israel, including defensive weapons, and opposes continued U.S. military aid to the state, citing genocide in Gaza. She has also opposed U.S. military action against Iran and supports reclaiming Congressional war powers from the president. Her commitment to these views is evidenced by her being fired from a law firm for criticizing the chilling effect on lawyers who criticize the Israeli government and by surviving a primary campaign featuring $1.3 million in attacks from Super PACs. She refuses corporate PAC money and advocates for a 10% reduction in Pentagon spending to weaken the military-industrial complex. However, as a candidate who has not yet cast a vote, she has not met the floor for a sitting member, which requires at least one real breaking vote against her own party leadership.",
+   "bottom_line": "Does not count because she has no legislative record of breaking votes to prove her reliability under pressure.",
+   "principle": "principled",
    "judged_model": "google/gemma-4-31b-it:free",
-   "judged_at": "2026-11-26T14:00:11.054580+00:00",
-   "confidence": 95,
+   "judged_at": "2026-11-26T16:36:18.442600+00:00",
+   "confidence": 65,
    "discharge_petitions": [],
    "bridge": null,
    "leadership": null,
