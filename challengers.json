@@ -1,23 +1,23 @@
 {
- "generated_at": "2026-11-28T00:26:38.547359+00:00",
+ "generated_at": "2026-11-28T08:02:17.859673+00:00",
  "challengers": [
   {
-   "name": "Mai Vang",
+   "name": "Angelica Duenas",
    "party": "D",
    "state": "CA",
-   "district": 7,
+   "district": 29,
    "chamber": "house",
    "antiArms": true,
    "antiArmsLevel": "yes",
    "antiArmsBasis": "statements",
    "evidence": [
-    "Mai will fight to end the genocide in Gaza, reject AIPAC money, and invest our tax dollars in health care, housing, and jobs at home\u2014not endless wars abroad. (https://www.maiforus.com/)"
+    "I will never vote to send U.S. weapons or military aid to Israel. (https://angelica4congress.com/)"
    ],
    "ps": "WON",
-   "note": "Mai will fight to end the genocide in Gaza, reject AIPAC money, and invest our tax dollars in health care, housing, and jobs at home\u2014not endless wars abroad. (https://www.maiforus.",
-   "website": "https://www.maiforus.com/",
+   "note": "I will never vote to send U.S. weapons or military aid to Israel. (https://angelica4congress.com/)",
+   "website": "https://angelica4congress.com/",
    "fec_ids": [
-    "H6CA07175"
+    "H8CA29100"
    ],
    "primaryDate": "2026-06-02",
    "primary_result": "WON",
@@ -29,21 +29,21 @@
     "trackaipac_endorsed"
    ],
    "antiTier": "soft",
-   "tier_source": "ai:groq",
-   "tier_reason": "No evidence of consistent anti\u2011Israel aid stance and AIPAC endorsement.",
+   "tier_source": "ai:openrouter",
+   "tier_reason": "No voting record and endorsed by TrackAIPAC.",
    "tier_evidence": [],
    "tier_risk": {
-    "capital": "medium",
-    "notes": "Her lack of federal record and pro\u2011Israel endorsements make her a weak candidate for coalition support.",
-    "political": "high"
+    "capital": "low",
+    "notes": "Endorsement by TrackAIPAC suggests she will vote with the establishment on aid to Israel.",
+    "political": "low"
    },
    "tier_screen": "marked anti on the focus issue by votes or statements",
-   "writeup": "Mai Vang is a Sacramento City Council member who has not yet served in Congress and has no roll\u2011call voting record on federal foreign\u2011policy issues. Her only public statement relevant to the coalition\u2019s criteria is a call to ban U.S. weapons sales used in genocide, which is a broad anti\u2011war stance but does not address aid to Israel specifically. The dossier indicates she is endorsed by AIPAC\u2011aligned groups, and her record shows no breaking anti\u2011intervention votes or leadership defiance. Because she has not demonstrated a consistent anti\u2011Israel aid position and is linked to pro\u2011Israel lobbying, she does not meet the coalition\u2019s threshold for a reliable ally. Her political risk is high given the lack of a proven anti\u2011intervention record, while capital risk is moderate due to her local office and limited campaign funding from state and university sources.",
-   "bottom_line": "Does not count because her record shows no consistent anti\u2011Israel aid stance and she is endorsed by AIPAC\u2011aligned groups.",
+   "writeup": "Angelica Duenas is a candidate for CA-29 with no prior service in Congress or other legislative office, meaning she has no voting record to evaluate across the five anti-interventionist areas. There is no evidence of her taking specific, consistent positions on military aid to Israel, arms transfers, sanctions, or authorizations of war. While she has no recorded contributions from the Israel lobby, she is explicitly endorsed by TrackAIPAC, which is a strong signal of establishment alignment. Without a record of breaking with her own party or leadership on interventionist issues, she cannot be considered a reliable ally. Her profile shows no evidence of the principled defiance required for a higher tier.",
+   "bottom_line": "Does not count because she has no legislative record and is endorsed by TrackAIPAC.",
    "principle": "unclear",
-   "judged_model": "openai/gpt-oss-20b",
-   "judged_at": "2026-11-25T23:49:17.983795+00:00",
-   "confidence": 60,
+   "judged_model": "google/gemma-4-31b-it:free",
+   "judged_at": "2026-11-26T15:06:09.331700+00:00",
+   "confidence": 95,
    "discharge_petitions": [],
    "bridge": null,
    "leadership": null,
@@ -135,6 +135,75 @@
    "source": "fec+trackaipac_endorsed"
   },
   {
+   "name": "William Lawrence",
+   "party": "D",
+   "state": "MI",
+   "district": 7,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "yes",
+   "antiArmsBasis": "statements",
+   "evidence": [
+    "Stop arms sales to Israel & other human rights violators (https://wewill2026.com/)"
+   ],
+   "ps": "ELECTED",
+   "note": "Stop arms sales to Israel & other human rights violators (https://wewill2026.com/)",
+   "website": "https://wewill2026.com/",
+   "fec_ids": [
+    "H6MI07298"
+   ],
+   "primaryDate": "2026-08-04",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_Michigan",
+   "general_result": "WON",
+   "general_result_by": "both",
+   "result_conflict": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "ai:groq",
+   "tier_reason": "No anti\u2011Israel aid record and TrackAIPAC endorsement.",
+   "tier_evidence": [
+    {
+     "claim": "TrackAIPAC endorsement",
+     "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxQcDRyOTVOaDNKY1ViR3ZDZ3BQMnQzWDZJVkpaTlkzUlVaNm14aDJRV3l5Skx5cmpLakZjQjF1eElXUDhUa2RpMFZVT3lrTUt5R0hRNEVzT0lpdk9VMXhUcUtleGdtSXhlVk4wTk1DTm15dUFmUU9HZjRQLThSdnhQWWlld1VZLXlCcGlDcFZJY2hjVW1kMXJvSWF2a1RqeDVkVFRRV0lvcWZkQVoxWDVr0gG0AUFVX3lxTFBTQXN1UzNtSHV6ajdGZGR0czJaeVBXaUhYYUVUY1BhZmZwaFdfS1MxTldmcEowZnBqYTI5UUJMcm9EX014b084UkRZWW83UlZtR0V5cTNpeWdOLTB6UjFzYmYtc0NPcHF3dFlqajlLVDVWRHRyZTBoV0hFN2Zna1M3VGRJb3lWZlU4ZVp5S3RoQ19UdGlSSjVybUJKdGhleUNBaVdibWdlTWxSZDZmSGJRS3FMTg?oc=5"
+    }
+   ],
+   "tier_risk": {
+    "capital": "medium",
+    "notes": "Potential vulnerability to pro\u2011Israel pressure.",
+    "political": "medium"
+   },
+   "tier_screen": "marked anti on the focus issue by votes or statements",
+   "writeup": "William Lawrence is a newly elected Michigan\u20117 candidate with no congressional voting record. He has no documented anti\u2011Israel aid votes, nor any breaking anti\u2011interventionist votes on the five key areas. His campaign was endorsed by TrackAIPAC, indicating potential influence from the Israel lobby. With no evidence of principled defiance of party leadership or consistent anti\u2011interventionist positions, he cannot be counted as a reliable ally. His lack of record and the presence of pro\u2011Israel campaign support suggest he may be swayed by establishment forces.",
+   "bottom_line": "Does not count because his record is nonexistent and he has not demonstrated consistent anti\u2011Israel aid voting, leaving him vulnerable to establishment pressure.",
+   "principle": "unclear",
+   "judged_model": "openai/gpt-oss-20b",
+   "judged_at": "2026-11-26T17:03:27.927890+00:00",
+   "confidence": 60,
+   "discharge_petitions": [],
+   "bridge": null,
+   "leadership": null,
+   "tier_stale": false,
+   "tier_facts": {
+    "focus_votes": 0,
+    "anti_focus_votes": 0,
+    "anti_congresses": [],
+    "latest_congress_focus": null,
+    "lobby_money_trackaipac": 0,
+    "lobby_outside_support": 0,
+    "lobby_outside_oppose": 0,
+    "discharge_petitions_against_own_leadership": 0,
+    "party_defections_to_anti": 0,
+    "breaking_anti_votes": 0,
+    "areas": {},
+    "applicable_discharge_petitions": 0,
+    "applicable_discharge_petitions_signed": 0
+   },
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
    "name": "Karen Ortiz",
    "party": "I",
    "state": "NY",
@@ -177,6 +246,70 @@
    "judged_model": "openai/gpt-oss-20b",
    "judged_at": "2026-11-25T23:48:41.990361+00:00",
    "confidence": 20,
+   "discharge_petitions": [],
+   "bridge": null,
+   "leadership": null,
+   "tier_stale": false,
+   "tier_facts": {
+    "focus_votes": 0,
+    "anti_focus_votes": 0,
+    "anti_congresses": [],
+    "latest_congress_focus": null,
+    "lobby_money_trackaipac": 0,
+    "lobby_outside_support": 0,
+    "lobby_outside_oppose": 0,
+    "discharge_petitions_against_own_leadership": 0,
+    "party_defections_to_anti": 0,
+    "breaking_anti_votes": 0,
+    "areas": {},
+    "applicable_discharge_petitions": 0,
+    "applicable_discharge_petitions_signed": 0
+   },
+   "source": "fec+trackaipac_endorsed"
+  },
+  {
+   "name": "Mai Vang",
+   "party": "D",
+   "state": "CA",
+   "district": 7,
+   "chamber": "house",
+   "antiArms": true,
+   "antiArmsLevel": "yes",
+   "antiArmsBasis": "statements",
+   "evidence": [
+    "Mai will fight to end the genocide in Gaza, reject AIPAC money, and invest our tax dollars in health care, housing, and jobs at home\u2014not endless wars abroad. (https://www.maiforus.com/)"
+   ],
+   "ps": "WON",
+   "note": "Mai will fight to end the genocide in Gaza, reject AIPAC money, and invest our tax dollars in health care, housing, and jobs at home\u2014not endless wars abroad. (https://www.maiforus.",
+   "website": "https://www.maiforus.com/",
+   "fec_ids": [
+    "H6CA07175"
+   ],
+   "primaryDate": "2026-06-02",
+   "primary_result": "WON",
+   "primary_result_source": "https://en.wikipedia.org/wiki/2026_United_States_House_of_Representatives_elections_in_California",
+   "general_result": null,
+   "general_result_by": null,
+   "result_conflict": null,
+   "endorsed_by": [
+    "trackaipac_endorsed"
+   ],
+   "antiTier": "soft",
+   "tier_source": "ai:groq",
+   "tier_reason": "No evidence of consistent anti\u2011Israel aid stance and AIPAC endorsement.",
+   "tier_evidence": [],
+   "tier_risk": {
+    "capital": "medium",
+    "notes": "Her lack of federal record and pro\u2011Israel endorsements make her a weak candidate for coalition support.",
+    "political": "high"
+   },
+   "tier_screen": "marked anti on the focus issue by votes or statements",
+   "writeup": "Mai Vang is a Sacramento City Council member who has not yet served in Congress and has no roll\u2011call voting record on federal foreign\u2011policy issues. Her only public statement relevant to the coalition\u2019s criteria is a call to ban U.S. weapons sales used in genocide, which is a broad anti\u2011war stance but does not address aid to Israel specifically. The dossier indicates she is endorsed by AIPAC\u2011aligned groups, and her record shows no breaking anti\u2011intervention votes or leadership defiance. Because she has not demonstrated a consistent anti\u2011Israel aid position and is linked to pro\u2011Israel lobbying, she does not meet the coalition\u2019s threshold for a reliable ally. Her political risk is high given the lack of a proven anti\u2011intervention record, while capital risk is moderate due to her local office and limited campaign funding from state and university sources.",
+   "bottom_line": "Does not count because her record shows no consistent anti\u2011Israel aid stance and she is endorsed by AIPAC\u2011aligned groups.",
+   "principle": "unclear",
+   "judged_model": "openai/gpt-oss-20b",
+   "judged_at": "2026-11-25T23:49:17.983795+00:00",
+   "confidence": 60,
    "discharge_petitions": [],
    "bridge": null,
    "leadership": null,
